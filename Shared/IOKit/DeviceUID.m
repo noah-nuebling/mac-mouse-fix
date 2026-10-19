@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// MacAddress.m
+// DeviceUID.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2024
 // Licensed under Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
@@ -8,69 +8,100 @@
 //
 
 ///
-/// This file retrieves the MAC (Media Access Control) address for the current device
-///     This can be used to **uniquely identify the hardware** we're running on
+/// Retrieves a deviceUID - this can be used to **uniquely identify the hardware** we're running on
 ///
-///     This code is copied from these Apple docs:
-///         https://developer.apple.com/documentation/appstorereceipts/validating_receipts_on_the_device#//apple_ref/doc/uid/TP40010573-CH1-SW14
+/// `getDeviceUID_V1` (Formerly `get_mac_address()`)
+///     This file retrieves the MAC (Media Access Control) address for the current device
+///         This code is copied from these Apple docs:
+///             https://developer.apple.com/documentation/appstorereceipts/validating_receipts_on_the_device#//apple_ref/doc/uid/TP40010573-CH1-SW14
 ///
-///     The Apple docs suggest that getting the MAC address in this fashion is the proper way to get a unique device id on macOS, whereas on iOS the proper way is using`UIDevice.currentDevice.identifierForVendor`.
+///         The Apple docs suggest that getting the MAC address in this fashion is the proper way to get a unique device id on macOS, whereas on iOS the proper way is using`UIDevice.currentDevice.identifierForVendor`.
+///     PRIVACY:
+///         Apple has anonymized Device IDs on iOS using `UIDevice.currentDevice.identifierForVendor`. Unfortunately this isn't available on macOS.
+///         A macAddress is a *globally unique hardware identifier* – do not store or send without thinking thoroughly about the privacy implications.
+///         Currently (Nov 2024) we only use the macAddress as an input to an SHA-256 hash for our offline license validation (so it's not sent and cannot be retrieved from any data we store, because SHA-256 hashes are irreversible)
 ///
-/// PRIVACY:
-///     Apple has anonymized Device IDs on iOS using `UIDevice.currentDevice.identifierForVendor`. Unfortunately this isn't available on macOS.
-///     A macAddress is a *globally unique hardware identifier* – do not store or send without thinking thoroughly about the privacy implications.
-///     Currently (Nov 2024) we only use the macAddress as an input to an SHA-256 hash for our offline license validation (so it's not sent and cannot be retrieved from any data we store, because SHA-256 hashes are irreversible)
+/// `getDeviceUID_V2`: (Aka `IOPlatformUUID`) (Update [Oct 2026])
+///     Why V2?
+///         We think that `get_mac_address()` has a small chance of contributing to `@improveSecDocs` issues.
+///         Opus 5.5. says `IOPlatformUUID` might be more stable, so we're using that now.
+///
+///     Why keep V1?
+///         Keeping `getDeviceUID_V1` around for smooth migration without extra internet connections. Could probably delete after a few MMF releases. (See usage in GetLicenseState.swift [Oct 2026]) (@improveSecDocs)
+///
 
-#import "MacAddress.h"
+#import "DeviceUID.h"
 #import <IOKit/network/IONetworkLib.h>
 #import "Logging.h"
 #import "SharedUtility.h"
 #import "MFDefer.h"
 
+#pragma mark - deviceUID
+
+NSString *getDeviceUID_V2(void) {
+
+    io_service_t platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, CFBridgingRetain(@{
+        @kIOProviderClassKey: @"IOPlatformExpertDevice"
+    }));
+    NSString *result = CFBridgingRelease(IORegistryEntryCreateCFProperty(platformExpert, CFSTR("IOPlatformUUID"), kCFAllocatorDefault, /*options*/0));
+
+    /// Cleanup
+    IOObjectRelease(platformExpert);
+
+    return result;
+}
+
+static NSData *get_mac_address(void); /// Forward declaration
+NSData *getDeviceUID_V1(void) { return get_mac_address(); }
+
+#pragma mark - MAC address (getDeviceUID_V1)
+
 @interface MacAddress : NSObject @end
 
 @implementation MacAddress
 
-uint64 mac_address_to_int(NSData *_Nullable mac_address_data) {
-    
-    if (mac_address_data == nil) return 0;
-    
-    NSUInteger len = [mac_address_data length];
-    
-    if (len != 6 && len != 8) {
-        DDLogError("mac address has unexpected byte count: %lu (Mac addresses normally have 6 bytes, sometimes 8. Anything over 8 won't fit into int64 and will be truncated in our return value.)", (unsigned long)len);
+#if 0
+    static uint64 mac_address_to_int(NSData *_Nullable mac_address_data) {
+
+        if (mac_address_data == nil) return 0;
+
+        NSUInteger len = [mac_address_data length];
+
+        if (len != 6 && len != 8) {
+            DDLogError("mac address has unexpected byte count: %lu (Mac addresses normally have 6 bytes, sometimes 8. Anything over 8 won't fit into int64 and will be truncated in our return value.)", (unsigned long)len);
+        }
+
+        uint64 result = 0;
+        [mac_address_data getBytes:&result length:MIN(len, 8)];
+
+        return result;
     }
-    
-    uint64 result = 0;
-    [mac_address_data getBytes:&result length:MIN(len, 8)];
-    
-    return result;
-}
 
-NSString *_Nullable mac_address_to_string(NSData *_Nullable mac_address_data) {
+    static NSString *_Nullable mac_address_to_string(NSData *_Nullable mac_address_data) {
 
-    if (mac_address_data == nil) return nil;
+        if (mac_address_data == nil) return nil;
 
-    NSUInteger len = [mac_address_data length];
-    
-    NSString *result;
-    if (len == 6) {
-        char buf[6];
-        [mac_address_data getBytes:&buf length:6];
-        result = stringf(@"%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
-    } else if (len == 8) {
-        char buf[8];
-        [mac_address_data getBytes:&buf length:8];
-        result = stringf(@"%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
-    } else {
-        DDLogError("Failed to convert mac address to string. It has neither 6 nor 8 bytes. Has %lu bytes", len);
-        result = nil;
+        NSUInteger len = [mac_address_data length];
+
+        NSString *result;
+        if (len == 6) {
+            char buf[6];
+            [mac_address_data getBytes:&buf length:6];
+            result = stringf(@"%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
+        } else if (len == 8) {
+            char buf[8];
+            [mac_address_data getBytes:&buf length:8];
+            result = stringf(@"%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
+        } else {
+            DDLogError("Failed to convert mac address to string. It has neither 6 nor 8 bytes. Has %lu bytes", len);
+            result = nil;
+        }
+
+        return result;
     }
-    
-    return result;
-}
+#endif
 
-NSData *_Nullable get_mac_address(void) {
+static NSData *_Nullable get_mac_address(void) {
 
     /// Apple comments:     (This code is originally copied from Apple's documentation - see the discussion at the top of the file)
     ///     Prefer built-in network interfaces.
@@ -108,7 +139,7 @@ NSData *_Nullable get_mac_address(void) {
     return result;
 }
 
-io_service_t copy_io_service(const char *name, BOOL wantBuiltIn) {
+static io_service_t copy_io_service(const char *name, BOOL wantBuiltIn) {
     
     /// Helper function
     ///     Returns an IOService with the name `name` and with a `kIOBuiltin` property that must match `wantBuiltIn`.

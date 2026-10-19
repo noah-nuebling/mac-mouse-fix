@@ -39,6 +39,7 @@
 #import "HelperUtility.h"
 #import "MFMessagePort.h"
 #import "Locator.h"
+#import "SecureStorage.h"
 
 #if IS_HELPER
     #import "Mac_Mouse_Fix_Helper-Swift.h"
@@ -545,9 +546,16 @@ static void _loadAndRepair(void) {
                     
                     /// Move lastUseDate from config to SecureStorage.
                     NSObject *d = config(@"License.trial.lastUseDate");
-                    [SecureStorage set:@"License.trial.lastUseDate" value:d];
                     removeFromConfig(@"License.trial.lastUseDate");
-                    
+                    {
+                        NSMutableDictionary *dict = nil;
+                        SecureStorageReadError readErr = readSecureStorage(/*callerName*/@"Config._loadAndRepair", &dict);
+                        if (readErr != kSecureStorageReadError_UnexpectedError) { /// If there's a sporadic issue with the keychain, just drop the write, it's not critical. [Oct 2026]
+                            [dict setObject: d forCoolKeyPath: @"License.trial.lastUseDate"];
+                            (void)writeSecureStorage(/*callerName*/@"Config._loadAndRepair", dict, readErr);
+                        }
+                    }
+
                     currentVersion = 22;
                     
                 } else if (currentVersion == 22) {
@@ -578,9 +586,11 @@ static void _loadAndRepair(void) {
                     removeFromConfig(@"License.licenseReasonCache");
                     
                     currentVersion = 24;
-                    
-                } else {
-                    
+                }
+                /// [Oct 2026] added `License.licenseStateCacheHash_AgainstLicenseKey` and `License.licenseStateCacheHash_AgainstDeviceUID` and removed `License.licenseStateCacheHash`
+                ///     but it doesn't need migration here or a new configVersion
+                else {
+
                     log(Info, "No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
                     goto replace;
                 }

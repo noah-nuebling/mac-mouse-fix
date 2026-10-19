@@ -92,7 +92,7 @@ enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea i
             assert(false) /// I'm not sure this can actually happen.
             
             let error = NSError(domain: MFLicenseErrorDomain,
-                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                code: Int(kMFLicenseErrorCode_ServerResponseInvalid),
                                 userInfo: ["data": (serverData ?? "<nil>"),
                                            "urlResponse": (urlResponse ?? "<nil>"),
                                            "dataAsUTF8": (String(data: (serverData ?? Data()), encoding: .utf8) ?? "")])
@@ -119,7 +119,7 @@ enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea i
             assert(error__ != nil)
             
             let error = NSError(domain: MFLicenseErrorDomain,
-                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                code: Int(kMFLicenseErrorCode_ServerResponseInvalid),
                                 userInfo: ["data": serverData,
                                            "urlResponse": urlResponse,
                                            "dataAsUTF8": (String(data: serverData, encoding: .utf8) ?? ""),
@@ -132,7 +132,7 @@ enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea i
         /// Guard: JSON from server is a acually dict
         guard let jsonDict = jsonObject as? [String: Any] else {
             let error = NSError(domain: MFLicenseErrorDomain,
-                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                code: Int(kMFLicenseErrorCode_ServerResponseInvalid),
                                 userInfo: ["data": serverData,
                                            "urlResponse": urlResponse,
                                            "jsonSerializationResult": (jsonObject ?? "")])

@@ -60,15 +60,20 @@ import Foundation
                 } else if error.domain == MFLicenseErrorDomain {
                     
                     switch error.code as MFLicenseErrorCode {
-                        
-                    case kMFLicenseErrorCodeInvalidNumberOfActivations:
+
+                    case kMFLicenseErrorCode_KeychainError:
+
+                        let messageFormat = MFLocalizedString("license-toast.keychain-error", comment: "")
+                        message = String(format: messageFormat, Links.link(kMFLinkID_FeedbackBugReport) ?? "")
+
+                    case kMFLicenseErrorCode_InvalidNumberOfActivations:
                         
                         let nOfActivations = (error.userInfo["nOfActivations"] as? Int) ?? -1
                         let maxActivations = (error.userInfo["maxActivations"] as? Int) ?? -1
                         let messageFormat = MFLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.") /// We do the localizer hint with the c-format-specifier-explanation on this string since it's the most complicated one atm. I feel like if we do the explanation on a simpler string, localizers might miss details on this one. E.g. usage of `d` instead `@` in some specifiers.
                         message = String(format: messageFormat, (Links.link(kMFLinkID_MailToNoah) ?? ""), nOfActivations, maxActivations)
                         
-                    case kMFLicenseErrorCodeServerResponseInvalid:
+                    case kMFLicenseErrorCode_ServerResponseInvalid:
                         
                         /// Sidenote:
                         ///     We added this localizedStringKey on the master branch inside .strings files, while we already replaced all the .strings files with .xcstrings files on the feature-strings-catalog branch. -- Don't forget to port this string over, when you merge the master changes into feature-strings-catalog! (Last updated: Oct 2024)
@@ -93,7 +98,7 @@ import Foundation
                             DDLogError("Received invalid Gumroad server response. Debug info:\n\n\(debugInfo)")
                         }
                         
-                    case kMFLicenseErrorCodeGumroadServerResponseError:
+                    case kMFLicenseErrorCode_GumroadServerResponseError:
                         
                         if let gumroadMessage = error.userInfo["message"] as? String {
                             

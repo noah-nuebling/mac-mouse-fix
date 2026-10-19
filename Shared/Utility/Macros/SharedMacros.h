@@ -75,6 +75,9 @@
 ///     Shorthand for creating an NSError with a debug description (Uses `NSDebugDescriptionErrorKey`)
 ///     Usage example:
 ///         `mferror(NSCocoaErrorDomain, NSPropertyListReadCorruptError, @"Deserialized plist object from %@ is not a mutable dictionary. Is %@", url, [result class]);`
+///     Update: [Oct 2026] This is retarded, like all the stuff rom this era (MFDataClass, MFCoding, MFSharedMacros, ...),
+///         but for errors you don't ever branch on, and just log it, does make some sense to have a macro for creating a generic (MFErrorDomain) error that just contains a string.
+///             We're using `mferror` for that now and should probably replace with something that only takes a string arg. (Maybe like `+[NSError mf_genericError:]`)
 
 #define mferror(domain_, code_, formatAndArgs_...) \
     [NSError errorWithDomain: (domain_) code: (code_) userInfo: @{ NSDebugDescriptionErrorKey: stringf(@"" formatAndArgs_) }]
@@ -85,6 +88,9 @@
 ///     Note on old investigation: [Aug 2025]
 ///         IIRC we did a longer investigation into writing custom messages into crash reports. I don't remember where. Maybe some side-repo? I remember finding some global c variable but it was ignored unless it was written to from the crash reporter module or something. I also remember discovering some elaborate private API (CFType-based I think), but not pursuing it further.
 ///     TODO: Move this into Logging.h when merging this code from master into feature-strings-catalog
+///
+///     Update: [Oct 2026] This is now mfrequire in Logging.h
+///         Delete all this SharedMacros.h stuff oh god.
 
 #define mfabort(format, args...) ({ \
     DDLogError("mfabort failure: " format, ## args); \

@@ -14,8 +14,6 @@
     #import "Threads.h"
 #endif
 
-NS_ASSUME_NONNULL_BEGIN
-
 /// RunLoop
 static inline CFRunLoopRef configRunLoop(void) CF_RETURNS_NOT_RETAINED {
     #if IS_HELPER
@@ -64,4 +62,3 @@ void commitConfig(void);
 
 @end
 
-NS_ASSUME_NONNULL_END

@@ -9,6 +9,11 @@
 
 import CryptoKit
 
+/// Log prefix for this file
+fileprivate func _DDLogInfo (_ m: @autoclosure () -> String) { DDLogInfo ("GetLicenseState: \(m())") }
+fileprivate func _DDLogDebug(_ m: @autoclosure () -> String) { DDLogDebug("GetLicenseState: \(m())") }
+fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLicenseState: \(m())") }
+
 @objc class GetLicenseState : NSObject {
 
     /// -> This class retrieves instances of the `MFLicenseState` dataclass
@@ -24,11 +29,11 @@ import CryptoKit
 
         assertRunLoop(licensingRunLoop())
 
-        let result = self.licenseStateFromCache(licenseKey: "", deviceUID: nil, enableOfflineValidation: false) ??
+        let result = self.licenseStateFromCache(licenseKey: "", enableOfflineValidation: false) ??
                      self.licenseStateFromFallback
         
-        DDLogInfo("GetLicenseState.get_Preliminary(): \(result)\ncaller: \(_callingFunc)")
-        
+        _DDLogInfo("get_Preliminary(): \(result)\ncaller: \(_callingFunc)")
+
         return result
     }
     #endif
@@ -50,54 +55,69 @@ import CryptoKit
         /// Check if the license key is valid
         
         checkLicenseKeyValidity: do {
-            
-            /// Get key
-            ///     from secure storage
 
-            guard let key = SecureStorage.get("License.key") as? String else {
+            /// Read secureStorage
+            var secureStorage: NSMutableDictionary? = nil;
+            let readError = readSecureStorage(/*callerName*/"GetLicenseState.get", &secureStorage);
 
-                /// No key found in secure storage
-                
-                /// Delete cache
-                deleteLicenseStateFromCache(commitConfig: true) /// `<-` See docs in here for discussion.
-                
-                /// Return unlicensed
-                ///     Note: Perhaps we should also do this if the licenseKey is an emptyString?
-                result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
-                DDLogInfo("GetLicenseState: No license key was found in the secureStorage.\n(This is now just a log message. Would formerly return NSError with code kMFLicenseErrorCodeKeyNotFound)") /// This shouldn't be an error log as this is the normal case if the user hasn't entered a licenseKey e.g. during the trial period.
-                break checkLicenseKeyValidity
+            /// Get licenseKey from secureStorage
+            var key: String? = nil
+            do {
+                if readError == kSecureStorageReadError_UnexpectedError {
+                    key = nil /// Be lenient with weird errors - makes `licenseStateFromCache` not validate the licenseStateCache against the licenseKey at all.
+                }
+                else if readError == kSecureStorageReadError_DoesntExistYet {
+                    key = nil /// Be lenient even for `kSecureStorageReadError_DoesntExistYet`, because we don't even fully trust that it's not spurious, and we can still use the `licenseStateFromCache` data here. (And reasonably validate it / protect against piracy via `deviceUID`) @improveSecDocs [Oct 2026]
+                }
+                else if readError == kSecureStorageReadError_ReadSuccessful {
+                    key = secureStorage?.object(forCoolKeyPath: "License.key") as? String
+                    if key == nil {
+
+                        /// Debug
+                        ///     This isn't an error log because this is the normal case if the user hasn't entered a licenseKey e.g. during the trial period.
+                        _DDLogDebug("readSecureStorage succeeded but didn't contain a key. Deciding that the app is not licensed. [Oct 2026]")
+                        if (config("License.licenseStateCache") != nil) {
+                            /// This could trigger 'Free days are over' bug.
+                            ///     Opus 5.5 says it matches `Tim Otheo's` report and could happen when another Mac without a key overrides the keychain or something. [Oct 2026]
+                            _DDLogError("About to delete non-nil licenseStateCache [Oct 2026]")
+                        }
+
+                        /// Delete cache
+                        deleteLicenseStateFromCache(commitConfig: true) /// `<-` See docs in here for discussion.
+
+                        /// Return unlicensed
+                        ///     Note: Perhaps we should also do this if the licenseKey is an emptyString?
+                        result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
+                        break checkLicenseKeyValidity
+                    }
+                }
             }
-            
+
+
             /// 1. Ask cache
-            let deviceUID = get_mac_address()
-            if deviceUID == nil { DDLogWarn("GetLicenseState: Failed to get deviceUID for offline validation. (Offline validation should still work normally as long as we *always consistently* fail to retrieve the deviceUID on this device. (Because then we'll always consistently pass nil))") }
-            result = self.licenseStateFromCache(licenseKey: key,
-                                                deviceUID: deviceUID,
+            result = self.licenseStateFromCache(licenseKey: key, /// Passing through nil if there were`SecureStorageReadError` errors (See above @improveSecDocs) [Oct 2026]
                                                 enableOfflineValidation: true)
 
-            if (result == nil) {
-                
-                /// 2. Ask server
+
+            /// 2. Ask server
+            if (result == nil && key != nil) {
                 
                 let licenseConfig = await GetLicenseConfig.get()
                 
                 var serverError: NSError?
-                (result, serverError) = await licenseStateFromServer(key: key,
+                (result, serverError) = await licenseStateFromServer(key: key!,
                                                                      incrementActivationCount: false, /// It's important that this is `false`! Otherwise we might accidentally increase the activationCount of the license more and more
                                                                      licenseConfig: licenseConfig)
             
                 if let serverError = serverError {
-                    DDLogInfo("GetLicenseState: LicenseServer API responded with error: \(serverError)")
+                    _DDLogError("LicenseServer API responded with error: \(serverError)")
                 }
-                
-                if (result == nil) {
-                
-                    /// 3. Ask fallback
-                
-                    result = self.licenseStateFromFallback
-                    DDLogInfo("GetLicenseState: Using hardcoded fallback: \(result.map { String(describing: $0) } ?? "<nil>")\n(This is now just a log message. Would formerly return NSError with code: kMFLicenseErrorCodeNoInternetAndNoCache")
-                }
-            
+            }
+
+            /// 3. Ask fallback
+            if (result == nil) {
+                result = self.licenseStateFromFallback
+                _DDLogError("Using hardcoded fallback: \(result.map { String(describing: $0) } ?? "<nil>")\n(This is now just a log message. Would formerly return NSError with code: kMFLicenseErrorCode_NoInternetAndNoCache")
             }
             
         } /// end of checkLicenseKeyValidity
@@ -105,11 +125,8 @@ import CryptoKit
         /// Note: [Jan 2024] We could just update the cache right here instead of deleting cache in all these different places  (See deleteLicenseStateFromCache() docs)
         
         /// Unwrap
-        guard var result = result
-        else {
-            fatalError("Something in our code is wrong. MFLicenseState is nil even though we should've assigned a hardcoded fallback value at the very least.")
-        }
-        
+        guard var result = result else { fatalError("Something in our code is wrong. MFLicenseState is nil even though we should've assigned a hardcoded fallback value at the very least.") }
+
         /// Validate checkLicenseKeyValidity result
         assert(result.freshness != kMFValueFreshnessNone)
         if result.isLicensed { assert(!(result.licenseTypeInfo is MFLicenseTypeInfoNotLicensed)) }
@@ -123,7 +140,7 @@ import CryptoKit
         }
         
         /// Log
-        DDLogInfo("GetLicenseState.get(): \(result)\ncaller: \(_callingFunc)")
+        _DDLogInfo("\(result)\ncaller: \(_callingFunc)")
 
         /// Return result
         return result
@@ -162,38 +179,41 @@ import CryptoKit
     private static let licenseStateFromFallback: MFLicenseState = MFLicenseState(isLicensed: false,
                                                                                  freshness: kMFValueFreshnessFallback,
                                                                                  licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
-    
-    private static func getHashForOfflineCacheValidation(licenseState: Data, licenseKey: String, deviceUID: Data?) -> Data {
-            
-            /// Our offline validation mechanism for the `MFLicenseState` - which relies on this hashing function - ensures data-integrity and prevents easy tampering by users. All without making an internet connection.
-            ///     Input values:
-            ///     `licenseStateData`:
-            ///         - Example when this is useful: This validation would render the cache invalid, if the user simply sets `licenseState.isLicensed == true` in the cached `MFLicenseState` - This prevents users from hacking the app into being licensed too easily
-            ///     `licenseKey`:
-            ///         - Example when this is useful: If the user changes their `licenseKey` on one device, it will get synced to their other devices via iCloud. But the cache is not synchronized. However, due to this cache validation, the cache will then become invalid, prompting the app to re-download the `MFLicenseState` from the server instead of continuing to use the old, stale `MFLicenseState` - This ensures data integrity.
-            ///     `deviceUID`
-            ///         - Example when this is useful: Even if a user shares their licenseKey alongside their config.plist (which contains the MFLicenseState cache as of now - Oct 2024) other users won't be able to activate the app by simply copying that data to their device, because the `deviceUID` is part of the hashed data.
-            ///             -> On second thought I think this is pretty unnecessary. I don't think many users would do this. And I mean they could still just share the licenseKey without the config.plist and just activate it multiple times. But I guess this extra check doesn't hurt.
-            ///         - Note: If, on some device, our method for retrieving a deviceUID fails, nil should be passed in here. As long as getting the `deviceUID` *always consistently* fails on a given device and we always pass in nil, then the offline validation should still work fine. The deviceUID is really not essential for the offline validation. Which hints that we might wanna think about removing it.
-            ///
-            /// Possible simplification / optimization:
-            ///     Using `[NSObject -hash]`
-            ///         This wouldn't work. E.g. an NSDictionary's `-hash` is just the number of keys it has. The hash does not depend on the dicts' contents.
-            ///             iirc this is by design as the `-hash` should never change while an object is in a collection, so it's better to make the hash independent of the object's content, so that the content can be modified while the object is in a collection without changing the hash.
-            ///             Also the default implementation of `-hash` uses the object's storage address iirc, and that wouldn't be stable across app launches, which is crucial here.
-            ///     Combine hashes simply using the `^` bitwise operator?
-            ///         This would probably work. We don't need the hashes to be cryptographically secure at all.
-            
-            var hashFunction = SHA256.init() /// SHA256 is totally overkill we just need someee simple hash to prevent tampering and ensure data integrity. It doesn't need to be cryptographically secure at all.
-            hashFunction.update(data: licenseState)
-            hashFunction.update(data: licenseKey.data(using: .utf8) ?? Data())
-            hashFunction.update(data: deviceUID ?? Data())
-            let hashDigest = hashFunction.finalize()
-            let hashData = Data(hashDigest)
-            
-            return hashData
+
+    /// Hashing functions for cached license state [Oct 2026]
+    ///     Conceptual: (Offline validation [Oct 2026]) @improveSecDocs
+    ///     Offline validation: We cache the latest `MFLicenseState` in the config.plist, and then use that instead of pinging Gumroad on every launch.
+    ///         To prevent piracy from beingt too easy, we hash the licenseState against some environment variables: (In the abstract sense, not to be confused with Unix envvars)
+    ///             1. The user's `licenseKey`
+    ///             2. The `deviceUID` of the current computer
+    ///         If the environment changes or the the `MFLicenseState` is tampered with, the hash will change and we don't use the cached `MFLicenseState`. That's what 'offline validation' is currently [Oct 2026]
+    ///     Why use separate hashing functions for each environment variable? [Oct 2026]
+    ///         We think that the getters could sporadically fail causing random lockdowns of the app @improveSecDocs [Oct 2026] - so we only validate against the environment variables that are currently available
+    ///             That means err on the side of treating the MFLicenseState as valid, without giving up all validation just because one of the environment variables is not available. [Oct 2026] @improveSecDocs
+
+    private static func hashLicenseState(_ licenseState: Data, againstLicenseKey licenseKey: String) -> Data {
+        var hashFunction = SHA256.init() /// SHA256 is totally overkill we just need someee simple hash to prevent tampering and ensure data integrity. It doesn't need to be cryptographically secure at all.
+        hashFunction.update(data: licenseState)
+        hashFunction.update(data: licenseKey.data(using: .utf8) ?? Data())
+        return Data(hashFunction.finalize())
     }
-    
+    private static func hashLicenseState(_ licenseState: Data, againstDeviceUID_V2 deviceUID: String) -> Data {
+        var hashFunction = SHA256.init()
+        hashFunction.update(data: licenseState)
+        hashFunction.update(data: deviceUID.data(using: .utf8) ?? Data())
+        return Data(hashFunction.finalize())
+    }
+    private static func legacy_hashLicenseState(_ licenseState: Data, againstLicenseKey licenseKey: String, andDeviceUID_V1 deviceUID: Data?) -> Data {
+        /// Formerly `getHashForOfflineCacheValidation`
+        /// Old hash which combines licenseKey and deviceUID (and which could therefore not properly be used if one of them was unavailable @improveSecDocs) [Oct 2026]. See usage site [Oct 2026]
+
+        var hashFunction = SHA256.init()
+        hashFunction.update(data: licenseState)
+        hashFunction.update(data: licenseKey.data(using: .utf8) ?? Data())
+        hashFunction.update(data: deviceUID ?? Data())
+        return Data(hashFunction.finalize())
+    }
+
     private static func deleteLicenseStateFromCache(commitConfig doCommitConfig: Bool) {
         
         /// We create an abstraction for this so we can easily regex for it
@@ -227,13 +247,16 @@ import CryptoKit
         ///                 Caching override-MFLicenseStates like freeCountry might be sort of useful for extra robustness. E.g. if the app is licensed under a freeCountry license where that free country isn't included in the hardcoded fallback, and then the internet and the licenseConfig cache goes away, then the user can't use the app anymore. Whereas when we cache the override-MFLicenseStates, then that would serve as an extra failsafe making the app usable even if those other two things go away (I think at least - not entirely sure. Haven't thought this through.)
     
         removeFromConfig("License.licenseStateCache")
-        removeFromConfig("License.licenseStateCacheHash")
-        
+        removeFromConfig("License.licenseStateCacheHash_AgainstLicenseKey")
+        removeFromConfig("License.licenseStateCacheHash_AgainstDeviceUID")
+
+        removeFromConfig("License.licenseStateCacheHash") /// Legacy key, also removed by the migration code [Oct 2026]
+
         if doCommitConfig { commitConfig() }
     }
     
-    private static func storeLicenseStateInCache(_ newValue: MFLicenseState, licenseKey: String, deviceUID: Data?) {
-    
+    private static func storeLicenseStateInCache(_ newValue: MFLicenseState, licenseKey: String, deviceUID_V2: String?) {
+
             /// Which fields of MFLicenseState to cache?
             ///     We're caching all the fields of the `MFLicenseState`. It's an offline substitute for the data we would receive from a license server.
             ///         It's unnecessary to cache the `MFLicenseState.freshness` value since that indicates the orgin of the data - server, cache, or fallback - and isn't really "part of the data" itself.
@@ -246,7 +269,7 @@ import CryptoKit
                 guard let xmlData = xmlData,
                       let xmlString = NSString(data: xmlData, encoding: NSUTF8StringEncoding)
                 else {
-                    DDLogError("GetLicenseState: MFLicenseState xmlString for caching came out as nil. Don't think this should ever happen.")
+                    _DDLogError("MFLicenseState xmlString for caching came out as nil. Don't think this should ever happen.")
                     assert(false)
                     return
                 }
@@ -262,75 +285,98 @@ import CryptoKit
             ///     Note: [Jan 2025] Need to use `.xml` instead of `.binary`. to make the data (and with it the hash) deterministic. Not sure why. We might be relying on an implementation detail here.
             let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: dict, format: .xml, options: 0) }
             guard let dictData else {
-                DDLogError("GetLicenseState: Caching: plist serialization of licenseState dict archive failed with error: \(error.map { String(describing: $0) } ?? "<nil>"). (Don't think this should ever happen.)")
+                _DDLogError("Caching: plist serialization of licenseState dict archive failed with error: \(error.map { String(describing: $0) } ?? "<nil>"). (Don't think this should ever happen.)")
                 assert(false);
                 return
             }
-            let hash = self.getHashForOfflineCacheValidation(licenseState: dictData, licenseKey: licenseKey, deviceUID: deviceUID)
-            
+            let hash_licenseKey = self.hashLicenseState(dictData, againstLicenseKey: licenseKey)
+            let hash_deviceUID  = deviceUID_V2 != nil ? self.hashLicenseState(dictData, againstDeviceUID_V2: deviceUID_V2!) : nil
+
             /// Store data
-            setConfig("License.licenseStateCache",      dict as NSDictionary)
-            setConfig("License.licenseStateCacheHash",  hash as NSData)
+            setConfig("License.licenseStateCache",                         dict as NSDictionary)
+            setConfig("License.licenseStateCacheHash_AgainstLicenseKey",   hash_licenseKey as NSData)
+            setConfig("License.licenseStateCacheHash_AgainstDeviceUID",    hash_deviceUID as NSData?)
             commitConfig()
     }
     
-    private static func licenseStateFromCache(licenseKey: String, deviceUID: Data?, enableOfflineValidation: Bool) -> MFLicenseState? {
+    private static func licenseStateFromCache(licenseKey: String?, enableOfflineValidation: Bool) -> MFLicenseState? {
             assertRunLoop(licensingRunLoop())
 
             /// Note: If the argument `enableOfflineValidation` is set to `false`, then all the other arguments are ignored - they only exist for the offlineValidation
             
             /// Get cached MFLicenseState archive
-            guard let cachedDict = config("License.licenseStateCache") as? NSDictionary
+            guard let cachedLicenseState = config("License.licenseStateCache") as? NSDictionary
             else {
-                DDLogDebug("GetLicenseState: MFLicenseState dict could not be extracted from cache") /// Don't make this an error log because this is pretty expected if we simply haven't cached anything, yet
+                _DDLogError("MFLicenseState dict could not be extracted from cache")
                 return nil
             }
-            
-            if enableOfflineValidation {
-                
-                var success = true
-                
-                offlineValidation: do {
-                   
-                    /// Get cached hash
-                    guard let cachedHash = config("License.licenseStateCacheHash") as? Data else {
-                        DDLogDebug("GetLicenseState: Offline validation failed: licenseState hash not found in cache")
-                        success = false
-                        break offlineValidation
+
+            /// Validate the cached MFLicenseState against the environment, using the hashes stored next to it
+            var isValid: Bool = true
+            validation: if enableOfflineValidation {
+
+                let deviceUID_V2 = getDeviceUID_V2();
+
+                if licenseKey == nil && deviceUID_V2 == nil
+                    { isValid = true; _DDLogError("Not enough info from environment to validate offline license. Treating this as a spurious failure and treating cached licenseState as valid"); break validation; }
+
+                /// Serialize the `cachedLicenseState` so we can pass it to our hashing functions [Oct 2026]
+                let (cachedLicenseState_Data_, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: cachedLicenseState, format: .xml, options: 0) as Data }
+                guard let cachedLicenseState_Data = cachedLicenseState_Data_ else
+                    { isValid = false; _DDLogError("Offline validation failed: plist serialization of dict archive failed. Error: \(error.map { String(describing: $0) } ?? "<nil>")"); break validation }
+
+                step1: do {
+
+                    isValid = true
+
+                    /// Validate `cachedLicenseState` against `licenseKey` [Oct 2026]
+                    if let licenseKey {
+                        if  config("License.licenseStateCacheHash_AgainstLicenseKey") as? Data !=
+                            self.hashLicenseState(cachedLicenseState_Data, againstLicenseKey: licenseKey)
+                        { isValid = false; _DDLogError("Offline validation failed: licenseKey doesn't match the hash"); break step1;  }
                     }
-                
-                    /// Calculate fresh hash
-                    ///     for cached licenseState
-                    let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: cachedDict, format: .xml, options: 0) }
-                    guard let dictData else {
-                        DDLogError("GetLicenseState: Offline validation failed: plist serialization of dict archive failed. Error: \(error.map { String(describing: $0) } ?? "<nil>")")
-                        success = false
-                        break offlineValidation
+
+                    /// Validate `cachedLicenseState` against `deviceUID_V2` [Oct 2026]
+                    if let deviceUID_V2 {
+                        if  config("License.licenseStateCacheHash_AgainstDeviceUID") as? Data !=
+                            self.hashLicenseState(cachedLicenseState_Data, againstDeviceUID_V2: deviceUID_V2)
+                        { isValid = false; _DDLogError("Offline validation failed: deviceUID doesn't match the hash"); break step1; }
                     }
-                    let hash = self.getHashForOfflineCacheValidation(licenseState: dictData, licenseKey: licenseKey, deviceUID: deviceUID)
-                    
-                    /// Compare hashes
-                    ///     If this fails, then at least one of the hashing input-values (licenseState, licenseKey and deviceUID) has changed since the cache was stored. (Or the cachedHash itself changed.)
-                    if (hash != cachedHash) {
-                        DDLogError("GetLicenseState: Offline validation failed: The hashes don't match.\nCached hash: \(cachedHash)\nFresh hash:  \(hash)")
-                        success = false
-                        break offlineValidation
-                    }
-                    
-                    /// Success!
-                    DDLogInfo("GetLicenseState: Offline validation succeeded.\nCached hash: \(cachedHash)\nFresh hash:  \(hash)")
-                    
-                } /// end of `offlineValidation:`
-                
-                if !success { /// Offline validation failed
-                    
-                    /// Delete cache
-                    ///     (Because we know it's invalid)
-                    deleteLicenseStateFromCache(commitConfig: true) /// `<-` Also see the discussion in here
-                    
-                    /// Return
-                    return nil
                 }
+
+                /// Fallback -> Validate `cachedLicenseState` against both `licenseKey` and `deviceUID` (Support for legacy `License.licenseStateCacheHash` configKey [Oct 2026]) (@improveSecDocs)
+                if !isValid, let licenseKey {
+
+                    let deviceUID_V1 = getDeviceUID_V1()
+
+                    if  config("License.licenseStateCacheHash") as? Data !=
+                        self.legacy_hashLicenseState(cachedLicenseState_Data, againstLicenseKey: licenseKey, andDeviceUID_V1: deviceUID_V1)
+                    { isValid = false; _DDLogError("Offline validation failed: legacy hash didn't match either."); }
+
+                    else {
+                        isValid = true
+                        /// Rewrite the `licenseStateCacheHash` in the new format [Oct 2026]
+                        ///     Usually we do these kinds of migrations in `Config.m > _loadAndRepair` [Oct 2026]. I think migrating like this is ok for transient data. (App just has to connect to internet once to recover, if this fails)
+                        removeFromConfig("License.licenseStateCacheHash")
+                        setConfig("License.licenseStateCacheHash_AgainstLicenseKey", self.hashLicenseState(cachedLicenseState_Data, againstLicenseKey: licenseKey) as NSObject)
+                        if let deviceUID_V2 { setConfig("License.licenseStateCacheHash_AgainstDeviceUID",  self.hashLicenseState(cachedLicenseState_Data, againstDeviceUID_V2: deviceUID_V2) as NSObject) }
+                        commitConfig()
+                    }
+                }
+            }
+
+            /// Handle offline validation failure
+            if isValid {
+                /// Log success!
+                _DDLogInfo("Offline validation succeeded.\nCached hash: \("<refactor>")\nFresh hash:  \("<refactor>")")
+            }
+            else {
+                /// Delete cache
+                ///     (Because we know it's invalid)
+                deleteLicenseStateFromCache(commitConfig: true) /// `<-` Also see the discussion in here
+
+                /// Return
+                return nil
             }
             
             /// Unarchive
@@ -339,10 +385,10 @@ import CryptoKit
             ///         -> I guess another possible benefit of the nil/type checks is if we change MFLicenseState in the future and we forget to handle that explicitly, then we would just return nil here in some cases instead of returning an invalid object that might crash the app because of unexpected type/nullability
             ///             ... But we should just introduce versioning to handle this properly. More on this in MFCoding.m > "On validation of decoded values"
             guard
-                let cachedDict = cachedDict as? [String: NSObject], /// ([Feb 2025] We're first casting to NSDictionary and then to [String: NSObject], which is then Swift auto-bridged back to NSDictionary. Does that make sense?)
+                let cachedDict = cachedLicenseState as? [String: NSObject], /// ([Feb 2025] We're first casting to NSDictionary and then to [String: NSObject], which is then Swift auto-bridged back to NSDictionary. Does that make sense?)
                 let licenseState = MFLicenseState(plist: cachedDict, requireSecureCoding: true)
             else {
-                DDLogError("GetLicenseState: Initializing MFLicenseState using cached dict failed.")
+                _DDLogError("Initializing MFLicenseState using cached dict failed.")
                 return nil
             }
             
@@ -457,7 +503,7 @@ import CryptoKit
             var responseError: NSError? = nil
             if (serverResponseDict["success"] as? Bool) != true { /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
                 responseError = NSError(domain: MFLicenseErrorDomain,
-                                code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
+                                code: Int(kMFLicenseErrorCode_GumroadServerResponseError),
                                 userInfo: serverResponseDict)
             }
             
@@ -500,7 +546,7 @@ import CryptoKit
         if parsedServerResponse.isValidKey == .valid {
             let isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations /// [Jul 2025] When activating bulk purchases on Gumroad, it still only produces one license key. I think we'd have to multiply the licenseConfig.maxActivations with the number of seats to support this.
             if isSuspiciousActivationCount {
-                parsedServerResponse.error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
+                parsedServerResponse.error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCode_InvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                 parsedServerResponse.isValidKey = .invalid
             }
         }
@@ -530,9 +576,9 @@ import CryptoKit
             self.deleteLicenseStateFromCache(commitConfig: true)
         }
         else if result?.isLicensed == true {
-            let deviceUID = get_mac_address() /// To understand this, also see the other place where we call `get_mac_address()` in this file [Feb 2025]
-            if deviceUID == nil { DDLogWarn("GetLicenseState: Want to cache licenseState from the server, but getting device MAC address failed.") } /// Why are we logging this instead of returning an error? The returned errors are specifically to display feedback to the user on the LicenseSheet about the server's assessment of the licenseKey. Aside from this UI feedback, I think returning errors is overkill.
-            self.storeLicenseStateInCache(result!, licenseKey: key, deviceUID: deviceUID)
+            let deviceUID = getDeviceUID_V2() /// To understand this, also see the other place where we call `getDeviceUID_V2()` in this file [Feb 2025]
+            if deviceUID == nil { _DDLogError("Want to cache licenseState from the server, but getting deviceUID address failed.") } /// Why are we logging this instead of returning an error? The returned errors are specifically to display feedback to the user on the LicenseSheet about the server's assessment of the licenseKey. Aside from this UI feedback, I think returning errors is overkill.
+            self.storeLicenseStateInCache(result!, licenseKey: key, deviceUID_V2: deviceUID)
         }
         else { fatalError() }
         

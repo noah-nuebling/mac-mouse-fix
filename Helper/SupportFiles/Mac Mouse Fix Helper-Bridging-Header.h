@@ -45,12 +45,13 @@
 #import "Device.h"
 #import "ButtonModifiers.h"
 #import "NSString+Additions.h"
-#import "MacAddress.h"
+#import "DeviceUID.h"
 #import "MFCoding.h"
 #import "NSData+Additions.h"
 #import "NSTimer+Additions.h"
 #import "Localization.h"
 #import "Threads.h"
+#import "SecureStorage.h"
 
 #import "DevToggles.h" /// [May 2025] We don't need this in release builds
 

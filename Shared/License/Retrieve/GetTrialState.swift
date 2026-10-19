@@ -14,12 +14,22 @@
     @objc static func get(_ licenseConfig: MFLicenseConfig) -> MFTrialState {
         assertRunLoop(licensingRunLoop())
 
+
+        var daysOfUse = 0
         #if FORCE_EXPIRED
-            let daysOfUse = licenseConfig.trialDays + 1
+            daysOfUse = licenseConfig.trialDays + 1
         #elseif FORCE_NOT_EXPIRED
-            let daysOfUse = 0
+            daysOfUse = 0
         #else
-            let daysOfUse = TrialCounter.daysOfUse
+            /// Note on reading secureStorage separately from `GetLicenseState.get()`: [Oct 2026]
+            ///     Callers call `GetLicenseState.get()` and `GetTrialState.get()` in quick succession, both read `secureStorage` separately.
+            ///     The two reads can disagree if the keychain fails sporadically (there are network `await`s between them).
+            ///     Ideally, we'd read the keychain once and then pass the values through.
+            ///     Currently [Oct 2026] this very unlikely to cause issues, since a failed license read won't invalidate the offline license (`licenseStateCache`), and a failed trial read is covered by `kDaysOfUseFallback`.
+            ///     Also see 'Free days are over' bug notes
+            var secureStorage: NSMutableDictionary? = nil
+            let _: SecureStorageReadError = readSecureStorage(/*callerName*/"GetTrialState.get", &secureStorage)
+            daysOfUse = secureStorage?.object(forCoolKeyPath: "License.trial.daysOfUse") as? Int ?? kDaysOfUseFallback /// No need to check the `SecureStorageReadError`. See `kDaysOfUseFallback`
         #endif
         
         let trialDays = licenseConfig.trialDays

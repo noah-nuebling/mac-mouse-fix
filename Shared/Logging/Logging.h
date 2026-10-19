@@ -46,7 +46,11 @@ Old logLevel logic (When we were still using CocoaLumberjack)
     + (void)flushLog;
 @end
 
-/// Note: I'm not sure logLevels add any utility, but we're already using these everywhere.
+/// TODO: Once we actually collect logs, make everything {public} by default [Oct 2026]
+///     - the app doesn't know anything sensitive except $3 license key,
+///         and local logs aren't more accessible than the users's license email anyways,
+///     - I wouldn't trust that sysdiagnose contains no private info at all even with {private} redactions, so I'll treat them as confidential. [Oct 2026]
+/// Note: The only utility of log levels is that `os_log` persists them differently -> Understand this and simplify API [Oct 2026]
 #define DDLogError(msg...)      ({ if (os_log_type_enabled(OS_LOG_DEFAULT, OS_LOG_TYPE_FAULT))    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_FAULT,   msg); })
 #define DDLogWarn(msg...)       ({ if (os_log_type_enabled(OS_LOG_DEFAULT, OS_LOG_TYPE_ERROR))    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_ERROR,   msg); })
 #define DDLogDebug(msg...)      ({ if (os_log_type_enabled(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG))    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG,   msg); })

@@ -25,7 +25,7 @@ import ReactiveCocoa
     typealias Error = Never
     var producer: ReactiveSwift.SignalProducer<NSDictionary, Never> {
         let currentConfig = Config.shared().config
-        return signal.producer.prefix(value: currentConfig)
+        return signal.producer.prefix(value: currentConfig!)
     }
     
     /// Create signal

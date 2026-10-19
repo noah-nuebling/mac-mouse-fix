@@ -61,9 +61,21 @@ import Cocoa
         
         if isEmpty && isDifferent {
             
-            /// Delete key
-            SecureStorage.delete("License.key")
-            
+            /// Delete the license from secureStorage
+            do {
+                /// Read
+                var dict: NSMutableDictionary? = nil
+                let err = readSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", &dict)
+                if err == kSecureStorageReadError_UnexpectedError { self.isProcessing = false; return } /// Abort on failure. For *activations*, we report this via `kMFLicenseErrorCode_KeychainError` and `displayUserFeedback()`, but for *deactivations* this would require refactor. Should be super rare and not consequential [Oct 2026]
+
+                /// Modify
+                dict?.removeObject(forCoolKeyPath: "License.key")
+
+                /// Write
+                let success = writeSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", dict, err)
+                if !success { self.isProcessing = false; return } /// Abort on failure
+            }
+
             /// Close sheet
             LicenseSheetController.remove()
             
@@ -104,9 +116,9 @@ import Cocoa
             
             /// Ask licenseServer
             ///     Note: (Nov 2024) If the licenseServer responds with a clear "yes"/"no" to the question "is this licenseValid", then the cache will get overriden with the server's response, which I think is desirable? (So we don't keep using old cached values after activating a new license.)
-            let (state, serverError) = await GetLicenseState.licenseStateFromServer(key: key,
-                                                                                    incrementActivationCount: isActivation, /// Increasing the activationCount (aka usageCount) is the main difference between activating and checking a license
-                                                                                    licenseConfig: licenseConfig)
+            var (state, error) = await GetLicenseState.licenseStateFromServer(key: key,
+                                                                              incrementActivationCount: isActivation, /// Increasing the activationCount (aka usageCount) is the main difference between activating and checking a license
+                                                                              licenseConfig: licenseConfig)
             /// Determine success
             /// Notes:
             ///     (The following note is outdated as of Oct 2024 because we're now directly using the lower-level function to talk the licenseServer, instead of using the higher-level function that applies freeCountry overrides and stuff.)
@@ -122,8 +134,27 @@ import Cocoa
                     assert(false)
                 }
                 
-                /// Store
-                SecureStorage.set("License.key", value: key)
+                /// Store licenseKey in secureStorage
+                do {
+                    /// Read
+                    var dict: NSMutableDictionary? = nil
+                    var err = readSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", &dict)
+                    if err == kSecureStorageReadError_UnexpectedError {
+                        err = kSecureStorageReadError_ForceWrite; /// Try to force the write regardless of the read error. Failing to store the user's licenseKey would be worse than overriding anything else in the SecureStorage (just the trial data [Oct 2026])
+                        dict = [:]
+                    }
+
+                    /// Modify
+                    dict?.setObject(key as NSObject, forCoolKeyPath: "License.key")
+
+                    /// Write
+                    let success = writeSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", dict, err)
+                    if !success {
+                        error = NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCode_KeychainError, userInfo: nil) /// [Oct 2026] Overrides the serverError? Don't think that can happen
+                    }
+                }
+
+
             }
             /// Get licenseState override
             ///     Explanation: Even if the server says the license is not valid, there might be special conditions that render the app activated regardless - and we wanna tell the user about this.
@@ -141,7 +172,7 @@ import Cocoa
                 self.displayUserFeedback(isValidLicense: isValidLicense,
                                          licenseTypeInfo: state?.licenseTypeInfo,
                                          licenseTypeInfoOverride: licenseStateOverride?.licenseTypeInfo,
-                                         error: serverError,
+                                         error: error,
                                          key: key,
                                          isActivation: isActivation)
                 
@@ -241,10 +272,10 @@ import Cocoa
         }
         
         /// Load existing key into licenseField
-        var key: String = ""
-        if let k = SecureStorage.get("License.key") as? String {
-            key = k
-        }
+        var dict: NSMutableDictionary? = nil
+        let _: SecureStorageReadError = readSecureStorage(/*callerName*/"LicenseSheetController.viewDidLoad", &dict)
+        let key: String = dict?.object(forCoolKeyPath: "License.key") as? String ?? "" /// Empty string works, not reason to branch on`SecureStorageReadError`, I think [Oct 2026]
+
         licenseField.stringValue = key
         initialKey = key
         

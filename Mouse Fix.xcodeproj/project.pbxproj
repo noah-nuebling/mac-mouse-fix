@@ -70,8 +70,8 @@
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
 		4F41506429255F880040BA7D /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
-		4F428CE62CD3D608006322AB /* MacAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F428CE52CD3D608006322AB /* MacAddress.m */; };
-		4F428CE72CD3D608006322AB /* MacAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F428CE52CD3D608006322AB /* MacAddress.m */; };
+		4F428CE62CD3D608006322AB /* DeviceUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F428CE52CD3D608006322AB /* DeviceUID.m */; };
+		4F428CE72CD3D608006322AB /* DeviceUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F428CE52CD3D608006322AB /* DeviceUID.m */; };
 		4F428D022CD80462006322AB /* MFCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F428D012CD80462006322AB /* MFCoding.m */; };
 		4F428D032CD80462006322AB /* MFCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F428D012CD80462006322AB /* MFCoding.m */; };
 		4F428D082CD8C688006322AB /* MFCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F428D072CD8C688006322AB /* MFCoding.swift */; };
@@ -194,6 +194,8 @@
 		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
 		4FA2ADAC308287A000925D0C /* NSTimer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */; };
 		4FA2ADAD308287A000925D0C /* NSTimer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */; };
+		4FA2AF833083F38C00925D0C /* SecureStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA2AF823083F38900925D0C /* SecureStorage.m */; };
+		4FA2AF843083F38C00925D0C /* SecureStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA2AF823083F38900925D0C /* SecureStorage.m */; };
 		4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
 		4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
@@ -290,8 +292,6 @@
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
-		4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
-		4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
 		4FDA9D512FE96D8D00610BEB /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; };
 		4FDB5F4A2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */; };
 		4FDB5F4B2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */; };
@@ -638,7 +638,7 @@
 		4F12523D2CA9421600A079BD /* UNIXSignals.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNIXSignals.m; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
 		4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fallback_licenseinfo_config.json; sourceTree = "<group>"; };
-		4F143E482B2D1FA500FE4092 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F143E482B2D1FA500FE4092 /* License Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "License Readme.md"; sourceTree = "<group>"; };
 		4F1667C92C6A6717009E4924 /* XCStringsDummyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCStringsDummyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F1667DC2C6A6782009E4924 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F1667DD2C6A6782009E4924 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -714,8 +714,8 @@
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
 		4F4150652927B6A40040BA7D /* AddField_New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddField_New.swift; sourceTree = "<group>"; };
 		4F42304628CE6C1C003A41D3 /* License */ = {isa = PBXFileReference; lastKnownFileType = text; path = License; sourceTree = "<group>"; };
-		4F428CE52CD3D608006322AB /* MacAddress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacAddress.m; sourceTree = "<group>"; };
-		4F428CE82CD3D627006322AB /* MacAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacAddress.h; sourceTree = "<group>"; };
+		4F428CE52CD3D608006322AB /* DeviceUID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceUID.m; sourceTree = "<group>"; };
+		4F428CE82CD3D627006322AB /* DeviceUID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceUID.h; sourceTree = "<group>"; };
 		4F428CFF2CD6690F006322AB /* MFDefer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDefer.h; sourceTree = "<group>"; };
 		4F428D002CD80462006322AB /* MFCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFCoding.h; sourceTree = "<group>"; };
 		4F428D012CD80462006322AB /* MFCoding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFCoding.m; sourceTree = "<group>"; };
@@ -892,6 +892,8 @@
 		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
 		4FA2ADAA308287A000925D0C /* NSTimer+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Additions.h"; sourceTree = "<group>"; };
 		4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Additions.m"; sourceTree = "<group>"; };
+		4FA2AF813083F37E00925D0C /* SecureStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecureStorage.h; sourceTree = "<group>"; };
+		4FA2AF823083F38900925D0C /* SecureStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecureStorage.m; sourceTree = "<group>"; };
 		4FA2F1392C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LicenseSheetController.xcstrings; sourceTree = "<group>"; };
 		4FA2F13A2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Main.xcstrings; sourceTree = "<group>"; };
 		4FA2F13B2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MenuBarItem.xcstrings; sourceTree = "<group>"; };
@@ -1004,7 +1006,6 @@
 		4FD9820D292A9CB000645FE3 /* ReactiveRemaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRemaps.swift; sourceTree = "<group>"; };
 		4FD9820F292AB02D00645FE3 /* ReactiveModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveModifiers.swift; sourceTree = "<group>"; };
 		4FD9A7CE28BA29CB0006DF4B /* default_secureStorage.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_secureStorage.plist; sourceTree = "<group>"; };
-		4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 		4FDB5F482D4F85A900164F97 /* NSCharacterSet+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSCharacterSet+Additions.h"; sourceTree = "<group>"; };
 		4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSCharacterSet+Additions.m"; sourceTree = "<group>"; };
 		4FDB941A2FE743AA001E05CB /* Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tests.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1889,8 +1890,8 @@
 				4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */,
 				4F70ECB5267E810900325A76 /* IOUtility.h */,
 				4F70ECB6267E810900325A76 /* IOUtility.m */,
-				4F428CE82CD3D627006322AB /* MacAddress.h */,
-				4F428CE52CD3D608006322AB /* MacAddress.m */,
+				4F428CE82CD3D627006322AB /* DeviceUID.h */,
+				4F428CE52CD3D608006322AB /* DeviceUID.m */,
 				4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */,
 				4FD66E0C27BBB55200F67559 /* External */,
 			);
@@ -2249,7 +2250,8 @@
 		4FD9A7CF28BA2A650006DF4B /* SecureStorage */ = {
 			isa = PBXGroup;
 			children = (
-				4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */,
+				4FA2AF813083F37E00925D0C /* SecureStorage.h */,
+				4FA2AF823083F38900925D0C /* SecureStorage.m */,
 				4FD9A7CE28BA29CB0006DF4B /* default_secureStorage.plist */,
 			);
 			path = SecureStorage;
@@ -2276,7 +2278,7 @@
 				4FDE759D28B174E700662314 /* TrialCounter.swift */,
 				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
 				4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */,
-				4F143E482B2D1FA500FE4092 /* README.md */,
+				4F143E482B2D1FA500FE4092 /* License Readme.md */,
 			);
 			path = License;
 			sourceTree = "<group>";
@@ -3466,7 +3468,7 @@
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
-				4F428CE72CD3D608006322AB /* MacAddress.m in Sources */,
+				4F428CE72CD3D608006322AB /* DeviceUID.m in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
@@ -3589,7 +3591,6 @@
 				4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
 				4FE1A1BA2C56A50100CE3347 /* Logging.m in Sources */,
-				4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */,
 				4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */,
 				4FA40CF828A0CCCA00499E53 /* TestAccelerationCurve.swift in Sources */,
 				4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */,
@@ -3597,6 +3598,7 @@
 				4F79A83626051E4A00076A7E /* Toast.m in Sources */,
 				4FDE75A928B269AE00662314 /* Randomizer.swift in Sources */,
 				4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */,
+				4FA2AF833083F38C00925D0C /* SecureStorage.m in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
 				4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */,
@@ -3634,7 +3636,7 @@
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */,
-				4F428CE62CD3D608006322AB /* MacAddress.m in Sources */,
+				4F428CE62CD3D608006322AB /* DeviceUID.m in Sources */,
 				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
@@ -3666,12 +3668,12 @@
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
 				4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
 				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,
+				4FA2AF843083F38C00925D0C /* SecureStorage.m in Sources */,
 				4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */,
 				4F0D90732E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
-				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,
 				4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */,

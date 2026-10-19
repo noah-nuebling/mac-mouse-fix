@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Constants : NSObject
 
+/// Errors [Oct 2026]
+
+#define MFErrorDomain @"MFErrorDomain" /// TODO: [Oct 2026] Only use this error domain and gather all the error codes. (Also unify or whatever with mf_genericError, and mferror)
+
 /// Input processing
 
 typedef enum {

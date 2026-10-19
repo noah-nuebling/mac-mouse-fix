@@ -53,7 +53,7 @@
 #import "NSString+Additions.h"
 #import "IBUtility.h"
 #import "Links.h"
-#import "MacAddress.h"
+#import "DeviceUID.h"
 #import "MFCoding.h"
 #import "NSData+Additions.h"
 #import "NSTimer+Additions.h"
@@ -64,5 +64,6 @@
 #import "NSBox+Additions.h"
 #import "Localization.h"
 #import "Threads.h"
+#import "SecureStorage.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

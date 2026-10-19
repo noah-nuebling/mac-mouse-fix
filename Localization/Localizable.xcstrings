@@ -10357,6 +10357,22 @@
         }
       }
     },
+    "license-toast.keychain-error" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gibt ein **Problem mit dem macOS Schlüsselbund**\n\nWenn das Problem weiterhin besteht, schreibe [hier](%@) einen Fehlerbericht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is a **problem with the macOS keychain**\n\nIf the issue persists, write a **Bug Report** [here](%@)."
+          }
+        }
+      }
+    },
     "license-toast.no-internet" : {
       "comment" : "",
       "localizations" : {
