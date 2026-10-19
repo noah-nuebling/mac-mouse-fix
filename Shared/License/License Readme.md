@@ -64,7 +64,6 @@ Everything licensing runs on `IOThread` (mainThread in the mainApp) as of [Sep 2
 
 Greppable tag: (in source code)
     'Free days are over'
-    @improveSecDocs (TODO: Delete these / move them over to 'Free days are over')
 
 History:
     3.0.4 rewrote the licensing system with great care. 
@@ -87,7 +86,7 @@ In [Oct 2026], (for the release after 3.1.0)
             - 'lenient' meaning erring on the side of not locking people out of the app
             - In the case of GetLicenseState, we even accept the offline license, if we can not retrieve a licenseKey at all.
                 - We think this is ok because the offline license is still validated against the deviceUID, 
-                    -> preventing the 'one 30 second crack shared on forum that works forever' which the whole licensing system is designed to prevent. (Obviously you can use open source app without a license but it can't be too easy, probably wrote about this somewhere else when originally writing the licensing system [Oct 2026])
+                    -> preventing the 'one 30 second crack shared on forum that works for everyone forever' which the whole licensing system is designed to 'barely' prevent. (Obviously you can use open source app without a license but it can't be too easy, probably wrote about this somewhere else when originally writing the licensing system [Oct 2026])
                 - To facilitate this, we split the combined offline-license-validation hash into two So we can partially verify against whatever info we have
                     (`License.licenseStateCacheHash` -> `License.licenseStateCacheHash_AgainstLicenseKey` and `License.licenseStateCacheHash_AgainstDeviceUID`)
                     The app currently still reads the old `License.licenseStateCacheHash` and can validate it against the old `deviceUID_V1`, it then automatically migrates config.plist to the new format.

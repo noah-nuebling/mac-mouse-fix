@@ -61,13 +61,14 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             let readError = readSecureStorage(/*callerName*/"GetLicenseState.get", &secureStorage);
 
             /// Get licenseKey from secureStorage
+            ///     We're very lenient and catch keychain errors (See 'Free days are over' bug notes)
             var key: String? = nil
             do {
                 if readError == kSecureStorageReadError_UnexpectedError {
                     key = nil /// Be lenient with weird errors - makes `licenseStateFromCache` not validate the licenseStateCache against the licenseKey at all.
                 }
                 else if readError == kSecureStorageReadError_DoesntExistYet {
-                    key = nil /// Be lenient even for `kSecureStorageReadError_DoesntExistYet`, because we don't even fully trust that it's not spurious, and we can still use the `licenseStateFromCache` data here. (And reasonably validate it / protect against piracy via `deviceUID`) @improveSecDocs [Oct 2026]
+                    key = nil /// Be lenient even for `kSecureStorageReadError_DoesntExistYet`, because we don't even fully trust that it's not spurious, and we can still use the `licenseStateFromCache` data here. (And reasonably validate it / protect against piracy via `deviceUID`) (See 'Free days are over' bug notes) [Oct 2026]
                 }
                 else if readError == kSecureStorageReadError_ReadSuccessful {
                     key = secureStorage?.object(forCoolKeyPath: "License.key") as? String
@@ -94,8 +95,8 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             }
 
 
-            /// 1. Ask cache
-            result = self.licenseStateFromCache(licenseKey: key, /// Passing through nil if there were`SecureStorageReadError` errors (See above @improveSecDocs) [Oct 2026]
+            /// 1. Ask cache (offline license)
+            result = self.licenseStateFromCache(licenseKey: key, /// Passing through nil if there were`SecureStorageReadError` errors - this makes the offline license validation skip validating against the key entirely (See above and 'Free days are over' bug notes)  [Oct 2026]
                                                 enableOfflineValidation: true)
 
 
@@ -180,16 +181,20 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
                                                                                  freshness: kMFValueFreshnessFallback,
                                                                                  licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
 
-    /// Hashing functions for cached license state [Oct 2026]
-    ///     Conceptual: (Offline validation [Oct 2026]) @improveSecDocs
-    ///     Offline validation: We cache the latest `MFLicenseState` in the config.plist, and then use that instead of pinging Gumroad on every launch.
+    /// Hashing functions for validating the offline license (aka `licenseStateCache`) [Oct 2026]
+    ///     Also see:
+    ///         - 'Free days are over' bug notes
+    ///         - Where these hashing functions are used (to validate the offline license)
+    ///     Explanation of offline validation (and how we use the hashes): (Writing this [Oct 2026] - might be duplicate with something older)
+    ///         We cache the latest `MFLicenseState` in the config.plist > `License.licenseStateCache` and then use that instead of pinging Gumroad on every launch.
     ///         To prevent piracy from beingt too easy, we hash the licenseState against some environment variables: (In the abstract sense, not to be confused with Unix envvars)
     ///             1. The user's `licenseKey`
     ///             2. The `deviceUID` of the current computer
-    ///         If the environment changes or the the `MFLicenseState` is tampered with, the hash will change and we don't use the cached `MFLicenseState`. That's what 'offline validation' is currently [Oct 2026]
+    ///         If the environment changes or the `MFLicenseState` is tampered with, the hash will change and we don't use the cached `MFLicenseState`. That's what 'offline license validation' is currently [Oct 2026]
     ///     Why use separate hashing functions for each environment variable? [Oct 2026]
-    ///         We think that the getters could sporadically fail causing random lockdowns of the app @improveSecDocs [Oct 2026] - so we only validate against the environment variables that are currently available
-    ///             That means err on the side of treating the MFLicenseState as valid, without giving up all validation just because one of the environment variables is not available. [Oct 2026] @improveSecDocs
+    ///         We think that the getters for the environment variables could sporadically fail causing random lockdowns of the app (See 'Free days are over' bug notes) [Oct 2026] - so we only validate against the environment variables that are currently available
+    ///             That means err on the side of treating the MFLicenseState as valid, without giving up all validation just because one of the environment variables is not available,
+    ///                 preventing robust, shareable "30 second crack" (See in 'Free days are over' bug notes [Oct 2026]) without ever locking paying users out (hopefully)
 
     private static func hashLicenseState(_ licenseState: Data, againstLicenseKey licenseKey: String) -> Data {
         var hashFunction = SHA256.init() /// SHA256 is totally overkill we just need someee simple hash to prevent tampering and ensure data integrity. It doesn't need to be cryptographically secure at all.
@@ -205,7 +210,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
     }
     private static func legacy_hashLicenseState(_ licenseState: Data, againstLicenseKey licenseKey: String, andDeviceUID_V1 deviceUID: Data?) -> Data {
         /// Formerly `getHashForOfflineCacheValidation`
-        /// Old hash which combines licenseKey and deviceUID (and which could therefore not properly be used if one of them was unavailable @improveSecDocs) [Oct 2026]. See usage site [Oct 2026]
+        /// Old hash which combines licenseKey and deviceUID. See "Why use separate hashing functions for each environment variable" above [Oct 2026]
 
         var hashFunction = SHA256.init()
         hashFunction.update(data: licenseState)
@@ -281,7 +286,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             /// Convert MFDataClass object to plist dict
             let dict = newValue.asPlist(withRequireSecureCoding: true)
             
-            /// Calculate hash
+            /// Calculate hashs
             ///     Note: [Jan 2025] Need to use `.xml` instead of `.binary`. to make the data (and with it the hash) deterministic. Not sure why. We might be relying on an implementation detail here.
             let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: dict, format: .xml, options: 0) }
             guard let dictData else {
@@ -290,7 +295,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
                 return
             }
             let hash_licenseKey = self.hashLicenseState(dictData, againstLicenseKey: licenseKey)
-            let hash_deviceUID  = deviceUID_V2 != nil ? self.hashLicenseState(dictData, againstDeviceUID_V2: deviceUID_V2!) : nil
+            let hash_deviceUID  = deviceUID_V2 == nil ? nil : self.hashLicenseState(dictData, againstDeviceUID_V2: deviceUID_V2!)
 
             /// Store data
             setConfig("License.licenseStateCache",                         dict as NSDictionary)
@@ -344,7 +349,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
                     }
                 }
 
-                /// Fallback -> Validate `cachedLicenseState` against both `licenseKey` and `deviceUID` (Support for legacy `License.licenseStateCacheHash` configKey [Oct 2026]) (@improveSecDocs)
+                /// Fallback -> Validate `cachedLicenseState` against both `licenseKey` and `deviceUID` (Support for legacy `License.licenseStateCacheHash` configKey [Oct 2026]) (See `License.licenseStateCacheHash` in 'Free days are over' bug notes)
                 if !isValid, let licenseKey {
 
                     let deviceUID_V1 = getDeviceUID_V1()

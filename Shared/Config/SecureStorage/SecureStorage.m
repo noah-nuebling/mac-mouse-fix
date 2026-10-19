@@ -19,7 +19,7 @@
             Makes it harder to build the app and I think increases compile times [Oct 2026]
 
     History:
-        - Rewrote SecureStorage.swift -> SecureStorage.m [Oct 2026]
+        - Rewrote SecureStorage.swift -> SecureStorage.m as part of trying to solve 'Free days are over' bug. [Oct 2026]
 
     About `default_secureStorage.plist`: (Old, not sure if stale [Oct 2026])
         In the same folder as this file, there's `default_secureStorage.plist`. At the time of writing, this is unused.
@@ -42,6 +42,7 @@
 
     Also see:
         Great Apple documentation: https://developer.apple.com/documentation/security/keychain_services/keychain_items?language=objc
+        'Free days are over' bug notes
 
     TODO:
         - Implement cleanup function. See Notes in NSDictionary+Additions.m for details. (Old, not sure if stale [Oct 2026])
@@ -72,7 +73,7 @@
 
 #define fail() { \
     if (outErr) { \
-        if (!err) err = [NSError mf_genericError: @"Cocoa returned nil but set no error"]; /** Extra defensive nil checks probably can't happen because it breaks Cocoa contract, but our `readSecureStorage`/`writeSecureStorage` callers would have no way of knowing that something went wrong without it. (Which is exactly the kind of sporadic issue we're trying to debug @improveSecDocs) [Oct 2026] */\
+        if (!err) err = [NSError mf_genericError: @"Cocoa returned nil but set no error"]; /** Extra defensive nil checks probably can't happen because it breaks Cocoa contract, but our `readSecureStorage`/`writeSecureStorage` callers would have no way of knowing that something went wrong without it. (Which is exactly the kind of sporadic issue we're dealing with here. See 'Free days are over' bug notes) [Oct 2026] */\
         *outErr = err; \
     } \
     return nil; \
@@ -184,7 +185,7 @@ bool writeSecureStorage(NSString *callerName, NSMutableDictionary *dict, SecureS
         status = _callSecItemUpdate(data);
         if (status == errSecItemNotFound)                      ///      Still fall back to `SecItemAdd` to let the user force a write regardless of error. Could also maybe avoid some sporadic issues. Should be safe [Oct 2026]
             status = _callSecItemAdd(data);
-    } else if (readError == kSecureStorageReadError_DoesntExistYet) { /// Read failed with `errSecItemNotFound` -> use `SecItemAdd`. If the read failed spuriously, this will fail with `errSecDuplicateItem`, preventing accidental overrides. @improveSecDocs
+    } else if (readError == kSecureStorageReadError_DoesntExistYet) { /// Read failed with `errSecItemNotFound` -> use `SecItemAdd`. If the read failed spuriously, this will fail with `errSecDuplicateItem`, preventing accidental overrides.
         status = _callSecItemAdd(data);
     } else {
         mfrequire(false, @"Called writeSecureStorage with invalid readError. (If readSecureStorage fails with any error other than `errSecItemNotFound`, the caller should treat SecureStorage as temporarily unavailable or whatever and pass `kSecureStorageReadError_ForceWrite` to force a write. [Oct 2026])");

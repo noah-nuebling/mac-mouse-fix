@@ -23,11 +23,11 @@
 ///
 /// `getDeviceUID_V2`: (Aka `IOPlatformUUID`) (Update [Oct 2026])
 ///     Why V2?
-///         We think that `get_mac_address()` has a small chance of contributing to `@improveSecDocs` issues.
+///         We think that `get_mac_address()` has a small chance of contributing to 'Free days are over' bug.
 ///         Opus 5.5. says `IOPlatformUUID` might be more stable, so we're using that now.
 ///
 ///     Why keep V1?
-///         Keeping `getDeviceUID_V1` around for smooth migration without extra internet connections. Could probably delete after a few MMF releases. (See usage in GetLicenseState.swift [Oct 2026]) (@improveSecDocs)
+///         Keeping `getDeviceUID_V1` around for smooth migration without extra internet connections. Could probably delete after a few MMF releases. (See usage in GetLicenseState.swift [Oct 2026]) (See 'Free days are over' bug notes)
 ///
 
 #import "DeviceUID.h"
