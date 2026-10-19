@@ -124,10 +124,10 @@ import Cocoa
             ///     (The following note is outdated as of Oct 2024 because we're now directly using the lower-level function to talk the licenseServer, instead of using the higher-level function that applies freeCountry overrides and stuff.)
             ///     - By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
             ///         The way things are currently set up this leads to weird behaviour when activating a license without internet in freeCountries: If the cache says it's licensed, users will get the no internet error, but if the cache says it's not licensed. Users will get the it's free in your country message. This is because the freeCountry overrides inside activateLicense only take effect if isLicensed is false. This is slightly weird but it's such a small edge case that I don't think it matters. Although it hints that it might be more logical to change the logic for applying the freeCountry overrides.
-            let isValidLicense = state?.isLicensed ?? false
-            
+            var successfullyActivatedLicense = state?.isLicensed ?? false
+
             /// Store new licenseKey
-            if isActivation && isValidLicense {
+            if isActivation && successfullyActivatedLicense {
                 /// Validate
                 if !MFLicenseTypeRequiresValidLicenseKey(state?.licenseTypeInfo) {
                     DDLogError("Error: Will store licenseKey but license has type that doesn't appear to require valid license key. (Doesn't make sense) License state: \(state.map { String(describing: $0) } ?? "<nil>")")
@@ -150,6 +150,7 @@ import Cocoa
                     /// Write
                     let success = writeSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", dict, err)
                     if !success {
+                        successfullyActivatedLicense = false
                         error = NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCode_KeychainError, userInfo: nil) /// [Oct 2026] Overrides the serverError? Don't think that can happen
                     }
                 }
@@ -158,7 +159,7 @@ import Cocoa
             }
             /// Get licenseState override
             ///     Explanation: Even if the server says the license is not valid, there might be special conditions that render the app activated regardless - and we wanna tell the user about this.
-            let licenseStateOverride = isValidLicense ? nil : await GetLicenseState.licenseStateFromOverrides()
+            let licenseStateOverride = successfullyActivatedLicense ? nil : await GetLicenseState.licenseStateFromOverrides()
         
             /// Validate
             if let override = licenseStateOverride {
@@ -169,7 +170,7 @@ import Cocoa
             mfrun(CFRunLoopGetMain()) {
             
                 /// Display user feedback
-                self.displayUserFeedback(isValidLicense: isValidLicense,
+                self.displayUserFeedback(successfullyActivatedLicense: successfullyActivatedLicense,
                                          licenseTypeInfo: state?.licenseTypeInfo,
                                          licenseTypeInfoOverride: licenseStateOverride?.licenseTypeInfo,
                                          error: error,
@@ -185,15 +186,15 @@ import Cocoa
     
     /// Helper for activateLicense
     
-    fileprivate func displayUserFeedback(isValidLicense: Bool, licenseTypeInfo: MFLicenseTypeInfo?, licenseTypeInfoOverride: MFLicenseTypeInfo?, error: NSError?, key: String, isActivation: Bool) {
+    fileprivate func displayUserFeedback(successfullyActivatedLicense: Bool, licenseTypeInfo: MFLicenseTypeInfo?, licenseTypeInfoOverride: MFLicenseTypeInfo?, error: NSError?, key: String, isActivation: Bool) {
 
         /// Validate
-        if (isValidLicense) {
+        if (successfullyActivatedLicense) {
             assert(licenseTypeInfo != nil)
         }
         
-        if isValidLicense /** server says the license is valid */ {
-            
+        if successfullyActivatedLicense /** server says the license is valid and license has been stored in keychain successfully [Oct 2026] */ {
+
             /// Dismiss
             LicenseSheetController.remove()
             

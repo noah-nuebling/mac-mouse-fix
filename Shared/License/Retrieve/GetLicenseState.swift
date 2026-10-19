@@ -29,7 +29,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
 
         assertRunLoop(licensingRunLoop())
 
-        let result = self.licenseStateFromCache(licenseKey: "", enableOfflineValidation: false) ??
+        let result = self.licenseStateFromCache(licenseKey: nil, enableOfflineValidation: false) ??
                      self.licenseStateFromFallback
         
         _DDLogInfo("get_Preliminary(): \(result)\ncaller: \(_callingFunc)")
@@ -286,7 +286,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             /// Convert MFDataClass object to plist dict
             let dict = newValue.asPlist(withRequireSecureCoding: true)
             
-            /// Calculate hashs
+            /// Calculate hashes
             ///     Note: [Jan 2025] Need to use `.xml` instead of `.binary`. to make the data (and with it the hash) deterministic. Not sure why. We might be relying on an implementation detail here.
             let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: dict, format: .xml, options: 0) }
             guard let dictData else {
@@ -312,7 +312,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             /// Get cached MFLicenseState archive
             guard let cachedLicenseState = config("License.licenseStateCache") as? NSDictionary
             else {
-                _DDLogError("MFLicenseState dict could not be extracted from cache")
+                _DDLogError("MFLicenseState dict could not be extracted from cache") /// DDLogError - this is normal for unlicensed users so a little bad to persist, but what if it's involved in 'Free days are over' bugs. Not sure how to decide about these things. [Oct 2026]
                 return nil
             }
 
@@ -356,7 +356,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
 
                     if  config("License.licenseStateCacheHash") as? Data !=
                         self.legacy_hashLicenseState(cachedLicenseState_Data, againstLicenseKey: licenseKey, andDeviceUID_V1: deviceUID_V1)
-                    { isValid = false; _DDLogError("Offline validation failed: legacy hash didn't match either."); }
+                    { isValid = false; _DDLogError("Offline validation failed: Tried fallback but the legacy hash didn't match either."); }
 
                     else {
                         isValid = true
@@ -373,7 +373,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             /// Handle offline validation failure
             if isValid {
                 /// Log success!
-                _DDLogInfo("Offline validation succeeded.\nCached hash: \("<refactor>")\nFresh hash:  \("<refactor>")")
+                _DDLogInfo("Offline validation succeeded.\nlicenseKey: \(licenseKey.map { String(describing: $0) } ?? "<nil>"), enableOfflineValidation: \(enableOfflineValidation), cachedLicenseState: \(cachedLicenseState)")
             }
             else {
                 /// Delete cache

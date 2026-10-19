@@ -82,19 +82,20 @@ In [Oct 2026], (for the release after 3.1.0)
         - The deviceUID
     
     -> So in [Oct 2026], we
-        - Rewrote `SecureStorage.swift` to `SecureStorage.m` and made all callers be 'lenient' in case of keyChain errors, 
+        1. Rewrote `SecureStorage.swift` to `SecureStorage.m` and made all callers be 'lenient' in case of keyChain errors, 
             - 'lenient' meaning erring on the side of not locking people out of the app
             - In the case of GetLicenseState, we even accept the offline license, if we can not retrieve a licenseKey at all.
                 - We think this is ok because the offline license is still validated against the deviceUID, 
                     -> preventing the 'one 30 second crack shared on forum that works for everyone forever' which the whole licensing system is designed to 'barely' prevent. (Obviously you can use open source app without a license but it can't be too easy, probably wrote about this somewhere else when originally writing the licensing system [Oct 2026])
+                    -> Another Opus 5.5 notes it's a little easier crack since you could have a script that generates the config.plist for your machine that works without licenseKey and it wouldn't break even when the app updates. Before, such a script would've had to write to keychain which requires disabling AMFI. Not sure if Opus is thinking clearly (was maxEffort, which makes them a little retarded [Oct 2026]). I think it should be fine. 
                 - To facilitate this, we split the combined offline-license-validation hash into two So we can partially verify against whatever info we have
                     (`License.licenseStateCacheHash` -> `License.licenseStateCacheHash_AgainstLicenseKey` and `License.licenseStateCacheHash_AgainstDeviceUID`)
                     The app currently still reads the old `License.licenseStateCacheHash` and can validate it against the old `deviceUID_V1`, it then automatically migrates config.plist to the new format.
                         -> The migration avoids another internet connection for people who are already offline-licensed 
                             -> this might be worth it for Chinese users who'd have to use a VPN to re-activate and stff
                             -> After a few MMF releases it should be ok to delete the migration code (`License.licenseStateCacheHash` and `deviceUID_V1`)
-        - Changed `deviceUID_V1` (MAC address) -> `deviceUID_V2` ("IOPlatformUUID") since Opus 5.5 said it might be more stable
-        - Added some better debug logs, in case In case there are still errors after 3.1.0
+        2. Changed `deviceUID_V1` (MAC address) -> `deviceUID_V2` ("IOPlatformUUID") since Opus 5.5 said it might be more stable
+        3. Added some better debug logs, in case In case there are still errors after 3.1.0
             - Relevant logs contain 'secureStorage' OR 'GetLicenseState' OR 'TrialCounter'
             - We use `DDLogError` to always persist some important-seeming errors 
                 (Though we currently don't have a good way to gather logs from users. [Oct 2026]. Have plans with `runningDebugMode` stuff)
