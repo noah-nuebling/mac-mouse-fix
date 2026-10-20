@@ -137,7 +137,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
 
         _timerMachPort = (void *)CFAutorelease(CFMachPortCreateWithPort(kCFAllocatorDefault, _mkTimer, mkTimerCallback, &(CFMachPortContext){
             .info = (__bridge void *)self,
-            .retain = NULL, .release = NULL, /// Don't need to own this since we destroy this stuff in -dealloc [Oct 2026]
+            .retain = NULL, .release = NULL, /// Doesn't need to own `self`.`self` destroys this stuff in `-dealloc` [Oct 2026]
         }, /*shouldFreeInfo*/NULL));
         CFRunLoopSourceRef timerSource = (void *)CFAutorelease(CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _timerMachPort, /*order*/0));
         _mfrequire(timerSource, "Wrapping _mkTimer in a CFRunLoopSourceRef failed");
@@ -164,7 +164,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
 
         if (lastFrame <= self->_lastLastFrame + tolerance) { /// [Oct 2026] Last frame being equal rarely happens but causes division by zero in the animators. Have never seen wakeups in quick succession within `tolerance`.
             _DDLogDebug("Woke up twice lastFrame: %f, _lastLastFrame: %f",
-                machTimeToSeconds(now - lastFrame) * 1e3, machTimeToSeconds(now - self->_lastLastFrame) * 1e3);
+                1e3*machTimeToSeconds(now - lastFrame), 1e3*machTimeToSeconds(now - self->_lastLastFrame));
         }
         else {
 

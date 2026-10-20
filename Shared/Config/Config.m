@@ -587,7 +587,7 @@ static void _loadAndRepair(void) {
                     
                     currentVersion = 24;
                 }
-                /// [Oct 2026] added `License.licenseStateCacheHash_AgainstLicenseKey` and `License.licenseStateCacheHash_AgainstDeviceUID` and removed `License.licenseStateCacheHash`
+                /// [Oct 2026], (For the release after 3.1.0) added `License.licenseStateCacheHash_AgainstLicenseKey` and `License.licenseStateCacheHash_AgainstDeviceUID` and removed `License.licenseStateCacheHash`
                 ///     but it doesn't need migration here or a new configVersion
                 else {
 

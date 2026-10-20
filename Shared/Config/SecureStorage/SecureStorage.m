@@ -16,7 +16,7 @@
         Good: The keychain is synced to all the users devices
         Good: Isn't automatically deleted on uninstall by apps like AppCleaner by FreeMacSoft. This makes it a little more annoying to reset the trial period.
         Bad: Special entitlements on the mainApp and Helper is required to let both access the same keychain item.
-            Makes it harder to build the app and I think increases compile times [Oct 2026]
+            Makes it harder to build the app and I think increases iteration times [Oct 2026]
 
     History:
         - Rewrote SecureStorage.swift -> SecureStorage.m as part of trying to solve 'Free days are over' bug. [Oct 2026]
@@ -41,8 +41,8 @@
             - No. config.plist fills the same role.
 
     Also see:
-        Great Apple documentation: https://developer.apple.com/documentation/security/keychain_services/keychain_items?language=objc
-        'Free days are over' bug notes
+        - Great Apple documentation: https://developer.apple.com/documentation/security/keychain_services/keychain_items?language=objc
+        - 'Free days are over' bug notes
 
     TODO:
         - Implement cleanup function. See Notes in NSDictionary+Additions.m for details. (Old, not sure if stale [Oct 2026])

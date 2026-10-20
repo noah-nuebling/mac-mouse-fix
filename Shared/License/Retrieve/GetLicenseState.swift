@@ -286,7 +286,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             /// Convert MFDataClass object to plist dict
             let dict = newValue.asPlist(withRequireSecureCoding: true)
             
-            /// Calculate hashes
+            /// Serialize the licenseState (offline license) for hashing
             ///     Note: [Jan 2025] Need to use `.xml` instead of `.binary`. to make the data (and with it the hash) deterministic. Not sure why. We might be relying on an implementation detail here.
             let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: dict, format: .xml, options: 0) }
             guard let dictData else {
@@ -294,13 +294,11 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
                 assert(false);
                 return
             }
-            let hash_licenseKey = self.hashLicenseState(dictData, againstLicenseKey: licenseKey)
-            let hash_deviceUID  = deviceUID_V2 == nil ? nil : self.hashLicenseState(dictData, againstDeviceUID_V2: deviceUID_V2!)
 
-            /// Store data
+            /// Store (& hash)
             setConfig("License.licenseStateCache",                         dict as NSDictionary)
-            setConfig("License.licenseStateCacheHash_AgainstLicenseKey",   hash_licenseKey as NSData)
-            setConfig("License.licenseStateCacheHash_AgainstDeviceUID",    hash_deviceUID as NSData?)
+            setConfig("License.licenseStateCacheHash_AgainstLicenseKey",   self.hashLicenseState(dictData, againstLicenseKey: licenseKey) as NSData)
+            if let deviceUID_V2 { setConfig("License.licenseStateCacheHash_AgainstDeviceUID", self.hashLicenseState(dictData, againstDeviceUID_V2: deviceUID_V2) as NSData) }
             commitConfig()
     }
     
@@ -362,6 +360,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
                         isValid = true
                         /// Rewrite the `licenseStateCacheHash` in the new format [Oct 2026]
                         ///     Usually we do these kinds of migrations in `Config.m > _loadAndRepair` [Oct 2026]. I think migrating like this is ok for transient data. (App just has to connect to internet once to recover, if this fails)
+                        ///     More on this in 'Free days are over' bug notes [Oct 2026]
                         removeFromConfig("License.licenseStateCacheHash")
                         setConfig("License.licenseStateCacheHash_AgainstLicenseKey", self.hashLicenseState(cachedLicenseState_Data, againstLicenseKey: licenseKey) as NSObject)
                         if let deviceUID_V2 { setConfig("License.licenseStateCacheHash_AgainstDeviceUID",  self.hashLicenseState(cachedLicenseState_Data, againstDeviceUID_V2: deviceUID_V2) as NSObject) }
@@ -528,7 +527,8 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             ///         That's because if we set the value to`.invalid` we consider the app *definitively*unlicensed and then lock it down immediately (in case the free days have been used up), which makes for a really annoying user experience if there's a false positive on `.invalid` due to an internal server error or something.
             ///         If instead, we have a false positive on `.unsure` then we just fall back to the cached value for whether the app is licensed or not, which should make for a much less disruptive user experience.
             ///         Actually, as I'm working on this, (Oct 9 2024) I got a [GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/1136) from a user saying they regularly have their app locked down and they have to re-enter their license. (I think I also saw reports like this before.) Hopefully that stuff is fixed now.
-            
+            ///         Update: [Oct 2026] Also see 'Free days are over' bug notes. (We mostly fixed these 2024 issues in 3.0.4 but there were still some reports which we hope to have addressed now [Oct 2026])
+
             let serverSuccess: Bool? = serverResponseDict["success"] as? Bool
             var isValidKey: LicenseValidityFromServer
             if      (serverSuccess == true)     { isValidKey = .valid }

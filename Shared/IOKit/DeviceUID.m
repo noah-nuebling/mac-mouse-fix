@@ -11,15 +11,15 @@
 /// Retrieves a deviceUID - this can be used to **uniquely identify the hardware** we're running on
 ///
 /// `getDeviceUID_V1` (Formerly `get_mac_address()`)
-///     This file retrieves the MAC (Media Access Control) address for the current device
-///         This code is copied from these Apple docs:
+///     This function retrieves the MAC (Media Access Control) address for the current device
+///         Code is copied from these Apple docs:
 ///             https://developer.apple.com/documentation/appstorereceipts/validating_receipts_on_the_device#//apple_ref/doc/uid/TP40010573-CH1-SW14
 ///
 ///         The Apple docs suggest that getting the MAC address in this fashion is the proper way to get a unique device id on macOS, whereas on iOS the proper way is using`UIDevice.currentDevice.identifierForVendor`.
 ///     PRIVACY:
 ///         Apple has anonymized Device IDs on iOS using `UIDevice.currentDevice.identifierForVendor`. Unfortunately this isn't available on macOS.
 ///         A macAddress is a *globally unique hardware identifier* – do not store or send without thinking thoroughly about the privacy implications.
-///         Currently (Nov 2024) we only use the macAddress as an input to an SHA-256 hash for our offline license validation (so it's not sent and cannot be retrieved from any data we store, because SHA-256 hashes are irreversible)
+///         Currently [Nov 2024] we only use the macAddress as an input to an SHA-256 hash for our offline license validation (so it's not sent and cannot be retrieved from any data we store, because SHA-256 hashes are irreversible)
 ///
 /// `getDeviceUID_V2`: (Aka `IOPlatformUUID`) (Update [Oct 2026])
 ///     Why V2?
@@ -27,7 +27,9 @@
 ///         Opus 5.5. says `IOPlatformUUID` might be more stable, so we're using that now.
 ///
 ///     Why keep V1?
-///         Keeping `getDeviceUID_V1` around for smooth migration without extra internet connections. Could probably delete after a few MMF releases. (See usage in GetLicenseState.swift [Oct 2026]) (See 'Free days are over' bug notes)
+///         Keeping `getDeviceUID_V1` around for smooth migration without extra internet connections. Could probably delete after a few MMF releases. (See usage in GetLicenseState.swift [Oct 2026]) (Also see 'Free days are over' bug notes)
+///
+///    The PRIVACY note under `getDeviceUID_V1` is still relevant! [Oct 2026]
 ///
 
 #import "DeviceUID.h"
