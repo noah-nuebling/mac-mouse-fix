@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ekim 2026**
 
+- 🇨🇦&nbsp;Simon - "Fixed my zoom speed issue with the CadMouse Pro."
 - 🇺🇸&nbsp;William&nbsp;Raggio
 - 🇫🇷&nbsp;Philippe&nbsp;Kalmykow
 - 🇺🇸&nbsp;Randall&nbsp;(Triple)&nbsp;Li - "It's been like 5 years or more where I could not use my trackball to scroll. Worth every penny."
