@@ -258,9 +258,9 @@ import ReactiveCocoa
         
         var modString = ""
         
-//        if flags.contains(.function) {
-//            modString.append("fn")
-//        }
+        if flags.contains(.function) {
+            modString.append("🌐︎")
+        }
         if flags.contains(.control) {
             modString.append("⌃")
         }
