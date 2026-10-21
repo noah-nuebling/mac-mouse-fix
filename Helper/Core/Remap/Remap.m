@@ -8,6 +8,7 @@
 //
 
 #import "Remap.h"
+#import "LogitechButtonDiverter.h"
 #import "ModificationUtility.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerGenerator.h"
@@ -70,6 +71,8 @@ static NSDictionary *_remaps;
     
     /// This method is private. It's used by `reload` and `enableAddMode`.
     
+    [LogitechButtonDiverter updateRemaps:remapsDict];
+
     /// Compare
     BOOL isEqual = [_remaps isEqualToDictionary:remapsDict];
     

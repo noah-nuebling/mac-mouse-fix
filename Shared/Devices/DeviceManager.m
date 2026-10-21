@@ -32,6 +32,7 @@
 
 #import "Threads.h"
 
+#import "LogitechButtonDiverter.h"
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
@@ -103,9 +104,13 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (void)load_Manual {
     setupDeviceMatchingAndRemovalCallbacks();
     _attachedDevices = [NSMutableArray array];
+    // This loop starts only after Config.load_Manual finishes. Reading policy
+    // synchronously here would see an uninitialized Config and silently opt out.
+    [LogitechButtonDiverter scheduleStartOnRunLoop:IOThread.runLoop];
 }
 
 + (void)deconfigureDevices {
+    [LogitechButtonDiverter restoreNativeBehavior];
 
     /// Meant to be called when the app closes
 
