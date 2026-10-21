@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A534DE100000000000000001 /* MissionControlPreviews.m in Sources */ = {isa = PBXBuildFile; fileRef = A534DE100000000000000002 /* MissionControlPreviews.m */; };
 		4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
@@ -608,6 +609,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A534DE100000000000000003 /* MissionControlPreviews.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MissionControlPreviews.h; sourceTree = "<group>"; };
+		A534DE100000000000000002 /* MissionControlPreviews.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MissionControlPreviews.m; sourceTree = "<group>"; };
 		4F0028012C58303B00CDB9D0 /* LocalizationScreenshotTakerTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = LocalizationScreenshotTakerTestPlan.xctestplan; path = LocalizationScreenshotTaker/LocalizationScreenshotTakerTestPlan.xctestplan; sourceTree = SOURCE_ROOT; };
 		4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputCoordinator.swift; sourceTree = "<group>"; };
 		4F02C7202899453200ED0AA8 /* OutputCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputCoordinator.h; sourceTree = "<group>"; };
@@ -2717,6 +2720,8 @@
 			children = (
 				4FF6663A25F2C93A00689B77 /* Actions.h */,
 				4FF6663B25F2C93A00689B77 /* Actions.m */,
+				A534DE100000000000000003 /* MissionControlPreviews.h */,
+				A534DE100000000000000002 /* MissionControlPreviews.m */,
 				4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */,
 				4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */,
 				4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */,
@@ -3632,6 +3637,7 @@
 				4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
+				A534DE100000000000000001 /* MissionControlPreviews.m in Sources */,
 				4FA625582DA97CCE004F46DA /* MFDataClass.m in Sources */,
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,

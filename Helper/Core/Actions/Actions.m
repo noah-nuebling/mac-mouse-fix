@@ -22,6 +22,7 @@
 #import "CGSHotKeys.h"
 */
 #import "SymbolicHotKeys.h"
+#import "MissionControlPreviews.h"
 #import <Carbon/Carbon.h>
 
 #import "Threads.h"
@@ -46,6 +47,14 @@
             MFSymbolicHotkey shk = ((NSNumber *)actionDict[kMFActionDictKeyGenericVariant]).intValue;
             [SymbolicHotKeys post:(CGSSymbolicHotKey)shk];
             
+        } else if ([actionType isEqualToString:kMFActionDictTypeMissionControlPreviews]) {
+
+            mfrun(CFRunLoopGetMain(), ^{
+                static MissionControlPreviews *previews;
+                if (!previews) previews = [MissionControlPreviews new];
+                [previews toggleWithAction:^{ [SymbolicHotKeys post:(CGSSymbolicHotKey)kMFSHMissionControl]; }];
+            });
+
         } else if ([actionType isEqualToString:kMFActionDictTypeNavigationSwipe]) {
             
             /// Universal Back and Forward
