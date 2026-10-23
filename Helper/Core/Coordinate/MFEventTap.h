@@ -20,12 +20,13 @@
     typedef int64_t MFEventType;
         #define kMFEventType_StopListening              ((MFEventType)0)
 
-        #define kMFEventType_Modifier                   ((MFEventType)1 << 1)
-        #define kMFEventType_Keystroke                  ((MFEventType)1 << 2)
+        #define kMFEventType_KeyboardModifier           ((MFEventType)1 << 1)
+        #define kMFEventType_KeyPress                   ((MFEventType)1 << 2)
 
-        #define kMFEventType_TrackingSensor             ((MFEventType)1 << 3)
+        #define kMFEventType_Sensor                     ((MFEventType)1 << 3)
         #define kMFEventType_ScrollWheel                ((MFEventType)1 << 4)
-        #define kMFEventType_Experiment                 ((MFEventType)1 << 5) /// [Oct 2026] Experimenting with other CGEventTypes is a little more difficult due to this abstraction
+
+        #define kMFEventType_Experiment                 ((MFEventType)1 << 5) /// [Oct 2026] Experimenting with other CGEventTypes is a little more difficult due to the MFEventType abstraction, but can still be done
 
         #define kMFEventType_Button(buttonIndex)        ((MFEventType)1 << ((buttonIndex) + _kMFEventType_ButtonShift))
         #define _kMFEventType_ButtonShift 32

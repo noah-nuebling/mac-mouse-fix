@@ -27,7 +27,7 @@
 
     DDLogInfo("Enabling keyCaptureMode");
 
-    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Keystroke callback: keyCaptureModeCallback context: NULL];
+    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: keyCaptureModeCallback context: NULL];
     [MFEventTap enable: true forListener: kListenerID];
 }
 

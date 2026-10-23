@@ -50,7 +50,7 @@
         assertRunLoop(IOThread.runLoop);
         if (!_listeners) _listeners = [NSMutableDictionary new];
         _listeners[listenerID] = !events ? nil : configure([_MFEventTapListener new], it->_events = events; it->_callback = callback; it->_context = context, it->_enabled = false);
-        updateCGTaps(); /// Do need to call `updateCGTaps()` in case the user is disabling the tap which is currently running
+        updateCGTaps(); /// Do need to call `updateCGTaps()`, in case we're disabling the listener through this call.
     }
     + (bool) isEnabledForListener: (NSString *)listenerID {
         assertRunLoop(IOThread.runLoop);
@@ -68,10 +68,10 @@
     typedef enum {
         kCGTapID_Null = 0,
 
-        kCGTapID_Modifier = 1,
-        kCGTapID_Keystroke,
+        kCGTapID_KeyboardModifier = 1,
+        kCGTapID_KeyPress,
 
-        kCGTapID_TrackingSensor,
+        kCGTapID_Sensor,
         kCGTapID_ScrollWheel,
         kCGTapID_Experiment,
 
@@ -85,9 +85,9 @@
     static NSString *CGTapIDDescription(CGTapID tapID) {
         switch (tapID) {
             case kCGTapID_Null:                     return @"Null";
-            case kCGTapID_Modifier:                 return @"Modifier";
-            case kCGTapID_Keystroke:                return @"Keystroke";
-            case kCGTapID_TrackingSensor:           return @"TrackingSensor";
+            case kCGTapID_KeyboardModifier:         return @"KeyboardModifier";
+            case kCGTapID_KeyPress:                 return @"KeyPress";
+            case kCGTapID_Sensor:                   return @"Sensor";
             case kCGTapID_ScrollWheel:              return @"ScrollWheel";
             case kCGTapID_Experiment:               return @"Experiment";
             case kCGTapID_PrimaryMouseButton:       return @"PrimaryMouseButton";
@@ -115,12 +115,12 @@
     static int _orderedEventTaps_Count = 0;
 
     static CGTapData _cgTapData[] = {
-        [kCGTapID_Null] = {}, /// This entry allows for null-coalescing [Oct 2026]
+        [kCGTapID_Null] = {}, /// This entry enables null-coalescing [Oct 2026]
 
-        [kCGTapID_Modifier] = { .options = kCGEventTapOptionListenOnly, .mask = CGEventMaskBit(kCGEventFlagsChanged), },
-        [kCGTapID_Keystroke] = { .options = kCGEventTapOptionDefault, .mask = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NX_SYSDEFINED), },
+        [kCGTapID_KeyboardModifier] = { .options = kCGEventTapOptionListenOnly, .mask = CGEventMaskBit(kCGEventFlagsChanged), },
+        [kCGTapID_KeyPress] = { .options = kCGEventTapOptionDefault, .mask = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NX_SYSDEFINED), },
 
-        [kCGTapID_TrackingSensor] = {
+        [kCGTapID_Sensor] = {
             .options = kCGEventTapOptionDefault,                ///< Older comment from ModifiedDrag.m [Oct 2026]: Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages. Edit: In other places, I've had issues using listenOnly because it messes up the timestamps (I'm on macOS 12.4. right now). -> Trying default again.
                                                                 ///< Older comment from PointerFreeze.m: [Oct 2026]: Using a listenOnly tap would be more appropriate but they sometimes behave weirdly
             .mask = CGEventMaskBit(kCGEventMouseMoved) |        ///< Older comment from ModifiedDrag.m [Oct 2026]: kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
@@ -152,10 +152,10 @@
                     allTypes |= listener->_events;
 
             /// Figure out which underlying `CGEventTaps` we need based on combined `MFEventTypes`
-            _cgTapData[kCGTapID_Modifier].enabled             = allTypes & kMFEventType_Modifier;
-            _cgTapData[kCGTapID_Keystroke].enabled            = allTypes & kMFEventType_Keystroke;
+            _cgTapData[kCGTapID_KeyboardModifier].enabled     = allTypes & kMFEventType_KeyboardModifier;
+            _cgTapData[kCGTapID_KeyPress].enabled             = allTypes & kMFEventType_KeyPress;
 
-            _cgTapData[kCGTapID_TrackingSensor].enabled       = allTypes & kMFEventType_TrackingSensor;
+            _cgTapData[kCGTapID_Sensor].enabled               = allTypes & kMFEventType_Sensor;
             _cgTapData[kCGTapID_ScrollWheel].enabled          = allTypes & kMFEventType_ScrollWheel;
             _cgTapData[kCGTapID_Experiment].enabled           = allTypes & kMFEventType_Experiment;
 
@@ -204,10 +204,10 @@
         /// Find `MFEventType` for this cgEvent
         MFEventType mfEventType = 0;
         {
-            if      (tapID == kCGTapID_Modifier)               mfEventType = kMFEventType_Modifier;
-            else if (tapID == kCGTapID_Keystroke)              mfEventType = kMFEventType_Keystroke;
+            if      (tapID == kCGTapID_KeyboardModifier)       mfEventType = kMFEventType_KeyboardModifier;
+            else if (tapID == kCGTapID_KeyPress)               mfEventType = kMFEventType_KeyPress;
 
-            else if (tapID == kCGTapID_TrackingSensor)         mfEventType = kMFEventType_TrackingSensor;
+            else if (tapID == kCGTapID_Sensor)                 mfEventType = kMFEventType_Sensor;
             else if (tapID == kCGTapID_ScrollWheel)            mfEventType = kMFEventType_ScrollWheel;
             else if (tapID == kCGTapID_Experiment)             mfEventType = kMFEventType_Experiment;
 

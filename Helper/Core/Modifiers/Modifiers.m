@@ -64,7 +64,7 @@ static NSMutableDictionary *_modifiers;
         _modifiers = [NSMutableDictionary dictionary];
         
         /// Create keyboard modifier event tap
-        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Modifier callback: kbModsChanged context: NULL];
+        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyboardModifier callback: kbModsChanged context: NULL];
 
         #if 0
         /// Enable/Disable eventTap based on Remap.remaps

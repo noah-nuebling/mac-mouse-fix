@@ -62,7 +62,7 @@ static int64_t _lastEventDelta;
 
         _cgsConnection = CGSMainConnectionID();
         _puppetCursorView = [[NSImageView alloc] init];
-        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_TrackingSensor callback: mouseMovedCallback context: NULL];
+        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Sensor callback: mouseMovedCallback context: NULL];
     }
 }
 

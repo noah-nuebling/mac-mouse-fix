@@ -136,7 +136,7 @@ static ModifiedDragState _drag;
     _drag.usageThreshold = 7; // 20, 5
     
     /// Create mouse moved callback
-    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_TrackingSensor callback: eventTapCallback context: NULL];
+    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Sensor callback: eventTapCallback context: NULL];
 }
 
 /// Interface - start
