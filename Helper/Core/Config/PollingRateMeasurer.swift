@@ -8,6 +8,9 @@
 //
 
 /// Too lazy to explain my thinking behind this in detail but it works. Basically round the time deltas between events to 1/8 of a ms because that's the fastest polling rate on the market. Then create histogram and choose most often occuring bucket. Convert to polling rate in Hz and round to increments of 5, because that/s the most fine grained description of polling rate Hz I could find.
+///     Update: [Oct 2026] Based on recent experiences:
+///         - New algorithm idea: Have a sliding window of like 3 or some more events, calc the average ms/event in each window, pick the fastest time you find in any window (because slowly moving mouse should decrease event frequency)
+///         - Use IOHIDEvent timestamps, not CGEventTimestamps or whatever we used here -> More accurate in my experience (I think with Dock Swipes)
 ///
 /// This is horrible code.
 ///     - Should/ve not written this in Swift. Made it so much harder to deal with C APIs.
@@ -38,18 +41,18 @@ fileprivate let _periodMax = 50.0 /// Max ms between events that we could still 
     
     /// Interface
     
-//    @objc func stopMeasuring() {
-//
-//    }
-    
+    //@objc func stopMeasuring() {
+    //
+    //}
+
     @objc func measure(onDevice device: Device, numberOfSamples nSamples: Int, completionCallback: @escaping (Double, Int) -> (), progressCallback: @escaping (Double, Double, Int) -> ()) {
         /// Measures the polling rate on `device` by intercepting `nSamples` events from the device and applying a heuristic algorithm I made up.
         /// It will call `progressCallback` with values between 0.0 and 1.0 as more samples come in as its first arg. Second 2 args are like `completionCallback`
         /// Once measurement is completed, it will call `completionCallback` with the `pollingInterval` and the `pollingRate`. `pollingInterval` is given in ms and rounded to 1/8 of a ms. `pollingRate` is given in Hz and rounded to increments of 5.
         
         /// Debug
-//        Unmanaged.passRetained(self)
-        
+        /Unmanaged.passRetained(self)
+
         /// Store args
         _device = device
         _nSamples = nSamples
@@ -105,8 +108,8 @@ func eventTapCallback(_ proxy: OpaquePointer, _ type: CGEventType, _ event: CGEv
     }
     
     /// Main Logic
-//    let hidEvent = CGEventGetHIDEvent(event)
-//    let sender = HIDEventGetSendingDevice(hidEvent)?.takeUnretainedValue()
+    //let hidEvent = CGEventGetHIDEvent(event)
+    //let sender = HIDEventGetSendingDevice(hidEvent)?.takeUnretainedValue()
     let sender = CGEventGetSendingDevice(event)?.takeUnretainedValue();
     guard let sender = sender else { return Unmanaged.passUnretained(event) }
     let senderDeviceID = IOHIDDeviceGetProperty(sender, kIOHIDLocationIDKey as CFString) as! NSNumber /// Not sure if this is good way of comparing devices.
