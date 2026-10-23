@@ -25,7 +25,7 @@ fileprivate let _periodMax = 50.0 /// Max ms between events that we could still 
 @objc class PollingRateMeasurer: NSObject {
     
     /// State
-    var _lastMeasurementTime: UInt64 = 0
+    var _lastMeasurementTime: CFTimeInterval = 0
     var _periodHistogram: [Int] = []
     var _measurementCount = 0
     
@@ -115,9 +115,8 @@ func eventTapCallback(_ proxy: OpaquePointer, _ type: CGEventType, _ event: CGEv
     let senderDeviceID = IOHIDDeviceGetProperty(sender, kIOHIDLocationIDKey as CFString) as! NSNumber /// Not sure if this is good way of comparing devices.
     let targetDeviceID = IOHIDDeviceGetProperty(selfff._device!.iohidDevice, kIOHIDLocationIDKey as CFString) as! NSNumber
     if !senderDeviceID.isEqual(to: targetDeviceID) { return Unmanaged.passUnretained(event) }
-    let time = event.timestamp
-    let delta: CFTimeInterval = Double(time - selfff._lastMeasurementTime)/Double(NSEC_PER_SEC)
-    /// ^ Discussion: normally, CGEvent timestamp is a `mach_absolute_time()` timestamp, and we use CGEventGetTimeStampInSeconds() or related functions to convert to seconds. But here, the CGEvent timestampts are already in nanoseconds! No idea why.
+    let time = CGEventGetTimestampInSeconds(event);
+    let delta: CFTimeInterval = Double(time - selfff._lastMeasurementTime)
     selfff._lastMeasurementTime = time
     let period = round(delta*1000*8)/8
     if 0 < period && period <= _periodMax {

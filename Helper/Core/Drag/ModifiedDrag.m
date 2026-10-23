@@ -21,9 +21,9 @@
                 Looks like, under load, CGEventTapEnable() in freezePointer() blocks long time and stalls all evenProcessing and the call to `CGWarpMouseCursorPosition()`. (Observed ~70 ms, using Instruments Processor Trace)
                     -> Hypothesis: WindowServer continues processing and sending us events while we wait for it, not having sent `CGWarpMouseCursorPosition()`, yet.
             Plan2:
-                Writing a `CommonEventTap` abstraction (coined that name right here [Oct 2026] that multiplexes to multiple clients from a single CGEventTap would avoid this this problem
+                Writing a `MFEventTap` abstraction (coined that name right here [Oct 2026] that multiplexes to multiple clients from a single CGEventTap would avoid this this problem
                     -> I had plans doing that for other reasons, so now might be a good time @afterNoGCDTodo
-                        Another note about `CommonEventTap` idea: [Oct 2026, macOS 27, M4 MBA] In `claude --resume 361c7ab2-a2f2-48cb-9d54-7b7bf7fbc804` Claude skipped CGEvent serialization for raw data communication with WindowServer.
+                        Another note about `MFEventTap` idea: [Oct 2026, macOS 27, M4 MBA] In `claude --resume 361c7ab2-a2f2-48cb-9d54-7b7bf7fbc804` Claude skipped CGEvent serialization for raw data communication with WindowServer.
                             CPU usage of passing through mouse wiggles of 1000 Hz mouse went from 9% -> 4%. Required around 180 lines microlib of .defs and C helpers (Just for the tap, we didn't parse the eventData).
                             Dataformat could break in future. Not sure if worth it. (WindowServer at ~45% and AppleUserHIDDrivers at ~15%, so all three together went from ~70% to ~65%.)
                             Could maybe send Apple Feedback about this. (Claude in that session can explain what is inefficient)
@@ -67,6 +67,8 @@
 #import "Threads.h"
 #import "MathObjc.h"
 
+#import "MFEventTap.h"
+
 @implementation CoalescableEvent @end
 @implementation CoalescableEvent_Delta @end
 @implementation CoalescableEvent_Deactivation @end
@@ -81,16 +83,11 @@
 ///             - "Gaussian Blur + Contrast" trick to simulate surface tension could be interesting. See: https://www.reddit.com/r/iOSProgramming/comments/1l2xxx5/bringing_emoji_reactions_to_life_a_creative_take/
 ///     TODO: Rename this to just `Drag`
 
+#define kListenerID @"ModifiedDrag"
+
 /// Vars
 
 static ModifiedDragState _drag;
-
-//static CGEventTapProxy _tapProxy;
-
-//+ (CGEventTapProxy)tapProxy {
-//    return _tapProxy;
-//}
-
 
 /// Derived props
 
@@ -118,8 +115,7 @@ static ModifiedDragState _drag;
         originOffset: (%f, %f)\n\
         usageAxis: %u\n\
         phase: %d\n",
-                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback
-                  ];
+                  [MFEventTap descriptionForListener: kListenerID], drag.usageThreshold, drag.type, drag.activationState, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback];
     } @catch (NSException *exception) {
         DDLogInfo("Exception while generating string description of ModifiedDragState: %@", exception);
     }
@@ -140,23 +136,7 @@ static ModifiedDragState _drag;
     _drag.usageThreshold = 7; // 20, 5
     
     /// Create mouse moved callback
-    if (!_drag.eventTap) {
-
-        CGEventMask eventMask = (CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved) | /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
-                                   CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged)); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
-        CFMachPortRef eventTap = [
-            ModificationUtility
-            createEventTapWithLocation: kCGHIDEventTap
-            mask: eventMask
-            option:/*kCGEventTapOptionListenOnly*/ kCGEventTapOptionDefault
-                        /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages. Edit: In other places, I've had issues using listenOnly because it messes up the timestamps (I'm on macOS 12.4. right now). -> Trying default again.
-            placement: kCGHeadInsertEventTap
-            callback: eventTapCallBack
-            runLoop: IOThread.runLoop
-        ];
-
-        _drag.eventTap = eventTap;
-    }
+    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_TrackingSensor callback: eventTapCallback context: NULL];
 }
 
 /// Interface - start
@@ -230,30 +210,16 @@ static void initDragState(void) {
     _drag.lastVBLTimeThatProcessedCoalescableEvents = 0;
 
     [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to `_drag`. So this is not super pretty/semantic
-    
-    CGEventTapEnable(_drag.eventTap, true);
+
+    [MFEventTap enable: true forListener: kListenerID];
     DDLogDebug("Enabled drag eventTap");
 }
 
-static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
+static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
 
     assertRunLoop(IOThread.runLoop);
 
-    /// Store proxy
-    //_tapProxy = proxy;
-
-    /// Catch special events
-    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
-        
-        DDLogDebug("ModifiedDrag eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
-        
-        if (type == kCGEventTapDisabledByTimeout) {
-            //assert(false); /// Not sure this ever times out
-            CGEventTapEnable(_drag.eventTap, true);
-        }
-        
-        return event;
-    }
+    CGEventRef event = *eventPtr;
 
     /// Debug
     if (runningDebugMode()) {
@@ -269,7 +235,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
             CGEventGetLocation(event).x,
             CGEventGetLocation(event).y,
             1e3*(ts - tsLast),
-            1e3*machTimeToSeconds(mach_absolute_time() - CGEventGetTimestamp(event))
+            1e3*(CACurrentMediaTime() - CGEventGetTimestampInSeconds(event, kMFEventTapLocation))
         );
         tsLast = ts;
 
@@ -297,9 +263,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         ///         This handles race condition where `_drag.eventTap` is disabled right after eventTapCallBack() is called
         ///         We implemented the same idea in PointerFreeze.
         ///         Actually, the check for kMFModifiedInputActivationStateNone below (Update: [Sep 2026] Now in `processPendingCoalescableEvents`) has the same effect, but I think but this makes it clearer?
-        if (!CGEventTapIsEnabled(_drag.eventTap)) {
-            return event;
-        }
+        if (![MFEventTap isEnabledForListener: kListenerID]) return;
 
         /// Get the display (For processing coalescable events once per frame) [Oct 2026]
         if (!_drag.displayID) _drag.displayID = [[NSScreen mainScreen] displayID];
@@ -331,7 +295,6 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     /// - Update [Sep 2026]: Comments above are from before 'No more dispatch queues' refactor. Not totally sure they still apply (didn't really read them)
 
     CGEventSetType(event, kCGEventMouseMoved);
-    return event;
 }
 
 static void processPendingCoalescableEventsOncePerFrame(void) {
@@ -559,7 +522,7 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
     _drag.activationState = kMFModifiedInputActivationStateNone;
     
     /// Disable eventTap
-    CGEventTapEnable(_drag.eventTap, false);
+    [MFEventTap enable: false forListener: kListenerID];
     
     /// Debug
     DDLogDebug("modifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);

@@ -19,14 +19,13 @@
 #import <AppKit/NSEvent.h>
 #import <Carbon/Carbon.h>
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "MFEventTap.h"
 
 #pragma mark - State
 
 double devToggles_C   = 0.85;
 int    devToggles_Lo  = 160;
 int    devToggles_Hi  = 6;
-
-CFMachPortRef _tap = NULL;
 
 #pragma mark - Event listener
 
@@ -35,18 +34,11 @@ CFMachPortRef _tap = NULL;
 
     @implementation NSObject (DevToggles_OnLoad)
         + (void) load {
-            CGEventMask observedEvents = /*kCGEventMaskForAllEvents*/CGEventMaskBit(kCGEventKeyDown);
-            _tap = [ModificationUtility createEventTapWithLocation:kCGHIDEventTap
-                                                              mask:observedEvents
-                                                            option:kCGEventTapOptionDefault
-                                                         placement:kCGHeadInsertEventTap
-                                                          callback:eventTapCallback
-                                                           runLoop:CFRunLoopGetMain()];
-            CGEventTapEnable(_tap, true);
-                                                    
+            #define kListenerID @"DevToggles"
+            [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Keystroke callback: eventTapCallback context: NULL];
+            [MFEventTap enable: true forListener: kListenerID];
         }
-
-        static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+        void eventTapCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
             
             #define evmatch(event, _type, vkc, modflags) (                                      \
                 ((_type)    == type)                                                            && \
@@ -57,12 +49,8 @@ CFMachPortRef _tap = NULL;
 
             #define log(args...) DDLogDebug("DevToggles.m: " args);
  
-            if (type == kCGEventTapDisabledByTimeout)
-                CGEventTapEnable(_tap, true);
-            if (type == kCGEventTapDisabledByUserInput)
-                log("Disabled by user input");
- 
-            CGEventRef result = event;
+            CGEventRef event = *eventPtr;
+            CGEventType type = CGEventGetType(event);
 
             if ((1)) {
                 
@@ -93,11 +81,9 @@ CFMachPortRef _tap = NULL;
                 if (is_anything) {
                     [ScrollConfig devToggles_deleteCache];
                     log("C: %.2f Lo: %d, Hi: %d", devToggles_C, devToggles_Lo, devToggles_Hi);
-                    result = NULL;
+                    *eventPtr = NULL;
                }
             }
-            
-            return result;
             
             #undef evmatch
             #undef flg

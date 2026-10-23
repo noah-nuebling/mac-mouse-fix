@@ -96,7 +96,6 @@
     /// Testing & Debug
     ///
     
-    
     //    [GlobalDefaults applyDoubleClickThreshold];
     //    PointerConfig.customTableBasedAccelCurve;
     //    CFMachPortRef testTap = [ModificationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];

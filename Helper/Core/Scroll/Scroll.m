@@ -32,6 +32,7 @@
 @import IOKit;
 #import "MFHIDEventImports.h"
 #import "IOUtility.h"
+#import "MFEventTap.h"
 
 ///
 /// There are issues where scrolling stops working intermittently or after a restart [Apr 8 2025]
@@ -41,9 +42,6 @@
 @implementation Scroll
 
 #pragma mark - Variables - static
-
-static CFMachPortRef _eventTap;
-static CGEventSourceRef _eventSource;
 
 static TouchAnimator *_animator;
 
@@ -65,29 +63,22 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
 
 static MFReadWriteTracker _readWriteTracker;
 
+#define kListenerID @"Scroll"
+
 #pragma mark - Public functions
+
 
 + (void) load_Manual {
 
     readsAndWritesState(&_readWriteTracker); /// [Sep 2026] Probably unnecessary
 
-    /// Create AXUIElement for getting app under mouse pointer
-    //_systemWideAXUIElement = AXUIElementCreateSystemWide();
-    /// Create Event source
-    if (_eventSource == NULL) {
-        _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-    }
-    
+    #if 0
+        /// Create AXUIElement for getting app under mouse pointer
+        _systemWideAXUIElement = AXUIElementCreateSystemWide();
+    #endif
+
     /// Create/enable scrollwheel input callback
-    if (_eventTap == NULL) {
-        CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-        DDLogDebug("Scroll.m: _eventTap: %@", _eventTap);
-        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(IOThread.runLoop, runLoopSource, kCFRunLoopCommonModes);
-        CFRelease(runLoopSource);
-        CGEventTapEnable(_eventTap, false); // Not sure if this does anything
-    }
+    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_ScrollWheel callback: eventTapCallback context: NULL];
     
     /// Create animator
     _animator = [[TouchAnimator alloc] initWithPhaseShift: kVBLPhase_DefaultForEventSending runLoop: IOThread.runLoop name: @"ScrollAnimator"];
@@ -119,10 +110,9 @@ static MFReadWriteTracker _readWriteTracker;
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
-    DDLogDebug("Scroll.m: startReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
+    DDLogDebug("Scroll.m: startReceiving. isReceiving: %d", [MFEventTap isEnabledForListener: kListenerID]);
 
-    if (!CGEventTapIsEnabled(_eventTap))
-        CGEventTapEnable(_eventTap, true);
+    [MFEventTap enable: true forListener: kListenerID];
 }
 
 + (void)stopReceiving {
@@ -134,16 +124,15 @@ static MFReadWriteTracker _readWriteTracker;
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
-    DDLogDebug("Scroll.m: stopReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
+    DDLogDebug("Scroll.m: stopReceiving. isReceiving: %d", [MFEventTap isEnabledForListener: kListenerID]);
 
-    if (CGEventTapIsEnabled(_eventTap))
-        CGEventTapEnable(_eventTap, false);
+    [MFEventTap enable: false forListener: kListenerID];
 }
 
 + (BOOL)isReceiving {
-    /// At the time of writing we just need this for debugging. Should'nt ever need it for something else I think.
+    /// At the time of writing we just need this for debugging. Shouldn't ever need it for something else I think.
     ///     [Sep 2026] Not adding `readsState()` / `assertRunLoop` since this is just for debugging
-    return CGEventTapIsEnabled(_eventTap);
+    return [MFEventTap isEnabledForListener: kListenerID];
 }
 
 #pragma mark - Event tap
@@ -172,27 +161,15 @@ static MFReadWriteTracker _readWriteTracker;
 
 #pragma clang diagnostic pop
 
-static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
+static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
+
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
+    CGEventRef event = *eventPtr;
+
     /// Debug
-    
     //DDLogDebug("Scroll.m: SCROOOL EVENT – %@", CGScrollWheelEventDescription(event));
-
-    /// Handle eventTapDisabled messages
-    
-    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
-
-        DDLogDebug("Scroll.m: eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
-        
-        if (type == kCGEventTapDisabledByTimeout) {
-            CGEventTapEnable(_eventTap, true);
-        }
-        
-        return event;
-    }
 
     /// Return non-scrollwheel events unaltered
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
@@ -204,26 +181,27 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if (isPixelBased != 0
         || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
         || drawingTabletID != 0 /// Untested
-        || isDiagonal) {
-        
-        return event;
+        || isDiagonal)
+    {
+        return;
     }
     
     /// Filter out scroll events by wacom tablet
     if (CGEvent_IsWacomEvent(event))
-        return event;
+        return;
     
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
     ///     @afterNoGCDTodo We found that the HIDEvent's timestamps are much more accurate.
-    CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event);
-    
+    CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event, kMFEventTapLocation);
+
     /// Do the actual work
     ///     We used to do this on a separate dispatch queue before the 'No more dispatch queues' refactor. Deleted the comments about why [Oct 2026]
     allowNestedReadOrWrite()
     heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
 
-    return NULL;
+    /// Block original event
+    *eventPtr = NULL;
 }
 
 #pragma mark - Main event processing
@@ -295,10 +273,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     ///
     ///     @note We check the `_modifications.effectMod` before updating `_modifications`. Not totally sure this makes sense?
     
-    MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:_scrollConfig.u_invertDirection horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
-    
-    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTS direction:scrollDirection config:_scrollConfig];
-    
+    MFDirection scrollDirection = [ScrollUtility directionForInputAxis: inputAxis inputDelta: scrollDelta invertSetting: _scrollConfig.u_invertDirection horizontalModifier: (_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
+
+    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt: tickTS direction: scrollDirection config: _scrollConfig];
+
     ///
     /// Update stuff
     ///     on the first scrollTick
@@ -321,8 +299,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         ///             - This code comes from MMF 2 iirc. We originally commented this out for MMF 3.0.0, but re-activated it for 3.0.3.
         ///                 -> We commented it out since we thought we didn't need it since there are no app-specific settings anymore in MMF 3. However, I overlooked the display-link-updating stuff, which makes it so this is still needed under MMF 3.
         ///             - Having this state stored inside of ScrollUtility instead of a variable defined in Scroll.m is pretty weird, and might have contributed to us commenting it out for MMF 3 even though it was still used.
-        [ScrollUtility updateMouseDidMoveWithEvent:event];
-        
+        [ScrollUtility updateMouseDidMoveWithEvent: event];
+
         /// Update application Overrides
         if ((NO)) { /// Unused in MMF 3
             if (!ScrollUtility.mouseDidMove) {
@@ -383,8 +361,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     _lastScrollAnalysisResultTimeStamp = CACurrentMediaTime();
     
     /// Debug
-    DDLogDebug("Scroll.m: ScrollAnalysisResult: %@", [ScrollAnalyzer scrollAnalysisResultDescription:scrollAnalysisResult]);
-    
+    DDLogDebug("Scroll.m: firstConsecutive: %d, ScrollAnalysisResult: %@", firstConsecutive, [ScrollAnalyzer scrollAnalysisResultDescription: scrollAnalysisResult]);
+
     /// Make scrollDelta positive, now that we have scrollDirection stored
     scrollDelta = llabs(scrollDelta);
     
@@ -1067,8 +1045,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         }
         
         /// Post event
-        
-        CGEventPost(kCGSessionEventTap, event);
+
+        [MFEventTap postCGEvent: event];
         CFRelease(event);
         
     } else if (outputType == kMFScrollOutputTypeLineScroll) {
@@ -1122,7 +1100,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         DDLogDebug("Scroll.m: Posting lineScroll event – %@", CGScrollWheelEventDescription(event));
         
         /// Send
-        CGEventPost(kCGSessionEventTap, event);
+        [MFEventTap postCGEvent: event];
         
         /// Release
         CFRelease(event);
@@ -1262,12 +1240,11 @@ static BOOL _appSwitcherIsOpen = NO;
 void sendKeyEvent(CGKeyCode keyCode, CGEventFlags flags, bool keyDown) {
     mfassert(false); /// Unused [Oct 2026]
 
-    CGEventTapLocation tapLoc = kCGSessionEventTap;
-    
     CGEventRef event = CGEventCreateKeyboardEvent(NULL, keyCode, keyDown);
     CGEventSetFlags(event, flags);
     
-    CGEventPost(tapLoc, event);
+    [MFEventTap postCGEvent: event];
+
     CFRelease(event);
 }
 

@@ -18,8 +18,11 @@
 #import "ModificationUtility.h"
 #import <os/signpost.h>
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "MFEventTap.h"
 
 @implementation Modifiers
+
+#define kListenerID ((MFEventListenerID *)@"Modifiers")
 
 #pragma mark - Notes
 
@@ -61,26 +64,24 @@ static NSMutableDictionary *_modifiers;
         _modifiers = [NSMutableDictionary dictionary];
         
         /// Create keyboard modifier event tap
-        CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-        _kbModEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, kbModsChanged, NULL);
-        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _kbModEventTap, 0);
-        CFRunLoopAddSource(IOThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
-        CFRelease(runLoopSource);
-        
-//        /// Enable/Disable eventTap based on Remap.remaps
-//        CGEventTapEnable(_kbModEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
-//        toggleModifierListening(Remap.remaps);
-//
-//        /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
-//        /// TODO:! Test if this works
-//        [NSNotificationCenter.defaultCenter addObserverForName:kMFNotifCenterNotificationNameRemapsChanged
-//                                                        object:nil
-//                                                         queue:nil
-//                                                    usingBlock:^(NSNotification * _Nonnull note) {
-//
-//            DDLogDebug("Received notification that remaps have changed");
-//            toggleModifierListening(Remap.remaps);
-//        }];
+        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Modifier callback: kbModsChanged context: NULL];
+
+        #if 0
+        /// Enable/Disable eventTap based on Remap.remaps
+        CGEventTapEnable(_kbModEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
+        toggleModifierListening(Remap.remaps);
+
+        /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
+        /// TODO:! Test if this works
+        [NSNotificationCenter.defaultCenter addObserverForName:kMFNotifCenterNotificationNameRemapsChanged
+                                                        object:nil
+                                                         queue:nil
+                                                    usingBlock:^(NSNotification * _Nonnull note) {
+
+            DDLogDebug("Received notification that remaps have changed");
+            toggleModifierListening(Remap.remaps);
+        }];
+        #endif
     }
 }
 
@@ -88,9 +89,9 @@ static NSMutableDictionary *_modifiers;
 
 static MFModifierPriority _kbModPriority;
 static MFModifierPriority _btnModPriority;
-static CFMachPortRef _kbModEventTap;
+//static CFMachPortRef _kbModEventTap; /// Replace with MFEventTap. Still referenced in older comments [Oct 2026]
 
-+ (void)setKeyboardModifierPriority:(MFModifierPriority)priority {
++ (void) setKeyboardModifierPriority:(MFModifierPriority)priority {
     
     /// [Sep 2024] - I just saw a crash report in console on CGEventTapEnable(). Here's the interesting part of the stack trace:
     ///     ```
@@ -190,7 +191,7 @@ static CFMachPortRef _kbModEventTap;
     /// Update: [Sep 2026] Didn't read the above but might be fixed after 'No more dispatch queues' refactor
 
     _kbModPriority = priority;
-    CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
+    [MFEventTap enable: _kbModPriority == kMFModifierPriorityActiveListen forListener: kListenerID];
 }
 
 + (void)setButtonModifierPriority:(MFModifierPriority)priority {
@@ -215,17 +216,7 @@ static CFMachPortRef _kbModEventTap;
 
 #pragma mark Handle modifier change
 
-CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
-    
-    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
-        
-        if (type == kCGEventTapDisabledByTimeout) {
-            CGEventTapEnable(_kbModEventTap, true);
-        }
-        
-        return event;
-    }
+void kbModsChanged(void *context, MFEventType eventType, CGEventRef *eventPtr) {
     
     /// Get mouse
     
@@ -237,8 +228,8 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     /// -> Idea: This might be because we're using a passive listener eventTap?
     ///     ... Update: No I think CGEventCreate(NULL) uses the `CombinedSessionState` which only updates after the event has passed through the window server, not when we intercept it (I think.) ... Update 2: This comment doesn't make sense – getting flags from CGEventCreate(NULL) is up-to-date, but getting flags from the intercepted `event` doesn't work.
     
-    NSUInteger newFlags = flagsFromEvent(event);
-    
+    NSUInteger newFlags = flagsFromEvent(*eventPtr);
+
     /// Check Change
     NSNumber *newFlagsNS = @(newFlags);
     NSNumber *oldFlags = _modifiers[kMFModificationPreconditionKeyKeyboard];
@@ -254,12 +245,9 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         }
         
         /// Notify
-//        [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
+        //[ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
         [SwitchMaster.shared modifiersChangedWithModifiers:_modifiers];
     }
-    
-    /// Return
-    return event;
 }
 
 + (void)buttonModsChangedTo:(ButtonModifierState)newModifiers {

@@ -56,7 +56,7 @@ CGEventRef eventTapCallback(CGEventTapProxy  proxy, CGEventType type, CGEventRef
                 CGEventPost(kCGSessionEventTap, eventCopy);
                 CFRelease(eventCopy);
             }];
-            
+
             return NULL;
         }
         

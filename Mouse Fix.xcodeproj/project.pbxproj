@@ -346,6 +346,8 @@
 		4FF1DC7B2CC1130700A839AB /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF1DC792CC1130700A839AB /* License.m */; };
 		4FF27DD72B95B108004744E1 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF27DD62B95B108004744E1 /* Shorthands.swift */; };
 		4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF27DD62B95B108004744E1 /* Shorthands.swift */; };
+		4FF5011F308B99A60080000B /* MFEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5011E308B99A50080000B /* MFEventTap.m */; };
+		4FF504B4308C19570080000B /* universalControlTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5049F308C194F0080000B /* universalControlTest.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -1071,6 +1073,9 @@
 		4FF0BD5D266ADFE5003935EA /* MathObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathObjc.h; sourceTree = "<group>"; };
 		4FF1DC792CC1130700A839AB /* License.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = License.m; sourceTree = "<group>"; };
 		4FF27DD62B95B108004744E1 /* Shorthands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shorthands.swift; sourceTree = "<group>"; };
+		4FF5011D308B99740080000B /* MFEventTap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFEventTap.h; sourceTree = "<group>"; };
+		4FF5011E308B99A50080000B /* MFEventTap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFEventTap.m; sourceTree = "<group>"; };
+		4FF5049F308C194F0080000B /* universalControlTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = universalControlTest.m; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
@@ -2240,6 +2245,8 @@
 		4FD9820C292A9BEE00645FE3 /* Coordinate */ = {
 			isa = PBXGroup;
 			children = (
+				4FF5011D308B99740080000B /* MFEventTap.h */,
+				4FF5011E308B99A50080000B /* MFEventTap.m */,
 				4F17D2E0292A635200EB07CA /* SwitchMaster.swift */,
 				4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */,
 				4F02C7202899453200ED0AA8 /* OutputCoordinator.h */,
@@ -2262,6 +2269,7 @@
 			children = (
 				4FDB94342FE75270001E05CB /* main.m */,
 				4FDB94332FE75270001E05CB /* FixDockSwipes.m */,
+				4FF5049F308C194F0080000B /* universalControlTest.m */,
 				4F1873D7307C234F00209BB2 /* vblphase.m */,
 				4F8605A22FE81F5D00CC1147 /* Other */,
 			);
@@ -2405,14 +2413,22 @@
 			path = AddMode;
 			sourceTree = "<group>";
 		};
+		4FF50108308B99660080000B /* Threads */ = {
+			isa = PBXGroup;
+			children = (
+				4F2507893064712D007B537E /* Threads.h */,
+				4F25079130693260007B537E /* Threads.m */,
+				4F25078D30658CF2007B537E /* Threads.swift */,
+			);
+			path = Threads;
+			sourceTree = "<group>";
+		};
 		4FF6652B25F2C7B000689B77 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				4FF6653325F2C7B000689B77 /* Constants.h */,
 				4FCEDC91292D765600E7DA2A /* Constants.swift */,
-				4F2507893064712D007B537E /* Threads.h */,
-				4F25079130693260007B537E /* Threads.m */,
-				4F25078D30658CF2007B537E /* Threads.swift */,
+				4FF50108308B99660080000B /* Threads */,
 				4FFBC56E2667DC76001D389B /* Logging */,
 				4FE78C412C5027A800C54103 /* DisableSwiftBridging */,
 				4F44FF012606D6FD00926A5E /* MessagePort */,
@@ -3641,6 +3657,7 @@
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4F67978C2DCFB76100516167 /* DevToggles.m in Sources */,
+				4FF5011F308B99A60080000B /* MFEventTap.m in Sources */,
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
@@ -3802,6 +3819,7 @@
 				4FDB943B2FE75270001E05CB /* FixDockSwipes.m in Sources */,
 				4F1873D8307C234F00209BB2 /* vblphase.m in Sources */,
 				4FDB943C2FE75270001E05CB /* main.m in Sources */,
+				4FF504B4308C19570080000B /* universalControlTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
