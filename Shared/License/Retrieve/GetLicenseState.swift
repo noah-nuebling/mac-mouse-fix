@@ -185,13 +185,15 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
     ///     Also see:
     ///         - 'Free days are over' bug notes
     ///         - Where these hashing functions are used (to validate the offline license)
-    ///     Explanation of offline validation (and how we use the hashes): (Writing this [Oct 2026] - might be duplicate with something older)
+    ///     `Explanation of MFLicenseState offline validation (and how we use the hashes)`:
     ///         We cache the latest `MFLicenseState` in the config.plist > `License.licenseStateCache` and then use that instead of pinging Gumroad on every launch.
-    ///         To prevent piracy from beingt too easy, we hash the licenseState against some environment variables: (In the abstract sense, not to be confused with Unix envvars)
+    ///         To prevent piracy from being too easy, we hash the licenseState against some environment variables:
     ///             1. The user's `licenseKey`
     ///             2. The `deviceUID` of the current computer
-    ///         If the environment changes or the `MFLicenseState` is tampered with, the hash will change and we don't use the cached `MFLicenseState`. That's what 'offline license validation' is currently [Oct 2026]
-    ///     Why use separate hashing functions for each environment variable? [Oct 2026]
+    ///         If the environment changes or the `MFLicenseState` is tampered with, the hash will change and we don't use the cached `MFLicenseState`. [Oct 2026]
+    ///         Also see:
+    ///             `Explanation of our offline validation strategy` (Older more comprehensive explanation, also focused on `MFLicenseConfig`, not just  `MFLicenseState` [Oct 2026])
+    ///     `Why use separate hashing functions for each environment variable?` [Oct 2026]
     ///         We think that the getters for the environment variables could sporadically fail causing random lockdowns of the app (See 'Free days are over' bug notes) [Oct 2026] - so we only validate against the environment variables that are currently available
     ///             That means err on the side of treating the MFLicenseState as valid, without giving up all validation just because one of the environment variables is not available,
     ///                 preventing robust, shareable "30 second crack" (See in 'Free days are over' bug notes [Oct 2026]) without ever locking paying users out (hopefully)
@@ -210,7 +212,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
     }
     private static func legacy_hashLicenseState(_ licenseState: Data, againstLicenseKey licenseKey: String, andDeviceUID_V1 deviceUID: Data?) -> Data {
         /// Formerly `getHashForOfflineCacheValidation`
-        /// Old hash which combines licenseKey and deviceUID. See "Why use separate hashing functions for each environment variable" above [Oct 2026]
+        /// Old hash which combines licenseKey and deviceUID. See `Why use separate hashing functions for each environment variable?` above [Oct 2026]
 
         var hashFunction = SHA256.init()
         hashFunction.update(data: licenseState)
