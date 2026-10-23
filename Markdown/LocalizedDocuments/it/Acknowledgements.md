@@ -94,6 +94,7 @@ Queste persone hanno speso molto più del prezzo standard e mi hanno offerto un 
 
 **ottobre 2026**
 
+- 🇺🇸&nbsp;Nathaniel&nbsp;White
 - 🇺🇸&nbsp;Michael&nbsp;Tran - "Sometimes the best way to solve your own problems is to help someone else. - Uncle Iroh"
 - 🇨🇦&nbsp;Simon - "Fixed my zoom speed issue with the CadMouse Pro."
 - 🇺🇸&nbsp;William&nbsp;Raggio

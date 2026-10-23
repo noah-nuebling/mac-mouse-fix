@@ -95,6 +95,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 10 2026**
 
+- 🇺🇸&nbsp;Nathaniel&nbsp;White
 - 🇺🇸&nbsp;Michael&nbsp;Tran - "Sometimes the best way to solve your own problems is to help someone else. - Uncle Iroh"
 - 🇨🇦&nbsp;Simon - "Fixed my zoom speed issue with the CadMouse Pro."
 - 🇺🇸&nbsp;William&nbsp;Raggio
