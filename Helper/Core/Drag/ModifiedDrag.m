@@ -8,9 +8,6 @@
 // --------------------------------------------------------------------------
 //
 
-/// @noGCDCleanup
-///     Add `readsState()` / `readsAndWritesState()` checks to `ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m`
-
 /**
     TODO: Address `[debugWarpDelta]` bug: [Oct 11 2026]  @afterNoGCDTodo
         - Problem: After PointerFreeze's CGWarpMouseCursorPosition(), the eventTaps in ModifiedDrag.m and PointerFreeze.m
