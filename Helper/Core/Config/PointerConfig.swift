@@ -41,6 +41,7 @@ class PointerConfig: NSObject {
 
     /// Reload from config dict
     @objc static func reload() {
+        assertRunLoop(configRunLoop()); /// [Oct 2026] Not having any more `assertRunLoop` checks below, many are plain ivars with no getter, only client is PointerSpeed.m, currently unused anyways, not worth refactoring rn.
         // TODO: Delete caches (if you use any)
     }
     
@@ -93,7 +94,7 @@ class PointerConfig: NSObject {
     // MARK: Sensitivity
     
     @objc static var CPIMultiplier: Double {
-        
+
         let sens = 1.0
         /// ^ It's probably better to leave this at 1.0 and use our custom speed curve to control sensitivity instead. This is a factor on the mouse speed before it's passed to the acceleration algorithm. So the whole acceleration curve changes when you change this.  However that makes it perfect for compensating CPI.
         
@@ -118,10 +119,10 @@ class PointerConfig: NSObject {
     @objc static var tableBasedCurve: [[Double]] {
         
         /// Debug - test mouse speed
-//        let testCurve = TestAccelerationCurve(thresholdSpeed: 3.0, firstSens: 0.0, secondSens: 2.0)
-//        let testTrace = testCurve.traceSpeed(startX: 0.0, endX: 20, nOfSamples: 1000, bias: 2.0)
-//        return testTrace
-        
+        //let testCurve = TestAccelerationCurve(thresholdSpeed: 3.0, firstSens: 0.0, secondSens: 2.0)
+        //let testTrace = testCurve.traceSpeed(startX: 0.0, endX: 20, nOfSamples: 1000, bias: 2.0)
+        //return testTrace
+
         /// Declare curve params
         let v0: Double = 0.1
         let s0: Double
@@ -131,10 +132,10 @@ class PointerConfig: NSObject {
         
         /// Create userParams -> curveParams maps
         /// Simple settings maps
-//        let lowSensMap = CombinedLinearCurve(yValues:    [1.25,  1.625,  2.0,    3.0,    4.0]) /// These are too fast
-//        let highSensMap = CombinedLinearCurve(yValues:   [13.0,  18.0,   22.0,   30.0,   70.0])
-//        let curveMap = CombinedLinearCurve(yValues:      [4.0,   3.0,    2.75,   2.58,    1.75])
-        
+        //let lowSensMap = CombinedLinearCurve(yValues:    [1.25,  1.625,  2.0,    3.0,    4.0]) /// These are too fast
+        //let highSensMap = CombinedLinearCurve(yValues:   [13.0,  18.0,   22.0,   30.0,   70.0])
+        //let curveMap = CombinedLinearCurve(yValues:      [4.0,   3.0,    2.75,   2.58,    1.75])
+
         let lowSensMap = CombinedLinearCurve(yValues:    [0.5, 1.25, 1.875, 2.0,  3.0])
         let highSensMap = CombinedLinearCurve(yValues:   [7.0, 13.0, 18.0,  22.0, 30.0])
         let curveMap = CombinedLinearCurve(yValues:      [2.0, 2.25, 2.0,   2.75, 2.58])

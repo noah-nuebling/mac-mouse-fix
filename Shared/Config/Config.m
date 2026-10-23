@@ -7,10 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-/// @noGCDCleanup Add assertRunLoop to all the other/derived 'config' files.
-/// @noGCDCleanup Maybe add `readsAndWritesState()` checks to this file
-///         (Maybe also check if we made any stuff direct calls instead of deferred in this file, which would potentially introduce new reentrancy bugs)
-
 /// Notes:
 /// - [Aug 2025] MMF 3 doesn't support app-specific settings, so all the 'overrides' stuff doesn't apply currently.
 /// - We're using our custom coolKeyPath API all over this class, instead of Apple's key-value-coding API (aka KVC) (See valueForKeyPath:). The main reason we do this, is so that, when we set a value at a keypPath which doesn't exist, yet using the function `setConfig(NSString *keyPath, NSObject *value)` then the keyPath is created automatically, instead of just failing. This has the benefit, of being more robust and we don't need to make sure, that all keyPaths already exist in the defaultConfig. In all the other places where we use the coolKeyPath API in this class, we only do this to stay consistent (at the time of writing). I'm not sure, whether our coolKeyPath API is slower that the KVC API. We transitioned over to coolKeyPath API without testing speed.

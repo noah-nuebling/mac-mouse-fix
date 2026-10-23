@@ -14,7 +14,8 @@ import Cocoa
     private static var _generalConfigRaw: NSDictionary? = nil
     
     @objc static func reload() {
-        
+        assertRunLoop(configRunLoop());
+
         /// Guard equal
         let new = config("General") as! NSDictionary?
         
@@ -36,19 +37,23 @@ import Cocoa
     /// Advanced settings
     
     @objc static func freezePointerDuringModifiedDrag() -> Bool {
+        assertRunLoop(configRunLoop());
         return config("General.lockPointerDuringDrag") as! Bool
     }
     @objc static var doubleClickThreshold: Double {
+        assertRunLoop(configRunLoop());
         return 0.01;
     }
     
     /// Internal
     
     @objc static func mouseMovingMaxIntervalLarge() -> Double {
+        assertRunLoop(configRunLoop());
         return 0.1
     }
     
     @objc static func mouseMovingMaxIntervalSmall() -> Double {
+        assertRunLoop(configRunLoop());
         return 0.04
         /// ^ Only consider the mouse moving, if less than this time interval has passed between the last two events
         /// Notes from using this in ModifiedDrag:

@@ -287,7 +287,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Could also use `[ScrollConfig scrollConfigWithModifiers:inputAxis:event:]` here? It probably doesn't matter. This should only happen once on the very first tick after the helper starts.
     
     if (_scrollConfig == nil) {
-        _scrollConfig = ScrollConfig.shared;
+        _scrollConfig = ScrollConfig.defaultInstance;
     }
     
     /// Run preliminary scrollAnalysis

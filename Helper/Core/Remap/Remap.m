@@ -36,7 +36,8 @@
 static NSMutableDictionary *_swizzleCache = nil;
 
 + (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers {
-    
+    assertRunLoop(configRunLoop());
+
     /// Cache is reset whenever remaps change
     
     if (_swizzleCache == nil) {
@@ -63,13 +64,12 @@ static NSMutableDictionary *_swizzleCache = nil;
 static NSDictionary *_remaps;
 
 + (NSDictionary *)remaps {
+    assertRunLoop(configRunLoop());
     return _remaps;
 }
 
-+ (void)setRemaps:(NSDictionary *)remapsDict {
-    
-    /// This method is private. It's used by `reload` and `enableAddMode`.
-    
+static void setRemaps(NSDictionary *remapsDict) {
+
     /// Compare
     BOOL isEqual = [_remaps isEqualToDictionary:remapsDict];
     
@@ -100,7 +100,8 @@ static NSDictionary *_remaps;
 #pragma mark - Reload
 
 + (void)reload {
-    
+    assertRunLoop(configRunLoop());
+
     /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
     /// The remaps are also stored to file in this format and therefore what `Config.config` contains.
     /// The helper was made to handle a dictionary format which should be more effictient among other perks.
@@ -115,7 +116,7 @@ static NSDictionary *_remaps;
     
     if (_addModeIsEnabled) {
         _addModeIsEnabled = NO;
-//        [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
+        //[MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
     }
     
     ///
@@ -124,8 +125,8 @@ static NSDictionary *_remaps;
     
     if (USE_TEST_REMAPS) {
         
-        [self setRemaps:self.testRemaps];
-        
+        setRemaps(testRemaps());
+
     } else {
         
         ///
@@ -197,13 +198,15 @@ static NSDictionary *_remaps;
         ///
         /// Get values from action table (button remaps)
         ///
-        
-//        BOOL killSwitch = [(id)config(@"General.buttonKillSwitch") boolValue] /*|| HelperState.shared.isLockedDown*/;
-        
-//        if (killSwitch) {
-//            /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
-//        } else {
-            
+
+        #if 0
+        BOOL killSwitch = [(id)config(@"General.buttonKillSwitch") boolValue] /*|| HelperState.shared.isLockedDown*/;
+
+        if (killSwitch) {
+            /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
+        } else {
+        #endif
+
         /// Convert remaps table to remaps dict
         
         NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
@@ -236,10 +239,12 @@ static NSDictionary *_remaps;
             NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
             [remapsDict setObject:effect forCoolKeyArray:keyArray];
         }
-        
-//        }
-        
-        [self setRemaps:remapsDict];
+
+        #if 0
+        }
+        #endif
+
+        setRemaps(remapsDict);
     }
 }
 
@@ -247,6 +252,7 @@ static NSDictionary *_remaps;
 
 BOOL _addModeIsEnabled = NO;
 + (BOOL)addModeIsEnabled {
+    assertRunLoop(configRunLoop());
     return _addModeIsEnabled;
 }
 
@@ -276,7 +282,8 @@ BOOL _addModeIsEnabled = NO;
     /// We implemented a policy of "modifiers need to be present to capture drags and scrolls" using the `addModePayloadIsValid:` method.
     ///     Edit: The remapSwizzler is actually responsible for this now.
     ///     TODO: Remove addModePayloadIsValid.
-    
+
+    assertRunLoop(configRunLoop());
     DDLogDebug("TRM set remaps to addMode");
     
     NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
@@ -317,25 +324,24 @@ BOOL _addModeIsEnabled = NO;
     _addModeIsEnabled = YES;
     
     /// Send feedback
-//    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
-    
+    //[MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
+
     /// Set `_remaps` to generated
     ///    Why weren't we using setRemaps here? Changed it to setRemaps now. Hopefully nothing breaks.
 
-    [self setRemaps:@{
+    setRemaps(@{
         @{}: triggerToEffectDict
-    }];
-    
+    });
+
     /// Return success
     return YES;
 }
 
 + (BOOL)disableAddMode {
-    
+    assertRunLoop(configRunLoop());
+
     /// Reload
-    if (_addModeIsEnabled) {
-        [self reload];
-    }
+    if (_addModeIsEnabled) [self reload];
     
     /// Return success
     return YES;
@@ -359,19 +365,20 @@ BOOL _addModeIsEnabled = NO;
 //}
 
 + (void)sendAddModeFeedback:(NSDictionary *)payload {
-    
+    assertRunLoop(configRunLoop());
+
     DDLogDebug("Concluding addMode with payload: %@", payload);
     
-    if (![self addModePayloadIsValid:payload]) {
+    if (!addModePayloadIsValid(payload)) {
         /// The way things are set up currently, we constantly get invalid payloads. So we just ignore them
-//        [self disableAddMode];
+        //[self disableAddMode];
         return;
     }
     
-//    [self reload];
-    
-//    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
-    
+    //[self reload];
+
+    //[MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
+
     
     
     [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload waitForReply:NO];
@@ -380,19 +387,19 @@ BOOL _addModeIsEnabled = NO;
 
 }
 
-/// Using this to prevent payloads containing a modifiedDrag / modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
-/// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that
-///     Edit: We simplified things now and this is the only safety net against sending payloads without necessary modificationPreconditions.
-/// Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
-///     Also the remap table is completely structured around buttons now, so it wouldn't fit into the UI to have keyboard-modifier-only modifiedDrags and modifiedScrolls
-+ (BOOL)addModePayloadIsValid:(NSDictionary *)payload {
-    
+static BOOL addModePayloadIsValid(NSDictionary *payload) {
+    /// Using this to prevent payloads containing a modifiedDrag / modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
+    /// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that
+    ///     Edit: We simplified things now and this is the only safety net against sending payloads without necessary modificationPreconditions.
+    /// Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
+    ///     Also the remap table is completely structured around buttons now, so it wouldn't fit into the UI to have keyboard-modifier-only modifiedDrags and modifiedScrolls
+
     if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]
         || [payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerScroll]) {
         
         NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
         if (buttonPreconds == nil || buttonPreconds.count == 0) {
-//            assert(false);
+            //assert(false);
             return NO;
         }
     }
@@ -401,7 +408,7 @@ BOOL _addModeIsEnabled = NO;
 
 #pragma mark - Dummy Data
 
-+ (NSDictionary *)testRemaps {
+static NSDictionary *testRemaps(void) {
     /// This fanned out dictionary representation of our remappings is what we based our helper code on.
     /// It's not super human readable, but it should be very fast, and makes some of the operations like overrides and on the fly 'assessment of the mapping landscape' pretty handy.
     /// Using this in Helper is definitely faster than the tableView oriented (-> array based) structure which the MainApp uses. That's because we can do a lot of O(1) dict accesses where we'd have to use O(n) array searches using the other structure. I suspect that performance gains are negligible though.
