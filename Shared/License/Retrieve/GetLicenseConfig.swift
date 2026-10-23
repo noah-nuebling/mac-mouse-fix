@@ -75,8 +75,8 @@
         ///                 However, this in-memory cache should be totally acceptable for `MFLicenseConfig`, because we only expect the licenseConfig to change every couple of weeks at most, and I think it's never crucial for it to change while the app is running. It's still nice for it to have the chance to update every time the app is launched though. If we never updated it, there might be problems in the long term. E.g. we might end up with a dead link when the user clicks on `Mac Mouse Fix > Buy Mac Mouse Fix...` if we ever move the checkout page or something like that.
         ///
         ///             What's the difference between the `inMemoryCache` and the normal on-disk cache for `MFLicenseConfig` (aka `_licenseConfigDictCache`)?
-        ///                 - The normal cache persists the licenseState on-disk and is meant for when there is no way to reach the server, because the internet is down.
-        ///                 - The inMemoryCache is deleted after the app is closed and is meant to prevent duplicate, back-to-back downloads of the licenseConfig from the server.
+        ///                 - The normal cache persists the `licenseConfig` on-disk and is meant for when there is no way to reach the server, because the internet is down.
+        ///                 - The `inMemoryCache` is deleted after the app is closed and is meant to prevent duplicate, back-to-back downloads of the `licenseConfig` from the server.
         ///
         ///             Thread safety:
         ///                 Thread safety of the `inMemoryCache` (Outdated [Oct 2026])

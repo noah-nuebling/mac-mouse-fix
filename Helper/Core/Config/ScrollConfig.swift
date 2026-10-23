@@ -39,7 +39,7 @@ import Cocoa
     
     // MARK: Static functions
     
-    private static let _defaultInstance = ScrollConfig()
+    private static var _defaultInstance = ScrollConfig()
     @objc static var defaultInstance: ScrollConfig {
         assertRunLoop(configRunLoop())
         return _defaultInstance;
@@ -59,6 +59,7 @@ import Cocoa
         /// - This should be called when the underlying config (which mirrors the config file) changes
         /// - All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
         /// - TODO: Make a copy before storing in `_scrollConfigRaw` just to be sure the equality checks always work
+        _defaultInstance = ScrollConfig()
         _scrollConfigRaw = newConfigRaw
         cache = nil
         //ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
@@ -66,6 +67,7 @@ import Cocoa
     }
     @objc static func devToggles_deleteCache() { /// [May 2025] Added this function as a hack for DevToggles.m
         assertRunLoop(configRunLoop());
+        _defaultInstance = ScrollConfig()
         cache = nil
     }
     private static var cache: [_HT<MFScrollModificationResult, MFAxis, CGDirectDisplayID>: ScrollConfig]? = nil
