@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **أكتوبر 2026**
 
+- 🇬🇧&nbsp;Paul&nbsp;Southcombe - "Makes my little wired mouse magic."
 - 🇺🇸&nbsp;Nathaniel&nbsp;White
 - 🇺🇸&nbsp;Michael&nbsp;Tran - "Sometimes the best way to solve your own problems is to help someone else. - Uncle Iroh"
 - 🇨🇦&nbsp;Simon - "Fixed my zoom speed issue with the CadMouse Pro."
