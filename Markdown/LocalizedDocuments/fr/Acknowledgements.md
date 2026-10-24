@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **octobre 2026**
 
+- 🇺🇸&nbsp;Eric&nbsp;Engstrom
 - 🇺🇸&nbsp;Jasper2K - "Best. Utility. Ever. 😎"
 - 🇬🇧&nbsp;Paul&nbsp;Southcombe - "Makes my little wired mouse magic."
 - 🇺🇸&nbsp;Nathaniel&nbsp;White

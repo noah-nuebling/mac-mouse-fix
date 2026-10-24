@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ekim 2026**
 
+- 🇺🇸&nbsp;Eric&nbsp;Engstrom
 - 🇺🇸&nbsp;Jasper2K - "Best. Utility. Ever. 😎"
 - 🇬🇧&nbsp;Paul&nbsp;Southcombe - "Makes my little wired mouse magic."
 - 🇺🇸&nbsp;Nathaniel&nbsp;White

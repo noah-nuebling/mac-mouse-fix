@@ -94,6 +94,7 @@ Queste persone hanno speso molto più del prezzo standard e mi hanno offerto un 
 
 **ottobre 2026**
 
+- 🇺🇸&nbsp;Eric&nbsp;Engstrom
 - 🇺🇸&nbsp;Jasper2K - "Best. Utility. Ever. 😎"
 - 🇬🇧&nbsp;Paul&nbsp;Southcombe - "Makes my little wired mouse magic."
 - 🇺🇸&nbsp;Nathaniel&nbsp;White

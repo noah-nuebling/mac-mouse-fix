@@ -94,6 +94,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **octubre 2026**
 
+- 🇺🇸&nbsp;Eric&nbsp;Engstrom
 - 🇺🇸&nbsp;Jasper2K - "Best. Utility. Ever. 😎"
 - 🇬🇧&nbsp;Paul&nbsp;Southcombe - "Makes my little wired mouse magic."
 - 🇺🇸&nbsp;Nathaniel&nbsp;White
