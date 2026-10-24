@@ -28,14 +28,13 @@
 
 #pragma mark - Private helper class
 
-@interface _MFEventTapListener : NSObject
-    { @public
-        MFEventType           _events;
-        MFEventTapCallback    _callback;
-        void                  *_context;
-        bool                  _enabled;
-    }
-@end
+@interface _MFEventTapListener : NSObject {
+    @public
+    MFEventType           _events;
+    MFEventTapCallback    _callback;
+    void                  *_context;
+    bool                  _enabled;
+} @end
 @implementation _MFEventTapListener @end
 
 #pragma mark - Main impl
@@ -48,18 +47,29 @@
     #pragma mark Interface for listening
     + (void) registerListener: (MFEventListenerID *)listenerID forEvents: (MFEventType)events callback: (MFEventTapCallback)callback context: (void *)context {
         assertRunLoop(IOThread.runLoop);
+
         if (!_listeners) _listeners = [NSMutableDictionary new];
-        _listeners[listenerID] = !events ? nil : configure([_MFEventTapListener new], it->_events = events; it->_callback = callback; it->_context = context, it->_enabled = false);
-        updateCGTaps(); /// Do need to call `updateCGTaps()`, in case we're disabling the listener through this call.
+
+        _MFEventTapListener *newListener = !events ? nil : configure([_MFEventTapListener new], it->_events = events, it->_callback = callback, it->_context = context, it->_enabled = false);
+        [_listeners setObject: newListener forKey: listenerID];
+
+        updateCGTaps(); /// Do need to call `updateCGTaps()`, in case we're disabling the listener through this call. [Oct 2026]
     }
     + (bool) isEnabledForListener: (NSString *)listenerID {
         assertRunLoop(IOThread.runLoop);
-        return _listeners[listenerID]->_enabled;
+        if (![_listeners objectForKey: listenerID]) {
+            mfassert(false, @"Trying to get isEnabled for unknown listener id %@. Known: %@", listenerID, [_listeners allKeys]);
+            return false;
+        }
+        return [_listeners objectForKey: listenerID]->_enabled;
     }
     + (void) enable: (bool)enable forListener: (NSString *)listenerID {
         assertRunLoop(IOThread.runLoop);
-        mfassert(_listeners[listenerID], @"Trying to enable unknown listener id %@. Known: %@", listenerID, [_listeners allKeys]);
-        _listeners[listenerID]->_enabled = enable;
+        if (![_listeners objectForKey: listenerID]) {
+            mfassert(false, @"Trying to enable unknown listener id %@. Known: %@", listenerID, [_listeners allKeys]);
+            return;
+        }
+        [_listeners objectForKey: listenerID]->_enabled = enable;
         updateCGTaps();
     }
 
@@ -111,8 +121,8 @@
         bool enabled;
     } CGTapData;
 
-    static CGTapID _orderedEventTaps[kCGTapID_Max] = {};
-    static int _orderedEventTaps_Count = 0;
+    static CGTapID _orderedCGTaps[kCGTapID_Max] = {};
+    static int _orderedCGTaps_Count = 0;
 
     static CGTapData _cgTapData[] = {
         [kCGTapID_Null] = {}, /// This entry enables null-coalescing [Oct 2026]
@@ -177,7 +187,7 @@
                     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, /*order*/0);
                     CFRunLoopAddSource([IOThread runLoop], runLoopSource, /*mode*/kCFRunLoopCommonModes);
                     _cgTapData[i].tap = eventTap;
-                    _orderedEventTaps[_orderedEventTaps_Count++] = i; /// Works because we use `kCGTailAppendEventTap`
+                    _orderedCGTaps[_orderedCGTaps_Count++] = i; /// Works because we use `kCGTailAppendEventTap` [Oct 2026]
                 }
 
                 /// Toggle the tap
@@ -233,9 +243,9 @@
         assertRunLoop(IOThread.runLoop);
 
         CGEventTapProxy lastProxy = NULL;
-        for reverse_range(i, _orderedEventTaps_Count)
-            if (_cgTapData[_orderedEventTaps[i]].proxy)
-                { lastProxy = _cgTapData[_orderedEventTaps[i]].proxy; break; }
+        for reverse_range(i, _orderedCGTaps_Count)
+            if (_cgTapData[_orderedCGTaps[i]].proxy)
+                { lastProxy = _cgTapData[_orderedCGTaps[i]].proxy; break; }
 
         if (lastProxy) CGEventTapPostEvent(lastProxy, cgEvent);  /// Post after the last of our taps, prevents any feedback loops [Oct 2026]
         else           [self postCGEventBeforeAllSessionTaps: cgEvent]; /// This can't feed back into our taps either, because we always have a proxy for all our taps (I hope) [Oct 2026]. @mfEventTapTodo: Look into private API for getting the proxy immediately
@@ -249,6 +259,6 @@
     #pragma mark Debug descriptions
     + (NSString *) descriptionForListener: (MFEventListenerID *)listenerID {
         assertRunLoop(IOThread.runLoop);
-        return [_listeners[listenerID] description];
+        return [[_listeners objectForKey: listenerID] description];
     }
 @end
