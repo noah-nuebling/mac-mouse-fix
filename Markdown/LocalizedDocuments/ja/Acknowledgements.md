@@ -94,6 +94,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **10月 2026**
 
+- 🇺🇸&nbsp;Macbeast - "Great App"
 - 🇺🇸&nbsp;Eric&nbsp;Engstrom
 - 🇺🇸&nbsp;Jasper2K - "Best. Utility. Ever. 😎"
 - 🇬🇧&nbsp;Paul&nbsp;Southcombe - "Makes my little wired mouse magic."
