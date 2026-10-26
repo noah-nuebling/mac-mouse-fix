@@ -35,7 +35,7 @@ int    devToggles_Hi  = 6;
     @implementation NSObject (DevToggles_OnLoad)
         + (void) load {
             #define kListenerID @"DevToggles"
-            [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: eventTapCallback context: NULL];
+            [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: eventTapCallback];
             [MFEventTap enable: true forListener: kListenerID];
         }
         void eventTapCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {

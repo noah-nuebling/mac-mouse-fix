@@ -78,7 +78,7 @@ static MFReadWriteTracker _readWriteTracker;
     #endif
 
     /// Create/enable scrollwheel input callback
-    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_ScrollWheel callback: eventTapCallback context: NULL];
+    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_ScrollWheel callback: eventTapCallback];
     
     /// Create animator
     _animator = [[TouchAnimator alloc] initWithPhaseShift: kVBLPhase_DefaultForEventSending runLoop: IOThread.runLoop name: @"ScrollAnimator"];
@@ -105,7 +105,7 @@ static MFReadWriteTracker _readWriteTracker;
     /// - We used to call `resetState` when starting/stopping, but this doesn't makes sense I think. Because we don't want to reset/cancel animations just because the interception of scrollwheel events stopped. Those things are logically separate.
     /// - I did some rudimentary performance testing here (when we were still calling `resetState`) and it seems that `[Scroll startReceiving]` and `[Scroll stopReceiving]` have practically no impact on CPU usage even when spamming a button with such settings that SwitchMaster calls start/stop on each button press and release.
     /// - [Oct 2026] After 'No more dispatch queues' refactor, everything is on `IOThread.runLoop`.
-    ///     Maybe interesting if we ever want to introduce more threads: `_eventTap` is only touched in a few places and used to be managed by a separate thread. IIRC that also caused how some of this is factored, which maybe could be reconsidered (Unsure about all this) [Oct 2026]
+    ///     Maybe interesting if we ever want to introduce more threads: `CFMachPortRef _eventTap` (Update: now `MFEventTap`) is only touched in a few places and used to be managed by a separate thread. IIRC that also caused how some of this is factored, which maybe could be reconsidered (Unsure about all this) [Oct 2026]
 
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
@@ -161,7 +161,7 @@ static MFReadWriteTracker _readWriteTracker;
 
 #pragma clang diagnostic pop
 
-static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
+static void eventTapCallback(MFEventType eventType, CGEventRef *eventPtr) {
 
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
@@ -192,8 +192,8 @@ static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *e
     
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
-    ///     @afterNoGCDTodo We found that the HIDEvent's timestamps are much more accurate.
-    CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event, kMFEventTapLocation);
+    ///     @afterNoGCDTodo We found that the HIDEvent's timestamps are much more accurate - try using that instead of CGEventGetTimeStamp() / CACurrentMediaTime() throughout codebase. [Oct 2026]
+    CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event, kTapLocation_Listening);
 
     /// Do the actual work
     ///     We used to do this on a separate dispatch queue before the 'No more dispatch queues' refactor. Deleted the comments about why [Oct 2026]

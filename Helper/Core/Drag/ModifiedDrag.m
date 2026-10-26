@@ -9,34 +9,73 @@
 //
 
 /**
-    TODO: Address `[debugWarpDelta]` bug: [Oct 11 2026]  @afterNoGCDTodo
-        - Problem: After PointerFreeze's CGWarpMouseCursorPosition(), the eventTaps in ModifiedDrag.m and PointerFreeze.m
-            still receive a few events with unwarped location, the first warped event carries a delta describing (actualMovementByUserForThisEvent + warp).
-            Under heavy load, this warpDelta can be so large that it causes major jank and stuff [macOS 27]
-        - Plan: Track the first event that is warped, and subtract the warpDelta.
-            (Opus 5.5 says to use 0.5 px or 1.0 px tolerance off of the warpPoint because of what it saw in earlier logs. Didn't quite understand why.
-                Personally only seen post-warp events be exactly the value passed to CGWarpMouseCursorPosition())
-        - Secondary problem factor:
-            Why does WindowServer send us so many events before applying `CGWarpMouseCursorPosition()`:
-                Looks like, under load, CGEventTapEnable() in freezePointer() blocks long time and stalls all evenProcessing and the call to `CGWarpMouseCursorPosition()`. (Observed ~70 ms, using Instruments Processor Trace)
-                    -> Hypothesis: WindowServer continues processing and sending us events while we wait for it, not having sent `CGWarpMouseCursorPosition()`, yet.
-            Plan2:
-                Writing a `MFEventTap` abstraction (coined that name right here [Oct 2026] that multiplexes to multiple clients from a single CGEventTap would avoid this this problem
-                    -> I had plans doing that for other reasons, so now might be a good time @afterNoGCDTodo
-                        Another note about `MFEventTap` idea: [Oct 2026, macOS 27, M4 MBA] In `claude --resume 361c7ab2-a2f2-48cb-9d54-7b7bf7fbc804` Claude skipped CGEvent serialization for raw data communication with WindowServer.
-                            CPU usage of passing through mouse wiggles of 1000 Hz mouse went from 9% -> 4%. Required around 180 lines microlib of .defs and C helpers (Just for the tap, we didn't parse the eventData).
-                            Dataformat could break in future. Not sure if worth it. (WindowServer at ~45% and AppleUserHIDDrivers at ~15%, so all three together went from ~70% to ~65%.)
-                            Could maybe send Apple Feedback about this. (Claude in that session can explain what is inefficient)
-        - Reproduction stuff:
-            - Can be hard to reproduce - Comes in cycles, I think only under heavy window-server load. The load I saw it under:
-                - 60 Hz screen: streaming vbldelta.m and logs from MMF helper, and watching youtube at 1080p
-                - 144 Hz screen: Xcode, streaming MMF Helper logs, using MMF 'Scroll & Navigate' in the main view.
-                - Having lots of Safari tabs and iTerm tabs, and Finder windows open in the background.
-                -> Even then the problem only occurred in 'cycles' sometimes going back to perfectly smooth scrolling, but when it was bad it happened every interaction.
-            - Also reproduced on 3.1.0 (24898) (before 'No more dispatch queues' refactor) -> Not a regression from the refactor. Maybe new in macOS 27 / 27.2 Beta 3
-            - Never noticed this issue ever before that day.
-        - Also see:
-            The logs we added that are tagged with `[debugWarpDelta]` - they let us clearly see the problem (maybe along with vbldelta.m script) (Maybe clean those up after we're done)
+
+`Slow WindowServer IPC` problems [Oct 2026]
+    [Oct 2026] After 'No more dispatch queues' refactor (Which put everything on IOThread+mainThread instead of many different concurrent dispatch queues),
+        I noticed 2 problems with TwoFingerSwipe.m when under heavy load (When scrolling something heavy like Spotify and it gets to like 5 fps):
+        - A) `Erratic momentum speeds` Summary: Momentum scrolling speeds were erratic (The thing `_smoothingAnimator` is designed to prevent)
+        - B) `warpDeltas` Summary: The position of the puppet cursor and scrolled view sometimes jumped back in the opposite direction some time after starting the click-and-drag gesture.
+
+        Cleanup idea:
+            Maybe make `Erratic momentum speeds` and `warpDeltas` notes separate? Not sure how related they are [Oct 2026]
+
+        Diagnosis / Observations:
+            - When under very heavy load, some calls that do WindowServer IPC end up blocking for a super long time, like 10s or even 100s or milliseconds.
+                I observed being slow: `CGEventTapEnable`, `CGWarpMouseCursorPosition`, `CGDisplayHideCursor` (I think I remember observing that one, not 100% sure)
+            - When these `Slow WindowServer IPC` calls block the IOThread, then `_smoothingAnimator` won't be able to deliver regularly.
+                -> This causes A) `Erratic momentum speeds`
+                (That's because AppKit's NSScrollView seems to base its in-process-momentum-scroll speed on the time between the last two gesture-phase events, I surely wrote more about that a long time ago, probably around `_smoothingAnimator` or `GestureScrollSimulator.m` [Oct 2026])
+            - After PointerFreeze calls `CGWarpMouseCursorPosition`, the eventTaps in ModifiedDrag.m and PointerFreeze.m
+                still receive a few events with unwarped pointer location.
+                The first warped event carries a delta describing (actualMovementByUserForThisEvent + warpDelta).
+                Under heavy load, this warpDelta can come so late into the gesture (and therefore be so large) that it's very noticable.
+                -> This causes B) `warpDeltas`
+        Solution measures:
+            A) `Erratic momentum speeds`:
+                Solution measure: We moved the per-event callbacks (`mouseMovedCallback`) inside PointerFreeze.m (which block on `CGWarpMouseCursorPosition`) from IOThread to mainThread.
+                    This unblocks IOThread and allows it to deliver `_smoothingAnimator` regularly.
+                Conclusion: This immediately fixes the problem even under super heavy load.
+                Caveats?: I still sometimes saw erratic momentumSpeeds but only when debug logging is enabled and I think only when Xcode is attached (which makes the log calls extra slow, I think [Oct 2026])
+                Alternatives/Questions:
+                    - You could have `_smoothingAnimator` on a completely separate thread, but under any normal circumstance this seems good enough
+                    - Doesn't it cause problems to have the mainThread (instead of the IOThread) blocked by WindowServer IPC?
+                        -> I don't notice any downsides. Explanation idea: the only other thing we're doing on mainThread during the gesture is puppetCursor drawing in ScreenDrawer.swift, and I guess if the WindowServer is that much under load, us not sending it more draw commands (because blocked by IPC) doesn't hurt overall framerate/responsiveness? Not sure. [Oct 2026]
+            B) `warpDeltas`:
+                Solution measures based on `Slow WindowServer IPC` theory:
+                    The theory: Maybe the `Slow WindowServer IPC` calls (see above) block the IOThread, and somehow cause WindowServer to process and send us many events before our `CGWarpMouseCursorPosition` is called/starts taking effect.
+                    Sub-solution measure 1: `MFEventTap` - We introduced MFEventTap as an attempt to fix this (but it might have other advantages, see `MFEventTap.h` notes [Oct 2026])
+                        Mechanism: MFEventTap.m allows ModifiedDrag.m and PointerFreeze.m to share one underlying CGEventTap,
+                            which avoids problem where the `CGEventTapEnable` call for PointerFreeze.m happens during ongoing gesture (in +handleBecameInUse) and takes very long, and only once it returns, will PointerFreeze start sending CGWarpMouseCursorPosition (from the CGEventTap callback).
+                        Conclusion: I think this made the problem better.
+                            Caveat: Didn't really try the `Reproduction` of the super bad circumstances (See below.) [Oct 2026]
+                    Sub-solution measure 2: Make PointerFreeze.m > `freezePointer` not block `+handleBecameInUse` at all
+                        Mechanism: freezePointer() doesn't call `CGEventTapEnable` anymore (See `MFEventTap` solution measure above),
+                            but it still does another `Slow WindowServer IPC` call: `CGDisplayHideCursor`
+                        Conclusion: Didn't see any improvement (in the `WarpDeltaCompensator`s logs - see below [Oct 2026])
+                            -> This casts doubt that the `MFEventTap` solution measure (see above) even made a difference, or if maybe the `Caveat` (not doing `Reproduction` properly tricked me.)
+                    Conclusion: I'm not sure these `Slow WindowServer IPC`-based solution measures worked. However, that shouldn't matter because the `WarpDeltaCompensator` solution measure (below [Oct 2026]) seems to work.
+                        Deeper context: I'm only writing this down I guess to document that this might have been a (now stale) factor that went into the MFEventTap design, or decision to even add it. [Oct 2026]
+                Solution measure: `WarpDeltaCompensator`
+                    Mini object which tracks the pattern where the pointer location veers off the
+                        freeze/CGWarpMouseCursorPosition point and then snapps back in one event which also carries the `warpDelta`,
+                        and then subtracts that `warpDelta` so our algorithms always get the actual movement by the physical mouse.
+                        Conclusion: This seems to work
+                            What I observed: It feels like it stops the 'swallowing' of the pointer movement
+                            What I haven't observed: I haven't really reproduced the super bad circumstances which caused the jank. See `Reproduction` below [Oct 2026]
+                        Caveat: Observations made on macOS 27. Didn't test older versions. [Oct 2026]
+        `Reproduction`
+            B) `warpDeltas` [Oct 2026]
+                - I always see the `warpDeltas` in logs, but it's not very noticable, the problem where it really janks out and makes the scrollPosition / puppetCursor jump can be hard to reproduce
+                    (Update: wrote this before I implemented the `Solution measures` above, might be impossible now) - it comes in cycles, I think only under heavy window-server load. The load I saw it under:
+                    - M4 MBA, macOS 27
+                    - 60 Hz screen: streaming vbldelta.m and logs from MMF helper, and watching youtube at 1080p
+                    - 144 Hz screen: Xcode, streaming MMF Helper logs, using MMF 'Scroll & Navigate' in the main view.
+                    - Having lots of Safari tabs and iTerm tabs, and Finder windows open in the background.
+                    -> Even then the problem only occurred in 'cycles' sometimes going back to perfectly smooth scrolling, but when it was bad it happened every interaction, and usually so bad it ended up scrolling in the *opposite* direction that I moved the gesture (Don't fully understand why that happens.) 
+                - Also reproduced on 3.1.0 (24898) (before 'No more dispatch queues' refactor) -> Not a regression from the refactor. Maybe new in macOS 27 / 27.2 Beta 3
+                - Never noticed this issue ever before that day.
+        Also see:
+            The logs we added that are tagged with `[debugWarpDelta]` - they let us clearly see the `warpDeltas` problem (maybe along with vbldelta.m script) (Maybe clean those up at some point [Oct 2026])
  */
 
 #import "Constants.h"
@@ -87,7 +126,9 @@
 
 /// Vars
 
-static ModifiedDragState _drag;
+static ModifiedDragState _drag = {
+    .warpDeltaCompensator = { .name = "ModifiedDrag" }
+};
 
 /// Derived props
 
@@ -136,7 +177,7 @@ static ModifiedDragState _drag;
     _drag.usageThreshold = 7; // 20, 5
     
     /// Create mouse moved callback
-    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Sensor callback: eventTapCallback context: NULL];
+    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Sensor callback: eventTapCallback];
 }
 
 /// Interface - start
@@ -215,33 +256,12 @@ static void initDragState(void) {
     DDLogDebug("Enabled drag eventTap");
 }
 
-static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
+static void eventTapCallback(MFEventType eventType, CGEventRef *eventPtr) {
 
     assertRunLoop(IOThread.runLoop);
 
     CGEventRef event = *eventPtr;
 
-    /// Debug
-    if (runningDebugMode()) {
-
-        static double tsLast = 0;
-        double ts = CACurrentMediaTime();
-        DDLogDebug("ModifiedDrag eventTapCallback [debugWarpDelta] type %2d, delta (%3lld, %3lld) (%3lld, %3lld), loc: (%.2f, %.2f), dt: %5.2f age: %.2f",
-            CGEventGetType(event),
-            CGEventGetIntegerValueField(event, kCGMouseEventDeltaX),
-            CGEventGetIntegerValueField(event, kCGMouseEventDeltaY),
-            CGEventGetIntegerValueField(event, kCGEventUnacceleratedPointerMovementX),
-            CGEventGetIntegerValueField(event, kCGEventUnacceleratedPointerMovementY),
-            CGEventGetLocation(event).x,
-            CGEventGetLocation(event).y,
-            1e3*(ts - tsLast),
-            1e3*(CACurrentMediaTime() - CGEventGetTimestampInSeconds(event, kMFEventTapLocation))
-        );
-        tsLast = ts;
-
-        /// Filter other event-types (might wanna log other events for debugging [Oct 2026])
-        //if ((CGEventMaskBit(type) & _eventMask) == 0) return event;
-    }
 
 
     /// Get deltas
@@ -250,6 +270,31 @@ static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *e
     
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+
+    /// Debug
+    if (runningDebugMode()) {
+
+        static double tsLast = 0;
+        double ts = CACurrentMediaTime();
+        DDLogDebug("ModifiedDrag eventTapCallback [debugWarpDelta] type %2d, delta (%3lld, %3lld) (%3lld, %3lld), loc: (%.2f, %.2f), dt: %5.2f age: %.2f",
+            CGEventGetType(event),
+            dx,
+            dy,
+            CGEventGetIntegerValueField(event, kCGEventUnacceleratedPointerMovementX),
+            CGEventGetIntegerValueField(event, kCGEventUnacceleratedPointerMovementY),
+            CGEventGetLocation(event).x,
+            CGEventGetLocation(event).y,
+            1e3*(ts - tsLast),
+            1e3*(CACurrentMediaTime() - CGEventGetTimestampInSeconds(event, kTapLocation_Listening))
+        );
+        tsLast = ts;
+
+        /// Filter other event-types (might wanna log other events for debugging [Oct 2026])
+        //if ((CGEventMaskBit(type) & _eventMask) == 0) return event;
+    }
+
+    /// WarpDeltaCompensator
+    WarpDeltaCompensator_GetActualDelta(&_drag.warpDeltaCompensator, dx, dy, CGEventGetLocation(event), &dx, &dy);
 
     /// Ignore event if both deltas are zero
     /// - We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up. Now that we're dispatching throuch a TouchAnimator this shouldn't really matter but it doesn't hurt.

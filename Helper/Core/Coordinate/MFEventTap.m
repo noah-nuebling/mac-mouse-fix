@@ -7,13 +7,10 @@
 // --------------------------------------------------------------------------
 //
 
-/// @mfEventTapTodo Update stale comments throughout codebase
-/// @mfEventTapTodo Probably tap at kCGHIDEventTap again, for feedback-free Swish interop.
-/// @mfEventTapTodo Look into supporting universalControl (Not totally sure this is related to MFEventTap, seems like the failure point are the `iohidDevice != NULL` assertions, but I'd like to figure it out first in case it imposes any constraints on MFEventTap design)
-/// @mfEventTapTodo Document why we're doing this
-
 #import "MFEventTap.h"
 #import "Threads.h"
+#import "SharedUtility.h"
+#import <os/lock.h>
 
 #pragma mark - General helpers
 
@@ -26,55 +23,76 @@
 #define range(i, n) (int i = 0; i < (n); i++)
 #define reverse_range(i, n) (int i = (int)(n)-1; i >= 0; i--)
 
+#define _DDLogDebug(x...) DDLogDebug("MFEventTap: " x)
+
+#pragma mark - Descriptions
+
+NSString *MFEventTypeDescription(MFEventType type) {
+    return bitflagsDescription(type, ^NSString *(uint64_t bitflag) {
+        if (bitflag == kMFEventType_KeyboardModifier)   return @"KeyboardModifier";
+        if (bitflag == kMFEventType_KeyPress)           return @"KeyPress";
+        if (bitflag == kMFEventType_Sensor)             return @"Sensor";
+        if (bitflag == kMFEventType_ScrollWheel)        return @"ScrollWheel";
+        if (bitflag == kMFEventType_Experiment)         return @"Experiment";
+
+        uint64_t buttonFlags = (bitflag >> _kMFEventType_ButtonShift) & _kMFEventType_ButtonMask;
+        if (buttonFlags) return stringf(@"Button%d", __builtin_ctz(buttonFlags));
+
+        return nil;
+    });
+}
+
+NSString *CGEventMaskDescription(CGEventMask eventMask) {
+    return bitflagsDescription(eventMask, ^NSString * _Nonnull(uint64_t bitflag) {
+        switch (bitflag) {
+            case /*0*/CGEventMaskBit(NX_NULLEVENT):          return @"NULLEVENT";
+            case /*1*/CGEventMaskBit(NX_LMOUSEDOWN):         return @"LMOUSEDOWN";
+            case /*2*/CGEventMaskBit(NX_LMOUSEUP):           return @"LMOUSEUP";
+            case /*3*/CGEventMaskBit(NX_RMOUSEDOWN):         return @"RMOUSEDOWN";
+            case /*4*/CGEventMaskBit(NX_RMOUSEUP):           return @"RMOUSEUP";
+            case /*5*/CGEventMaskBit(NX_MOUSEMOVED):         return @"MOUSEMOVED";
+            case /*6*/CGEventMaskBit(NX_LMOUSEDRAGGED):      return @"LMOUSEDRAGGED";
+            case /*7*/CGEventMaskBit(NX_RMOUSEDRAGGED):      return @"RMOUSEDRAGGED";
+            case /*8*/CGEventMaskBit(NX_MOUSEENTERED):       return @"MOUSEENTERED";
+            case /*9*/CGEventMaskBit(NX_MOUSEEXITED):        return @"MOUSEEXITED";
+            case /*25*/CGEventMaskBit(NX_OMOUSEDOWN):        return @"OMOUSEDOWN";
+            case /*26*/CGEventMaskBit(NX_OMOUSEUP):          return @"OMOUSEUP";
+            case /*27*/CGEventMaskBit(NX_OMOUSEDRAGGED):     return @"OMOUSEDRAGGED";
+            case /*10*/CGEventMaskBit(NX_KEYDOWN):           return @"KEYDOWN";
+            case /*11*/CGEventMaskBit(NX_KEYUP):             return @"KEYUP";
+            case /*12*/CGEventMaskBit(NX_FLAGSCHANGED):      return @"FLAGSCHANGED";
+            case /*13*/CGEventMaskBit(NX_KITDEFINED):        return @"KITDEFINED";
+            case /*14*/CGEventMaskBit(NX_SYSDEFINED):        return @"SYSDEFINED";
+            case /*15*/CGEventMaskBit(NX_APPDEFINED):        return @"APPDEFINED";
+            case /*22*/CGEventMaskBit(NX_SCROLLWHEELMOVED):  return @"SCROLLWHEELMOVED";
+            case /*28*/CGEventMaskBit(NX_ZOOM):              return @"ZOOM";
+            case /*23*/CGEventMaskBit(NX_TABLETPOINTER):     return @"TABLETPOINTER";
+            case /*24*/CGEventMaskBit(NX_TABLETPROXIMITY):   return @"TABLETPROXIMITY";
+            default:                                         return nil;
+        }
+    });
+}
+
 #pragma mark - Private helper class
 
 @interface _MFEventTapListener : NSObject {
     @public
+    MFEventListenerID    *_id;
     MFEventType           _events;
     MFEventTapCallback    _callback;
-    void                  *_context;
     bool                  _enabled;
 } @end
-@implementation _MFEventTapListener @end
+@implementation _MFEventTapListener
+    - (NSString *) description {
+        return stringf(@"{ _id: '%@', _callback: %p, _enabled: %@, _events: %@ }", _id, _callback, @(_enabled), MFEventTypeDescription(_events));
+    }
+@end
 
 #pragma mark - Main impl
 
 @implementation MFEventTap
 
-    #pragma mark State
-    static NSMutableDictionary<NSString *, _MFEventTapListener *> *_listeners = nil; /// @mfEventTapTodo Make iteration over these consistently ordered
-
-    #pragma mark Interface for listening
-    + (void) registerListener: (MFEventListenerID *)listenerID forEvents: (MFEventType)events callback: (MFEventTapCallback)callback context: (void *)context {
-        assertRunLoop(IOThread.runLoop);
-
-        if (!_listeners) _listeners = [NSMutableDictionary new];
-
-        _MFEventTapListener *newListener = !events ? nil : configure([_MFEventTapListener new], it->_events = events, it->_callback = callback, it->_context = context, it->_enabled = false);
-        [_listeners setObject: newListener forKey: listenerID];
-
-        updateCGTaps(); /// Do need to call `updateCGTaps()`, in case we're disabling the listener through this call. [Oct 2026]
-    }
-    + (bool) isEnabledForListener: (NSString *)listenerID {
-        assertRunLoop(IOThread.runLoop);
-        if (![_listeners objectForKey: listenerID]) {
-            mfassert(false, @"Trying to get isEnabled for unknown listener id %@. Known: %@", listenerID, [_listeners allKeys]);
-            return false;
-        }
-        return [_listeners objectForKey: listenerID]->_enabled;
-    }
-    + (void) enable: (bool)enable forListener: (NSString *)listenerID {
-        assertRunLoop(IOThread.runLoop);
-        if (![_listeners objectForKey: listenerID]) {
-            mfassert(false, @"Trying to enable unknown listener id %@. Known: %@", listenerID, [_listeners allKeys]);
-            return;
-        }
-        [_listeners objectForKey: listenerID]->_enabled = enable;
-        updateCGTaps();
-    }
-
-    #pragma mark Impl for listening
-
+    #pragma mark Typedefs
     typedef enum {
         kCGTapID_Null = 0,
 
@@ -115,15 +133,24 @@
 
         /// Lazy / runtime
         CFMachPortRef tap;
-        CGEventTapProxy proxy;
 
         /// State
         bool enabled;
     } CGTapData;
 
-    static CGTapID _orderedCGTaps[kCGTapID_Max] = {};
-    static int _orderedCGTaps_Count = 0;
+    NSString *CGTapDataDescription(CGTapData cgTapData[]) {
+        NSMutableString *result = [NSMutableString new];
+        [result appendString: @"{\n"];
+        for range(i, kCGTapID_Max) if (i)
+            [result appendFormat: @"    %@: { options: %d, tap: %p, enabled: %d, mask: %@ }\n", [CGTapIDDescription(i) stringByPaddingToLength: 21 withString: @" " startingAtIndex: 0], cgTapData[i].options, cgTapData[i].tap, cgTapData[i].enabled, CGEventMaskDescription(cgTapData[i].mask)];
+        [result appendString: @"}"];
+        return result;
+    }
 
+    #pragma mark State
+
+    static NSMutableDictionary<NSString *, _MFEventTapListener *> *_listenerMap = nil;
+    static NSMutableArray<_MFEventTapListener *> *_listenerList = nil;                  /// For consistent ordering when iterating over the listeners, which I'm not sure NSMutableDictionary provides. (I guess ordering is good so bugs are deterministic?) [Oct 2026]
     static CGTapData _cgTapData[] = {
         [kCGTapID_Null] = {}, /// This entry enables null-coalescing [Oct 2026]
 
@@ -147,7 +174,60 @@
 
     };
 
+    #pragma mark Locks for the State
+    /// Background: This makes MFEventTap thread safe.  currently only need this for PointerFreeze.m, which wants to share one underlying `kMFEventType_Sensor` CGEventTap (on `IOThread`) with `TwoFingerSwipe.m`, but wants to do most stuff (and control MFEventTap) from mainThread  (See `Slow WindowServer IPC` > `Erratic momentum speeds` notes) [Oct 2026]
+    ///     Could probably restructure `TwoFingerSwipe.m`/`PointerFreeze.m`slightly to avoid need for thread-safe `MFEventTap`, but just making it thread-safe seemed less risky and easier to think about [Oct 2026]
+
+    static os_unfair_lock _listenerLock = OS_UNFAIR_LOCK_INIT; /// Why use `os_unfair_lock`? Idk Opus 5.5 told me. Works, is basically free. @synchronized would probably also work [Oct 2026]
+    static os_unfair_lock _cgTapDataLock = OS_UNFAIR_LOCK_INIT;
+    void _unlock(void *lock) { os_unfair_lock_unlock(*(void **)lock); }
+    #define _lockScope(lockPtr) \
+        os_unfair_lock_lock(lockPtr); \
+        __attribute__((cleanup(_unlock))) auto _scopedLock = (lockPtr);
+
+    #pragma mark Interface for listening
+
+    + (void) registerListener: (MFEventListenerID *)listenerID forEvents: (MFEventType)events callback: (MFEventTapCallback)callback {
+        { _lockScope(&_listenerLock);
+            if (!_listenerMap) _listenerMap = [NSMutableDictionary new];
+            if (!_listenerList) _listenerList = [NSMutableArray new];
+
+            _MFEventTapListener *listener = [_listenerMap objectForKey: listenerID];
+            if (!listener) {
+                listener = [_MFEventTapListener new];
+                [_listenerMap  setObject: listener forKey: listenerID];
+                [_listenerList addObject: listener];
+            }
+            configure(listener, it->_id = listenerID, it->_events = events, it->_callback = callback, it->_enabled = false);
+
+            _DDLogDebug("Registered listener: %@", listener);
+        }
+        updateCGTaps(); /// Do need to call `updateCGTaps()`, in case we're disabling the listener through this call. [Oct 2026]
+    }
+    + (bool) isEnabledForListener: (NSString *)listenerID {
+        _lockScope(&_listenerLock);
+        _MFEventTapListener *listener = [_listenerMap objectForKey: listenerID];
+        if (!listener) {
+            mfassert(false, @"Trying to get isEnabled for unknown listener id %@. Known: %@", listenerID, [_listenerMap allKeys]);
+            return false;
+        }
+        return listener->_enabled;
+    }
+    + (void) enable: (bool)enable forListener: (NSString *)listenerID {
+        { _lockScope(&_listenerLock);
+            _MFEventTapListener *listener = [_listenerMap objectForKey: listenerID];
+            if (!listener) mfassert(false, @"Trying to enable unknown listener id %@. Known: %@", listenerID, [_listenerMap allKeys]);
+            else           listener->_enabled = enable;
+            _DDLogDebug("Enabled/disabled listener: %@", listener);
+        }
+        updateCGTaps();
+    }
+
+    #pragma mark Impl for listening
+
     static void updateCGTaps(void) {
+
+        _lockScope(&_cgTapDataLock);
 
         /// Record current enabledState
         bool _lastCGTapEnabled[kCGTapID_Max];
@@ -157,9 +237,11 @@
         {
             /// Collect the combined MFEventTypes from all listeners
             MFEventType allTypes = 0;
-            for (_MFEventTapListener *listener in [_listeners allValues])
-                if (listener->_enabled)
-                    allTypes |= listener->_events;
+            { _lockScope(&_listenerLock)
+                for (_MFEventTapListener *listener in _listenerList)
+                    if (listener->_enabled)
+                        allTypes |= listener->_events;
+            }
 
             /// Figure out which underlying `CGEventTaps` we need based on combined `MFEventTypes`
             _cgTapData[kCGTapID_KeyboardModifier].enabled     = allTypes & kMFEventType_KeyboardModifier;
@@ -176,37 +258,42 @@
         }
 
         /// Toggle the cgTaps whose enabledState changed
-        for range(i, kCGTapID_Max) if (i)
-            if (_lastCGTapEnabled[i] != _cgTapData[i].enabled) {
+        for range(i, kCGTapID_Max) if (i) if (_lastCGTapEnabled[i] != _cgTapData[i].enabled) {
 
-                /// Lazily create the tap (not sure if good)
-                ///     This leaks but ok since this only runs a few times [Oct 2026]
-                if (!_cgTapData[i].tap) {
+            /// Lazily create the tap (not sure if good)
+            ///     This leaks but ok since this only runs a few times [Oct 2026]
+            if (!_cgTapData[i].tap) {
 
-                    CFMachPortRef eventTap = CGEventTapCreate(kMFEventTapLocation, kCGTailAppendEventTap, _cgTapData[i].options, _cgTapData[i].mask, sharedCGTapCallback, /*userInfo*/(void *)i);
-                    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, /*order*/0);
-                    CFRunLoopAddSource([IOThread runLoop], runLoopSource, /*mode*/kCFRunLoopCommonModes);
-                    _cgTapData[i].tap = eventTap;
-                    _orderedCGTaps[_orderedCGTaps_Count++] = i; /// Works because we use `kCGTailAppendEventTap` [Oct 2026]
-                }
+                CFMachPortRef eventTap = CGEventTapCreate(kTapLocation_Listening, kCGTailAppendEventTap, _cgTapData[i].options, _cgTapData[i].mask, sharedCGTapCallback, /*userInfo*/(void *)i);
+                CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, /*order*/0);
+                CFRunLoopAddSource(eventTapRunLoop(), runLoopSource, /*mode*/kCFRunLoopCommonModes);
 
-                /// Toggle the tap
-                CGEventTapEnable(_cgTapData[i].tap, _cgTapData[i].enabled);
+                _cgTapData[i].tap = eventTap;
             }
+
+            /// Toggle the tap
+            CGEventTapEnable(_cgTapData[i].tap, _cgTapData[i].enabled);
+        }
+
+        if (runningDebugMode()) {
+            _lockScope(&_listenerLock);
+            _DDLogDebug("Updated taps to: %@ for listeners %@", CGTapDataDescription(_cgTapData), _listenerList);
+        }
     }
 
     static CGEventRef sharedCGTapCallback(CGEventTapProxy proxy, CGEventType cgEventType, CGEventRef cgEvent, void *userInfo) {
+        assertRunLoop(eventTapRunLoop());
 
         /// Get the cgTap
         CGTapID tapID = (CGTapID)userInfo;
 
-        /// Store the cgProxy
-        _cgTapData[tapID].proxy = proxy;
-
         /// Handle special events
         if (cgEventType == kCGEventTapDisabledByTimeout || cgEventType == kCGEventTapDisabledByUserInput) {
-            DDLogDebug("MFEventTap: cgTap %@ was disabled by %@", CGTapIDDescription(tapID), cgEventType == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
-            if (cgEventType == kCGEventTapDisabledByTimeout) CGEventTapEnable(_cgTapData[tapID].tap, true);
+            _DDLogDebug("cgTap '%@' was disabled by %@", CGTapIDDescription(tapID), cgEventType == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+            if (cgEventType == kCGEventTapDisabledByTimeout) {
+                _lockScope(&_cgTapDataLock);
+                if (_cgTapData[tapID].enabled) CGEventTapEnable(_cgTapData[tapID].tap, true);
+            }
             return cgEvent;
         }
 
@@ -229,9 +316,17 @@
         }
 
         /// Notify listeners for this `MFEventType`
-        for (_MFEventTapListener *listener in [_listeners allValues])
-            if (listener->_enabled && listener->_events & mfEventType)
-                listener->_callback(listener->_context, mfEventType, &cgEvent); /// If multiple listeners modify the `&cgEvent`, weird things could happen, MMF doesn't currently do this [Oct 2026]
+        { _lockScope(&_listenerLock);
+            for (_MFEventTapListener *listener in _listenerList) {
+                if (listener->_enabled && listener->_events & mfEventType) {
+                    MFEventTapCallback callback = listener->_callback;
+                    if ((0)) _DDLogDebug("Calling out to listener %@ for eventType %@", listener, MFEventTypeDescription(mfEventType)); /// Extremely verbose and not necessary [Oct 2026]
+                    os_unfair_lock_unlock(&_listenerLock); /// Unlock around the callout since `os_unfair_lock` isn't recursive [Oct 2026]
+                    callback(mfEventType, &cgEvent); /// If multiple listeners modify the `&cgEvent`, weird things could happen, MMF doesn't currently do this [Oct 2026]
+                    os_unfair_lock_lock(&_listenerLock);
+                }
+            }
+        }
 
         /// Return event
         return cgEvent;
@@ -240,25 +335,14 @@
     #pragma mark Interface for sending
 
     + (void) postCGEvent: (CGEventRef)cgEvent {
-        assertRunLoop(IOThread.runLoop);
-
-        CGEventTapProxy lastProxy = NULL;
-        for reverse_range(i, _orderedCGTaps_Count)
-            if (_cgTapData[_orderedCGTaps[i]].proxy)
-                { lastProxy = _cgTapData[_orderedCGTaps[i]].proxy; break; }
-
-        if (lastProxy) CGEventTapPostEvent(lastProxy, cgEvent);  /// Post after the last of our taps, prevents any feedback loops [Oct 2026]
-        else           [self postCGEventBeforeAllSessionTaps: cgEvent]; /// This can't feed back into our taps either, because we always have a proxy for all our taps (I hope) [Oct 2026]. @mfEventTapTodo: Look into private API for getting the proxy immediately
+        if ((0)) _DDLogDebug("Posting event %@", cgEvent); /// Too verbose, and completely unnecessary [Oct 2026]
+        CGEventPost(kTapLocation_Posting, cgEvent);
     }
 
-    + (void) postCGEventBeforeAllSessionTaps: (CGEventRef)cgEvent { /// Posting gesture events here or before is necessary for interop with Swish which taps at `kCGSessionEventTap`/`kCGHeadInsertEventTap` says Opus 5.5 [Oct 2026] There's no harm (feedback loop chance) in posting before our taps if it's an eventType we're not listening to (We're not listening to touch events) [Oct 2026] @mfEventTapTodo: Actually, we do listen to e22 - so there is feedback, costing CPU.
-        assertRunLoop(IOThread.runLoop);
-        CGEventPost(kCGSessionEventTap, cgEvent);
-    }
+    #pragma mark Interface for debug descriptions
 
-    #pragma mark Debug descriptions
     + (NSString *) descriptionForListener: (MFEventListenerID *)listenerID {
-        assertRunLoop(IOThread.runLoop);
-        return [[_listeners objectForKey: listenerID] description];
+        _lockScope(&_listenerLock);
+        return [[_listenerMap objectForKey: listenerID] description];
     }
 @end

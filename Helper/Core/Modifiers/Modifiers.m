@@ -64,7 +64,7 @@ static NSMutableDictionary *_modifiers;
         _modifiers = [NSMutableDictionary dictionary];
         
         /// Create keyboard modifier event tap
-        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyboardModifier callback: kbModsChanged context: NULL];
+        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyboardModifier callback: kbModsChanged];
 
         #if 0
         /// Enable/Disable eventTap based on Remap.remaps
@@ -216,7 +216,7 @@ static MFModifierPriority _btnModPriority;
 
 #pragma mark Handle modifier change
 
-void kbModsChanged(void *context, MFEventType eventType, CGEventRef *eventPtr) {
+void kbModsChanged(MFEventType eventType, CGEventRef *eventPtr) {
     
     /// Get mouse
     

@@ -41,6 +41,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     ///     - Edit: Using the `_smoothingAnimator` forces complicated `continuation` code.
     ///         Maybe you could just introduce a delay between the last two events? I feel like the lack of that delay causes most of the erratic behaviour.
     ///     @afterNoGCDTodo [Oct 2026] In Safari (heavy load), I observe much more erratic momentum speeds after 'No more dispatch queues' refactor! Possibly `MFEventTap` will fix this.
+    ///         Update: Fixed! See `Erratic momentum speeds` notes [Oct 2026]
     ///
     /// - Using a TouchAnimator here might not be the best choice. We made the TouchAnimator primarily for scrollwheel input. But then we started using it here too.
     ///     In both situations we needed pretty different functionality so now it's this weird swiss army knife hybrid. For example it supports Vectors which we don't
@@ -79,6 +80,9 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 + (void)handleBecameInUse {
     
     /// Freeze pointer
+
+    WarpDeltaCompensator_ReportFreeze(&_drag->warpDeltaCompensator, _drag->usageOrigin);
+
     if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
     } else {
@@ -244,11 +248,12 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
         /// Handle non-cancelation
 
-
         /// Crash if continuation (below) times out [Oct 2026]
         ///     We added this before 'No more dispatch queues' refactor when this was prone to deadlocks. Now I don't think this can permanently freeze anymore?
         ///     But still good to have a failsafe against freezing the user's pointer (really bad). [Oct 2026]
-        NSTimer *continuationTimeout = [NSTimer timerWithTimeInterval: /** Crash after 2 seconds */2.0 repeats: NO block:^(NSTimer * _Nonnull timer) {
+        static NSTimer *continuationTimeout = nil;
+        [continuationTimeout invalidate];
+        continuationTimeout = [NSTimer mf_scheduledTimerWithTimeInterval: /** Crash after 2 seconds */2.0 mode: NSRunLoopCommonModes block:^(NSTimer * _Nonnull timer) {
             if (!runningDebugMode()) /// Make failures more noticable in debug mode I guess [Oct 2026]
                 [PointerFreeze unfreeze]; /// If we don't do this, I guess the pointer could stay hidden after crash? Not sure. Don't remember ever noticing this making a difference in the last years [Oct 2026]
             DDLogError("twoFinger continuation timed out. Aborting");
@@ -266,7 +271,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
             DDLogDebug("twoFinger continuing deactivation after momentumScroll start.");
             [PointerFreeze unfreeze];
             [GestureScrollSimulator afterStartingMomentumScroll: NULL];
-            [continuationTimeout invalidate];
+            [continuationTimeout invalidate]; continuationTimeout = nil;
         };
         [GestureScrollSimulator afterStartingMomentumScroll: continuation];
 

@@ -48,10 +48,10 @@ static NSMutableDictionary *_swipeInfo;
     CGEventSetIntegerValueField(e, 132, kIOHIDEventPhaseBegan);
     CGEventSetIntegerValueField(e, 115, dir);
     
-    [MFEventTap postCGEventBeforeAllSessionTaps: e];
+    [MFEventTap postCGEvent: e];
     CGEventSetIntegerValueField(e, 115, kIOHIDSwipeNone);
     CGEventSetIntegerValueField(e, 132, kIOHIDEventPhaseEnded);
-    [MFEventTap postCGEventBeforeAllSessionTaps: e];
+    [MFEventTap postCGEvent: e];
     CFRelease(e);
 }
 
@@ -60,7 +60,7 @@ static NSMutableDictionary *_swipeInfo;
     CGEventRef e = CGEventCreate(NULL);
     CGEventSetIntegerValueField(e, 55, 29); /// NSEventTypeGesture
     CGEventSetIntegerValueField(e, 110, 22); /// kIOHIDEventTypeZoomToggle
-    [MFEventTap postCGEventBeforeAllSessionTaps: e];
+    [MFEventTap postCGEvent: e];
     CFRelease(e);
 }
 
@@ -72,7 +72,7 @@ static NSMutableDictionary *_swipeInfo;
     CGEventSetIntegerValueField(e, 110, 5); /// kIOHIDEventTypeRotation
     CGEventSetDoubleValueField(e, 114, rotation);
     CGEventSetIntegerValueField(e, 132, phase);
-    [MFEventTap postCGEventBeforeAllSessionTaps: e];
+    [MFEventTap postCGEvent: e];
     CFRelease(e);
 }
 
@@ -92,7 +92,7 @@ static NSMutableDictionary *_swipeInfo;
     CGEventSetIntegerValueField(event, 110, 8); /// 8 -> kIOHIDEventTypeZoom
     CGEventSetIntegerValueField(event, 132, phase);
     CGEventSetDoubleValueField(event, 113, magnification);
-    [MFEventTap postCGEventBeforeAllSessionTaps: event];
+    [MFEventTap postCGEvent: event];
     CFRelease(event);
 }
 

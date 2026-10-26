@@ -56,12 +56,12 @@ static void registerInputCallback(void) {
     for (int i = 2; i < kMFMaxButtonNumber; i++) types |= kMFEventType_Button(i);
 
     /// Create tap
-    [MFEventTap registerListener: kListenerID forEvents: types callback: eventTapCallback context: NULL];
+    [MFEventTap registerListener: kListenerID forEvents: types callback: eventTapCallback];
 }
 
 NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
 
-static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
+static void eventTapCallback(MFEventType eventType, CGEventRef *eventPtr) {
 
     assertRunLoop(IOThread.runLoop);
 

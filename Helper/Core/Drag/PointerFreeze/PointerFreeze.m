@@ -9,7 +9,7 @@
 
 ///
 /// TODO: Build a failsafe so users never get stuck with a frozen pointer.
-///     - July 2024 - I think I just got stuck with a 'frozen' pointer (it still moved, but clicking anything didn't work and sometimes the pointer teleported to the middle of the screen) I couldn't trace back how this issue happened, and it seems to be really rare, but I think it would be good to give some reliable way to the user for ending pointer freeze in case it gets stuck. For example we could end the freeze on left-click, or perhaps we could build some vaildation e.g. assert that the pointer is not frozen (aka `_coolEventTapIsEnabled == YES`) before freeze() is called.
+///     - July 2024 - I think I just got stuck with a 'frozen' pointer (it still moved, but clicking anything didn't work and sometimes the pointer teleported to the middle of the screen) I couldn't trace back how this issue happened, and it seems to be really rare, but I think it would be good to give some reliable way to the user for ending pointer freeze in case it gets stuck. For example we could end the freeze on left-click, or perhaps we could build some vaildation e.g. assert that the pointer is not frozen (aka `[MFEventTap isEnabledForListener:] == YES`) before freeze() is called.
 ///
 
 #import "PointerFreeze.h"
@@ -23,10 +23,11 @@
 @import CoreMedia;
 #import "MFGate.h"
 #import "MFEventTap.h"
+#import "WarpDeltaCompensator.h"
 
 @implementation PointerFreeze
 
-/// Vars
+/// State
 
 static CGPoint _origin;
 static CGPoint _puppetCursorPosition;
@@ -40,9 +41,14 @@ static CGDirectDisplayID _display;
 
 static CFTimeInterval _lastEventTimestamp;
 static int64_t _lastEventDelta;
+static WarpDeltaCompensator _warpDeltaCompensator = { .name = "PointerFreeze" };
 
-#define pointerFreezeRunLoop() IOThread.runLoop
+#define pointerFreezeRunLoop()      CFRunLoopGetMain()  ///< runLoop that owns most of the state above [Oct 2026]
+#define _ioThreadRunLoop()          eventTapRunLoop()   ///< runLoop where we expect the callers to run and where MFEventTap delivers us per-event callbacks. Owns a few state vars, which is probably stupid [Oct 2026]
+#define slowWindowServerRunLoop()   CFRunLoopGetMain()  ///< runLoop for doing WindowServer IPC which can block for a long time. Only before the slow calls as documentation. See `Slow WindowServer IPC` notes. [Oct 2026]
+
 #define kListenerID @"PointerFreeze"
+
 
 /// + initialize
 
@@ -62,7 +68,7 @@ static int64_t _lastEventDelta;
 
         _cgsConnection = CGSMainConnectionID();
         _puppetCursorView = [[NSImageView alloc] init];
-        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Sensor callback: mouseMovedCallback context: NULL];
+        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_Sensor callback: mouseMovedCallback];
     }
 }
 
@@ -87,70 +93,73 @@ static int64_t _lastEventDelta;
 }
 
 static void freezePointer(CGPoint origin, BOOL keepPointerMoving) {
-    assertRunLoop(pointerFreezeRunLoop());
 
-    /// Debug
-    DDLogDebug("PointerFreeze - freezing");
+    mfrunAndWait/*mfrun*/(pointerFreezeRunLoop(), ^{ /// Freeze and unfreeze is blocking via `mfrunAndWait()`. It matches older pre-'No more dispatch queues' behavior (which I'm not sure was explained). Not sure this helps [Oct 2026]
 
-    /// Store
-    _origin = origin;
-    _keepPointerMoving = keepPointerMoving;
+        /// Debug
+        DDLogDebug("PointerFreeze - freezing");
 
-    /// Decrease delay after warping
-    ///     But only as much so that it doesn't break `CGWarpMouseCursorPosition(()` ability to stop cursor by calling repeatedly
-    ///     This changes the timeout globally for many events, so we need to reset this after the drag is deactivated!
-    setSuppressionInterval(kMFEventSuppressionIntervalForStoppingCursor);
+        /// Store
+        _origin = origin;
+        _keepPointerMoving = keepPointerMoving;
+        WarpDeltaCompensator_ReportFreeze(&_warpDeltaCompensator, _origin);
 
-    /// Enable eventTap
-    [MFEventTap enable: true forListener: kListenerID];
+        /// Decrease delay after warping
+        ///     But only as much so that it doesn't break `CGWarpMouseCursorPosition(()` ability to stop cursor by calling repeatedly
+        ///     This changes the timeout globally for many events, so we need to reset this after the drag is deactivated!
+        setEventSuppressionInterval(kMFEventSuppressionInterval_ForLockingPointerByWarping);
 
-    if (keepPointerMoving) {
+        /// Enable eventTap
+        [MFEventTap enable: true forListener: kListenerID];
 
-        /// Init puppet cursor pos
-        _puppetCursorPosition = origin;
+        if (keepPointerMoving) {
 
-        /// Get display under mouse pointer
-        CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
-        if (rt != kCVReturnSuccess) DDLogWarn("Couldn't get display under mouse pointer in PointerFreeze");
+            /// Init puppet cursor pos
+            _puppetCursorPosition = origin;
 
-        /// Draw puppet cursor before hiding
-        drawPuppetCursor(kPuppetCursorCommand_Draw);
+            /// Get display under mouse pointer
+            CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
+            if (rt != kCVReturnSuccess) DDLogWarn("Couldn't get display under mouse pointer in PointerFreeze");
 
-        if ((0)) {
-            /// Wait
-            ///     [Sep 2026] Aparrently used to prevent flickers when I developed this (real pointer hiding before puppet cursor draws)
-            ///         Don't think this is necessary anymore. Don't see any flicker when freezing. We're also waiting on mainThread in the `kPuppetCursorCommand_Draw` above, so maybe that helps. Not sure.
-            ///         (However, I *am* seeing occasional flicker when unfreezing now! Maybe look into that at some point. [Sep 2026])
-            ///         Old notes:
-            ///             The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
-            ///             This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
-            ///             Not sure why this happens. But adding a delay of 20 ms before hiding makes it look seamless.
-            ///             Edit: deferring caused race conditions, so we're sleeping instead. Might be bad for performance because this is running on IOThread [Oct 2026]
-            ///
-            usleep(10 * 1000); /// Wait for 10 ms
+            /// Draw puppet cursor before hiding
+            drawPuppetCursor(kPuppetCursorCommand_Draw);
+
+            if ((0)) {
+                /// Wait
+                ///     [Sep 2026] Aparrently used to prevent flickers when I developed this (real pointer hiding before puppet cursor draws)
+                ///         Don't think this is necessary anymore. Don't see any flicker when freezing. We're also waiting on mainThread in the `kPuppetCursorCommand_Draw` above, so maybe that helps. Not sure.
+                ///         (However, I *am* seeing occasional flicker when unfreezing now! Maybe look into that at some point. [Sep 2026])
+                ///         Old notes:
+                ///             The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
+                ///             This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
+                ///             Not sure why this happens. But adding a delay of 20 ms before hiding makes it look seamless.
+                ///             Edit: deferring caused race conditions, so we're sleeping instead. Might be bad for performance because this is running on IOThread [Oct 2026]
+                ///
+                usleep(10 * 1000); /// Wait for 10 ms
+            }
+
+            /// Hide cursor
+            assertRunLoop(slowWindowServerRunLoop()); /// Observed `CGDisplayHideCursor` to be slow - not sure it matters since it's at the start, not middle / end of the freeze. See `Slow WindowServer IPC` notes.
+            [ModificationUtility hideMousePointer: YES];
         }
-
-        /// Hide cursor
-        [ModificationUtility hideMousePointer: YES];
-    }
+    });
 }
 
-void mouseMovedCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
+void mouseMovedCallback(MFEventType eventType, CGEventRef *eventPtr) {
 
-    assertRunLoop(pointerFreezeRunLoop());
+    assertRunLoop(_ioThreadRunLoop());
 
     CGEventRef event = *eventPtr;
 
     /// Get deltas
-    int64_t dx = -1;
-    int64_t dy = -1;
-    if (_keepPointerMoving) {
-        dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
-        dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    }
-    
+    int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
+    int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+
+    /// Compensate
+    WarpDeltaCompensator_GetActualDelta(&_warpDeltaCompensator, dx, dy, CGEventGetLocation(event), &dx, &dy);
+
     /// Debug
-    DDLogDebug("PointerFreeze mouseMovedCallback [debugWarpDelta] delta: (%lld, %lld), loc (%d, %d), _coolEventTapIsEnabled: %d"
+    DDLogDebug("PointerFreeze mouseMovedCallback [debugWarpDelta] delta: (%lld, %lld), loc (%d, %d), isEnabledForListener: %d"
         ,CGEventGetIntegerValueField(event, kCGMouseEventDeltaX)
         ,CGEventGetIntegerValueField(event, kCGMouseEventDeltaY)
         ,(int)CGEventGetLocation(event).x
@@ -159,48 +168,61 @@ void mouseMovedCallback(void *context, MFEventType eventType, CGEventRef *eventP
     );
 
     /// Record timestamp and delta
+    /// TODO: _lastEventTimestamp -> Maybe use the more-accurate IOHIDEvent timestamp instead, or least CGEventGetTimestampInSeconds (throughout the codebase) [Oct 2026]
+    /// TODO: _lastEventDelta -> This llabs calculation is broken, but it's been working fine for years in practice [Oct 2026] -> Maybe remove
+    ///     -> If we do both of these, we can remove `_ioThreadRunLoop()` checks [Oct 2026]
     _lastEventTimestamp = CACurrentMediaTime();
     _lastEventDelta = llabs(MAX(dx,dy));
-        
+
     /// Check interrupt
     if (![MFEventTap isEnabledForListener: kListenerID]) return;
 
-    /// Warp pointer to origin to prevent cursor movement
-    ///     This only works when the suppressionInterval is a certain size, and that will cause a slight stutter / delay until the mouse starts moving againg when we deactivate. So this isn't optimal
-    CGWarpMouseCursorPosition(_origin);
+    mfrun(pointerFreezeRunLoop(), ^{ /// Defer so the per-event callback does not block on `slowWindowServerRunLoop()` stuff, competing with the `_smoothingAnimator`. See `Slow WindowServer IPC` notes. [Oct 2026]
 
-    //        CGWarpMouseCursorPosition(_drag->origin);
-    /// ^ Move pointer to origin instead of usageOrigin to make scroll events dispatch there - would be nice but that moves the pointer, which creates events which will feed back into our eventTap and mess everything up (even though `CGWarpMouseCursorPosition` docs say that it doesn't create events??)
-    ///     I gues we'll just have to make the usageThreshold small instead
+        /// Check interrupt
+        if (![MFEventTap isEnabledForListener: kListenerID]) return;
 
-    /// Disassociate pointer to prevent cursor movements
-    ///     This makes the inputDeltas weird I feel. Better to freeze pointer through calling CGWarpMouseCursorPosition repeatedly.
-    //        CGAssociateMouseAndMouseCursorPosition(NO);
+        /// Warp pointer to origin to prevent cursor movement
+        ///     This only works when the suppressionInterval is a certain size, and that will cause a slight stutter / delay until the mouse starts moving againg when we deactivate. So this isn't optimal
+        assertRunLoop(slowWindowServerRunLoop()); /// Observed `CGWarpMouseCursorPosition` to be slow. See `Slow WindowServer IPC` notes. [Oct 2026]
+        CGWarpMouseCursorPosition(_origin);
 
-    if (_keepPointerMoving) {
-        /// Update puppetCursorPosition
-        updatePuppetCursorPosition(dx, dy);
-        /// Draw puppet cursor
-        drawPuppetCursor(kPuppetCursorCommand_Move);
-    }
+        /// Move pointer to origin instead of usageOrigin to make scroll events dispatch there - would be nice but that moves the pointer, which creates events which will feed back into our eventTap and mess everything up (even though `CGWarpMouseCursorPosition` docs say that it doesn't create events??)
+        ///     I gues we'll just have to make the usageThreshold small instead
+        #if 0
+        CGWarpMouseCursorPosition(_drag->origin);
+        #endif
+
+        /// Disassociate pointer to prevent cursor movements
+        ///     This makes the inputDeltas weird I feel. Better to freeze pointer through calling CGWarpMouseCursorPosition repeatedly.
+        if ((0)) CGAssociateMouseAndMouseCursorPosition(NO);
+
+        if (_keepPointerMoving) {
+            /// Update puppetCursorPosition
+            updatePuppetCursorPosition(dx, dy);
+            /// Draw puppet cursor
+            drawPuppetCursor(kPuppetCursorCommand_Move);
+        }
+
+    });
 }
 
 + (void)unfreeze {
+    assertRunLoop(_ioThreadRunLoop()); /// `_ioThreadRunLoop()` owns `_lastEventTimestamp` and `_lastEventDelta` currently. Probably stupid and could be removed [Oct 2026]
 
-    assertRunLoop(pointerFreezeRunLoop());
-
-    /// Record timestamp
+    /// Record timestamp and access `_ioThreadRunLoop()`-owned vars before `mfrunAndWait` [Oct 2026]
     CFTimeInterval timeSinceLastEvent = CACurrentMediaTime() - _lastEventTimestamp;
-    
-    {
-        
-        /// Process timestamp
-        BOOL pointerIsMoving = (timeSinceLastEvent < GeneralConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
-        
+    int64_t lastEventDelta = _lastEventDelta;
+
+    /// Process timestamp
+    BOOL pointerIsMoving = (timeSinceLastEvent < GeneralConfig.mouseMovingMaxIntervalSmall) && lastEventDelta > 0;
+
+    mfrunAndWait(pointerFreezeRunLoop(), ^{
+
         /// Debug
         /// Doing this outside the queue led to race conditions (I think?)
         DDLogDebug("PointerFreeze - UNfreezing");
-        DDLogDebug("PointerFreeze - pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
+        DDLogDebug("PointerFreeze - pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, lastEventDelta);
         
         /// Disable eventTap
         /// Think about the order of getting pos, unfreezing, and disabling event tap. -> I think it doesn't matter since everything is locked.
@@ -208,26 +230,23 @@ void mouseMovedCallback(void *context, MFEventType eventType, CGEventRef *eventP
         
         CGPoint warpDestination;
         if (_keepPointerMoving) {
-            setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
+            setEventSuppressionInterval(kMFEventSuppressionInterval_ForWarpingPointerToPuppet);
             warpDestination = _puppetCursorPosition;
         } else {
-            /// When we're freezing the pointer, we still want to warp one last time, to create a the delay before the pointer unfreezes.
-            
-            MFEventSuppressionInterval delay;
-            if (pointerIsMoving) {
-                delay = kMFEventSuppressionIntervalForUnfreezingPointerDuringFlick;
-            } else {
-                delay = kMFEventSuppressionIntervalZero;
-            }
-            setSuppressionInterval(delay);
+            /// When locking the pointer completely (without a moving puppet), we still want to warp one last time on unfreeze, to create a the delay before the pointer reacts to user input again.
+            CFTimeInterval interval;
+            if (pointerIsMoving) interval = kMFEventSuppressionInterval_ForReleasingLockedPointerDuringFlick;
+            else                 interval = kMFEventSuppressionInterval_ForReleasingLockedPointer; /// This is 0 - does that turn this into a no-op? Forgot intention behind this code [Oct 2026]
+            setEventSuppressionInterval(interval);
             warpDestination = _origin;
         }
         
-        /// Warp actual cursor to position of puppet cursor
+        /// Warp pointer
+        assertRunLoop(slowWindowServerRunLoop()); /// Observed `CGWarpMouseCursorPosition` to be slow. Not sure it matters since this is the end, not middle of the freeze. See `Slow WindowServer IPC` notes. [Oct 2026]
         CGWarpMouseCursorPosition(warpDestination);
         
         if (_keepPointerMoving) {
-        
+
             /// Show mouse pointer again
             [ModificationUtility hideMousePointer: NO];
 
@@ -236,26 +255,22 @@ void mouseMovedCallback(void *context, MFEventType eventType, CGEventRef *eventP
         }
         
         /// Reset suppression interval to default
-        setSuppressionInterval(kMFEventSuppressionIntervalDefault);
-    }
+        setEventSuppressionInterval(kMFEventSuppressionInterval_Default);
+    });
 }
 
 #pragma mark - Helper functions
 
 /// Event suppression
 
-typedef enum {
-    kMFEventSuppressionIntervalZero,
-    kMFEventSuppressionIntervalForWarping,
-    kMFEventSuppressionIntervalForStoppingCursor,
-    kMFEventSuppressionIntervalForUnfreezingPointerDuringFlick,
-    kMFEventSuppressionIntervalDefault,
-} MFEventSuppressionInterval;
+static const CFTimeInterval kMFEventSuppressionInterval_ForLockingPointerByWarping           = 0.070; /*0.050*/  /// Can't be 0 or else repeatedly calling CGWarpMouseCursorPosition() won't work for stopping the cursor
+static const CFTimeInterval kMFEventSuppressionInterval_ForWarpingPointerToPuppet            = 0.000;
+static const CFTimeInterval kMFEventSuppressionInterval_ForReleasingLockedPointer            = 0.000;
+static const CFTimeInterval kMFEventSuppressionInterval_ForReleasingLockedPointerDuringFlick = 0.150;            /// We use a larger delay here so that the pointer doesn't suddenly get flicked around when unfreezing during a flick
+static const CFTimeInterval kMFEventSuppressionInterval_Default                             = -1;
 
-static MFEventSuppressionInterval _previousMFSuppressionInterval = kMFEventSuppressionIntervalDefault;
-static CFTimeInterval _defaultSuppressionInterval = 0.25;
-void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
-    
+static void setEventSuppressionInterval(CFTimeInterval interval) {
+
     /// We use CGWarpMousePointer to keep the pointer from moving during simulated touchScroll.
     ///     However, after that, the cursor will freeze for like half a second which is annoying.
     ///     To avoid this we need to set the CGEventSuppressionInterval to 0
@@ -264,48 +279,37 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     ///         I thought about using CGAssociateMouseAndMouseCursorPosition(), but in the end we'll still have to use the warp when deactivating to get the real pointer position to where the puppetPointerPosition is. And that's where the delay comes from. Also when using CGAssociateMouseAndMouseCursorPosition() the deltas become really inaccurate and irratic, overdriving the momentumScroll. So there's no benefit to using CGAssociateMouseAndMouseCursorPosition().
     /// Src: https://stackoverflow.com/questions/8215413/why-is-cgwarpmousecursorposition-causing-a-delay-if-it-is-not-what-is
     
-    /// Get source
+    /// Get eventSource
     CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
-    
-    /// Store default
-    if (_previousMFSuppressionInterval == kMFEventSuppressionIntervalDefault) {
-        _defaultSuppressionInterval = CGEventSourceGetLocalEventsSuppressionInterval(src);
+
+    /// Dynamically retrieve the default suppressionInterval
+    static CFTimeInterval _actualDefaultInterval = 0.250;
+    {
+        static CFTimeInterval _lastInterval = kMFEventSuppressionInterval_Default;
+        if (_lastInterval == kMFEventSuppressionInterval_Default)
+            _actualDefaultInterval = CGEventSourceGetLocalEventsSuppressionInterval(src);
+        _lastInterval = interval;
     }
-    
-    /// Get interval
-    double interval;
-    if (mfInterval == kMFEventSuppressionIntervalForStoppingCursor) {
-        /// Can't be 0 or else repeatedly calling CGWarpMouseCursorPosition() won't work for stopping the cursor
-        interval = 0.07 /*0.05*/;
-    } else if (mfInterval == kMFEventSuppressionIntervalZero) {
-        interval = 0.000;
-    } else if (mfInterval == kMFEventSuppressionIntervalDefault) {
-        interval = _defaultSuppressionInterval;
-    } else if (mfInterval == kMFEventSuppressionIntervalForWarping) {
-        interval = 0.000;
-    } else if (mfInterval == kMFEventSuppressionIntervalForUnfreezingPointerDuringFlick) {
-        /// We use a larger delay here so that the pointer doesn't suddenly get flicked around when unfreezing during a flick
-        interval = 0.15;
-    } else {
-        assert(false);
-    }
-    
-    /// Set new suppressionInterval
+
+    /// Resolve the `kMFEventSuppressionInterval_Default` sentinel
+    if (interval == kMFEventSuppressionInterval_Default) interval = _actualDefaultInterval;
+
+    /// Set new interval
     CGEventSourceSetLocalEventsSuppressionInterval(src, interval);
     
-    /// Analyze suppresionInterval
-    CFTimeInterval intervalResult = CGEventSourceGetLocalEventsSuppressionInterval(src);
-    DDLogDebug("PointerFreeze - Event suppression interval: %f", intervalResult);
-    
-    /// Store previous mfInterval
-    _previousMFSuppressionInterval = mfInterval;
-    
-    /// Release
+    /// Validate
+    if (runningDebugMode()) {
+        CFTimeInterval intervalResult = CGEventSourceGetLocalEventsSuppressionInterval(src);
+        DDLogDebug("PointerFreeze - Event suppression interval: %f (set to: %f)", intervalResult, interval);
+    }
+
+    /// Clean up
     CFRelease(src);
 }
 
-void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
-    
+#if 0
+void setEventSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
+
     /// Get src
     CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     /// Set new suppressionInterval
@@ -313,6 +317,7 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
     /// Release
     CFRelease(src);
 }
+#endif
 
 /// Puppet cursor
 
@@ -359,16 +364,20 @@ static void drawPuppetCursor(PuppetCursorCommand command) {
     /// Decide about blocking
     /// I used to think blocking was necessary to get the order of hiding/drawing/processing gesture right/non janky. On my M4 MBA it doesn't seem to make a difference. (Still had the usleep enabled, so maybe test again) Still doing this just in case or whatever I guess [Sep 2026]
     /// Wating on main could deadlock if main ever waits on IOThread (caller)! Doesn't do that currently [Sep 2026]
-    bool blockCaller = command != kPuppetCursorCommand_Move;
-    MFGate *gate = blockCaller ? [MFGate new] : nil;
 
-    /// Debug
-    double tsBeforeMain = CACurrentMediaTime();
+    #define kAllOnMain 1
+    #if !kAllOnMain /// [Oct 2026] We've now moved the whole `pointerFreezeRunLoop()` to `CFRunLoopGetMain()`, and the blocking is done earlier through `mfrunAndWait()`
+        bool blockCaller = command != kPuppetCursorCommand_Move;
+        MFGate *gate = blockCaller ? [MFGate new] : nil;
+
+        /// Debug
+        double tsBeforeMain = CACurrentMediaTime();
+    #endif
 
     /// Interact with AppKit from mainThread
     /// Optimization idea: Maybe coalesce these like we're already doing for DisplayLink.m's displayLinkCallback or ModifiedDrag's coalescingDisplayLink (But don't skip draw/undraw commands!) [Sep 2026]
-    mfrun(CFRunLoopGetMain(), ^{
-
+    mfassert(pointerFreezeRunLoop() == CFRunLoopGetMain());
+    {
         if (command == kPuppetCursorCommand_Draw) {
 
             /// Store cursor image into puppet view
@@ -398,15 +407,21 @@ static void drawPuppetCursor(PuppetCursorCommand command) {
             [ScreenDrawer.shared undrawWithView: _puppetCursorView];
         }
 
+        #if !kAllOnMain
         [gate signalWorkCompleted];
-    });
+        #endif
+    }
 
+    #if !kAllOnMain
     [gate waitForWork];
-
     if (gate) DDLogDebug("PointerFreeze waited %-7.2f (%@)", 1e3 * (CACurrentMediaTime() - tsBeforeMain), PuppetCursorCommand_Description(command));
+    #endif
+
+    #undef kAllOnMain
 }
 
 static void updatePuppetCursorPosition(int64_t dx, int64_t dy) {
+    assertRunLoop(pointerFreezeRunLoop());
 
     /// Store in local var
     ///     for easier readability

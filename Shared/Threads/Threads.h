@@ -47,7 +47,7 @@
                 Problem: No thread priority
                         (Also see `Ideas and notes about elevating thread priority` and `set_thread_priority` in the `.m` file [Oct 2026])
                     My theory for how MMF Helper can cause framedrops / unresponsiveness at all (even though it uses little CPU), is when system is under load and deprioritizes helper to keep the foreground app responsive (but then actually makes forground app less responsive, because the mouse driver is being throttled, which everything depends on).
-                        (Update: [Oct 2026] We saw PointerFreeze > CGEventTapEnable() cause long stalls under heavy load (See `[debugWarpDelta]`)- so I guess waiting on WindowServer could also cause delays, but  then there are heavy framedrops anways, probably - feel like priority `normalApps < MMF < WindowServer` makes sense (Untested))
+                        (Update: [Oct 2026] We saw PointerFreeze > CGEventTapEnable() cause long stalls under heavy load (See `Slow WindowServer IPC` notes)- so I guess waiting on WindowServer could also cause delays, but  then there are heavy framedrops anways, probably - feel like priority `normalApps < MMF < WindowServer` makes sense (Untested))
                     -> If you use normal threads instead of GCD, you can tell kernel to prioritize thread with `thread_set_policy` - pretty sure this will help much more for responsiveness.
                         (Update: [Oct 2026] Not sure I noticed a difference  due to `thread_policy_set`. It's all pretty good [macOS 27, M4 MBA] - haven't gone above `MAXPRI_USER`, round-robin, yet (Option above that would be realtime threads) (See our `set_thread_priority`))
                 Dispatch queues have less powerful primitives:

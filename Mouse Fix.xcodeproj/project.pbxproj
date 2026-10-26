@@ -348,6 +348,7 @@
 		4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF27DD62B95B108004744E1 /* Shorthands.swift */; };
 		4FF5011F308B99A60080000B /* MFEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5011E308B99A50080000B /* MFEventTap.m */; };
 		4FF504B4308C19570080000B /* universalControlTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5049F308C194F0080000B /* universalControlTest.m */; };
+		4FF504B7308E35B60080000B /* WarpDeltaCompensator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF504B6308E35B40080000B /* WarpDeltaCompensator.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -1076,6 +1077,8 @@
 		4FF5011D308B99740080000B /* MFEventTap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFEventTap.h; sourceTree = "<group>"; };
 		4FF5011E308B99A50080000B /* MFEventTap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFEventTap.m; sourceTree = "<group>"; };
 		4FF5049F308C194F0080000B /* universalControlTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = universalControlTest.m; sourceTree = "<group>"; };
+		4FF504B5308E35AB0080000B /* WarpDeltaCompensator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WarpDeltaCompensator.h; sourceTree = "<group>"; };
+		4FF504B6308E35B40080000B /* WarpDeltaCompensator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WarpDeltaCompensator.m; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
@@ -2423,6 +2426,36 @@
 			path = Threads;
 			sourceTree = "<group>";
 		};
+		4FF504B8308E55590080000B /* WarpDelta */ = {
+			isa = PBXGroup;
+			children = (
+				4FF504B5308E35AB0080000B /* WarpDeltaCompensator.h */,
+				4FF504B6308E35B40080000B /* WarpDeltaCompensator.m */,
+			);
+			path = WarpDelta;
+			sourceTree = "<group>";
+		};
+		4FF504B9308E559C0080000B /* PointerFreeze */ = {
+			isa = PBXGroup;
+			children = (
+				4FF0255D27B013A100923107 /* PointerFreeze.h */,
+				4FF0255E27B013A100923107 /* PointerFreeze.m */,
+				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
+			);
+			path = PointerFreeze;
+			sourceTree = "<group>";
+		};
+		4FF504BA308E55A80080000B /* Output */ = {
+			isa = PBXGroup;
+			children = (
+				4FF0255827B00F9700923107 /* ThreeFingerSwipe */,
+				4FF0255927B00FA400923107 /* TwoFingerSwipe */,
+				4FF0255A27B00FAF00923107 /* FakeDrag */,
+				4FF0255B27B00FBA00923107 /* AddMode */,
+			);
+			path = Output;
+			sourceTree = "<group>";
+		};
 		4FF6652B25F2C7B000689B77 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -2720,10 +2753,9 @@
 			children = (
 				4FF6663725F2C93A00689B77 /* ModifiedDrag.h */,
 				4FF6663825F2C93A00689B77 /* ModifiedDrag.m */,
-				4FF0255827B00F9700923107 /* ThreeFingerSwipe */,
-				4FF0255927B00FA400923107 /* TwoFingerSwipe */,
-				4FF0255A27B00FAF00923107 /* FakeDrag */,
-				4FF0255B27B00FBA00923107 /* AddMode */,
+				4FF504BA308E55A80080000B /* Output */,
+				4FF504B8308E55590080000B /* WarpDelta */,
+				4FF504B9308E559C0080000B /* PointerFreeze */,
 			);
 			path = Drag;
 			sourceTree = "<group>";
@@ -2758,9 +2790,6 @@
 			children = (
 				4FF6664525F2C93A00689B77 /* ModificationUtility.h */,
 				4FF6664225F2C93A00689B77 /* ModificationUtility.m */,
-				4FF0255D27B013A100923107 /* PointerFreeze.h */,
-				4FF0255E27B013A100923107 /* PointerFreeze.m */,
-				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
 				4FD66E0927BB9BAD00F67559 /* EventUtility.h */,
 				4FD66E0A27BB9BAE00F67559 /* EventUtility.m */,
 				4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */,
@@ -3801,6 +3830,7 @@
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,
 				4FB8B2982CCEBADA00A5A580 /* GetLicenseState.swift in Sources */,
+				4FF504B7308E35B60080000B /* WarpDeltaCompensator.m in Sources */,
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
 				4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */,
 				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,

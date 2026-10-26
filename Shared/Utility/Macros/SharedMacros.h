@@ -580,6 +580,8 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 ///     Example: `assert(ifthen(it_rains, street_is_wet));`
 #define ifthen(a, b) (!(a) || (b))
 
+
+#if 0 /// Unused [Oct 2026]
 /// Helper macro: bitpos(): Get the position of the bit in a one-bit-mask
 ///     - (a one-bit-mask is an integer with a single bit set – it specifies what that bit means in a bitflags datatype)
 ///     - Example usage: This expression will always evaluate to true: `mask == (1 << bitpos(mask))` (Given that exactly 1 bit is set in `mask`)
@@ -589,6 +591,7 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
     ((mask) & (mask)-1) != 0  ? -1 :                                    /** Fail: more than one bit set (aka not a power of two) */\
     __builtin_ctz(mask)                                                 /** Sucess! – Count trailling zeros*/ \
 )
+#endif
 
 /// Internal helper macro
 ///     Deferred concat

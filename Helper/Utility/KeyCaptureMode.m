@@ -27,7 +27,7 @@
 
     DDLogInfo("Enabling keyCaptureMode");
 
-    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: keyCaptureModeCallback context: NULL];
+    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: keyCaptureModeCallback];
     [MFEventTap enable: true forListener: kListenerID];
 }
 
@@ -36,7 +36,7 @@
     [MFEventTap enable: false forListener: kListenerID];
 }
 
-void keyCaptureModeCallback(void *context, MFEventType eventType, CGEventRef *eventPtr) {
+void keyCaptureModeCallback(MFEventType eventType, CGEventRef *eventPtr) {
     assertRunLoop(IOThread.runLoop);
 
     CGEventRef event = *eventPtr;
