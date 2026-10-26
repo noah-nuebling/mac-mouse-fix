@@ -192,7 +192,7 @@ static void eventTapCallback(MFEventType eventType, CGEventRef *eventPtr) {
     
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
-    ///     @afterNoGCDTodo We found that the HIDEvent's timestamps are much more accurate - try using that instead of CGEventGetTimeStamp() / CACurrentMediaTime() throughout codebase. [Oct 2026]
+    ///     §afterNoGCDTodo We found that the HIDEvent's timestamps are much more accurate - try using that instead of CGEventGetTimeStamp() / CACurrentMediaTime() throughout codebase. [Oct 2026]
     CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event, kTapLocation_Listening);
 
     /// Do the actual work

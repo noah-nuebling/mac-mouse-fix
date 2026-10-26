@@ -151,10 +151,10 @@ static CGEventRef __nullable eventTapCallback(CGEventTapProxy proxy, CGEventType
     ///     Findings: [Oct 2026]
     ///         Didn't look super close - they mostly look the same except for the `senderID`, which, for Universal Control events is a
     ///         `IOHIDEventSystem` service's "`RegistryID`" (See `hidutil list`) but doesn't actually appear as an entry in the IORegistry (See `ioreg` or `notes repo > ioreggg.m`)
-    ///     Conclusion for MMF: @afterNoGCDTodo [Oct 2026]
+    ///     Conclusion for MMF: §afterNoGCDTodo [Oct 2026]
     ///         MMF should use `IOHIDEventSystemClient` and `IOHIDServiceClient` APIs instead of `IOHIDManager` and `IOHIDDevice` - they mostly work the same
     ///         but they also work for non-IOService-backed devices (like the virtual devices created by universal control - not sure there are any others)
-    ///         -> The currently-not-yet-used `PointerSpeed.m` stuff already uses `IOHIDEventSystemClient` APIs -> we could unify this @afterNoGCDTodo [Oct 2026]
+    ///         -> The currently-not-yet-used `PointerSpeed.m` stuff already uses `IOHIDEventSystemClient` APIs -> we could unify this §afterNoGCDTodo [Oct 2026]
     ///         Other interesting stuff: [Oct 2026]
     ///             - Opus 5.5 says the properties for `IOService`-backed `IOHIDServiceClients` are mostly synced/passed through with the underlying `IOService`.
     ///             - Interesting Opus 5.5 finding: It says `IOHIDEventSystem` is part of IOKit framework but runs in WindowServer process - sort of aggregating/post-processing the IOHIDEvents from all the IORegistry drivers before converting them to CGEvents. [Oct 2026]

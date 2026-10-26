@@ -45,7 +45,7 @@
                     The theory: Maybe the `Slow WindowServer IPC` calls (see above) block the IOThread, and somehow cause WindowServer to process and send us many events before our `CGWarpMouseCursorPosition` is called/starts taking effect.
                     Sub-solution measure 1: `MFEventTap` - We introduced MFEventTap as an attempt to fix this (but it might have other advantages, see `MFEventTap.h` notes [Oct 2026])
                         Mechanism: MFEventTap.m allows ModifiedDrag.m and PointerFreeze.m to share one underlying CGEventTap,
-                            which avoids problem where the `CGEventTapEnable` call for PointerFreeze.m happens during ongoing gesture (in +handleBecameInUse) and takes very long, and only once it returns, will PointerFreeze start sending CGWarpMouseCursorPosition (from the CGEventTap callback).
+                            which avoids problem where the `CGEventTapEnable` call for PointerFreeze.m happens during ongoing gesture (in +handleBecameInUse) and takes very long, and only once it returns, will PointerFreeze start sending CGWarpMouseCursorPosition (from its CGEventTap callback).
                         Conclusion: I think this made the problem better.
                             Caveat: Didn't really try the `Reproduction` of the super bad circumstances (See below.) [Oct 2026]
                     Sub-solution measure 2: Make PointerFreeze.m > `freezePointer` not block `+handleBecameInUse` at all
@@ -54,19 +54,20 @@
                         Conclusion: Didn't see any improvement (in the `WarpDeltaCompensator`s logs - see below [Oct 2026])
                             -> This casts doubt that the `MFEventTap` solution measure (see above) even made a difference, or if maybe the `Caveat` (not doing `Reproduction` properly tricked me.)
                     Conclusion: I'm not sure these `Slow WindowServer IPC`-based solution measures worked. However, that shouldn't matter because the `WarpDeltaCompensator` solution measure (below [Oct 2026]) seems to work.
-                        Deeper context: I'm only writing this down I guess to document that this might have been a (now stale) factor that went into the MFEventTap design, or decision to even add it. [Oct 2026]
+                        Deeper context: I'm only writing this down I guess to document that this might have been a (now stale) factor that went into the MFEventTap design, or decision to even add it to codebase. [Oct 2026]
                 Solution measure: `WarpDeltaCompensator`
                     Mini object which tracks the pattern where the pointer location veers off the
-                        freeze/CGWarpMouseCursorPosition point and then snapps back in one event which also carries the `warpDelta`,
-                        and then subtracts that `warpDelta` so our algorithms always get the actual movement by the physical mouse.
+                        freeze-/CGWarpMouseCursorPosition-point and then snapps back in one event which also carries the `warpDelta`.
+                        `WarpDeltaCompensator` then subtracts that `warpDelta` so our algorithms always get the actual movement by the physical mouse.
                         Conclusion: This seems to work
                             What I observed: It feels like it stops the 'swallowing' of the pointer movement
                             What I haven't observed: I haven't really reproduced the super bad circumstances which caused the jank. See `Reproduction` below [Oct 2026]
-                        Caveat: Observations made on macOS 27. Didn't test older versions. [Oct 2026]
+                        Caveat: Observations made on macOS 27. Didn't test older versions. If they don't have the `warpDelta` this could be detrimental.
+                            Reason to maybe believe this: `CGWarpMouseCursorPosition` docs say that it doesn't produce a delta event, but the `warpDelta` seemingl contradicts that. [Oct 2026]
         `Reproduction`
             B) `warpDeltas` [Oct 2026]
                 - I always see the `warpDeltas` in logs, but it's not very noticable, the problem where it really janks out and makes the scrollPosition / puppetCursor jump can be hard to reproduce
-                    (Update: wrote this before I implemented the `Solution measures` above, might be impossible now) - it comes in cycles, I think only under heavy window-server load. The load I saw it under:
+                    (Update: wrote this before I implemented the `Solution measures` above, might be impossible to reproduce now) - it comes in cycles, I think only under heavy window-server load. The load I saw it under:
                     - M4 MBA, macOS 27
                     - 60 Hz screen: streaming vbldelta.m and logs from MMF helper, and watching youtube at 1080p
                     - 144 Hz screen: Xcode, streaming MMF Helper logs, using MMF 'Scroll & Navigate' in the main view.
@@ -75,7 +76,8 @@
                 - Also reproduced on 3.1.0 (24898) (before 'No more dispatch queues' refactor) -> Not a regression from the refactor. Maybe new in macOS 27 / 27.2 Beta 3
                 - Never noticed this issue ever before that day.
         Also see:
-            The logs we added that are tagged with `[debugWarpDelta]` - they let us clearly see the `warpDeltas` problem (maybe along with vbldelta.m script) (Maybe clean those up at some point [Oct 2026])
+            The logs we added that are tagged with `[debugWarpDelta]` - they let us clearly see the `warpDeltas` problem (maybe along with vbldelta.m script)
+                §cleanup: Maybe remove this tag at some point [Oct 2026]
  */
 
 #import "Constants.h"
@@ -365,7 +367,7 @@ static void processPendingCoalescableEventsOncePerFrame(void) {
     ///             Fallback timer - set up a timer (DisplayLink.m) each frame, which waits for a regular mouse event to flush, if no mouse event before deadline, the timer flushes that frame instead
     ///                 -> This should give us good `VBLPhase` with less CPU overhead.
     ///                     I think the CPU overhead, mostly comes from the runLoop waking up for the per-frame timer in addition to the CGEventTap wakeup - I observed there's still a lot of effective CPU overhead flushing every frame through timer, even with our super-lightweight `mk_timer` based `DisplayLink` - so I concluded overhead is inherent to the additional runLoop wakeup. [Oct 2026]
-    ///             @afterNoGCDTodo consider implementing this
+    ///             §afterNoGCDTodo consider implementing this
 
     uint64_t now = mach_absolute_time();
     uint64_t lastVBLTime = CGDisplay_NearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kVBLPhase_DefaultForEventSending) ?: fallbackPriorVBLTime(now);

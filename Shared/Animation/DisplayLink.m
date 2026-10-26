@@ -38,7 +38,7 @@
 ///         Avoid callbacks close together?
 ///             I sometimes saw pattern where every second frame callback is delayed, and delivers really close to the next one. Might be better to skip?
 ///                 However, I saw same pattern for real Trackpad events (using `vblphase.m`). Probably fine [Oct 2026]
-///         Use real time thread (instead of max priority in the normal band (`MAXPRI_USER`) via our `set_thread_priority()` [Oct 2026]) (@afterNoGCDTodo)
+///         Use real time thread (instead of max priority in the normal band (`MAXPRI_USER`) via our `set_thread_priority()` [Oct 2026]) (§afterNoGCDTodo)
 ///             -> Might solve bad-phase-zone and close-together-callabacks issues (above). Haven't tried real time scheduling at all so far. [Oct 2026]
 ///     Other info:
 ///         Opus 5.5 says CADisplayLink and CFRunLoopTimer are built on `mk_timer`, too, just like this DisplayLink
@@ -263,7 +263,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
         return _isRunning;
     }
 
-    - (void) linkToMainScreen { /// @afterNoGCDTodo: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
+    - (void) linkToMainScreen { /// §afterNoGCDTodo: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
         assertRunLoop(_runLoop);
         _linkedDisplay = [[NSScreen mainScreen] displayID];
     }
