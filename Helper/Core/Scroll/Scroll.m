@@ -1125,8 +1125,10 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     || [bundleID containsString:@"com.operasoftware.Opera"]
                     || [bundleID containsString:@"com.microsoft.edgemac"]
                     || [bundleID containsString:@"com.vivaldi.Vivaldi"]
-                    || [bundleID containsString:@"com.brave.Browser"]) {
-                    
+                    || [bundleID containsString:@"com.brave.Browser"]
+                    || [bundleID containsString:@"com.valvesoftware.steam"] /// Store inside `com.valvesoftware.steam.helper` uses Chromium [Oct 2026]
+                ) {
+
                     /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary" . Could perhaps use -hasPrefix: instead.
                     /// [Aug 2025] Also see the 'Universal Back and Forward' stuff in Actions.m
                     /// TODO: Add other Chromium browsers with the same behaviour.
@@ -1137,11 +1139,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     eventPhase = kIOHIDEventPhaseChanged;
                     
                     assert(eventDelta != 0);
-                    if (mfsign(eventDelta) > 0) {
-                        eventDelta += 380/800.0;
-                    } else {
-                        eventDelta -= 250/800.0;
-                    }
+                    if (mfsign(eventDelta) > 0) eventDelta += 380/800.0; /// Think we picked these by feel. Asked Opus 5.5 for exact values from Chromium source, but it worked less well [Oct 2026]
+                    else                        eventDelta -= 250/800.0;
                 }
             }
         }
