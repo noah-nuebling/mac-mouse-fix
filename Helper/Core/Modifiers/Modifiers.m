@@ -89,7 +89,7 @@ static NSMutableDictionary *_modifiers;
 
 static MFModifierPriority _kbModPriority;
 static MFModifierPriority _btnModPriority;
-//static CFMachPortRef _kbModEventTap; /// Replace with MFEventTap. Still referenced in older comments [Oct 2026]
+//static CFMachPortRef _kbModEventTap; /// Replaced with MFEventTap. Keeping it commented out, since it's still referenced in older comments [Oct 2026]
 
 + (void) setKeyboardModifierPriority:(MFModifierPriority)priority {
     

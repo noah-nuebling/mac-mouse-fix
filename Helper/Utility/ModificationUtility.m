@@ -76,8 +76,8 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     return 0.0;
 }
 
-+ (void)makeCursorSettable {
-    
++ (void)makeCursorSettable { /// TODO: Probably just inline thisinto hideMousePointer? Idk why we're calling this in some random +load_Manual [Oct 2026]
+
     /// Only do this once
     static BOOL cursorIsSettable = NO;
     if (cursorIsSettable) return;

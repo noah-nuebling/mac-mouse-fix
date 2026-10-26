@@ -389,6 +389,22 @@ static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_
 
 #pragma mark - Debug
 
+NSMutableString *bitflagsDescription(uint64_t flags, NSString *(^descriptionForBit)(uint64_t bitflag)) {
+    NSMutableString *result = [NSMutableString new];
+    [result appendString: @"("];
+    int first = 1;
+    for (int i = 0; flags; flags >>= 1, i++) {
+        if (!(flags & 1)) continue;
+        if (!first) [result appendString: @" | "];
+        [result appendString: descriptionForBit(1LL << i) ?: stringf(@"(1 << %d)", i)];
+        first = 0;
+    }
+    [result appendString: @")"];
+    return result;
+}
+
+
+#if 0 /// Unused [Oct 2026]
 NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitposToNameMap[_Nullable], int bitposToNameMapCount) {
     
     /**
@@ -453,6 +469,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     /// Return
     return result;
 }
+#endif
 
 /*
 + (NSString *)binaryRepresentation:(int64_t)value {

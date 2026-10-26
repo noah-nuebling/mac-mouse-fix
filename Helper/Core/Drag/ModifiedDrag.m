@@ -260,7 +260,7 @@ static void eventTapCallback(void *context, MFEventType eventType, CGEventRef *e
 
         /// Interrupt
         ///     [Sep 2026] Update: Old comment from before `coalesceEvents` refactor, not sure if/how it still applies:
-        ///         This handles race condition where `_drag.eventTap` is disabled right after eventTapCallBack() is called
+        ///         This handles race condition where `_drag.eventTap` is disabled right after `eventTapCallBack()` is called
         ///         We implemented the same idea in PointerFreeze.
         ///         Actually, the check for kMFModifiedInputActivationStateNone below (Update: [Sep 2026] Now in `processPendingCoalescableEvents`) has the same effect, but I think but this makes it clearer?
         if (![MFEventTap isEnabledForListener: kListenerID]) return;

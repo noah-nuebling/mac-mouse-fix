@@ -70,7 +70,8 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
 //+ (void)resetDispatchGroupCount:(dispatch_group_t)group;
-NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount);
+//NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount);
+NSMutableString *bitflagsDescription(uint64_t flags, NSString *(^descriptionForBit)(uint64_t bitflag));
 
 NS_ASSUME_NONNULL_END
 

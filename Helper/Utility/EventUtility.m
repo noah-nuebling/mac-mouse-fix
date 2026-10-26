@@ -219,7 +219,7 @@ CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef cgEvent, CGEventTapLocati
     CGEventTimestamp raw = CGEventGetTimestamp(cgEvent);
 
     if (eventTapLocation == kCGHIDEventTap)      return machTimeToSeconds(raw);
-    if (eventTapLocation == kCGSessionEventTap)  return (double)raw / 1e9;              /// Opus 5.5 says WindowServer re-stamps the event with nsec timestamp. (So even more inaccurate than  kCGHIDEventTap) -> Should use IOHIDEvent timestamp when possible [Oct 2026]
+    if (eventTapLocation == kCGSessionEventTap)  return (double)raw / 1e9;      /// Opus 5.5 says WindowServer re-stamps the event with nsec timestamp at `kCGSessionEventTap`. (So even more inaccurate than  `kCGHIDEventTap`) -> Should use IOHIDEvent timestamp when possible [Oct 2026]
     mfassert(false); return (double)raw / 1e9; /// Untested
 }
 
@@ -227,31 +227,33 @@ NSString *scrollEventDescription(CGEventRef scrollEvent) {
     return scrollEventDescriptionWithOptions(scrollEvent, YES, YES);
 }
 NSString *scrollEventDescriptionWithOptions(CGEventRef scrollEvent, BOOL allDeltas, BOOL phases) {
-    
-    ///
+
     /// Gather info
-    ///
-    
-    /// Gather deltas
-    
-    double delta1 = CGEventGetDoubleValueField(scrollEvent, 11); /// 11 -> kCGScrollWheelEventDeltaAxis1
-    double point1 = CGEventGetDoubleValueField(scrollEvent, 96); /// 96 -> kCGScrollWheelEventPointDeltaAxis1
-    double fixedPt1 = CGEventGetDoubleValueField(scrollEvent, 93); /// 93 -> kCGScrollWheelEventFixedPtDeltaAxis1
-    
-    double delta2 = CGEventGetDoubleValueField(scrollEvent, 12); /// 12 -> kCGScrollWheelEventDeltaAxis2
-    double point2 = CGEventGetDoubleValueField(scrollEvent, 97); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
-    double fixedPt2 = CGEventGetDoubleValueField(scrollEvent, 94); /// 94 -> kCGScrollWheelEventFixedPtDeltaAxis2
-    
-    /// Put deltas together
-    
-    Vector delta = (Vector){ .x = delta2, .y = delta1 };
-    Vector point = (Vector){ .x = point2, .y = point1 };
-    Vector fixedPt = (Vector){ .x = fixedPt2, .y = fixedPt1 };
-    
-    /// Gather phases
-    int64_t phase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase);
-    int64_t momentumPhase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase);
-    
+
+    Vector delta, point, fixedPt;
+    int64_t phase, momentumPhase;
+    {
+        /// Gather deltas
+
+        double delta1 = CGEventGetDoubleValueField(scrollEvent, 11); /// 11 -> kCGScrollWheelEventDeltaAxis1
+        double point1 = CGEventGetDoubleValueField(scrollEvent, 96); /// 96 -> kCGScrollWheelEventPointDeltaAxis1
+        double fixedPt1 = CGEventGetDoubleValueField(scrollEvent, 93); /// 93 -> kCGScrollWheelEventFixedPtDeltaAxis1
+
+        double delta2 = CGEventGetDoubleValueField(scrollEvent, 12); /// 12 -> kCGScrollWheelEventDeltaAxis2
+        double point2 = CGEventGetDoubleValueField(scrollEvent, 97); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
+        double fixedPt2 = CGEventGetDoubleValueField(scrollEvent, 94); /// 94 -> kCGScrollWheelEventFixedPtDeltaAxis2
+
+        /// Put deltas together
+
+        delta = (Vector){ .x = delta2, .y = delta1 };
+        point = (Vector){ .x = point2, .y = point1 };
+        fixedPt = (Vector){ .x = fixedPt2, .y = fixedPt1 };
+
+        /// Gather phases
+        phase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase);
+        momentumPhase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase);
+    }
+
     /// Assemble result string
     NSString *description = @"";
     description = [description stringByAppendingFormat:@"point: %@", vectorDescription(delta)];
