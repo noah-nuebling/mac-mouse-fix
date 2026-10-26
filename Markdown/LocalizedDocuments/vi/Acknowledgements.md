@@ -95,6 +95,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 10 2026**
 
+- 🇹🇼&nbsp;Wu&nbsp;Li&nbsp;Yu
 - 🇺🇸&nbsp;Gabriel&nbsp;Jackson
 - 🇩🇪&nbsp;Moritz&nbsp;Mußmann
 - 🇺🇸&nbsp;Zeb&nbsp;Evans

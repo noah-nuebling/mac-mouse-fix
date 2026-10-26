@@ -94,6 +94,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2026**
 
+- 🇹🇼&nbsp;Wu&nbsp;Li&nbsp;Yu
 - 🇺🇸&nbsp;Gabriel&nbsp;Jackson
 - 🇩🇪&nbsp;Moritz&nbsp;Mußmann
 - 🇺🇸&nbsp;Zeb&nbsp;Evans
