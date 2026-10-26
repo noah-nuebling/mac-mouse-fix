@@ -169,10 +169,10 @@ void mouseMovedCallback(MFEventType eventType, CGEventRef *eventPtr) {
 
     /// Record timestamp and delta
     /// TODO: _lastEventTimestamp -> Maybe use the more-accurate IOHIDEvent timestamp instead, or least CGEventGetTimestampInSeconds (throughout the codebase) [Oct 2026]
-    /// TODO: _lastEventDelta -> This llabs calculation is broken, but it's been working fine for years in practice [Oct 2026] -> Maybe remove
+    /// TODO: _lastEventDelta -> This llabs calculation was broken in a way that made _lastEventDelta do nothing, but it's been working fine for years in practice [Oct 2026] -> Maybe remove
     ///     -> If we do both of these, we can remove `_ioThreadRunLoop()` checks [Oct 2026]
     _lastEventTimestamp = CACurrentMediaTime();
-    _lastEventDelta = llabs(MAX(dx,dy));
+    _lastEventDelta = MAX(llabs(dx),llabs(dy)); /// This should be the correct llabs calculation, so it's taking effect, now. Probably doesn't make a difference. [Oct 2026]
 
     /// Check interrupt
     if (![MFEventTap isEnabledForListener: kListenerID]) return;

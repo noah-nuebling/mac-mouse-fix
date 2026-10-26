@@ -22,18 +22,20 @@ void WarpDeltaCompensator_GetActualDelta(WarpDeltaCompensator *self, int64_t dx,
         ,self->name ,dx, dy, location.x, location.y
         ,self->pointerFreezeLocation.x, self->pointerFreezeLocation.y, self->lastLocation.x, self->lastLocation.y, self->state);
 
-    if (self->state == 1) {
+    if (self->state == 1 || self->state == 2) {
         CGPoint roundedFreezeLocation = CGPointMake(floor(self->pointerFreezeLocation.x), floor(self->pointerFreezeLocation.y)); /// Not sure where the floor() rounding comes from but that's what we see after the warp takes effect [Oct 2026]
-        if (CGPointEqualToPoint(location, roundedFreezeLocation)) { /// `CGWarpMouseCursorPosition` has taken effect - this event's delta will carry the physical mouse's real delta + the warp delta (which we want to compensate for) [Oct 2026]
+
+        if (!CGPointEqualToPoint(location, roundedFreezeLocation)) { /// Pointer has moved off of the freeze point, after `_ReportFreeze`
+            self->lastLocation = location;
+            self->state = 2;
+        }
+        else if (self->state == 2)  { /// `CGWarpMouseCursorPosition` has taken effect - this event's delta will carry the physical mouse's real delta + the warp delta (which we want to compensate for) [Oct 2026]
             self->state = 0;
             int64_t warpDx = floor(roundedFreezeLocation.x - self->lastLocation.x); /// Not sure the `floor()` rounding is right, but 1 px shouldn't be noticeable anyways [Oct 2026]
             int64_t warpDy = floor(roundedFreezeLocation.y - self->lastLocation.y);
             DDLogDebug("WarpDeltaCompensator_GetActualDelta: (%s) compensating by (%lld, %lld)", self->name, -warpDx, -warpDy);
             *outDx = dx - warpDx;
             *outDy = dy - warpDy;
-        }
-        else { /// `CGWarpMouseCursorPosition` has not taken effect, yet
-            self->lastLocation = location;
         }
     }
 }

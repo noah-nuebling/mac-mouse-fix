@@ -316,16 +316,28 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
         }
 
         /// Notify listeners for this `MFEventType`
-        { _lockScope(&_listenerLock);
-            for (_MFEventTapListener *listener in _listenerList) {
-                if (listener->_enabled && listener->_events & mfEventType) {
-                    MFEventTapCallback callback = listener->_callback;
-                    if ((0)) _DDLogDebug("Calling out to listener %@ for eventType %@", listener, MFEventTypeDescription(mfEventType)); /// Extremely verbose and not necessary [Oct 2026]
-                    os_unfair_lock_unlock(&_listenerLock); /// Unlock around the callout since `os_unfair_lock` isn't recursive [Oct 2026]
-                    callback(mfEventType, &cgEvent); /// If multiple listeners modify the `&cgEvent`, weird things could happen, MMF doesn't currently do this [Oct 2026]
-                    os_unfair_lock_lock(&_listenerLock);
+        {
+
+            /// Collect callbacks
+            #define kListenerMax 16
+            MFEventTapCallback callbacks[kListenerMax] = {}; int callbackCount = 0;
+
+            { _lockScope(&_listenerLock);
+                for (_MFEventTapListener *listener in _listenerList) {
+                    if (listener->_enabled && listener->_events & mfEventType) {
+                        mfrequire(callbackCount < kListenerMax);
+                        callbacks[callbackCount++] = listener->_callback;
+                        if ((0)) _DDLogDebug("Calling out to listener %@ for eventType %@", listener, MFEventTypeDescription(mfEventType)); /// Extremely verbose and not necessary [Oct 2026]
+                    }
                 }
             }
+
+            /// Call the callbacks
+            ///     Why do this in a separate pass? This makes it so the callbacks can
+            ///         - Freely interact with MFEventTap without tripping the (non-recursive) `_listenerLock` [Oct 2026] or the objc for..in mutation checks.
+            ///         - Opus 5.5 also says not doing this makes PointerFreeze.m receive the delta for the event which activated it (depending on `_listenerList` order), which makes its calculations very slightly wrong. Tested and the error seems to be too small to notice [Oct 2026]
+            for range(i, callbackCount)
+                callbacks[i](mfEventType, &cgEvent); /// If multiple listeners modify the `&cgEvent`, weird things could happen, MMF doesn't currently do this [Oct 2026]
         }
 
         /// Return event
