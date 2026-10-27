@@ -426,9 +426,9 @@
                 @{ @"label": @"Jump to the previous open tab", @"symbols": @"⌘⌥←", @"steps": @[@[@123, @1572864]] },
                 @{ @"label": @"Jump to the last tab", @"symbols": @"⌘9", @"steps": @[@[@25, @1048576]] },
                 @{ @"label": @"Open the previous page in browsing history for the current tab", @"symbols": @"⌘[", @"steps": @[@[@33, @1048576]], @"variants": @{@"at": @[@[@23, @1572864]], @"de": @[@[@23, @1572864]]} },
-                @{ @"label": @"Open the previous page in browsing history for the current tab (alternative)", @"symbols": @"⌘←", @"steps": @[@[@123, @1048576]] },
+                @{ @"label": @"Open the previous page in browsing history for the current tab (alternative)", @"symbols": @"⌘←", @"steps": @[@[@123, @1048576]], @"verified": @YES },
                 @{ @"label": @"Open the next page in browsing history for the current tab", @"symbols": @"⌘]", @"steps": @[@[@30, @1048576]], @"variants": @{@"at": @[@[@22, @1572864]], @"de": @[@[@22, @1572864]]} },
-                @{ @"label": @"Open the next page in browsing history for the current tab (alternative)", @"symbols": @"⌘→", @"steps": @[@[@124, @1048576]] },
+                @{ @"label": @"Open the next page in browsing history for the current tab (alternative)", @"symbols": @"⌘→", @"steps": @[@[@124, @1048576]], @"verified": @YES },
                 @{ @"label": @"Close the current tab or pop-up", @"symbols": @"⌘W", @"steps": @[@[@13, @1048576]] },
                 @{ @"label": @"Move tabs right or left (Page Up key)", @"symbols": @"⌃⇧PgUp", @"steps": @[@[@116, @393216]] },
                 @{ @"label": @"Move tabs right or left (Page Down key)", @"symbols": @"⌃⇧PgDn", @"steps": @[@[@121, @393216]] },
@@ -563,7 +563,7 @@
                 @{ @"label": @"Toggle formula tooltips in formula bar", @"symbols": @"⌃⌥P", @"steps": @[@[@35, @786432]] },
                 @{ @"label": @"Toggle absolute, relative, and mixed references", @"symbols": @"⌘T", @"steps": @[@[@17, @1048576]] },
                 @{ @"label": @"Copy value from cell above", @"symbols": @"⌃⇧\"", @"steps": @[@[@39, @393216]], @"variants": @{@"at": @[@[@19, @393216]], @"de": @[@[@19, @393216]]} },
-                @{ @"label": @"Toggle display of values and formulas", @"symbols": @"⌃`", @"steps": @[@[@50, @262144]] },
+                @{ @"label": @"Toggle display of values and formulas", @"symbols": @"⌃`", @"steps": @[@[@50, @262144]], @"layouts": @[@"us"] },
                 @{ @"label": @"Copy formula from cell above", @"symbols": @"⌃'", @"steps": @[@[@39, @262144]], @"variants": @{@"at": @[@[@24, @786432]], @"de": @[@[@24, @786432]]} },
                 @{ @"label": @"Toggle hiding, displaying, and placeholder views for objects", @"symbols": @"⌃6", @"steps": @[@[@22, @262144]] },
                 @{ @"label": @"Clockwise to next corner of selection", @"symbols": @"⌃.", @"steps": @[@[@47, @262144]] },
@@ -617,8 +617,8 @@
                 @{ @"label": @"Go to Mail view", @"symbols": @"⌘1", @"steps": @[@[@18, @1048576]] },
                 @{ @"label": @"Go to Calendar view", @"symbols": @"⌘2", @"steps": @[@[@19, @1048576]] },
                 @{ @"label": @"Go to Contacts view", @"symbols": @"⌘3", @"steps": @[@[@20, @1048576]] },
-                @{ @"label": @"Cycle forward through open windows", @"symbols": @"⌘~", @"steps": @[@[@50, @1179648]] },
-                @{ @"label": @"Cycle backward through open windows", @"symbols": @"⇧⌘~", @"steps": @[@[@50, @1179648]] },
+                @{ @"label": @"Cycle forward through open windows", @"symbols": @"⌘~", @"steps": @[@[@50, @1179648]], @"layouts": @[@"us"] },
+                @{ @"label": @"Cycle backward through open windows", @"symbols": @"⇧⌘~", @"steps": @[@[@50, @1179648]], @"layouts": @[@"us"] },
                 @{ @"label": @"Move forward through controls", @"symbols": @"⇥", @"steps": @[@[@48, @0]] },
                 @{ @"label": @"Search current folder", @"symbols": @"⌥⌘F", @"steps": @[@[@3, @1572864]] },
                 @{ @"label": @"Advanced search", @"symbols": @"⇧⌘F", @"steps": @[@[@3, @1179648]] },
@@ -709,10 +709,10 @@
                 @{ @"label": @"Accept video call", @"symbols": @"⌘⇧V", @"steps": @[@[@9, @1179648]] },
                 @{ @"label": @"Start video call", @"symbols": @"⌘⇧S", @"steps": @[@[@1, @1179648]] },
                 @{ @"label": @"End video call", @"symbols": @"⌘⇧H", @"steps": @[@[@4, @1179648]] },
-                @{ @"label": @"Toggle mute", @"symbols": @"⌘⇧M", @"steps": @[@[@46, @1179648]] },
+                @{ @"label": @"Toggle mute", @"symbols": @"⌘⇧M", @"steps": @[@[@46, @1179648]], @"verified": @YES },
                 @{ @"label": @"Temporarily unmute", @"symbols": @"⌥Space", @"steps": @[@[@49, @524288]] },
                 @{ @"label": @"Raise or lower your hand", @"symbols": @"⌘⇧K", @"steps": @[@[@40, @1179648]] },
-                @{ @"label": @"Toggle video", @"symbols": @"⌘⇧O", @"steps": @[@[@31, @1179648]] },
+                @{ @"label": @"Toggle video", @"symbols": @"⌘⇧O", @"steps": @[@[@31, @1179648]], @"verified": @YES },
                 @{ @"label": @"Toggle live captions", @"symbols": @"⌘⇧A", @"steps": @[@[@0, @1179648]] },
                 @{ @"label": @"Toggle share content tray", @"symbols": @"⌘⇧E", @"steps": @[@[@14, @1179648]] },
                 @{ @"label": @"Decline screen share", @"symbols": @"⌘⇧D", @"steps": @[@[@2, @1179648]] },
@@ -739,8 +739,8 @@
                 @{ @"label": @"Zoom out", @"symbols": @"⌘-", @"steps": @[@[@27, @1048576]] },
                 @{ @"label": @"Return to 100% zoom", @"symbols": @"⌘0", @"steps": @[@[@29, @1048576]] },
                 @{ @"label": @"Open Go To dialog", @"symbols": @"⌥⌘G", @"steps": @[@[@5, @1572864]] },
-                @{ @"label": @"Switch to next window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]] },
-                @{ @"label": @"Switch to previous window", @"symbols": @"⇧⌘`", @"steps": @[@[@50, @1179648]] },
+                @{ @"label": @"Switch to next window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]], @"layouts": @[@"us"] },
+                @{ @"label": @"Switch to previous window", @"symbols": @"⇧⌘`", @"steps": @[@[@50, @1179648]], @"layouts": @[@"us"] },
                 @{ @"label": @"Move focus to Search in Document box", @"symbols": @"⌘F", @"steps": @[@[@3, @1048576]] },
                 @{ @"label": @"Open Find and Replace pane", @"symbols": @"⌃H", @"steps": @[@[@4, @262144]] },
                 @{ @"label": @"Find next spelling or grammar error", @"symbols": @"⌥F7", @"steps": @[@[@98, @524288]] },
@@ -778,8 +778,8 @@
                 @{ @"label": @"Paste (function key)", @"symbols": @"F4", @"steps": @[@[@118, @0]] },
                 @{ @"label": @"Paste text only", @"symbols": @"⇧⌘V", @"steps": @[@[@9, @1179648]] },
                 @{ @"label": @"Reset zoom to 100 percent", @"symbols": @"⌘0", @"steps": @[@[@29, @1048576]] },
-                @{ @"label": @"Next window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]] },
-                @{ @"label": @"Previous window", @"symbols": @"⇧⌘`", @"steps": @[@[@50, @1179648]] },
+                @{ @"label": @"Next window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]], @"layouts": @[@"us"] },
+                @{ @"label": @"Previous window", @"symbols": @"⇧⌘`", @"steps": @[@[@50, @1179648]], @"layouts": @[@"us"] },
                 @{ @"label": @"Save As", @"symbols": @"⇧⌘S", @"steps": @[@[@1, @1179648]] },
                 @{ @"label": @"Find, focus Search in Document box", @"symbols": @"⌘F", @"steps": @[@[@3, @1048576]] },
                 @{ @"label": @"Find and Replace pane", @"symbols": @"⌃H", @"steps": @[@[@4, @262144]] },
@@ -1023,7 +1023,7 @@
                 @{ @"label": @"Show next tab", @"symbols": @"⌃Tab", @"steps": @[@[@48, @262144]] },
                 @{ @"label": @"Show previous tab", @"symbols": @"⌃⇧Tab", @"steps": @[@[@48, @393216]] },
                 @{ @"label": @"View all tabs", @"symbols": @"⇧⌘\\", @"steps": @[@[@42, @1179648]], @"variants": @{@"at": @[@[@26, @1703936]], @"de": @[@[@26, @1703936]]} },
-                @{ @"label": @"Cycle through windows", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]] },
+                @{ @"label": @"Cycle through windows", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]], @"layouts": @[@"us"] },
                 @{ @"label": @"Minimize window", @"symbols": @"⌘M", @"steps": @[@[@46, @1048576]] },
                 @{ @"label": @"Hide Pixelmator Pro", @"symbols": @"⌘H", @"steps": @[@[@4, @1048576]] },
                 @{ @"label": @"Print", @"symbols": @"⌘P", @"steps": @[@[@35, @1048576]] }
@@ -1105,7 +1105,7 @@
                 @{ @"label": @"Go forward to next webpage", @"symbols": @"⌘]", @"steps": @[@[@30, @1048576]], @"variants": @{@"at": @[@[@22, @1572864]], @"de": @[@[@22, @1572864]]} },
                 @{ @"label": @"Zoom website content in", @"symbols": @"⌘+", @"steps": @[@[@24, @1179648]], @"variants": @{@"at": @[@[@30, @1048576]], @"de": @[@[@30, @1048576]]} },
                 @{ @"label": @"Zoom website content out", @"symbols": @"⌘-", @"steps": @[@[@27, @1048576]] },
-                @{ @"label": @"Switch to another Safari window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]] },
+                @{ @"label": @"Switch to another Safari window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]], @"layouts": @[@"us"] },
                 @{ @"label": @"Reopen last closed window", @"symbols": @"⇧⌘T", @"steps": @[@[@17, @1179648]] },
                 @{ @"label": @"Select next bookmark or folder", @"symbols": @"↓", @"steps": @[@[@125, @0]] },
                 @{ @"label": @"Select previous bookmark or folder", @"symbols": @"↑", @"steps": @[@[@126, @0]] }
@@ -1115,7 +1115,7 @@
                @"entries": @[
                 @{ @"label": @"Compose a new message", @"symbols": @"⌘N", @"steps": @[@[@45, @1048576]] },
                 @{ @"label": @"Compose a new message (alternate shortcut)", @"symbols": @"⌘⇧K", @"steps": @[@[@40, @1179648]] },
-                @{ @"label": @"Add an emoji reaction to a message (keys vary by keyboard layout)", @"symbols": @"⌘⇧` or ⌘⇧# or ⌘⇧\\ or ⌘⇧_ or ⌘⇧¡ or ⌘⇧à or ⌘⇧、", @"steps": @[@[@50, @1179648]] },
+                @{ @"label": @"Add an emoji reaction to a message (keys vary by keyboard layout)", @"symbols": @"⌘⇧` or ⌘⇧# or ⌘⇧\\ or ⌘⇧_ or ⌘⇧¡ or ⌘⇧à or ⌘⇧、", @"steps": @[@[@50, @1179648]], @"layouts": @[@"us"] },
                 @{ @"label": @"Start a search", @"symbols": @"⌘G", @"steps": @[@[@5, @1048576]] },
                 @{ @"label": @"Search in the current conversation", @"symbols": @"⌘F", @"steps": @[@[@3, @1048576]] },
                 @{ @"label": @"Toggle mute on a huddle", @"symbols": @"⌘⇧Space", @"steps": @[@[@49, @1179648]] },
@@ -1145,7 +1145,7 @@
                 @{ @"label": @"Forward message", @"symbols": @"F", @"steps": @[@[@3, @0]] },
                 @{ @"label": @"Add emoji reaction", @"symbols": @"R", @"steps": @[@[@15, @0]] },
                 @{ @"label": @"Undo formatting", @"symbols": @"⌘Z", @"steps": @[@[@6, @1048576]], @"variants": @{@"at": @[@[@16, @1048576]], @"de": @[@[@16, @1048576]]} },
-                @{ @"label": @"Toggle heading and list styles (canvas)", @"symbols": @"⌃`", @"steps": @[@[@50, @262144]] },
+                @{ @"label": @"Toggle heading and list styles (canvas)", @"symbols": @"⌃`", @"steps": @[@[@50, @262144]], @"layouts": @[@"us"] },
                 @{ @"label": @"Find next (canvas)", @"symbols": @"⌘G", @"steps": @[@[@5, @1048576]] },
                 @{ @"label": @"Find previous (canvas)", @"symbols": @"⌘⇧G", @"steps": @[@[@5, @1179648]] },
                 @{ @"label": @"Copy anchor link to section (canvas)", @"symbols": @"⌃⌥Q", @"steps": @[@[@12, @786432]] },
@@ -1225,8 +1225,8 @@
                 @{ @"label": @"New command", @"symbols": @"⇧⌘N", @"steps": @[@[@45, @1179648]] },
                 @{ @"label": @"Make fonts bigger", @"symbols": @"⌘+", @"steps": @[@[@24, @1179648]], @"variants": @{@"at": @[@[@30, @1048576]], @"de": @[@[@30, @1048576]]} },
                 @{ @"label": @"Make fonts smaller", @"symbols": @"⌘-", @"steps": @[@[@27, @1048576]] },
-                @{ @"label": @"Go to the next window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]] },
-                @{ @"label": @"Go to the previous window", @"symbols": @"⇧⌘~", @"steps": @[@[@50, @1179648]] },
+                @{ @"label": @"Go to the next window", @"symbols": @"⌘`", @"steps": @[@[@50, @1048576]], @"layouts": @[@"us"] },
+                @{ @"label": @"Go to the previous window", @"symbols": @"⇧⌘~", @"steps": @[@[@50, @1179648]], @"layouts": @[@"us"] },
                 @{ @"label": @"Go to the next tab", @"symbols": @"⌃⇥", @"steps": @[@[@48, @262144]] },
                 @{ @"label": @"Go to the previous tab", @"symbols": @"⌃⇧⇥", @"steps": @[@[@48, @393216]] },
                 @{ @"label": @"Close the tab", @"symbols": @"⌘W", @"steps": @[@[@13, @1048576]] },
@@ -1285,7 +1285,7 @@
                 @{ @"label": @"Show Command Palette", @"symbols": @"⇧⌘P", @"steps": @[@[@35, @1179648]] },
                 @{ @"label": @"Show Command Palette (F1)", @"symbols": @"F1", @"steps": @[@[@122, @0]] },
                 @{ @"label": @"Quick Open (Go to File)", @"symbols": @"⌘P", @"steps": @[@[@35, @1048576]] },
-                @{ @"label": @"New window or instance", @"symbols": @"⇧⌘N", @"steps": @[@[@45, @1179648]] },
+                @{ @"label": @"New window or instance", @"symbols": @"⇧⌘N", @"steps": @[@[@45, @1179648]], @"verified": @YES },
                 @{ @"label": @"Copy line down", @"symbols": @"⇧⌥↓", @"steps": @[@[@125, @655360]] },
                 @{ @"label": @"Copy line up", @"symbols": @"⇧⌥↑", @"steps": @[@[@126, @655360]] },
                 @{ @"label": @"Go to beginning of line", @"symbols": @"Home", @"steps": @[@[@115, @0]] },
@@ -1317,7 +1317,7 @@
                 @{ @"label": @"Open next editor", @"symbols": @"⌃Tab", @"steps": @[@[@48, @262144]] },
                 @{ @"label": @"Open previous editor", @"symbols": @"⌃⇧Tab", @"steps": @[@[@48, @393216]] },
                 @{ @"label": @"Toggle full screen", @"symbols": @"⌃⌘F", @"steps": @[@[@3, @1310720]] },
-                @{ @"label": @"Toggle editor layout (horizontal/vertical)", @"symbols": @"⌥⌘0", @"steps": @[@[@29, @1572864]] },
+                @{ @"label": @"Toggle editor layout (horizontal/vertical)", @"symbols": @"⌥⌘0", @"steps": @[@[@29, @1572864]], @"verified": @YES },
                 @{ @"label": @"Zoom in", @"symbols": @"⌘=", @"steps": @[@[@24, @1048576]], @"variants": @{@"at": @[@[@29, @1179648]], @"de": @[@[@29, @1179648]]} },
                 @{ @"label": @"Zoom out", @"symbols": @"⇧⌘-", @"steps": @[@[@27, @1179648]] },
                 @{ @"label": @"Toggle Sidebar visibility", @"symbols": @"⌘B", @"steps": @[@[@11, @1048576]] },
@@ -1326,7 +1326,7 @@
                 @{ @"label": @"Toggle Search details", @"symbols": @"⇧⌘J", @"steps": @[@[@38, @1179648]] },
                 @{ @"label": @"Toggle breakpoint", @"symbols": @"F9", @"steps": @[@[@101, @0]] },
                 @{ @"label": @"Start or Continue debugging", @"symbols": @"F5", @"steps": @[@[@96, @0]] },
-                @{ @"label": @"Create new terminal", @"symbols": @"⌃⇧`", @"steps": @[@[@50, @393216]], @"variants": @{@"at": @[@[@10, @393216]], @"de": @[@[@10, @393216]]} },
+                @{ @"label": @"Create new terminal", @"symbols": @"⌃⇧`", @"steps": @[@[@50, @393216]], @"layouts": @[@"us"] },
                 @{ @"label": @"Copy selection (terminal)", @"symbols": @"⌘C", @"steps": @[@[@8, @1048576]] }
                ] },
             @{ @"name": @"VLC media player",
@@ -1435,11 +1435,16 @@
 }
 
 + (NSArray *)effectsMenuEntriesForBundleID:(NSString *)bundleID {
-    NSString *layout = [self activeLayoutID];
+    return [self effectsMenuEntriesForBundleID:bundleID layout:[self activeLayoutID]];
+}
+
++ (NSArray *)effectsMenuEntriesForBundleID:(NSString *)bundleID layout:(NSString *)layout {
     NSMutableArray *result = [NSMutableArray array];
     for (NSDictionary *app in [self apps]) {
         if (![app[@"bundleIDs"] containsObject:bundleID]) continue;
         for (NSDictionary *entry in app[@"entries"]) {
+            /// Some entries only work on some layouts. Leave them out on the others, rather than offering a key that does nothing there.
+            if (entry[@"layouts"] && ![entry[@"layouts"] containsObject:layout]) continue;
             NSArray *steps = entry[@"variants"][layout] ?: entry[@"steps"];
             if (![self stepsAreValid:steps]) {
                 assert(false);

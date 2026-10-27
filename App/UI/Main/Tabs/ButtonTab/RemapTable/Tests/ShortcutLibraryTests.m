@@ -19,6 +19,7 @@
 @interface ShortcutLibrary (Tests)
 + (NSArray *)apps;
 + (BOOL)stepsAreValid:(NSArray *)steps;
++ (NSArray *)effectsMenuEntriesForBundleID:(NSString *)bundleID layout:(NSString *)layout;
 @end
 
 int main(void) { @autoreleasepool {
@@ -42,9 +43,13 @@ int main(void) { @autoreleasepool {
             if ([destructive firstMatchInString:label options:0 range:NSMakeRange(0, label.length)]) { failures++; printf("FAIL: destructive label: %s\n", label.UTF8String); }
         }
         
-        /// Every entry makes it into the effect menu (nothing is dropped by the validation in `effectsMenuEntriesForBundleID:`)
-        NSArray *menuEntries = [ShortcutLibrary effectsMenuEntriesForBundleID:bundleIDs.firstObject];
-        if (menuEntries.count != [app[@"entries"] count]) { failures++; printf("FAIL: %s: %lu menu entries for %lu library entries\n", [app[@"name"] UTF8String], menuEntries.count, [app[@"entries"] count]); }
+        /// Every entry for the US layout makes it into the effect menu (nothing is dropped by the validation in `effectsMenuEntriesForBundleID:layout:`)
+        NSUInteger nForUS = 0;
+        for (NSDictionary *entry in app[@"entries"]) {
+            if (!entry[@"layouts"] || [entry[@"layouts"] containsObject:@"us"]) nForUS++;
+        }
+        NSArray *menuEntries = [ShortcutLibrary effectsMenuEntriesForBundleID:bundleIDs.firstObject layout:@"us"];
+        if (menuEntries.count != nForUS) { failures++; printf("FAIL: %s: %lu menu entries for %lu library entries\n", [app[@"name"] UTF8String], menuEntries.count, nForUS); }
         
         /// Single keys create the same effect dict as recording a shortcut
         for (NSDictionary *menuEntry in menuEntries) {
@@ -64,14 +69,19 @@ int main(void) { @autoreleasepool {
     if ([ShortcutLibrary stepsAreValid:@[]]) { failures++; printf("FAIL: empty steps accepted\n"); }
     if (![ShortcutLibrary stepsAreValid:@[@[@46, @(kCGEventFlagMaskCommand | kCGEventFlagMaskShift)]]]) { failures++; printf("FAIL: Cmd-Shift-M rejected\n"); }
 
-    /// On German and Austrian keyboards the backtick is a dead key on the top-left key (key code 10), not on key code 50 (which gives "<").
+    /// Entries with `layouts` are left out on the other layouts. "Create new terminal" is US-only: on German and Austrian keyboards VS Code has no default for it.
+    for (NSString *layout in @[@"us", @"de", @"at"]) {
+        NSArray *menuEntries = [ShortcutLibrary effectsMenuEntriesForBundleID:@"com.microsoft.VSCode" layout:layout];
+        BOOL hasTerminal = NO;
+        for (NSDictionary *menuEntry in menuEntries) { if ([menuEntry[@"ui"] isEqualToString:@"Create new terminal"]) hasTerminal = YES; }
+        BOOL shouldHave = [layout isEqualToString:@"us"];
+        if (hasTerminal != shouldHave) { failures++; printf("FAIL: Create new terminal on %s: %s\n", layout.UTF8String, hasTerminal ? "shown" : "missing"); }
+    }
+
+    /// `layouts`, when present, is an array
     for (NSDictionary *app in [ShortcutLibrary apps]) {
-        if (![app[@"bundleIDs"] containsObject:@"com.microsoft.VSCode"]) continue;
         for (NSDictionary *entry in app[@"entries"]) {
-            if (![entry[@"label"] isEqualToString:@"Create new terminal"]) continue;
-            for (NSString *layout in @[@"de", @"at"]) {
-                if (![entry[@"variants"][layout] isEqual:@[@[@10, @393216]]]) { failures++; printf("FAIL: Create new terminal has no key 10 variant for %s\n", layout.UTF8String); }
-            }
+            if (entry[@"layouts"] && ![entry[@"layouts"] isKindOfClass:NSArray.class]) { failures++; printf("FAIL: layouts is not an array: %s\n", [entry[@"label"] UTF8String]); }
         }
     }
 
