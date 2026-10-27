@@ -36,7 +36,7 @@ NSString *MFEventTypeDescription(MFEventType type) {
         if (bitflag == kMFEventType_Experiment)         return @"Experiment";
 
         uint64_t buttonFlags = (bitflag >> _kMFEventType_ButtonShift) & _kMFEventType_ButtonMask;
-        if (buttonFlags) return stringf(@"Button%d", __builtin_ctz(buttonFlags));
+        if (buttonFlags) return stringf(@"Button%d", __builtin_ctzll(buttonFlags));
 
         return nil;
     });
@@ -200,7 +200,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
             }
             configure(listener, it->_id = listenerID, it->_events = events, it->_callback = callback, it->_enabled = false);
 
-            _DDLogDebug("Registered listener: %@", listener);
+            _DDLogDebug("Registered listener: %{public}@", listener);
         }
         updateCGTaps(); /// Do need to call `updateCGTaps()`, in case we're disabling the listener through this call. [Oct 2026]
     }
@@ -218,7 +218,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
             _MFEventTapListener *listener = [_listenerMap objectForKey: listenerID];
             if (!listener) mfassert(false, @"Trying to enable unknown listener id %@. Known: %@", listenerID, [_listenerMap allKeys]);
             else           listener->_enabled = enable;
-            _DDLogDebug("Enabled/disabled listener: %@", listener);
+            _DDLogDebug("Enabled/disabled listener: %{public}@", listener);
         }
         updateCGTaps();
     }
@@ -266,7 +266,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
 
                 CFMachPortRef eventTap = CGEventTapCreate(kTapLocation_Listening, kCGTailAppendEventTap, _cgTapData[i].options, _cgTapData[i].mask, sharedCGTapCallback, /*userInfo*/(void *)i);
                 CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, /*order*/0);
-                CFRunLoopAddSource(eventTapRunLoop(), runLoopSource, /*mode*/kCFRunLoopCommonModes);
+                CFRunLoopAddSource(eventTapRunLoop(), runLoopSource, kCFRunLoopCommonModes);
 
                 _cgTapData[i].tap = eventTap;
             }
@@ -277,7 +277,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
 
         if (runningDebugMode()) {
             _lockScope(&_listenerLock);
-            _DDLogDebug("Updated taps to: %@ for listeners %@", CGTapDataDescription(_cgTapData), _listenerList);
+            _DDLogDebug("Updated taps to: %{public}@ for listeners %{public}@", CGTapDataDescription(_cgTapData), _listenerList);
         }
     }
 
@@ -289,7 +289,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
 
         /// Handle special events
         if (cgEventType == kCGEventTapDisabledByTimeout || cgEventType == kCGEventTapDisabledByUserInput) {
-            _DDLogDebug("cgTap '%@' was disabled by %@", CGTapIDDescription(tapID), cgEventType == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+            _DDLogDebug("cgTap '%{public}@' was disabled by %{public}@", CGTapIDDescription(tapID), cgEventType == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
             if (cgEventType == kCGEventTapDisabledByTimeout) {
                 _lockScope(&_cgTapDataLock);
                 if (_cgTapData[tapID].enabled) CGEventTapEnable(_cgTapData[tapID].tap, true);
@@ -327,7 +327,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
                     if (listener->_enabled && listener->_events & mfEventType) {
                         mfrequire(callbackCount < kListenerMax);
                         callbacks[callbackCount++] = listener->_callback;
-                        if ((0)) _DDLogDebug("Calling out to listener %@ for eventType %@", listener, MFEventTypeDescription(mfEventType)); /// Extremely verbose and not necessary [Oct 2026]
+                        if ((0)) _DDLogDebug("Calling out to listener %{public}@ for eventType %{public}@", listener, MFEventTypeDescription(mfEventType)); /// Extremely verbose and not necessary [Oct 2026]
                     }
                 }
             }
@@ -347,7 +347,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
     #pragma mark Interface for sending
 
     + (void) postCGEvent: (CGEventRef)cgEvent {
-        if ((0)) _DDLogDebug("Posting event %@", cgEvent); /// Too verbose, and completely unnecessary [Oct 2026]
+        if ((0)) _DDLogDebug("Posting event %{public}@", cgEvent); /// Too verbose, and completely unnecessary [Oct 2026]
         CGEventPost(kTapLocation_Posting, cgEvent);
     }
 

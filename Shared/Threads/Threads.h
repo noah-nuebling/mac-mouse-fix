@@ -67,6 +67,7 @@
                     and with each other and would need complicated locking or thread-hops otherwise.
                     -> The only thing left on main is the stuff that needs to be - mostly AppKit - MenuBarItem, TrialNotification, ScreenDrawer, maybe CVDisplayLinkStart/Stop
                         maybe other small parts of input-processing-chain calling mainThread-only Apple APIs like TISInput stuff, also maybe NSScreen. Can't think of anything else. [Sep 2026]
+                            Update: [Oct 2026] Also moved PointerFreeze.m (mostly) to `mainThread` to unblock `_smoothingAnimator` See `Slow WindowServer IPC` > `Erratic momentum speeds`
         Ideas/usage policy:
             `main-thread-never-waits` might be good and doable: [Sep 2026]
                 If we avoid mainThread ever waiting on anything, then input-processing could theoretically wait on main to do parts of its processing, with easy-to-audit no deadlock risk - I think we can do this.

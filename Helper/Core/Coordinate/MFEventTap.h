@@ -15,17 +15,17 @@
         - Weak pro: I guess it lets us log the CGEventTap state of the entire program in one central place.
             Counter: But I don't think we ever had bugs with that anyways, and SwitchMaster was already kinda a central manager of all the CGEventTaps [Oct 2026]
         - Uncertain pro:`MFEventType` abstraction might make it easier to support remapping secondaryMouseButton
-            - I think that's the only real reason we added `MFEventType` abstraction, I plan to test this soon, and maybe simplify if it doesn't hold up @mfEventTapTodo.
+            - I think that's the only real reason we added `MFEventType` abstraction, I plan to test this soon, and maybe simplify if it doesn't hold up §mfEventTapTodo.
         - Uncertain pro: Minimizes WindowServer IPC. Explanation: The `TwoFingerSwipe.m` gesture and the thing it calls, `PointerFreeze.m`, might have some issues due to waiting for WindowServer. (See `Slow WindowServer IPC`)
             `CGEventTapEnable()` can be reduced, because `MFEventTap` makes `TwoFingerSwipe.m` and `PointerFreeze.m` share one CGEventTap under the hood. (See `Slow WindowServer IPC`)
                 Caveat: You could've maybe found another/simpler solution to do the same thing.
-            `CGEventTapIsEnabled()` can be avoided entirely (we keep the state in a static var) (Not addressed in `Slow WindowServer IPC` notes, but I think I saw ModifiedDrag optimization pull request mention that they saw this be slow) (Maybe find what the pull request was and link it here)
+            `CGEventTapIsEnabled()` can be avoided entirely (we keep the state in a static var) (Not addressed in `Slow WindowServer IPC` notes, but I think I saw ModifiedDrag optimization pull request mention that they saw `CGEventTapIsEnabled` be slow) (Maybe find what the pull request was and link it here)
         - Weak pro: This would let us manage all the `CGEventTapProxy` of the program and send each event at the earliest point that doesn't feed-back into our taps.
             But I don't know if there's any reason for this. See the `kTapLocation` notes below [Oct 2026]
         - Contra: MFEventType abstraction less flexible and could be more cumbersome for some experiments and stuff (See notes at `kMFEventType_Experiment` below [Oct 2026])
         - Contra: All taps locked to delivering on `eventTapRunLoop()`
-        - Speculative pro: We currently have ~one tap per `MFEventType`. We could instead have one tap for each combination of currently listened-to `MFEventType`, and only one tap ever active at a time.
-            Possible downside: Every switch in `MFEventType`s costs an enable + a disable of an underlying CGEventTap, which might be more expensive/slow and cause other problems.
+        - Speculative pro: We currently have ~one tap per `MFEventType`. We could instead have one tap for each combination of currently listened-to `MFEventType`s, and only one tap ever active at a time.
+            Possible downside: Every switch in `MFEventType`s costs an enable + a disable of an underlying CGEventTap, which might be more expensive/slow or cause other problems.
             Possible benefit: Events would be ordered exactly as the user produced them
                 Why we think this might currently be a problem:
                     IIRC, one of my motivations for 'No more dispatch queues' refactor, was that I sometimes noticed the button being processed too late when ending a gesture, causing mouse-movement after letting gesture button go to still be processed as part of gesture.
@@ -34,7 +34,7 @@
                         same events in lockstep, instead one tap got a burst of like 20 events, then the other tap got a burst of the same 20 events, and so on.
                         I don't remember exactly the circumstances of when I saw this, but it might suggest that there's still some desync when you have multiple `CGEventTap`s.
                         Having one active at a time should solve this. But I'll only look into that if I notice the problem again [Oct 2026]
-        - Weak contra: Whenever we add support for HID++ and more device-specific code, we might want an even higher level abstraction that just says `listen to mouse clicks` but doesn't necessarily provide a `CGEvent` at all.
+        - Weak contra: Whenever we add support for HID++ and more device-specific code, we might want an even higher level abstraction that just says `listen to mouse clicks` but doesn't necessarily provide a `CGEvent` to the callback at all.
             I think current `MFEventTap` was kinda designed with this in mind, [Oct 2026] but doesn't really do this, yet and maybe it sits in an awkward middleground where it doesn't really do anything useful now and will
             have to be rewritten anyways once it becomes important... But I guess it works, so I'll keep it for now [Oct 2026]
 
@@ -46,7 +46,7 @@
 
 */
 
-/// @mfEventTapTodo Try to support capturing Secondary mouse button (ButtonInputReceiver.m) and then decide whether the `kMFEventType_Button` / `MFEventType in general` abstractions actually are useful, or just complication.
+/// §mfEventTapTodo Try to support capturing Secondary mouse button (ButtonInputReceiver.m) and then decide whether the `kMFEventType_Button` / `MFEventType in general` abstractions actually are useful, or just complication.
 
 #pragma once
 #import <Foundation/Foundation.h>
@@ -66,7 +66,7 @@
                  - Is there any reason to do `kTapLocation_Listening` later than `kCGHIDEventTap`?
                      - I used to think so, but I think that was only based on the `fast user switching` problems which we already resolved through `SessionDidResignActiveNotification` [Oct 2026]
                          If we ever wanted to listen later than `kCGHIDEventTap` after all,
-                             - we could try to only post the events that swish needs so early, but that would involve `e22`, (scroll events) I think, which MMF produces a lot of (so that would feed-back and increase CPU usage, probably). [Oct 2026]
+                             - we could try to only post the events that swish needs early, but that would involve `e22`, (scroll events) I think, which MMF produces a lot of (so that would feed-back and increase CPU usage, probably). [Oct 2026]
                              - We could ask Swish developer to listen a little later at `kCGSessionEventTap`/`kCGTailAppendEventTap` [Oct 2026]
                  - If there's any reason to do posting and listening close together, MFEventTap could use our taps' `CGEventTapProxy` to post right after `kTapLocation_Listening` - but I don't see a reason to do that [Oct 2026]
     */
