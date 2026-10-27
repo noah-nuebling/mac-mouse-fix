@@ -38,6 +38,8 @@ import Foundation
     private var appPickerPopover: NSPopover?
     /// The app whose tab is selected. nil is the global tab.
     private(set) var scopeApp: String?
+    /// Offers a built-in preset in an empty app tab
+    private var presetBanner: AppPresetBannerView?
     
     //
     // - MARK: IBActions
@@ -252,6 +254,10 @@ import Foundation
 
         /// Init app tabs
         refreshAppTabStrip()
+
+        /// Init the preset banner
+        installPresetBanner()
+        NotificationCenter.default.addObserver(self, selector: #selector(remapTableDidChange(_:)), name: NSNotification.Name(kMFRemapTableDidChangeNotification as String), object: nil)
     }
     
     func createTrackingArea() {
@@ -396,6 +402,62 @@ import Foundation
         appTabStrip = strip
     }
 
+    /// Adds the preset banner at the top of the add field. It is shown only in an empty app tab that has a preset.
+    ///     (The area between the add field and the table is too tight for it.)
+    private func installPresetBanner() {
+        guard let container = addField.contentView else { return }
+        let banner = AppPresetBannerView()
+        container.addSubview(banner)
+        NSLayoutConstraint.activate([
+            banner.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10),
+            banner.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -10),
+            banner.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
+            banner.heightAnchor.constraint(equalToConstant: 42),
+        ])
+        banner.onReview = { [weak self] in self?.reviewPreset() }
+        banner.isHidden = true
+        presetBanner = banner
+    }
+    
+    /// Shows the preset offer for an empty app tab that has a preset, and hides it otherwise
+    func updatePresetBanner() {
+        guard let banner = presetBanner else { return }
+        guard let app = scopeApp, let preset = AppPreset.preset(for: app), tableController.dataModel.count == 0, !AppPreset.isDismissed(app) else {
+            banner.isHidden = true
+            return
+        }
+        banner.setText(String(format: MFLocalizedString("app-presets.banner", comment: ""), AppTabs.name(for: app), MFLocalizedString(preset.summaryKey, comment: "")))
+        banner.isHidden = false
+    }
+    
+    /// Opens the review sheet for the current app's preset. Nothing is written until the user confirms there.
+    /// Confirmed rows are added to the tab's rows, which are empty when the banner is shown. Restore Defaults on the tab undoes this.
+    private func reviewPreset() {
+        guard let app = scopeApp, let preset = AppPreset.preset(for: app), let window = MainAppState.shared.window else { return }
+
+        let controller = AppPresetReviewController(app: app, preset: preset, globalRows: RemapScope.rows(forScope: nil, inRemaps: config("Remaps") as? [Any]) as? [[String: Any]] ?? [])
+        controller.onFinish = { [weak self] rows, dontSuggestAgain in
+            guard let self else { return }
+            if dontSuggestAgain { AppPreset.setDismissed(app) }
+            if !rows.isEmpty {
+                /// Never replace a row the tab already has. A preset row whose trigger and modifiers are already used in this tab is left out.
+                ///     (The banner only shows in an empty tab, so normally there's nothing to leave out.)
+                let existingRows = RemapScope.rows(forScope: app, inRemaps: config("Remaps") as? [Any]) as? [[String: Any]] ?? []
+                let newRows = rows.filter { row in !existingRows.contains { ButtonTabController.rowsHaveSameTrigger($0, row) } }
+                ButtonTabController.replaceRows(forScope: app, with: existingRows + newRows)
+                self.tableController.reloadAll()
+            }
+            self.updatePresetBanner()
+        }
+
+        let sheet = NSWindow(contentViewController: controller)
+        window.beginSheet(sheet)
+    }
+    
+    @objc private func remapTableDidChange(_ notification: Notification) {
+        updatePresetBanner()
+    }
+    
     /// Rebuilds the tab strip from the stored tab list
     func refreshAppTabStrip() {
         appTabStrip?.setTabs(appBundleIDs: AppTabs.allBundleIDs(), selectedScope: scopeApp)
@@ -489,6 +551,15 @@ import Foundation
                 self.tableController.reloadAll()
             }
         }
+    }
+
+    /// Whether two rows have the same trigger and modifiers, so only one of them can be in a tab
+    private static func rowsHaveSameTrigger(_ row: [String: Any], _ otherRow: [String: Any]) -> Bool {
+        let trigger = row[kMFRemapsKeyTrigger as String] as AnyObject?
+        let otherTrigger = otherRow[kMFRemapsKeyTrigger as String] as AnyObject?
+        let modifiers = row[kMFRemapsKeyModificationPrecondition as String] as? NSDictionary ?? NSDictionary()
+        let otherModifiers = otherRow[kMFRemapsKeyModificationPrecondition as String] as? NSDictionary ?? NSDictionary()
+        return (trigger?.isEqual(otherTrigger) ?? false) && modifiers.isEqual(otherModifiers)
     }
 
     /// Replaces the rows of one scope in config and writes it. nil is the global scope. The other scopes keep their rows.

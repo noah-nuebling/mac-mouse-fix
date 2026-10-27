@@ -423,6 +423,9 @@
 		F37757FFCE9D826F2CE0B543 /* AppTabStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3D217C24A16836390C3E5 /* AppTabStripView.swift */; };
 		B2586079D7B1C590FE23488A /* AppTabPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */; };
 		E061F117F11B526A4413D16F /* RemapScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 145DC5374B7A8F2C9613524A /* RemapScope.m */; };
+		5556B9263976DC4290CD2B58 /* AppPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E8C33CF6CA6F718851FA2B /* AppPresets.swift */; };
+		5B128413AE6901E449767B3E /* AppPresetBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5705431BE8730523BDB1BC /* AppPresetBannerView.swift */; };
+		7E1F2A3B4C5D6E7F8A9B0C1D /* AppPresetReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E0A7F1D2B4E6A8F0C1B2D /* AppPresetReviewController.swift */; };
 		DAB8A92172035BE009ED25EF /* ShortcutLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 948A4F8843CA112A2808DD7C /* ShortcutLibrary.m */; };
 /* End PBXBuildFile section */
 
@@ -1215,6 +1218,9 @@
 		995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabPicker.swift; sourceTree = "<group>"; };
 		30B18771334473023F7FC264 /* RemapScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapScope.h; sourceTree = "<group>"; };
 		145DC5374B7A8F2C9613524A /* RemapScope.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapScope.m; sourceTree = "<group>"; };
+		20E8C33CF6CA6F718851FA2B /* AppPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPresets.swift; sourceTree = "<group>"; };
+		5F5705431BE8730523BDB1BC /* AppPresetBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPresetBannerView.swift; sourceTree = "<group>"; };
+		3C9E0A7F1D2B4E6A8F0C1B2D /* AppPresetReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPresetReviewController.swift; sourceTree = "<group>"; };
 		B4BE5E43850C09CE5220F19A /* ShortcutLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShortcutLibrary.h; sourceTree = "<group>"; };
 		948A4F8843CA112A2808DD7C /* ShortcutLibrary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShortcutLibrary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2949,6 +2955,9 @@
 		2A9756EC51734881AE7D8E04 /* AppTabs */ = {
 			isa = PBXGroup;
 			children = (
+				20E8C33CF6CA6F718851FA2B /* AppPresets.swift */,
+				5F5705431BE8730523BDB1BC /* AppPresetBannerView.swift */,
+				3C9E0A7F1D2B4E6A8F0C1B2D /* AppPresetReviewController.swift */,
 				1A74030334B741C66981FA7B /* AppTabs.swift */,
 				1FF3D217C24A16836390C3E5 /* AppTabStripView.swift */,
 				995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */,
@@ -3630,6 +3639,9 @@
 				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
 				4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
+				5556B9263976DC4290CD2B58 /* AppPresets.swift in Sources */,
+				5B128413AE6901E449767B3E /* AppPresetBannerView.swift in Sources */,
+				7E1F2A3B4C5D6E7F8A9B0C1D /* AppPresetReviewController.swift in Sources */,
 				D62EBA9B629BEF75BBC26619 /* AppTabs.swift in Sources */,
 				F37757FFCE9D826F2CE0B543 /* AppTabStripView.swift in Sources */,
 				B2586079D7B1C590FE23488A /* AppTabPicker.swift in Sources */,
