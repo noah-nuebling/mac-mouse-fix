@@ -96,6 +96,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **outubro 2026**
 
+- 🇦🇺&nbsp;Iain&nbsp;D
 - 🇹🇼&nbsp;Wu&nbsp;Li&nbsp;Yu
 - 🇺🇸&nbsp;Gabriel&nbsp;Jackson
 - 🇩🇪&nbsp;Moritz&nbsp;Mußmann

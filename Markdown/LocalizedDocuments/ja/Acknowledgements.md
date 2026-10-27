@@ -94,6 +94,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **10月 2026**
 
+- 🇦🇺&nbsp;Iain&nbsp;D
 - 🇹🇼&nbsp;Wu&nbsp;Li&nbsp;Yu
 - 🇺🇸&nbsp;Gabriel&nbsp;Jackson
 - 🇩🇪&nbsp;Moritz&nbsp;Mußmann

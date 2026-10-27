@@ -94,6 +94,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **oktober 2026**
 
+- 🇦🇺&nbsp;Iain&nbsp;D
 - 🇹🇼&nbsp;Wu&nbsp;Li&nbsp;Yu
 - 🇺🇸&nbsp;Gabriel&nbsp;Jackson
 - 🇩🇪&nbsp;Moritz&nbsp;Mußmann
