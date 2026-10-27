@@ -9,7 +9,7 @@
 import AppKit
 
 /// The vertical strip on the left of the Buttons tab.
-///     The global tab is on top, then one tab per app, then a "+" button at the bottom.
+///     The global tab is on top, then one tab per app, then a "+" button right below them.
 final class AppTabStripView: NSView {
 
     static let width: CGFloat = 60
@@ -53,10 +53,11 @@ final class AppTabStripView: NSView {
         scrollView.hasVerticalScroller = true
         scrollView.autohidesScrollers = true
         scrollView.scrollerStyle = .overlay
-        scrollView.contentView = FlippedClipView() /// A plain clip view keeps a short document at the bottom
+        scrollView.contentView = FlippedClipView() /// A flipped clip view keeps a short document at the top
         scrollView.documentView = tabStack
 
-        /// Add button (always visible, below the tabs)
+        /// Add button
+        ///     It sits right below the app tabs. If there are too many tabs to fit, the tabs scroll and the button stays at the bottom. (See the constraints below.)
 
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.isBordered = false
@@ -71,18 +72,23 @@ final class AppTabStripView: NSView {
         addSubview(addButton)
 
         let clip = scrollView.contentView
+        /// The scroll view is as tall as its tabs, so the button can sit right below them.
+        ///     When the tabs don't fit, the required constraints win over this preference. The scroll view then gets all the room above the button, and the button sits at the bottom.
+        let scrollViewFitsTabs = scrollView.heightAnchor.constraint(equalTo: tabStack.heightAnchor)
+        scrollViewFitsTabs.priority = .defaultHigh
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -8),
+            scrollViewFitsTabs,
 
             tabStack.leadingAnchor.constraint(equalTo: clip.leadingAnchor),
             tabStack.trailingAnchor.constraint(equalTo: clip.trailingAnchor),
             tabStack.topAnchor.constraint(equalTo: clip.topAnchor),
 
+            addButton.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 8),
+            addButton.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
             addButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            addButton.bottomAnchor.constraint(equalTo: bottomAnchor),
             addButton.widthAnchor.constraint(equalToConstant: 44),
             addButton.heightAnchor.constraint(equalToConstant: 44),
         ])
