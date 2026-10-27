@@ -28,6 +28,7 @@
 #import "EventUtility.h"
 #import "MathObjc.h"
 #import "Threads.h"
+#import "AppExclusions.h"
 
 @import IOKit;
 #import "MFHIDEventImports.h"
@@ -62,6 +63,8 @@ static MFScrollAnimationCurveParameters *_animationParams;
 static ScrollAnalysisResult _lastScrollAnalysisResult;
 static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
 
+
+static MFAppExclusionFeatures _appExcludedFeatures; /// Features the user turned off for the app under the pointer. Updated on the first tick of each swipe. (See AppExclusions.m)
 
 static MFReadWriteTracker _readWriteTracker;
 
@@ -220,15 +223,46 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Do the actual work
     ///     We used to do this on a separate dispatch queue before the 'No more dispatch queues' refactor. Deleted the comments about why [Oct 2026]
+    BOOL passThrough;
     allowNestedReadOrWrite()
-    heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
+    passThrough = heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
 
-    return NULL;
+    return passThrough ? event : NULL;
+}
+
+#pragma mark - App exclusions
+
+static MFScrollInversion effectiveInvertSetting(void) {
+    /// The user's Reverse Direction setting – unless they turned it off for the app under the pointer (See AppExclusions.m)
+    if (_appExcludedFeatures & kMFAppExclusionFeaturesReverseDirection) return kMFScrollInversionNonInverted;
+    return _scrollConfig.u_invertDirection;
+}
+
+static void invertScrollEvent(CGEventRef event) {
+
+    /// Flips the direction of a scroll event in place. Used to apply Reverse Direction to events we otherwise pass through unaltered.
+    ///     We read all the fields before writing any, since setting one delta field can update the others.
+
+    int64_t deltaLine1  = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    int64_t deltaLine2  = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    double deltaFixed1  = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
+    double deltaFixed2  = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2);
+    int64_t deltaPoint1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+    int64_t deltaPoint2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
+
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, -deltaLine1);
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, -deltaLine2);
+    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, -deltaFixed1);
+    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, -deltaFixed2);
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, -deltaPoint1);
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, -deltaPoint2);
 }
 
 #pragma mark - Main event processing
 
-static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTS) {
+static BOOL heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTS) {
+
+    /// Returns YES if the event should be passed through to the app instead of being swallowed.
 
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
@@ -295,7 +329,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     ///
     ///     @note We check the `_modifications.effectMod` before updating `_modifications`. Not totally sure this makes sense?
     
-    MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:_scrollConfig.u_invertDirection horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
+    MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:effectiveInvertSetting() horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
     
     BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTS direction:scrollDirection config:_scrollConfig];
     
@@ -351,8 +385,18 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             //}
         }
         
+        /// Update features the user turned off for the app under the pointer (See AppExclusions.m)
+        MFAppExclusionFeatures newExcludedFeatures = [AppExclusions excludedFeaturesForAppUnderPointerWithEvent:event];
+        if (newExcludedFeatures != _appExcludedFeatures) {
+            allowNestedReadOrWrite() [Scroll resetState]; /// Stop any running animation, so it doesn't keep scrolling in an app where smooth scrolling is turned off
+            _appExcludedFeatures = newExcludedFeatures;
+        }
+        
         /// Update modfications
-        MFScrollModificationResult newMods = [ScrollModifiers currentModificationsWithEvent:event];
+        MFScrollModificationResult newMods = (MFScrollModificationResult){ .inputMod = kMFScrollInputModificationNone, .effectMod = kMFScrollEffectModificationNone };
+        if (!(_appExcludedFeatures & kMFAppExclusionFeaturesScrollModifiers)) {
+            newMods = [ScrollModifiers currentModificationsWithEvent:event];
+        }
         if (![ScrollModifiers scrollModsAreEqual:newMods other:_modifications]) {
             allowNestedReadOrWrite() [Scroll resetState];
             _modifications = newMods;
@@ -371,7 +415,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Get effective direction
     ///  -> With user settings etc. applied
     
-    scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:_scrollConfig.u_invertDirection horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)]; /// Why do we need to get the scrollDirection again? We already calculated it during the "preliminary scrollAnalysis". Can it ever change betweent he 2 times we calculate it?
+    scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:effectiveInvertSetting() horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)]; /// Why do we need to get the scrollDirection again? We already calculated it during the "preliminary scrollAnalysis". Can it ever change betweent he 2 times we calculate it?
     
     /// Run full scrollAnalysis
     ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTS direction:scrollDirection config:_scrollConfig];
@@ -384,6 +428,20 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     /// Debug
     DDLogDebug("Scroll.m: ScrollAnalysisResult: %@", [ScrollAnalyzer scrollAnalysisResultDescription:scrollAnalysisResult]);
+    
+    /// Pass the event through in apps where the user turned off smooth scrolling (See AppExclusions.m)
+    ///     The app then gets the scroll events macOS would send without Mac Mouse Fix (no smoothing, no speed changes) – just with Reverse Direction applied.
+    ///     We still update the ScrollAnalyzer above, so that the slow work in the `firstConsecutive` section only happens once per swipe.
+    ///     Keyboard modifier scroll actions (zoom, etc.) still go through the normal path below, since they need us to generate the events.
+    if ((_appExcludedFeatures & kMFAppExclusionFeaturesSmoothScroll)
+        && _modifications.inputMod == kMFScrollInputModificationNone
+        && _modifications.effectMod == kMFScrollEffectModificationNone) {
+        
+        if (effectiveInvertSetting() == kMFScrollInversionInverted) {
+            invertScrollEvent(event);
+        }
+        return YES;
+    }
     
     /// Make scrollDelta positive, now that we have scrollDirection stored
     scrollDelta = llabs(scrollDelta);
@@ -484,7 +542,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             DDLogDebug("Scroll.m: Direction change – cancel scroll.");
             allowNestedReadOrWrite() /// [Sep 2026] `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
             [_animator cancel];
-            return;
+            return NO;
         }
         
         /// Debug
@@ -780,8 +838,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
         }];
     }
-    
+
     //CFRelease(event);
+    return NO;
 }
 
 #pragma mark - Send Scroll events

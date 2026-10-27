@@ -17,6 +17,7 @@
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "AppExclusions.h"
 
 @implementation ButtonInputReceiver
 
@@ -74,6 +75,7 @@ static void registerInputCallback() {
 }
 
 NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
+static uint64_t _buttonsPassingThroughForExcludedApp; /// Bitmask with one bit per buttonNumber. See AppExclusions.m
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
 
@@ -122,6 +124,21 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Filter buttons
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
+    
+    /// Let events pass through in apps where the user turned off buttons (See AppExclusions.m)
+    ///     We decide on mouseDown and stick with that decision until the matching mouseUp, so `Buttons` always sees complete down/up pairs – even if the pointer moves to another app while the button is held.
+    if (buttonNumber < 64) {
+        uint64_t buttonBit = (uint64_t)1 << buttonNumber;
+        if (mouseDown) {
+            BOOL appIsExcluded = ([AppExclusions excludedFeaturesForAppUnderPointerWithEvent:event] & kMFAppExclusionFeaturesButtons) != 0;
+            if (appIsExcluded)  _buttonsPassingThroughForExcludedApp |= buttonBit;
+            else                _buttonsPassingThroughForExcludedApp &= ~buttonBit;
+        }
+        if (_buttonsPassingThroughForExcludedApp & buttonBit) {
+            if (!mouseDown) _buttonsPassingThroughForExcludedApp &= ~buttonBit;
+            return event;
+        }
+    }
     
     /// Debug
     DDLogDebug("Input Receiver - Received event: %@", [NSEvent eventWithCGEvent:event].description);

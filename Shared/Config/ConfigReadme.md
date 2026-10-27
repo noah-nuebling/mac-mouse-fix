@@ -3,6 +3,8 @@
 - When you copy over a real `config.plist` to `default_config.plist`, make sure to reset the `State` values
 - `Remaps` in `default_config.plist` should be empty.
     - It will be programmatically replaced with one of the `defaultRemaps`
+- `AppExclusions` is optional and isn't in `default_config.plist` (so adding it didn't require a configVersion bump). It's an array of dicts with the keys `identifier` (bundleID, or executable path for apps without a bundleID), `name`, `path`, `disableSmoothScrolling`, `disableReverseDirection`, `disableScrollModifiers`, `disableButtons`.
+    - Edited by `AppsTabController.swift`, applied by `AppExclusions.m`
 
 
 ## Version Changes

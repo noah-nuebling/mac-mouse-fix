@@ -316,6 +316,193 @@
         }
       }
     },
+    "apps-tab.add.choose" : {
+      "comment" : "Apps Tab > + Menu > Opens a file picker",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose App…"
+          }
+        }
+      }
+    },
+    "apps-tab.add.running-header" : {
+      "comment" : "Apps Tab > + Menu > Header above the list of currently running apps",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running Apps"
+          }
+        }
+      }
+    },
+    "apps-tab.detail-title" : {
+      "comment" : "Apps Tab > Title above the checkboxes for the selected app. %@ is the app name. Each checked feature is turned off in that app.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn off in %@:"
+          }
+        }
+      }
+    },
+    "apps-tab.empty" : {
+      "comment" : "Apps Tab > Shown in the empty app list",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click + to add an app"
+          }
+        }
+      }
+    },
+    "apps-tab.feature.buttons" : {
+      "comment" : "Apps Tab > Checkbox. Turns off everything Mac Mouse Fix does with mouse buttons in the selected app",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buttons"
+          }
+        }
+      }
+    },
+    "apps-tab.feature.buttons.hint" : {
+      "comment" : "Apps Tab > Hint under the Buttons checkbox",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clicks reach the app unchanged."
+          }
+        }
+      }
+    },
+    "apps-tab.feature.reverse-direction" : {
+      "comment" : "Apps Tab > Checkbox. Turns off the 'Reverse Direction' setting from the Scrolling tab in the selected app",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reverse Direction"
+          }
+        }
+      }
+    },
+    "apps-tab.feature.reverse-direction.hint" : {
+      "comment" : "Apps Tab > Hint under the Reverse Direction checkbox",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scroll in the macOS direction."
+          }
+        }
+      }
+    },
+    "apps-tab.feature.scroll-modifiers" : {
+      "comment" : "Apps Tab > Checkbox. Turns off the 'Keyboard Modifiers' scroll actions from the Scrolling tab (zoom, horizontal scroll, etc.) in the selected app",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keyboard Modifiers"
+          }
+        }
+      }
+    },
+    "apps-tab.feature.scroll-modifiers.hint" : {
+      "comment" : "Apps Tab > Hint under the Keyboard Modifiers checkbox",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Holding keys like ⌘ or ⇧ while scrolling won't zoom or scroll horizontally."
+          }
+        }
+      }
+    },
+    "apps-tab.feature.smooth-scrolling" : {
+      "comment" : "Apps Tab > Checkbox. Turns off smooth scrolling and Mac Mouse Fix's scroll speed in the selected app",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smooth Scrolling"
+          }
+        }
+      }
+    },
+    "apps-tab.feature.smooth-scrolling.hint" : {
+      "comment" : "Apps Tab > Hint under the Smooth Scrolling checkbox",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app gets normal macOS scrolling. Reverse Direction still applies."
+          }
+        }
+      }
+    },
+    "apps-tab.hint" : {
+      "comment" : "Apps Tab > Explanation at the top of the tab",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn off Mac Mouse Fix features in specific apps, for example smooth scrolling in games. This applies while your pointer is over the app."
+          }
+        }
+      }
+    },
+    "apps-tab.no-selection" : {
+      "comment" : "Apps Tab > Shown on the right when no app is selected",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select an app to choose what's turned off"
+          }
+        }
+      }
+    },
+    "apps-tab.summary" : {
+      "comment" : "Apps Tab > App list > Line under each app name. %@ is a comma-separated list of the features that are turned off, e.g. 'Smooth Scrolling, Buttons'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off: %@"
+          }
+        }
+      }
+    },
+    "apps-tab.summary.nothing" : {
+      "comment" : "Apps Tab > App list > Line under the app name when nothing is turned off for that app",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing turned off"
+          }
+        }
+      }
+    },
+    "apps-tab.toolbar-label" : {
+      "comment" : "Toolbar > Apps Tab Button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apps"
+          }
+        }
+      }
+    },
     "app-version" : {
       "comment" : "Note: %@ will be the app version, e.g. '3.0.0 (22027)'",
       "localizations" : {

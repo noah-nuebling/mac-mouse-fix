@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AED13256CAEDDEA236E7D6AF /* AppsTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F6F63715FACC326F73412 /* AppsTabController.swift */; };
+		AE86C5CD7E32FD9490ABEF50 /* AppExclusions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE072081E6B77CF68445B478 /* AppExclusions.m */; };
 		4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
@@ -608,6 +610,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AE0F6F63715FACC326F73412 /* AppsTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsTabController.swift; sourceTree = "<group>"; };
+		AE072081E6B77CF68445B478 /* AppExclusions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppExclusions.m; sourceTree = "<group>"; };
+		AE1CF49FF6E2FA82F5A1FC02 /* AppExclusions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppExclusions.h; sourceTree = "<group>"; };
 		4F0028012C58303B00CDB9D0 /* LocalizationScreenshotTakerTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = LocalizationScreenshotTakerTestPlan.xctestplan; path = LocalizationScreenshotTaker/LocalizationScreenshotTakerTestPlan.xctestplan; sourceTree = SOURCE_ROOT; };
 		4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputCoordinator.swift; sourceTree = "<group>"; };
 		4F02C7202899453200ED0AA8 /* OutputCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputCoordinator.h; sourceTree = "<group>"; };
@@ -1761,6 +1766,7 @@
 		4F909CF528A0C3D2009349A2 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				AE0F6F63715FACC326F73412 /* AppsTabController.swift */,
 				4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */,
 				4F6F67A128A8188000C6C40F /* ButtonTab */,
 				4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */,
@@ -2591,6 +2597,8 @@
 		4FF6660C25F2C93A00689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				AE072081E6B77CF68445B478 /* AppExclusions.m */,
+				AE1CF49FF6E2FA82F5A1FC02 /* AppExclusions.h */,
 				4F67978A2DCFB76100516167 /* DevToggles.h */,
 				4F67978B2DCFB76100516167 /* DevToggles.m */,
 				4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */,
@@ -3445,6 +3453,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED13256CAEDDEA236E7D6AF /* AppsTabController.swift in Sources */,
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4F1B41A52D4BACBA00026C94 /* NSData+Additions.m in Sources */,
@@ -3621,6 +3630,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE86C5CD7E32FD9490ABEF50 /* AppExclusions.m in Sources */,
 				4FB8B29F2CCEBB1700A5A580 /* GetTrialState.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
