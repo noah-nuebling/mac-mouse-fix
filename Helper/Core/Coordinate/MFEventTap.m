@@ -93,6 +93,7 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
 @implementation MFEventTap
 
     #pragma mark Typedefs
+
     typedef enum {
         kCGTapID_Null = 0,
 

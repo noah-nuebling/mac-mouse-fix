@@ -132,160 +132,169 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
 #pragma mark - Use private classes
 
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name {
-    
+
     /// Look through all ivars and properties of `obj` and return the first value with name `name`
     /// -> Actually this only looks at ivars, and ignores values that aren't objects. Because that's all we need it for right now.
     /// -> We use this for changing tabs programmatically in `coolSelectTab(identifier: String)`, so don't break it!
-    
-    id result;
-    id __strong * resultPtr = &result;
-    
-    iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
-        
-        NSString *ivarName = @(ivar_getName(ivar) ?: "");
-        
-        if ([name isEqual:ivarName]) {
-            
-            const char *typeEncoding = ivar_getTypeEncoding(ivar);
-            BOOL isObject = typeEncoding[0] == '@';
-            if (!isObject) return; /// Ignore everything except objects, because we don't need more rn
-            
-            id value = (id)object_getIvar(obj, ivar);
-            if (value == nil) return;
-            
-            *resultPtr = value;
-            
-            *stop = YES;
+
+    #if 1 /// [Oct 2026] Simplification. Neither me nor Opus 5.5 couldn't find any reason we did it manually.
+        @try { return [obj valueForKey: name]; }
+        @catch (id exception) { return nil; } /// Match historical `getPrivateValueOf:forName:` behavior if ivar doesn't exist. Not sure it matters. [Oct 2026]
+    #else
+        id result;
+        id __strong * resultPtr = &result;
+
+        iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
+
+            NSString *ivarName = @(ivar_getName(ivar) ?: "");
+
+            if ([name isEqual:ivarName]) {
+
+                const char *typeEncoding = ivar_getTypeEncoding(ivar);
+                BOOL isObject = typeEncoding[0] == '@';
+                if (!isObject) return; /// Ignore everything except objects, because we don't need more rn
+
+                id value = (id)object_getIvar(obj, ivar);
+                if (value == nil) return;
+
+                *resultPtr = value;
+
+                *stop = YES;
+            }
+        });
+
+        return result;
+    #endif
+}
+
+
+#if 0 /// Unused [Oct 2026]
+
+    #pragma mark - Investigate private classes
+
+    + (NSString *)dumpClassInfo:(id)obj {
+        /// See this article to understand type encodings: https://nshipster.com/type-encodings/
+
+        Class class = [obj class];
+
+        /// Name
+        const char *className = class_getName(class);
+
+        /// Properties
+        NSMutableArray *properties = [NSMutableArray array];
+
+        iteratePropertiesOn(obj, ^(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop) {
+            [properties addObject:name];
+        });
+
+        /// Ivars
+        NSMutableArray *ivars = [NSMutableArray array];
+
+        iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
+
+            NSString *name = [@(ivar_getName(ivar) ?: "") copy];
+            [ivars addObject:name];
+        });
+
+        /// Methods
+        NSMutableArray *methods = [NSMutableArray array];
+        iterateMethodsOn(obj, ^(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *stop) {
+
+            [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
+        });
+
+        /// Class Methods
+        NSMutableArray *classMethods = [NSMutableArray array];
+        iterateMethodsOn([obj class], ^(Method method, struct objc_method_description *description, BOOL *stop) {
+
+            [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
+        });
+
+
+
+        /// Return string
+        return [NSString stringWithFormat:@"Info on class %@ - properties: %@, ivars: %@, methods: %@, classMethods: %@", @(className), properties, ivars, methods, classMethods];
+    }
+
+    #pragma mark - Core class accessor funcs
+
+    static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
+
+        Class class = [obj class];
+
+        unsigned int nIvars;
+        Ivar *ivarList = class_copyIvarList(class, &nIvars);
+
+        for (int i = 0; i < nIvars; i++) {
+
+            Ivar m = ivarList[i];
+            BOOL shouldStop = NO;
+            callback(m, &shouldStop);
+            if (shouldStop) break;
         }
-    });
-    
-    return result;
-}
-
-#pragma mark - Investigate private classes
-
-+ (NSString *)dumpClassInfo:(id)obj {
-    /// See this article to understand type encodings: https://nshipster.com/type-encodings/
-    
-    Class class = [obj class];
-    
-    /// Name
-    const char *className = class_getName(class);
-    
-    /// Properties
-    NSMutableArray *properties = [NSMutableArray array];
-    
-    iteratePropertiesOn(obj, ^(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop) {
-        [properties addObject:name];
-    });
-
-    /// Ivars
-    NSMutableArray *ivars = [NSMutableArray array];
-    
-    iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
-        
-        NSString *name = [@(ivar_getName(ivar) ?: "") copy];
-        [ivars addObject:name];
-    });
-
-    /// Methods
-    NSMutableArray *methods = [NSMutableArray array];
-    iterateMethodsOn(obj, ^(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *stop) {
-        
-        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
-    });
-
-    /// Class Methods
-    NSMutableArray *classMethods = [NSMutableArray array];
-    iterateMethodsOn([obj class], ^(Method method, struct objc_method_description *description, BOOL *stop) {
-        
-        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
-    });
-    
-
-    
-    /// Return string
-    return [NSString stringWithFormat:@"Info on class %@ - properties: %@, ivars: %@, methods: %@, classMethods: %@", @(className), properties, ivars, methods, classMethods];
-}
-
-#pragma mark - Core class accessor funcs
-
-static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
- 
-    Class class = [obj class];
-    
-    unsigned int nIvars;
-    Ivar *ivarList = class_copyIvarList(class, &nIvars);
-    
-    for (int i = 0; i < nIvars; i++) {
-        
-        Ivar m = ivarList[i];
-        BOOL shouldStop = NO;
-        callback(m, &shouldStop);
-        if (shouldStop) break;
     }
-}
 
-//static void iteratePropertyLikeMethods(id obj, void(^callback)(Method method, struct objc_method_description *description, id value, BOOL *stop)) {
-//    
-//    /// This can cause leaks. See https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
-//    ///     -> I think the iterateIvars function can also cause leaks in the same way.
-//    
-//    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
-//        
-//        /// Check if last char is `:` to see if method has arguments
-//        SEL sel = description->name;
-//        const char *name = sel_getName(sel);
-//        unsigned long len = strlen(name);
-//        char lastChar = name[len-1];
-//        if (lastChar == ':') return;
-//        id value = [obj performSelector:sel];
-//        if (value == nil) return;
-//        callback(method, description, value, stop);
-//    });
-//}
+    //static void iteratePropertyLikeMethods(id obj, void(^callback)(Method method, struct objc_method_description *description, id value, BOOL *stop)) {
+    //
+    //    /// This can cause leaks. See https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+    //    ///     -> I think the iterateIvars function can also cause leaks in the same way.
+    //
+    //    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
+    //
+    //        /// Check if last char is `:` to see if method has arguments
+    //        SEL sel = description->name;
+    //        const char *name = sel_getName(sel);
+    //        unsigned long len = strlen(name);
+    //        char lastChar = name[len-1];
+    //        if (lastChar == ':') return;
+    //        id value = [obj performSelector:sel];
+    //        if (value == nil) return;
+    //        callback(method, description, value, stop);
+    //    });
+    //}
 
-static void iterateMethodsOn(id _Nullable obj, void(^_Nonnull callback)(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *_Nonnull stop)) {
-    
-    /// To iterate class methods, pass in [obj class]
-    
-    Class _Nullable class = [obj class];
-    
-    unsigned int nMethods;
-    Method _Nonnull *_Nullable methodList = class_copyMethodList(class, &nMethods);
-    
-    for (int i = 0; i < nMethods; i++) {
-        
-        Method _Nonnull m = methodList[i];
-        struct objc_method_description *_Nonnull d = method_getDescription(m);
-        
-        BOOL shouldStop = NO;
-        callback(m, d, &shouldStop);
-        if (shouldStop) break;
+    static void iterateMethodsOn(id _Nullable obj, void(^_Nonnull callback)(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *_Nonnull stop)) {
+
+        /// To iterate class methods, pass in [obj class]
+
+        Class _Nullable class = [obj class];
+
+        unsigned int nMethods;
+        Method _Nonnull *_Nullable methodList = class_copyMethodList(class, &nMethods);
+
+        for (int i = 0; i < nMethods; i++) {
+
+            Method _Nonnull m = methodList[i];
+            struct objc_method_description *_Nonnull d = method_getDescription(m);
+
+            BOOL shouldStop = NO;
+            callback(m, d, &shouldStop);
+            if (shouldStop) break;
+        }
+
+        free(methodList);
     }
-    
-    free(methodList);
-}
 
-static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_property_t _Nonnull property, NSString *_Nullable name, NSString *_Nullable attributes, BOOL *_Nonnull stop)) {
-    
-    Class _Nullable class = [obj class];
-    
-    /// Properties
-    unsigned int nProperties;
-    objc_property_t _Nonnull *_Nullable propertyList = class_copyPropertyList(class, &nProperties);
-    
-    for (int i = 0; i < nProperties; i++) {
-        objc_property_t _Nonnull m = propertyList[i];
-        const char *_Nonnull name = property_getName(m);
-        const char *_Nullable attrs = property_getAttributes(m);
-        BOOL shouldStop = NO;
-        callback(m, @(name), @(attrs ?: ""), &shouldStop);
-        if (shouldStop) break;
+    static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_property_t _Nonnull property, NSString *_Nullable name, NSString *_Nullable attributes, BOOL *_Nonnull stop)) {
+
+        Class _Nullable class = [obj class];
+
+        /// Properties
+        unsigned int nProperties;
+        objc_property_t _Nonnull *_Nullable propertyList = class_copyPropertyList(class, &nProperties);
+
+        for (int i = 0; i < nProperties; i++) {
+            objc_property_t _Nonnull m = propertyList[i];
+            const char *_Nonnull name = property_getName(m);
+            const char *_Nullable attrs = property_getAttributes(m);
+            BOOL shouldStop = NO;
+            callback(m, @(name), @(attrs ?: ""), &shouldStop);
+            if (shouldStop) break;
+        }
+
+        free(propertyList);
     }
-    
-    free(propertyList);
-}
+#endif
 
 #pragma mark - Use command-line tools
 
@@ -372,20 +381,22 @@ static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_
     [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:NULL terminationHandler:nil];
 }
 
-#pragma mark - Monitor file system
+#if 0 /// Unused [Oct 2026]
+    #pragma mark - Monitor file system
 
-+ (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)paths withCallback:(FSEventStreamCallback)callback {
-    FSEventStreamRef stream = FSEventStreamCreate(kCFAllocatorDefault, callback, NULL, (__bridge CFArrayRef)paths, kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
-    FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-    FSEventStreamStart(stream);
-    return stream;
-}
-+ (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream {
-    if (stream != NULL) {
-        FSEventStreamInvalidate((void *_Nonnull)stream);
-        FSEventStreamRelease((void *_Nonnull)stream);
+    + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)paths withCallback:(FSEventStreamCallback)callback {
+        FSEventStreamRef stream = FSEventStreamCreate(kCFAllocatorDefault, callback, NULL, (__bridge CFArrayRef)paths, kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
+        FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+        FSEventStreamStart(stream);
+        return stream;
     }
-}
+    + (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream {
+        if (stream != NULL) {
+            FSEventStreamInvalidate((void *_Nonnull)stream);
+            FSEventStreamRelease((void *_Nonnull)stream);
+        }
+    }
+#endif
 
 #pragma mark - Debug
 
@@ -405,136 +416,135 @@ NSMutableString *bitflagsDescription(uint64_t flags, NSString *(^descriptionForB
 
 
 #if 0 /// Unused [Oct 2026]
-NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitposToNameMap[_Nullable], int bitposToNameMapCount) {
-    
-    /**
-    Debug-printing for enums. [Apr 2025]
-        
-    Also see: `CodeStyle.md`
-    Usage example:
-        ```
-        NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
-        
-            static NSString *map[] = {
-                [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
-                [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
-                [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
-                [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
-                [bitpos(kCGDisplayAddFlag)]                     = @"Add",
-                [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
-                [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
-                [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
-                [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
-                [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
-                [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
-            };
-            
-            NSString *result = bitflagstring(flags, map, arrcount(map));
-            return result;
-        };
-        ```
-    */
-    
-    /// Build result
-    NSMutableString *result = [NSMutableString string];
-    
-    int i = 0;
-    while (1) {
-        
-        /// Break
-        if (flags == 0) break;
-        
-        if ((flags & 1) != 0) { /// If `flags` contains bit `i`
-            
-            /// Insert separator
-            if (result.length > 0)
-                [result appendString:@" | "];
-            
-            /// Get string describing bit `i`
-            NSString *bitName = safeindex(bitposToNameMap, bitposToNameMapCount, i, nil);
-            NSString *str = (bitName && bitName.length > 0) ? bitName : stringf(@"(1 << %d)", i);
-            
-            /// Append
-            [result appendString:str];
-        }
-        
-        /// Increment
-        flags >>= 1;
-        i++;
-    }
-    
-    /// Wrap result in ()
-    result = [NSMutableString stringWithFormat:@"(%@)", result];
-    
-    /// Return
-    return result;
-}
-#endif
+    NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitposToNameMap[_Nullable], int bitposToNameMapCount) {
 
-/*
-+ (NSString *)binaryRepresentation:(int64_t)value {
-        
-    /// Note: [Apr 2025]: (While cleaning up merge of branch master into feature-strings-catalog)
-    /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
-    ///     Update: Oh but all usages of this are commented out.
-    ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
-    ///             Update: The macro was binarystring() I think
-        
-    uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
-    
-    int64_t nibbleCount = sizeof(value) * 2;
-    NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
-    
-    for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
-    {
-        [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
-        if (index % 4 == 0)
-        {
-            [bitString appendString:@" "];
+        /**
+        Debug-printing for enums. [Apr 2025]
+
+        Also see: `CodeStyle.md`
+        Usage example:
+            ```
+            NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
+
+                static NSString *map[] = {
+                    [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
+                    [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
+                    [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
+                    [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
+                    [bitpos(kCGDisplayAddFlag)]                     = @"Add",
+                    [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
+                    [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
+                    [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
+                    [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
+                    [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
+                    [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
+                };
+
+                NSString *result = bitflagstring(flags, map, arrcount(map));
+                return result;
+            };
+            ```
+        */
+
+        /// Build result
+        NSMutableString *result = [NSMutableString string];
+
+        int i = 0;
+        while (1) {
+
+            /// Break
+            if (flags == 0) break;
+
+            if ((flags & 1) != 0) { /// If `flags` contains bit `i`
+
+                /// Insert separator
+                if (result.length > 0)
+                    [result appendString:@" | "];
+
+                /// Get string describing bit `i`
+                NSString *bitName = safeindex(bitposToNameMap, bitposToNameMapCount, i, nil);
+                NSString *str = (bitName && bitName.length > 0) ? bitName : stringf(@"(1 << %d)", i);
+
+                /// Append
+                [result appendString:str];
+            }
+
+            /// Increment
+            flags >>= 1;
+            i++;
         }
+
+        /// Wrap result in ()
+        result = [NSMutableString stringWithFormat:@"(%@)", result];
+
+        /// Return
+        return result;
     }
-    return bitString;
-}
-*/
+    + (NSString *)binaryRepresentation:(int64_t)value {
+
+        /// Note: [Apr 2025]: (While cleaning up merge of branch master into feature-strings-catalog)
+        /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
+        ///     Update: Oh but all usages of this are commented out.
+        ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
+        ///             Update: The macro was binarystring() I think
+
+        uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
+
+        int64_t nibbleCount = sizeof(value) * 2;
+        NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
+
+        for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
+        {
+            [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
+            if (index % 4 == 0)
+            {
+                [bitString appendString:@" "];
+            }
+        }
+        return bitString;
+    }
+#endif
 
 + (NSString *)callerInfo {
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];
 }
-+ (void)printStackTrace {
-    DDLogInfo("PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
-}
 
-//+ (NSString *)currentDispatchQueueDescription {
-//    return dispatch_get_current_queue().description;
-//}
+#if 0 /// Unused [Oct 2026]
+    + (void)printStackTrace {
+        DDLogInfo("PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
+    }
 
-/// For debugging.
-+ (void)printInvocationCountWithId:(NSString *)strId {
-    
-    static NSMutableDictionary<NSString *, NSNumber *> *ids;
-    static BOOL hasBeenInited = NO;
-    
-    if (hasBeenInited == NO) {
-        ids = [NSMutableDictionary dictionary];
-        hasBeenInited = YES;
+    + (NSString *)currentDispatchQueueDescription {
+        return dispatch_get_current_queue().description;
     }
-    
-    int counterForId;
-    
-    NSNumber *counterForIdFromDict = ids[strId];
-    if (counterForIdFromDict == nil) {
-        counterForId = 0;
-    } else {
-        counterForId = counterForIdFromDict.intValue;
+
+    + (void)printInvocationCountWithId:(NSString *)strId {
+
+        static NSMutableDictionary<NSString *, NSNumber *> *ids;
+        static BOOL hasBeenInited = NO;
+
+        if (hasBeenInited == NO) {
+            ids = [NSMutableDictionary dictionary];
+            hasBeenInited = YES;
+        }
+
+        int counterForId;
+
+        NSNumber *counterForIdFromDict = ids[strId];
+        if (counterForIdFromDict == nil) {
+            counterForId = 0;
+        } else {
+            counterForId = counterForIdFromDict.intValue;
+        }
+
+        counterForId++;
+
+        DDLogInfo("%@: %d", strId, counterForId);
+
+        ids[strId] = @(counterForId);
+
     }
-    
-    counterForId++;
-    
-    DDLogInfo("%@: %d", strId, counterForId);
-    
-    ids[strId] = @(counterForId);
-    
-}
+#endif
 
 #pragma mark - Button Numbers
 
@@ -743,29 +753,29 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
 }
 
 #if 0
-+ (void)resetDispatchGroupCount:(dispatch_group_t)group {
-    /// Reset smoothing group counter to 0
-    /// This doesn't work, don't use this.
-    
-    assert(false);
-    
-    /// Method 2
-    
-//    dispatch_group_wait(group, DISPATCH_TIME_NOW); /// Time out immediately to reset state. Doesn't work....
-    
-    /// Method 1 (kinda hacky and unstable method)
-    
-    NSString *groupDebugDescription = group.debugDescription;
-    NSRange groupCountRange = [groupDebugDescription rangeOfString:@"(?<= count = ).*?(?=,)" options:NSRegularExpressionSearch];
-    /// ^ Actual Regex for count (?<= count = ).*?(?=,)
-    NSString *groupCountString = [groupDebugDescription substringWithRange:groupCountRange];
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    int groupCount = [numberFormatter numberFromString:groupCountString].intValue;
-    for (int i = 0; i < groupCount; i++) {
-        dispatch_group_leave(group);
+    + (void)resetDispatchGroupCount:(dispatch_group_t)group {
+        /// Reset smoothing group counter to 0
+        /// This doesn't work, don't use this.
+
+        assert(false);
+
+        /// Method 2
+
+        //dispatch_group_wait(group, DISPATCH_TIME_NOW); /// Time out immediately to reset state. Doesn't work....
+
+        /// Method 1 (kinda hacky and unstable method)
+
+        NSString *groupDebugDescription = group.debugDescription;
+        NSRange groupCountRange = [groupDebugDescription rangeOfString:@"(?<= count = ).*?(?=,)" options:NSRegularExpressionSearch];
+        /// ^ Actual Regex for count (?<= count = ).*?(?=,)
+        NSString *groupCountString = [groupDebugDescription substringWithRange:groupCountRange];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+        int groupCount = [numberFormatter numberFromString:groupCountString].intValue;
+        for (int i = 0; i < groupCount; i++) {
+            dispatch_group_leave(group);
+        }
     }
-}
 #endif
 
 @end
