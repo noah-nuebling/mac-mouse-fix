@@ -423,6 +423,7 @@
 		F37757FFCE9D826F2CE0B543 /* AppTabStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3D217C24A16836390C3E5 /* AppTabStripView.swift */; };
 		B2586079D7B1C590FE23488A /* AppTabPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */; };
 		E061F117F11B526A4413D16F /* RemapScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 145DC5374B7A8F2C9613524A /* RemapScope.m */; };
+		DAB8A92172035BE009ED25EF /* ShortcutLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 948A4F8843CA112A2808DD7C /* ShortcutLibrary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1214,6 +1215,8 @@
 		995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabPicker.swift; sourceTree = "<group>"; };
 		30B18771334473023F7FC264 /* RemapScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapScope.h; sourceTree = "<group>"; };
 		145DC5374B7A8F2C9613524A /* RemapScope.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapScope.m; sourceTree = "<group>"; };
+		B4BE5E43850C09CE5220F19A /* ShortcutLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShortcutLibrary.h; sourceTree = "<group>"; };
+		948A4F8843CA112A2808DD7C /* ShortcutLibrary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShortcutLibrary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -2016,6 +2019,8 @@
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
 				30B18771334473023F7FC264 /* RemapScope.h */,
 				145DC5374B7A8F2C9613524A /* RemapScope.m */,
+				B4BE5E43850C09CE5220F19A /* ShortcutLibrary.h */,
+				948A4F8843CA112A2808DD7C /* ShortcutLibrary.m */,
 				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
 			);
 			path = RemapTable;
@@ -3629,6 +3634,7 @@
 				F37757FFCE9D826F2CE0B543 /* AppTabStripView.swift in Sources */,
 				B2586079D7B1C590FE23488A /* AppTabPicker.swift in Sources */,
 				E061F117F11B526A4413D16F /* RemapScope.m in Sources */,
+				DAB8A92172035BE009ED25EF /* ShortcutLibrary.m in Sources */,
 				4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */,
 				4F47C11C2C58931B009F6CE7 /* LicenseToasts.swift in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,

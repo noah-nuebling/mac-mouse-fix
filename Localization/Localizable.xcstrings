@@ -7286,6 +7286,17 @@
         }
       }
     },
+    "effect.key-sequence.separator" : {
+      "comment" : "Shown between the keyboard shortcuts of an action that presses several shortcuts one after another. Example: '⌘K then ⌘S'. Keep the spaces around the word.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " then "
+          }
+        }
+      }
+    },
     "effect.launchpad" : {
       "comment" : "",
       "localizations" : {

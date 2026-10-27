@@ -189,6 +189,7 @@ typedef NSString*                                                       MFString
 #define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"
 #define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
+#define kMFActionDictTypeKeySequence                                    @"keySequence"
 #define kMFActionDictTypeSystemDefinedEvent                             @"systemDefinedEvent"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
 #define kMFActionDictTypeAddModeFeedback                                @"addModeAction"
@@ -200,6 +201,9 @@ typedef NSString*                                                       MFString
 // Keyboard shortcut variant keys
 #define kMFActionDictKeyKeyboardShortcutVariantKeycode                  @"keycode"
 #define kMFActionDictKeyKeyboardShortcutVariantModifierFlags            @"flags"
+// Key sequence variant keys (Each step has the keys of the keyboard shortcut variant)
+#define kMFActionDictKeySequenceVariantSteps                            @"steps"
+#define kMFActionDictKeySequenceVariantIntervalMs                       @"intervalMs"
 // Button click variant keys
 #define kMFActionDictKeyMouseButtonClicksVariantButtonNumber            @"button"
 #define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks          @"nOfClicks"
