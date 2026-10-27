@@ -66,6 +66,9 @@ static NSDictionary *addModeSwizzler(NSDictionary *remaps, NSDictionary *activeM
     NSMutableDictionary *modification = [SharedUtility deepMutableCopyOf:remaps[@{}]]; /// Deep copying so caller can store value without it changing afterwards due to references
     NSMutableDictionary *activeModifiers = [SharedUtility deepMutableCopyOf:(id)activeModifierss]; /// I think we deep mutable copy so the UI doesn't crash
     
+    /// Don't record the active app. Recorded remaps are global. (While recording, the frontmost app is usually our own app, which is not what the user wants to record for.)
+    [activeModifiers removeObjectForKey:kMFModificationPreconditionKeyApp];
+
     if (activeModifiers.count > 0) { /// There need to be modifiers for drag and scroll triggers!
         modification[kMFTriggerDrag][kMFRemapsKeyModificationPrecondition] = activeModifiers;
         modification[kMFTriggerScroll][kMFRemapsKeyModificationPrecondition] = activeModifiers;
@@ -111,6 +114,11 @@ static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary
     ///     Then, for each trigger-specific precond array, it takes all the modification dicts of each precond and overrides them into each other in the order of their precond size, from small to large
     /// I'm too lazy and stupid to describe why all this abstract stuff makes sense, but it leads the button and keyboard modifiers to always do the intuitive thing that you expect them to!
     
+    /// On app-specific remaps:
+    ///     The active modifiers only contain the frontmost app while some remap is specific to that app. (See `updateAppModifier()` in Modifiers.m)
+    ///     Preconds of different apps never match at the same time (See `isSubMod()`). So there are at most two layers: The global preconds, and the preconds of the frontmost app.
+    ///     Each layer is filtered like before (See `internalSubSetsFilteredOut()`), and the app's layer is applied on top of the global one (See `appSpecificity` below).
+
     /// Treat simple case separately for optimization
     
     if ([activeModifiers isEqual: @{}]) {
@@ -147,9 +155,12 @@ static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary
         NSArray *buttons = precond[kMFModificationPreconditionKeyButtons];
         int64_t buttonSubsequenceLength = buttons.count;
         
+        /// App-specific preconds always win over global ones (regardless of how many modifiers they have). See `isSubMod()`.
+        int64_t appSpecificity = (precond[kMFModificationPreconditionKeyApp] != nil) ? 1000 : 0;
+
         [precondsAndSizes addObject:@{
             @"precond": precond,
-            @"size": @(flagsSubsetSize + buttonSubsequenceLength),
+            @"size": @(flagsSubsetSize + buttonSubsequenceLength + appSpecificity),
         }];
     }
     
@@ -235,6 +246,8 @@ static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary
 
 /// MARK: SubsetOverrride helpers
 
+BOOL isSameAppScope(NSDictionary *precond, NSDictionary *otherPrecond);
+
 NSArray<NSDictionary *> *internalSubSetsFilteredOut(NSArray<NSDictionary *> *modifiers) {
     /// Will filter out any modifierDicts in `modifiers` that are a subset of another modifierDict in `modifiers`
     /// This function assumes that `modifiers` is sorted by subSetSize (See where this is called in subsetOverride() for example)
@@ -252,7 +265,7 @@ NSArray<NSDictionary *> *internalSubSetsFilteredOut(NSArray<NSDictionary *> *mod
             
             NSDictionary *otherPrecond = modifiers[j];
             
-            if (isSubMod(otherPrecond, precond)) {
+            if (isSubMod(otherPrecond, precond) && isSameAppScope(otherPrecond, precond)) {
                 isSubsetOfOtherPrecond = YES;
                 break;
             }
@@ -266,6 +279,20 @@ NSArray<NSDictionary *> *internalSubSetsFilteredOut(NSArray<NSDictionary *> *mod
     return filteredModifiers;
 }
 
+BOOL isSameAppScope(NSDictionary *precond, NSDictionary *otherPrecond) {
+
+    /// Preconds for different apps (or an app and no app) don't filter each other out.
+    ///     So a global remap is never disabled by an app-specific remap, and an app-specific remap is never disabled by a global one.
+    ///     Instead, app-specific remaps override global ones by their size. See `subsetSwizzler()`.
+
+    NSString *app = precond[kMFModificationPreconditionKeyApp];
+    NSString *otherApp = otherPrecond[kMFModificationPreconditionKeyApp];
+
+    if (app == nil || otherApp == nil) return app == otherApp;
+
+    return [app isEqual:otherApp];
+}
+
 BOOL isSubMod(NSDictionary *modifiers, NSDictionary *potentialSubModifiers) {
     
     /// Treat zero case separately
@@ -273,6 +300,12 @@ BOOL isSubMod(NSDictionary *modifiers, NSDictionary *potentialSubModifiers) {
     
     if (potentialSubModifiers.count == 0) return YES;
     
+    /// App
+    ///     Global preconds (without an app) are a subset of any app. App-specific preconds are only a subset of the same app.
+
+    NSString *subApp = potentialSubModifiers[kMFModificationPreconditionKeyApp];
+    if (subApp != nil && ![modifiers[kMFModificationPreconditionKeyApp] isEqual:subApp]) return NO;
+
     /// Keyboard flags
     
     CGEventFlags flags = ((NSNumber *)modifiers[kMFModificationPreconditionKeyKeyboard]).unsignedLongLongValue;

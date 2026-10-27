@@ -123,6 +123,8 @@ typedef NSString*                                                       MFString
 #define kMFRemapsKeyTrigger                     @"trigger"
 #define kMFRemapsKeyModificationPrecondition    @"modifiers"
 #define kMFRemapsKeyEffect                      @"effect"
+// Optional. Bundle ID of an app. If present, the remap only applies while that app is frontmost. If absent, the remap is global.
+#define kMFRemapsKeyApp                         @"app"
 
 #pragma mark - Remaps dict
 
@@ -134,6 +136,8 @@ typedef NSString*                                                       MFString
 // Keyboard
 #define kMFModificationPreconditionKeyKeyboard                          @"keyboardModifiers"
 // (^ Use NSModifierFlags (CGEventFlags would probably work, too) as values)
+// App (Bundle ID of the frontmost app. Only in active modifiers, and in preconditions of app-specific remaps. Set from kMFRemapsKeyApp.)
+#define kMFModificationPreconditionKeyApp                               @"app"
 
 // Modified drag
 
