@@ -45,7 +45,7 @@ class TabViewController: NSTabViewController {
     
     // MARK: Constants
     ///     TODO: Think about using validTabs in different places / if using it at all makes sense in the grand architecture
-    private let validTabs = ["general", "buttons", "scrolling", "about"]
+    private let validTabs = ["general", "buttons", "scrolling", "apps", "about"]
     
     private var window: ResizingTabWindow? {
         if let w = self.tabView.window as? ResizingTabWindow {
@@ -348,6 +348,17 @@ class TabViewController: NSTabViewController {
         super.viewDidLoad()
         /// Debug
         DDLogDebug("TBS tabview didLoad")
+        
+        /// Add Apps tab
+        ///     It's built in code instead of in Main.storyboard (See AppsTabController.swift)
+        let appsTab = NSTabViewItem(viewController: AppsTabController())
+        appsTab.identifier = "apps"
+        appsTab.label = MFLocalizedString("apps-tab.toolbar-label", comment: "Toolbar > Apps Tab Button")
+        if #available(macOS 11.0, *) {
+            appsTab.image = NSImage(systemSymbolName: "square.grid.2x2", accessibilityDescription: nil)
+        }
+        let aboutIndex = tabViewItems.firstIndex { $0.identifier as? String == "about" } ?? tabViewItems.count
+        insertTabViewItem(appsTab, at: aboutIndex)
     }
     
     override func viewWillAppear() {

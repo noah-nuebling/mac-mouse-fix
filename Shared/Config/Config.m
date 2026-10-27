@@ -13,6 +13,7 @@
 
 /// Notes:
 /// - [Aug 2025] MMF 3 doesn't support app-specific settings, so all the 'overrides' stuff doesn't apply currently.
+///     The only per-app setting is `AppExclusions` (turning off individual scroll/button features for specific apps), which doesn't use the 'overrides' system. See AppExclusions.m
 /// - We're using our custom coolKeyPath API all over this class, instead of Apple's key-value-coding API (aka KVC) (See valueForKeyPath:). The main reason we do this, is so that, when we set a value at a keypPath which doesn't exist, yet using the function `setConfig(NSString *keyPath, NSObject *value)` then the keyPath is created automatically, instead of just failing. This has the benefit, of being more robust and we don't need to make sure, that all keyPaths already exist in the defaultConfig. In all the other places where we use the coolKeyPath API in this class, we only do this to stay consistent (at the time of writing). I'm not sure, whether our coolKeyPath API is slower that the KVC API. We transitioned over to coolKeyPath API without testing speed.
 /// - TODO: Test if the coolKeyPath API is slower than the KVC API and optimize
 /// - TODO: Implement callback when frontmost application changes - change settings accordingly
@@ -43,6 +44,7 @@
 
 #if IS_HELPER
     #import "Mac_Mouse_Fix_Helper-Swift.h"
+    #import "AppExclusions.h"
 #elif IS_MAIN_APP
     #import "Mac_Mouse_Fix-Swift.h"
 #endif
@@ -178,6 +180,7 @@ static void updateDerivedStates(void) {
         //[Scroll decide];
         [PointerConfig reload];
         [GeneralConfig reload];
+        [AppExclusions reload];
         [MenuBarItem reload];
 
     #endif
