@@ -316,6 +316,149 @@
         }
       }
     },
+    "app-tabs.add.tooltip" : {
+      "comment" : "Tooltip of the + button that adds an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add App"
+          }
+        }
+      }
+    },
+    "app-tabs.alert.cancel" : {
+      "comment" : "Cancel button in the app tab alerts.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "app-tabs.global.tooltip" : {
+      "comment" : "Tooltip of the global tab in the Buttons tab strip. The global tab holds the buttons that apply to all apps.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Global"
+          }
+        }
+      }
+    },
+    "app-tabs.menu.remove" : {
+      "comment" : "Context menu item on an app tab. Removes the tab and its buttons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove App Tab…"
+          }
+        }
+      }
+    },
+    "app-tabs.picker.choose-other" : {
+      "comment" : "Button in the app picker. Opens a file chooser for apps that aren't open.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Other App…"
+          }
+        }
+      }
+    },
+    "app-tabs.picker.open-panel.message" : {
+      "comment" : "Message at the top of the file chooser that opens to pick an app for a new app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose an app to add as a tab."
+          }
+        }
+      }
+    },
+    "app-tabs.picker.search" : {
+      "comment" : "Placeholder of the search field in the app picker.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search open apps"
+          }
+        }
+      }
+    },
+    "app-tabs.remove.alert.confirm" : {
+      "comment" : "Confirm button of the alert that removes an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Tab"
+          }
+        }
+      }
+    },
+    "app-tabs.remove.alert.message" : {
+      "comment" : "Informative text of the alert that removes an app tab. Only shown if the tab has buttons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Its button settings are deleted too. Global settings are not affected."
+          }
+        }
+      }
+    },
+    "app-tabs.remove.alert.title" : {
+      "comment" : "Title of the alert that removes an app tab. %@ is the app name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove the %@ tab?"
+          }
+        }
+      }
+    },
+    "app-tabs.restore.alert.confirm" : {
+      "comment" : "Confirm button of the alert that deletes the buttons of an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Settings"
+          }
+        }
+      }
+    },
+    "app-tabs.restore.alert.message" : {
+      "comment" : "Informative text of the alert that deletes the buttons of an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The tab stays, so you can assign buttons again. Global settings are not affected."
+          }
+        }
+      }
+    },
+    "app-tabs.restore.alert.title" : {
+      "comment" : "Title of the alert that deletes the buttons of an app tab. %@ is the app name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all button settings for %@?"
+          }
+        }
+      }
+    },
     "app-version" : {
       "comment" : "Note: %@ will be the app version, e.g. '3.0.0 (22027)'",
       "localizations" : {

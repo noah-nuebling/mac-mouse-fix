@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix-Swift.h"
+#import "RemapScope.h"
 
 @implementation RemapTableUtility
 
@@ -134,6 +135,13 @@
     
     /// Get the remap table data model
     NSArray *dataModel = MainAppState.shared.remapTableController.dataModel;
+    
+    /// In an app tab, the table only shows that app's rows. But the global rows apply in that app, too.
+    ///     So a button counts as captured there, if the app's rows or the global rows use it. (In the global tab, this is the same as before app tabs existed.)
+    if (MainAppState.shared.remapTableController.scopeApp != nil) {
+        NSArray *globalRows = [RemapScope rowsForScope:nil inRemaps:(NSArray *)config(kMFConfigKeyRemaps)];
+        dataModel = [globalRows arrayByAddingObjectsFromArray:dataModel];
+    }
     
     /// Declare result
     NSMutableSet<NSNumber *> *capturedButtons = [NSMutableSet set];

@@ -419,6 +419,10 @@
 		4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAEBE92E74367300832CE2 /* AddField.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D62EBA9B629BEF75BBC26619 /* AppTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A74030334B741C66981FA7B /* AppTabs.swift */; };
+		F37757FFCE9D826F2CE0B543 /* AppTabStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3D217C24A16836390C3E5 /* AppTabStripView.swift */; };
+		B2586079D7B1C590FE23488A /* AppTabPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */; };
+		E061F117F11B526A4413D16F /* RemapScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 145DC5374B7A8F2C9613524A /* RemapScope.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1205,6 +1209,11 @@
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 		4FFF9F37307B8FE300211519 /* mk_timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mk_timer.h; sourceTree = "<group>"; };
 		4FFF9F38307B904900211519 /* mk_timer_notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = mk_timer_notes.md; sourceTree = "<group>"; };
+		1A74030334B741C66981FA7B /* AppTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabs.swift; sourceTree = "<group>"; };
+		1FF3D217C24A16836390C3E5 /* AppTabStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabStripView.swift; sourceTree = "<group>"; };
+		995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabPicker.swift; sourceTree = "<group>"; };
+		30B18771334473023F7FC264 /* RemapScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapScope.h; sourceTree = "<group>"; };
+		145DC5374B7A8F2C9613524A /* RemapScope.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapScope.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1573,6 +1582,7 @@
 			isa = PBXGroup;
 			children = (
 				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
+				2A9756EC51734881AE7D8E04 /* AppTabs */,
 				4F4150652927B6A40040BA7D /* AddField_New.swift */,
 				4FFAEBE92E74367300832CE2 /* AddField.swift */,
 				4FA8A30C28A9509E001E740F /* Options */,
@@ -2004,6 +2014,8 @@
 				4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
+				30B18771334473023F7FC264 /* RemapScope.h */,
+				145DC5374B7A8F2C9613524A /* RemapScope.m */,
 				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
 			);
 			path = RemapTable;
@@ -2929,6 +2941,16 @@
 			path = External;
 			sourceTree = "<group>";
 		};
+		2A9756EC51734881AE7D8E04 /* AppTabs */ = {
+			isa = PBXGroup;
+			children = (
+				1A74030334B741C66981FA7B /* AppTabs.swift */,
+				1FF3D217C24A16836390C3E5 /* AppTabStripView.swift */,
+				995EBBA4FD8D2B6E675A5FA7 /* AppTabPicker.swift */,
+			);
+			path = AppTabs;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3603,6 +3625,10 @@
 				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
 				4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
+				D62EBA9B629BEF75BBC26619 /* AppTabs.swift in Sources */,
+				F37757FFCE9D826F2CE0B543 /* AppTabStripView.swift in Sources */,
+				B2586079D7B1C590FE23488A /* AppTabPicker.swift in Sources */,
+				E061F117F11B526A4413D16F /* RemapScope.m in Sources */,
 				4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */,
 				4F47C11C2C58931B009F6CE7 /* LicenseToasts.swift in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,

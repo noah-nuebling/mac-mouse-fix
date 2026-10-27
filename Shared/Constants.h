@@ -113,6 +113,7 @@ typedef NSString*                                                       MFString
 #pragma mark - Config dict
 
 #define kMFConfigKeyRemaps @"Remaps"
+#define kMFConfigKeyAppTabs @"AppTabs" /// Bundle IDs of the per-app button tabs, in the order they were added. Rows for these apps are in kMFConfigKeyRemaps.
 #define kMFConfigKeyScroll @"Scroll"
 #define kMFConfigKeyPointer @"Pointer"
 #define kMFConfigKeyOther @"Other" // TODO: This occurs in keypaths a few times - replace with constant (search for 'Other.')
