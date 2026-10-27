@@ -63,7 +63,18 @@ int main(void) { @autoreleasepool {
     if ([ShortcutLibrary stepsAreValid:@[@[@0, @(kCGEventFlagMaskSecondaryFn)]]]) { failures++; printf("FAIL: fn flag accepted\n"); }
     if ([ShortcutLibrary stepsAreValid:@[]]) { failures++; printf("FAIL: empty steps accepted\n"); }
     if (![ShortcutLibrary stepsAreValid:@[@[@46, @(kCGEventFlagMaskCommand | kCGEventFlagMaskShift)]]]) { failures++; printf("FAIL: Cmd-Shift-M rejected\n"); }
-    
+
+    /// On German and Austrian keyboards the backtick is a dead key on the top-left key (key code 10), not on key code 50 (which gives "<").
+    for (NSDictionary *app in [ShortcutLibrary apps]) {
+        if (![app[@"bundleIDs"] containsObject:@"com.microsoft.VSCode"]) continue;
+        for (NSDictionary *entry in app[@"entries"]) {
+            if (![entry[@"label"] isEqualToString:@"Create new terminal"]) continue;
+            for (NSString *layout in @[@"de", @"at"]) {
+                if (![entry[@"variants"][layout] isEqual:@[@[@10, @393216]]]) { failures++; printf("FAIL: Create new terminal has no key 10 variant for %s\n", layout.UTF8String); }
+            }
+        }
+    }
+
     printf("%lu apps, %lu entries, %d failures\n", (unsigned long)[ShortcutLibrary apps].count, (unsigned long)nOfEntries, failures);
     return failures ? 1 : 0;
 }}

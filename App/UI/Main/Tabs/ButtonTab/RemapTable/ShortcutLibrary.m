@@ -1326,7 +1326,7 @@
                 @{ @"label": @"Toggle Search details", @"symbols": @"⇧⌘J", @"steps": @[@[@38, @1179648]] },
                 @{ @"label": @"Toggle breakpoint", @"symbols": @"F9", @"steps": @[@[@101, @0]] },
                 @{ @"label": @"Start or Continue debugging", @"symbols": @"F5", @"steps": @[@[@96, @0]] },
-                @{ @"label": @"Create new terminal", @"symbols": @"⌃⇧`", @"steps": @[@[@50, @393216]] },
+                @{ @"label": @"Create new terminal", @"symbols": @"⌃⇧`", @"steps": @[@[@50, @393216]], @"variants": @{@"at": @[@[@10, @393216]], @"de": @[@[@10, @393216]]} },
                 @{ @"label": @"Copy selection (terminal)", @"symbols": @"⌘C", @"steps": @[@[@8, @1048576]] }
                ] },
             @{ @"name": @"VLC media player",
