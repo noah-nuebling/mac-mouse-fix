@@ -13,6 +13,8 @@ import AppKit
 final class AppTabStripView: NSView {
 
     static let width: CGFloat = 60
+    /// The Buttons tab keeps at least this much height, so the strip fits the global tab, four app tabs and the "+" without scrolling. Without it, an empty app tab shrinks the window and the strip scrolls.
+    static let minimumHeight: CGFloat = 360
 
     /// Called with the bundle ID of the tapped app tab. nil is the global tab.
     var onSelectScope: ((String?) -> Void)?

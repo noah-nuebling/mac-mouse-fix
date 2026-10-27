@@ -607,6 +607,12 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         i = [[RemapTableMenuItem alloc] init];
         
+        /// Library entries get a small badge: a checkmark once the entry was verified in the app, an empty circle until then
+        if (itemModel[@"libraryVerified"] != nil) {
+            NSString *badge = [itemModel[@"libraryVerified"] boolValue] ? @"checkmark" : @"circle";
+            i.image = [SFSymbolStrings imageWithSymbolName:badge];
+        }
+
         NSString *title = itemModel[@"ui"];
         if (title != nil) {
             i.title = title;

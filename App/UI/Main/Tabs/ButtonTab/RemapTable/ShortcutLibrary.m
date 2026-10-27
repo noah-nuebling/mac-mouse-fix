@@ -1445,10 +1445,12 @@
                 assert(false);
                 continue;
             }
-            [result addObject:[self menuEntryForLabel:entry[@"label"]
-                                              symbols:entry[@"symbols"]
-                                                steps:steps
-                                           intervalMs:[entry[@"intervalMs"] doubleValue]]];
+            NSMutableDictionary *menuEntry = [[self menuEntryForLabel:entry[@"label"]
+                                                              symbols:entry[@"symbols"]
+                                                                steps:steps
+                                                           intervalMs:[entry[@"intervalMs"] doubleValue]] mutableCopy];
+            menuEntry[@"libraryVerified"] = @([entry[@"verified"] boolValue]); /// Drives the small badge in the effect menu. See RemapTableTranslator.
+            [result addObject:menuEntry];
         }
     }
     return result;

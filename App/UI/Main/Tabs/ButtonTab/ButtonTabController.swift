@@ -394,6 +394,7 @@ import Foundation
             strip.topAnchor.constraint(equalTo: root.topAnchor, constant: 20),
             strip.bottomAnchor.constraint(equalTo: root.bottomAnchor, constant: -20),
             strip.widthAnchor.constraint(equalToConstant: stripWidth),
+            strip.heightAnchor.constraint(greaterThanOrEqualToConstant: AppTabStripView.minimumHeight),
         ])
 
         strip.onSelectScope = { [weak self] app in self?.selectScope(app) }
