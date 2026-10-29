@@ -194,22 +194,18 @@ IOHIDDeviceRef _Nullable copySendingDevice_Reliable(uint64_t senderID) {
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
     io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
     
+    /// Virtual devices, including Universal Control senders, may not have an IORegistry entry.
+    if (service == IO_OBJECT_NULL) return NULL;
+
     /// Get IOHIDDevice
-    __block IOHIDDeviceRef iohidDevice;
+    __block IOHIDDeviceRef iohidDevice = NULL;
     [IOUtility iterateParentsOfEntry:service forEach:^Boolean(io_registry_entry_t parent) {
         iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
         return (iohidDevice == NULL); /// Keep going while device not found
     }];
-    
-    /// Validate
-    if (runningDebugMode()) {
-        BOOL isTakingLocalizationScreenshots = [NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"];
-        if (!isTakingLocalizationScreenshots) {
-            assert(iohidDevice != NULL); /// NULL for events sent by localizedScreenshot XCUITest runner, otherwise shouldn't be NULL.
-        }
-    }
-    
-    /// Return
+    IOObjectRelease(service);
+
+    /// A sender without an IOHIDDevice is valid for virtual input.
     return iohidDevice;
 }
 

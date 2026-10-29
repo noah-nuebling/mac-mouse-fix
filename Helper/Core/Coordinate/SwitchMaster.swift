@@ -502,7 +502,7 @@ import ReactiveSwift
         
         var priority = kMFModifierPriorityUnused
         
-        let someKbModReallyModifiesScroll   = somekbModModifiesScroll             && someDeviceHasScroll          && !scrollKillSwitch
+        let someKbModReallyModifiesScroll   = somekbModModifiesScroll                                          && !scrollKillSwitch
         let someKbModReallyModifiesPointing = somekbModModifiesPointing           && someDeviceHasPointing        && true
         let someKbModReallyModifiesButtons  = somekbModModifiesButtonOnSomeDevice && someDeviceHasUsableButtons   && !buttonKillSwitch
         
@@ -556,7 +556,9 @@ import ReactiveSwift
             return
         }
         
-        if someDeviceHasScroll && (defaultModifiesScroll || currentModificationModifiesScroll) {
+        /// Universal Control can send scroll-wheel events without a locally attached mouse.
+        /// Scroll's event filter still passes through continuous trackpad input.
+        if defaultModifiesScroll || currentModificationModifiesScroll {
             Scroll.startReceiving()
         } else {
             Scroll.stopReceiving()
