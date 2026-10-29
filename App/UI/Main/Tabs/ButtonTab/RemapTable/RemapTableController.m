@@ -25,6 +25,7 @@
 #import "NSView+Additions.h"
 #import "KeyCaptureView.h"
 #import "RemapTableUtility.h"
+#import "RemapScope.h"
 #import "ButtonGroupRowView.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "NSColor+Additions.h"
@@ -62,14 +63,18 @@
 
 - (void)loadDataModelFromConfig {
     [Config.shared loadConfigFromFile]; /// Not sure if necessary. Other than this, the only caller of `loadConfigFromFile` is `handleConfigFileChange`. Edit: Think this is unnecessary. Remove.
-    self.dataModel = Config.shared.config[kMFConfigKeyRemaps];
+    /// Only load the rows of our scope. The other scopes' rows are kept in config when we write back.
+    self.dataModel = [RemapScope rowsForScope:self.scopeApp inRemaps:Config.shared.config[kMFConfigKeyRemaps]];
 }
 - (void)writeDataModelToConfig {
-    
+
     DDLogDebug("TRM remap table store remaps"); /// Currently looks like this is never called? That can't be true.
-    
-    setConfig(kMFConfigKeyRemaps, self.dataModel);
+
+    /// Replace only our scope's rows. Rows of other scopes stay as they are in config.
+    NSArray *remaps = [RemapScope remapsReplacingScope:self.scopeApp withRows:self.dataModel inRemaps:(NSArray *)config(kMFConfigKeyRemaps)];
+    setConfig(kMFConfigKeyRemaps, remaps);
     commitConfig();
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMFRemapTableDidChangeNotification object:self];
 }
 
 /// Helper function for `handleEnterKeystrokeOptionSelected`
@@ -412,6 +417,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     ///     These are too long and obnoxious and not really helpful in this situation.
 //    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
 //    [CaptureToasts showButtonCaptureToastWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMFRemapTableDidChangeNotification object:self];
 }
 
 #pragma mark - Delegate & Controller
@@ -582,12 +588,21 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     
     NSMutableDictionary *rowDictToAdd = payload.mutableCopy;
     /// ((Check if payload is valid tableEntry))
+
+    /// A row added in an app tab belongs to that app. Rows added in the global tab have no app key.
+    ///     (We don't use the frontmost app here. While capturing, the frontmost app is our own window.)
+    if (self.scopeApp != nil) rowDictToAdd[kMFRemapsKeyApp] = self.scopeApp;
+    else                      [rowDictToAdd removeObjectForKey:kMFRemapsKeyApp];
     
     /// Check if already in table
     NSIndexSet *existingIndexes = [self.groupedDataModel indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
         BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:rowDictToAdd[kMFRemapsKeyTrigger]];
         BOOL modificationPreconditionMatches = [tableEntry[kMFRemapsKeyModificationPrecondition] isEqualTo:rowDictToAdd[kMFRemapsKeyModificationPrecondition]];
-        return triggerMatches && modificationPreconditionMatches;
+        /// Rows for different apps can have the same trigger and precondition. They're not duplicates.
+        NSString *app = [RemapScope appForRow:tableEntry];
+        NSString *appToAdd = [RemapScope appForRow:rowDictToAdd];
+        BOOL appMatches = (app == nil) ? (appToAdd == nil) : [app isEqualToString:appToAdd];
+        return triggerMatches && modificationPreconditionMatches && appMatches;
     }];
     NSAssert(existingIndexes.count <= 1, @"Duplicate remap triggers found in table");
     NSIndexSet *toHighlightIndexSet;

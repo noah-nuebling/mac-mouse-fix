@@ -31,6 +31,15 @@ import Foundation
     
     @IBOutlet weak var optionsButton: NSButton!
     @IBOutlet weak var restoreDefaultButton: NSButton!
+
+    /// App tabs
+
+    private var appTabStrip: AppTabStripView?
+    private var appPickerPopover: NSPopover?
+    /// The app whose tab is selected. nil is the global tab.
+    private(set) var scopeApp: String?
+    /// Offers a built-in preset in an empty app tab
+    private var presetBanner: AppPresetBannerView?
     
     //
     // - MARK: IBActions
@@ -41,6 +50,12 @@ import Foundation
     }
     
     @IBAction func restoreDefaults(_ sender: Any) {
+
+        /// In an app tab, "Restore Defaults" deletes the buttons of that app. The tab stays.
+        if let app = scopeApp {
+            confirmDeleteRows(forApp: app)
+            return
+        }
         
         let alert = NSAlert()
         alert.alertStyle = .informational
@@ -129,7 +144,8 @@ import Foundation
                 
                 /// Check Change
                 
-                let currentMap = config("Remaps")
+                /// Only the global rows are compared and replaced. The app tabs keep their rows.
+                let currentMap = RemapScope.rows(forScope: nil, inRemaps: config("Remaps") as? [Any]) as NSArray
                 let defaultMap = config(selectedPreset == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
                 
                 if currentMap != defaultMap {
@@ -137,8 +153,7 @@ import Foundation
                     /// Update remaps
                     
                     /// Set config
-                    setConfig("Remaps", defaultMap!)
-                    commitConfig()
+                    ButtonTabController.replaceRows(forScope: nil, with: (defaultMap as? [Any]) ?? [])
                     
                     /// Reload table
                     mfrun(CFRunLoopGetMain()) {
@@ -216,6 +231,11 @@ import Foundation
     }
     
     
+    override func loadView() {
+        super.loadView()
+        installAppTabStrip()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -231,6 +251,13 @@ import Foundation
         
         /// Init AddField visuals
         addField.coolInit()
+
+        /// Init app tabs
+        refreshAppTabStrip()
+
+        /// Init the preset banner
+        installPresetBanner()
+        NotificationCenter.default.addObserver(self, selector: #selector(remapTableDidChange(_:)), name: NSNotification.Name(kMFRemapTableDidChangeNotification as String), object: nil)
     }
     
     func createTrackingArea() {
@@ -242,6 +269,8 @@ import Foundation
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        /// The strip may have been built before the app's tabs were loaded. Rebuild it whenever this tab appears.
+        refreshAppTabStrip()
     }
     override func viewDidAppear() {
         super.viewDidAppear()
@@ -257,6 +286,10 @@ import Foundation
             ///
             /// Get info
             ///
+            
+            /// Only in the global tab
+            ///     The popover is about the default global rows, and "Restore Defaults" in an app tab deletes that app's rows instead.
+            guard self.scopeApp == nil else { return }
             
             /// Get device info
             guard let (deviceName, nOfButtons, _) = MessagePortUtility.shared.getActiveDeviceInfo() else { return }
@@ -338,6 +371,206 @@ import Foundation
     }
     
     //
+    // MARK: App tabs
+    //
+
+    /// Adds the tab strip on the left of the Buttons tab.
+    ///     The storyboard pins the content to the root view's leading edge with one constraint. We shift that constraint right by the strip's width.
+    ///     The window measures this tab by the root view, so the tab (and the window) grows by exactly the strip's width.
+    private func installAppTabStrip() {
+
+        let root = view
+        let stripWidth = AppTabStripView.width
+
+        for constraint in root.constraints {
+            let pinnedToRootLeading = (constraint.secondItem as AnyObject?) === root && constraint.firstAttribute == .leading && constraint.secondAttribute == .leading
+            if pinnedToRootLeading { constraint.constant += stripWidth }
+        }
+
+        let strip = AppTabStripView()
+        root.addSubview(strip)
+        NSLayoutConstraint.activate([
+            strip.leadingAnchor.constraint(equalTo: root.leadingAnchor),
+            strip.topAnchor.constraint(equalTo: root.topAnchor, constant: 20),
+            strip.bottomAnchor.constraint(equalTo: root.bottomAnchor, constant: -20),
+            strip.widthAnchor.constraint(equalToConstant: stripWidth),
+            strip.heightAnchor.constraint(greaterThanOrEqualToConstant: AppTabStripView.minimumHeight),
+        ])
+
+        strip.onSelectScope = { [weak self] app in self?.selectScope(app) }
+        strip.onAddButtonClicked = { [weak self] button in self?.showAppPicker(relativeTo: button) }
+        strip.onRemoveAppTab = { [weak self] app in self?.confirmRemoveAppTab(app) }
+        appTabStrip = strip
+    }
+
+    /// Adds the preset banner at the top of the add field. It is shown only in an empty app tab that has a preset.
+    ///     (The area between the add field and the table is too tight for it.)
+    private func installPresetBanner() {
+        guard let container = addField.contentView else { return }
+        let banner = AppPresetBannerView()
+        container.addSubview(banner)
+        NSLayoutConstraint.activate([
+            banner.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10),
+            banner.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -10),
+            banner.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
+            banner.heightAnchor.constraint(equalToConstant: 42),
+        ])
+        banner.onReview = { [weak self] in self?.reviewPreset() }
+        banner.isHidden = true
+        presetBanner = banner
+    }
+    
+    /// Shows the preset offer for an empty app tab that has a preset, and hides it otherwise
+    func updatePresetBanner() {
+        guard let banner = presetBanner else { return }
+        guard let app = scopeApp, let preset = AppPreset.preset(for: app), tableController.dataModel.count == 0, !AppPreset.isDismissed(app) else {
+            banner.isHidden = true
+            return
+        }
+        banner.setText(String(format: MFLocalizedString("app-presets.banner", comment: ""), AppTabs.name(for: app), MFLocalizedString(preset.summaryKey, comment: "")))
+        banner.isHidden = false
+    }
+    
+    /// Opens the review sheet for the current app's preset. Nothing is written until the user confirms there.
+    /// Confirmed rows are added to the tab's rows, which are empty when the banner is shown. Restore Defaults on the tab undoes this.
+    private func reviewPreset() {
+        guard let app = scopeApp, let preset = AppPreset.preset(for: app), let window = MainAppState.shared.window else { return }
+
+        let controller = AppPresetReviewController(app: app, preset: preset, globalRows: RemapScope.rows(forScope: nil, inRemaps: config("Remaps") as? [Any]) as? [[String: Any]] ?? [])
+        controller.onFinish = { [weak self] rows, dontSuggestAgain in
+            guard let self else { return }
+            if dontSuggestAgain { AppPreset.setDismissed(app) }
+            if !rows.isEmpty {
+                /// Never replace a row the tab already has. A preset row whose trigger and modifiers are already used in this tab is left out.
+                ///     (The banner only shows in an empty tab, so normally there's nothing to leave out.)
+                let existingRows = RemapScope.rows(forScope: app, inRemaps: config("Remaps") as? [Any]) as? [[String: Any]] ?? []
+                let newRows = rows.filter { row in !existingRows.contains { ButtonTabController.rowsHaveSameTrigger($0, row) } }
+                ButtonTabController.replaceRows(forScope: app, with: existingRows + newRows)
+                self.tableController.reloadAll()
+            }
+            self.updatePresetBanner()
+        }
+
+        let sheet = NSWindow(contentViewController: controller)
+        window.beginSheet(sheet)
+    }
+    
+    @objc private func remapTableDidChange(_ notification: Notification) {
+        updatePresetBanner()
+    }
+    
+    /// Rebuilds the tab strip from the stored tab list
+    func refreshAppTabStrip() {
+        appTabStrip?.setTabs(appBundleIDs: AppTabs.allBundleIDs(), selectedScope: scopeApp)
+    }
+
+    /// Shows the rows of one scope in the table. nil shows the global rows.
+    func selectScope(_ app: String?) {
+        scopeApp = app
+        tableController.scopeApp = app
+        tableController.reloadAll()
+        appTabStrip?.setSelectedScope(app)
+    }
+
+    /// Adds a tab for the app, unless it already has one, and shows that tab
+    func addAppTab(bundleID: String) {
+        var bundleIDs = AppTabs.allBundleIDs()
+        if !bundleIDs.contains(bundleID) { bundleIDs.append(bundleID) }
+        AppTabs.save(bundleIDs)
+        refreshAppTabStrip()
+        selectScope(bundleID)
+    }
+
+    private func showAppPicker(relativeTo button: NSButton) {
+
+        let picker = AppTabPickerViewController()
+        let popover = NSPopover()
+        popover.behavior = .transient
+        popover.contentViewController = picker
+
+        picker.onPickApp = { [weak self, weak popover] bundleID in
+            popover?.performClose(nil)
+            self?.addAppTab(bundleID: bundleID)
+        }
+        picker.onChooseOtherApp = { [weak self, weak popover] in
+            popover?.performClose(nil)
+            guard let self = self, let window = MainAppState.shared.window else { return }
+            AppTabs.chooseApp(in: window) { bundleID in self.addAppTab(bundleID: bundleID) }
+        }
+
+        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxX)
+        appPickerPopover = popover
+    }
+
+    /// Removes the app's tab and its rows. Asks first if the tab has any rows.
+    private func confirmRemoveAppTab(_ app: String) {
+
+        let nOfRows = RemapScope.rows(forScope: app, inRemaps: config("Remaps") as? [Any]).count
+        if nOfRows == 0 {
+            removeAppTab(app)
+            return
+        }
+
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = String(format: MFLocalizedString("app-tabs.remove.alert.title", comment: ""), AppTabs.name(for: app))
+        alert.informativeText = MFLocalizedString("app-tabs.remove.alert.message", comment: "")
+        _ = alert.addButton(withTitle: MFLocalizedString("app-tabs.remove.alert.confirm", comment: ""))
+        _ = alert.addButton(withTitle: MFLocalizedString("app-tabs.alert.cancel", comment: ""))
+
+        guard let window = MainAppState.shared.window else { return }
+        alert.beginSheetModal(for: window) { response in
+            if response == .alertFirstButtonReturn { self.removeAppTab(app) }
+        }
+    }
+
+    private func removeAppTab(_ app: String) {
+        AppTabs.save(AppTabs.allBundleIDs().filter { $0 != app })
+        ButtonTabController.replaceRows(forScope: app, with: [])
+        refreshAppTabStrip()
+        if scopeApp == app {
+            selectScope(nil)
+        } else {
+            tableController.reloadAll()
+        }
+    }
+
+    /// "Restore Defaults" in an app tab. Deletes the app's rows. The tab stays, so buttons can be assigned again.
+    private func confirmDeleteRows(forApp app: String) {
+
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = String(format: MFLocalizedString("app-tabs.restore.alert.title", comment: ""), AppTabs.name(for: app))
+        alert.informativeText = MFLocalizedString("app-tabs.restore.alert.message", comment: "")
+        _ = alert.addButton(withTitle: MFLocalizedString("app-tabs.restore.alert.confirm", comment: ""))
+        _ = alert.addButton(withTitle: MFLocalizedString("app-tabs.alert.cancel", comment: ""))
+
+        guard let window = MainAppState.shared.window else { return }
+        alert.beginSheetModal(for: window) { response in
+            if response == .alertFirstButtonReturn {
+                ButtonTabController.replaceRows(forScope: app, with: [])
+                self.tableController.reloadAll()
+            }
+        }
+    }
+
+    /// Whether two rows have the same trigger and modifiers, so only one of them can be in a tab
+    private static func rowsHaveSameTrigger(_ row: [String: Any], _ otherRow: [String: Any]) -> Bool {
+        let trigger = row[kMFRemapsKeyTrigger as String] as AnyObject?
+        let otherTrigger = otherRow[kMFRemapsKeyTrigger as String] as AnyObject?
+        let modifiers = row[kMFRemapsKeyModificationPrecondition as String] as? NSDictionary ?? NSDictionary()
+        let otherModifiers = otherRow[kMFRemapsKeyModificationPrecondition as String] as? NSDictionary ?? NSDictionary()
+        return (trigger?.isEqual(otherTrigger) ?? false) && modifiers.isEqual(otherModifiers)
+    }
+
+    /// Replaces the rows of one scope in config and writes it. nil is the global scope. The other scopes keep their rows.
+    private static func replaceRows(forScope app: String?, with rows: [Any]) {
+        let remaps = RemapScope.remapsReplacingScope(app, withRows: rows, inRemaps: config("Remaps") as? [Any])
+        setConfig("Remaps", remaps as NSArray)
+        commitConfig()
+    }
+
+    //
     // MARK: Other
     //
     
@@ -356,15 +589,15 @@ import Foundation
             let (_, _, bestPresetMatch) = MessagePortUtility.shared.getActiveDeviceInfo() ?? (nil, nil, nil)
             
             /// This is copy-pasted from `restoreDefaults()`
+            ///     Only the global rows are compared and replaced. Rows of app tabs are kept.
             
-            let currentMap = config("Remaps")
+            let currentMap = RemapScope.rows(forScope: nil, inRemaps: config("Remaps") as? [Any]) as NSArray
             let defaultMap = config(bestPresetMatch == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
             
             if (currentMap != defaultMap) {
                 
                 /// Set config
-                setConfig("Remaps", defaultMap!)
-                commitConfig()
+                ButtonTabController.replaceRows(forScope: nil, with: (defaultMap as? [Any]) ?? [])
                 
                 /// Reload table
                 /// Note: It feels a bit hacky to call `updateColumnWidths()` here. Maybe this should be handled automatically inside the remapTable code.

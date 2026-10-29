@@ -53,6 +53,8 @@ typedef enum {
 
 + (void)handleModificationHasBeenUsed;
 
++ (void)handleRemapsChanged;
+
 + (MFModifierPriority)kbModPriority;
 + (MFModifierPriority)btnModPriority;
 

@@ -66,6 +66,13 @@ static NSDictionary *_remaps;
     return _remaps;
 }
 
+static NSSet<NSString *> *_appsWithRemaps = nil;
+
++ (BOOL)hasRemapsForApp:(NSString *_Nullable)bundleID {
+    if (bundleID == nil) return NO;
+    return [_appsWithRemaps containsObject:(NSString *_Nonnull)bundleID];
+}
+
 + (void)setRemaps:(NSDictionary *)remapsDict {
     
     /// This method is private. It's used by `reload` and `enableAddMode`.
@@ -85,8 +92,18 @@ static NSDictionary *_remaps;
         
         /// Reset cache
         [_swizzleCache removeAllObjects];
-        
+
+        /// Find the apps that have app-specific remaps
+        NSMutableSet *apps = [NSMutableSet set];
+        for (NSDictionary *precond in _remaps) {
+            NSString *app = precond[kMFModificationPreconditionKeyApp];
+            if (app != nil) [apps addObject:app];
+        }
+        _appsWithRemaps = apps;
+
         /// Notify
+        ///     Modifiers needs to update the active app before SwitchMaster reads the active modifiers.
+        [Modifiers handleRemapsChanged];
         //[ReactiveRemaps.shared handleRemapsDidChange];
         [SwitchMaster.shared remapsChangedWithRemaps:_remaps];
         [RemapsAnalyzer reload];
@@ -211,6 +228,17 @@ static NSDictionary *_remaps;
         for (NSDictionary *tableEntry in remapsTable) {
             /// Get modification precondition section of keypath
             NSDictionary *modificationPrecondition = tableEntry[kMFRemapsKeyModificationPrecondition];
+            /// Add the app to the precondition, if the remap is limited to an app
+            ///     Only a non-empty string counts as an app. Rows without one are global and are converted exactly like before. (The mainApp reads rows the same way. See `RemapScope`.)
+            ///     The precondition stored in the row never decides the app. (So a stray app key in there can't make a global row app-specific.)
+            id app = tableEntry[kMFRemapsKeyApp];
+            BOOL hasApp = [app isKindOfClass:NSString.class] && ((NSString *)app).length > 0;
+            BOOL preconditionHasApp = [modificationPrecondition isKindOfClass:NSDictionary.class] && modificationPrecondition[kMFModificationPreconditionKeyApp] != nil;
+            if (hasApp || preconditionHasApp) {
+                NSMutableDictionary *preconditionWithApp = [NSMutableDictionary dictionaryWithDictionary:([modificationPrecondition isKindOfClass:NSDictionary.class] ? modificationPrecondition : @{})];
+                preconditionWithApp[kMFModificationPreconditionKeyApp] = hasApp ? app : nil;
+                modificationPrecondition = preconditionWithApp;
+            }
             /// Get trigger section of keypath
             NSArray *triggerKeyArray;
             id trigger = tableEntry[kMFRemapsKeyTrigger];

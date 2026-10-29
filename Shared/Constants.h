@@ -113,6 +113,7 @@ typedef NSString*                                                       MFString
 #pragma mark - Config dict
 
 #define kMFConfigKeyRemaps @"Remaps"
+#define kMFConfigKeyAppTabs @"AppTabs" /// Bundle IDs of the per-app button tabs, in the order they were added. Rows for these apps are in kMFConfigKeyRemaps.
 #define kMFConfigKeyScroll @"Scroll"
 #define kMFConfigKeyPointer @"Pointer"
 #define kMFConfigKeyOther @"Other" // TODO: This occurs in keypaths a few times - replace with constant (search for 'Other.')
@@ -123,6 +124,8 @@ typedef NSString*                                                       MFString
 #define kMFRemapsKeyTrigger                     @"trigger"
 #define kMFRemapsKeyModificationPrecondition    @"modifiers"
 #define kMFRemapsKeyEffect                      @"effect"
+// Optional. Bundle ID of an app. If present, the remap only applies while that app is frontmost. If absent, the remap is global.
+#define kMFRemapsKeyApp                         @"app"
 
 #pragma mark - Remaps dict
 
@@ -134,6 +137,8 @@ typedef NSString*                                                       MFString
 // Keyboard
 #define kMFModificationPreconditionKeyKeyboard                          @"keyboardModifiers"
 // (^ Use NSModifierFlags (CGEventFlags would probably work, too) as values)
+// App (Bundle ID of the frontmost app. Only in active modifiers, and in preconditions of app-specific remaps. Set from kMFRemapsKeyApp.)
+#define kMFModificationPreconditionKeyApp                               @"app"
 
 // Modified drag
 
@@ -184,6 +189,7 @@ typedef NSString*                                                       MFString
 #define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"
 #define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
+#define kMFActionDictTypeKeySequence                                    @"keySequence"
 #define kMFActionDictTypeSystemDefinedEvent                             @"systemDefinedEvent"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
 #define kMFActionDictTypeAddModeFeedback                                @"addModeAction"
@@ -195,6 +201,9 @@ typedef NSString*                                                       MFString
 // Keyboard shortcut variant keys
 #define kMFActionDictKeyKeyboardShortcutVariantKeycode                  @"keycode"
 #define kMFActionDictKeyKeyboardShortcutVariantModifierFlags            @"flags"
+// Key sequence variant keys (Each step has the keys of the keyboard shortcut variant)
+#define kMFActionDictKeySequenceVariantSteps                            @"steps"
+#define kMFActionDictKeySequenceVariantIntervalMs                       @"intervalMs"
 // Button click variant keys
 #define kMFActionDictKeyMouseButtonClicksVariantButtonNumber            @"button"
 #define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks          @"nOfClicks"

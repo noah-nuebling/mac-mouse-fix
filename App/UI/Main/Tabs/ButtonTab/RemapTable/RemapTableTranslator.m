@@ -8,6 +8,8 @@
 //
 
 #import "RemapTableTranslator.h"
+#import "ShortcutLibrary.h"
+#import "RemapScope.h"
 #import "Constants.h"
 #import "UIStrings.h"
 #import "SharedUtility.h"
@@ -322,9 +324,10 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     /// Insert entry for keyboard shortcut effect or systemDefined effect
     
     BOOL isKeyShortcut = [selectedEffect[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut];
+    BOOL isKeySequence = [selectedEffect[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeySequence];
     BOOL isSystemEvent = [selectedEffect[kMFActionDictKeyType] isEqual:kMFActionDictTypeSystemDefinedEvent];
     
-    if (isKeyShortcut || isSystemEvent) {
+    if (isKeyShortcut || isKeySequence || isSystemEvent) {
         
         /// Get index for new entry (right after keyCaptureEntry)
         NSUInteger shortcutIndex = keyCaptureIndex + 1;
@@ -393,12 +396,45 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @"submenu": submenu
     } atIndex:keyCaptureIndex+1];
     
+    /// App-specific rows get the built-in shortcuts of that app at the top of the menu
+    NSString *app = [RemapScope appForRow:rowDict];
+    if (app != nil) {
+        NSArray *libraryEntries = [ShortcutLibrary effectsMenuEntriesForBundleID:app];
+        if (libraryEntries.count > 0) {
+            NSMutableArray *withLibrary = [libraryEntries mutableCopy];
+            [withLibrary addObject:separatorEffectsTableEntry()];
+            [withLibrary addObjectsFromArray:oneShotEffectsTable];
+            oneShotEffectsTable = withLibrary;
+        }
+    }
     return oneShotEffectsTable;
 }
 
 /// Helper for getEffectsTable
 
 static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKeyShortcut) {
+    
+    if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeySequence]) {
+        
+        /// Steps are shown one after another, with a separator, in the same symbols as a single shortcut
+        ///     Steps that aren't dictionaries of numbers are skipped. (The helper skips them, too.)
+        NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
+        id steps = effectDict[kMFActionDictKeySequenceVariantSteps];
+        if (![steps isKindOfClass:NSArray.class]) return result;
+        NSFont *font = [NSFont systemFontOfSize:NSFont.systemFontSize];
+        NSString *separator = MFLocalizedString(@"effect.key-sequence.separator", @"Shown between the keyboard shortcuts of an action that presses several shortcuts one after another. Example: '⌘K then ⌘S'. Keep the spaces around the word.");
+        for (id step in (NSArray *)steps) {
+            if (![step isKindOfClass:NSDictionary.class]) continue;
+            id keyCode = step[kMFActionDictKeyKeyboardShortcutVariantKeycode];
+            id flags = step[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
+            if (![keyCode isKindOfClass:NSNumber.class] || ![flags isKindOfClass:NSNumber.class]) continue;
+            if (result.length > 0) {
+                [result appendAttributedString:[[NSAttributedString alloc] initWithString:separator attributes:@{ NSFontAttributeName: font }]];
+            }
+            [result appendAttributedString:[UIStrings getStringForKeyCode:[keyCode unsignedShortValue] flags:[flags unsignedLongValue] font:font]];
+        }
+        return result;
+    }
     
     if (isKeyShortcut) {
         
@@ -571,6 +607,12 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         i = [[RemapTableMenuItem alloc] init];
         
+        /// Library entries get a small badge: a seal with a checkmark once the entry was verified in the app, an empty circle until then
+        if (itemModel[@"libraryVerified"] != nil) {
+            NSString *badge = [itemModel[@"libraryVerified"] boolValue] ? @"checkmark.seal" : @"circle";
+            i.image = [SFSymbolStrings imageWithSymbolName:badge];
+        }
+
         NSString *title = itemModel[@"ui"];
         if (title != nil) {
             i.title = title;
@@ -579,7 +621,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         }
         i.action = @selector(updateTableAndWriteToConfig:);
         i.target = self.tableView.delegate;
-        i.toolTip = itemModel[@"tool"];
+        i.toolTip = itemModel[@"toolWithTitle"] ?: itemModel[@"tool"]; /// Shortcut library entries show their full name, which often doesn't fit the popup
         assert(i.accessibilityHelp == nil); /// Most UI elements publish their tooltips as accessibilityHelp automatically, but NSMenuItems don't do that by default, so we do it manually. We do this mainly so that the tooltip string is associated with its NSMenuItem in a way that is visible to accessibility API, which lets us link the menuItem to the tooltip string when creating localizationScreenshots.
         i.accessibilityHelp = i.toolTip;
         i.host = tableCell;

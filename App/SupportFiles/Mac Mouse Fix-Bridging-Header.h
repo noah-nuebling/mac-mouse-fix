@@ -42,6 +42,8 @@
 #import "Locator.h"
 #import "Device.h"
 #import "RemapTableUtility.h"
+#import "RemapScope.h"
+#import "ShortcutLibrary.h"
 #import "Alerts.h"
 #import "Shorthands.h"
 #import "SFSymbolStrings.h"

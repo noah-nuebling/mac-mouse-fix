@@ -26,6 +26,8 @@
 
 #import "Threads.h"
 
+static void postKeySequence(id steps, id intervalMs);
+
 @implementation Actions
 
 + (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase {
@@ -160,6 +162,10 @@
             NSNumber *flags = actionDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
             postKeyboardShortcut(keycode.intValue, flags.intValue);
             
+        } else if ([actionType isEqualToString:kMFActionDictTypeKeySequence]) {
+            
+            postKeySequence(actionDict[kMFActionDictKeySequenceVariantSteps], actionDict[kMFActionDictKeySequenceVariantIntervalMs]);
+            
         } else if ([actionType isEqualToString:kMFActionDictTypeSystemDefinedEvent]) {
             
             NSNumber *type = actionDict[kMFActionDictKeySystemDefinedEventVariantType];
@@ -215,6 +221,59 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
     e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:upData data2:-1];
     
     CGEventPost(tapLoc, e.CGEvent);
+}
+
+#pragma mark - Key sequences
+
+static void postKeySequenceStep(NSArray<NSArray<NSNumber *> *> *steps, NSUInteger i, CFTimeInterval gap);
+
+static void postKeySequence(id steps, id intervalMs) {
+    
+    /// Posts several keyboard shortcuts one after another, with a short gap between them. (Used by shortcut library entries that need more than one key.)
+    /// Notes:
+    /// - The values come from the config file, so they are checked here: At most `maxSteps` steps, key codes 0-127, and no flags other than Command, Shift, Option and Control. Invalid steps are skipped. The gap is clamped to 0-1000 ms.
+    /// - We don't block the IOThread while waiting. The later steps are posted by timers on the IOThread's runLoop.
+    
+    static const NSUInteger maxSteps = 16;
+    static const double maxIntervalMs = 1000.0;
+    const uint64_t allowedFlags = kCGEventFlagMaskCommand | kCGEventFlagMaskShift | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl;
+    
+    if (![steps isKindOfClass:NSArray.class]) return;
+    
+    NSMutableArray<NSArray<NSNumber *> *> *validSteps = [NSMutableArray array];
+    for (id step in (NSArray *)steps) {
+        if (validSteps.count >= maxSteps) break;
+        if (![step isKindOfClass:NSDictionary.class]) continue;
+        id keycode = step[kMFActionDictKeyKeyboardShortcutVariantKeycode];
+        id flags = step[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
+        if (![keycode isKindOfClass:NSNumber.class] || ![flags isKindOfClass:NSNumber.class]) continue;
+        long long k = [keycode longLongValue];
+        long long f = [flags longLongValue];
+        if (k < 0 || k > 127) continue;
+        if (f < 0 || ((uint64_t)f & ~allowedFlags) != 0) continue;
+        [validSteps addObject:@[@(k), @(f)]];
+    }
+    
+    double ms = [intervalMs isKindOfClass:NSNumber.class] ? [intervalMs doubleValue] : 0.0;
+    if (!(ms >= 0.0)) ms = 0.0; /// Also catches NaN
+    ms = MIN(ms, maxIntervalMs);
+    
+    postKeySequenceStep(validSteps, 0, ms / 1000.0);
+}
+
+static void postKeySequenceStep(NSArray<NSArray<NSNumber *> *> *steps, NSUInteger i, CFTimeInterval gap) {
+    
+    if (i >= steps.count) return;
+    
+    postKeyboardShortcut(steps[i][0].unsignedShortValue, (CGSModifierFlags)steps[i][1].unsignedIntValue);
+    
+    if (i + 1 >= steps.count) return;
+    
+    CFRunLoopTimerRef timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + gap, 0, 0, 0, ^(CFRunLoopTimerRef t) {
+        postKeySequenceStep(steps, i + 1, gap);
+    });
+    CFRunLoopAddTimer(IOThread.runLoop, timer, kCFRunLoopCommonModes);
+    CFRelease(timer);
 }
 
 #pragma mark - Keyboard shortcuts

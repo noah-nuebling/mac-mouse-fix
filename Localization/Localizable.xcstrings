@@ -316,6 +316,342 @@
         }
       }
     },
+    "app-presets.action.chrome-back" : {
+      "comment" : "Action name in the review sheet of the Google Chrome preset. Goes back in the browsing history.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        }
+      }
+    },
+    "app-presets.action.chrome-forward" : {
+      "comment" : "Action name in the review sheet of the Google Chrome preset. Goes forward in the browsing history.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forward"
+          }
+        }
+      }
+    },
+    "app-presets.action.teams-camera" : {
+      "comment" : "Action name in the review sheet of the Microsoft Teams preset. Turns the camera on or off.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toggle camera"
+          }
+        }
+      }
+    },
+    "app-presets.action.teams-mic" : {
+      "comment" : "Action name in the review sheet of the Microsoft Teams preset. Turns the microphone on or off.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toggle microphone"
+          }
+        }
+      }
+    },
+    "app-presets.banner" : {
+      "comment" : "Banner in an empty app tab. %1$@ is the app name and the second %@ is the list of buttons, for example 'button 4 mic, button 5 camera'.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A preset is available for %@: %@."
+          }
+        }
+      }
+    },
+    "app-presets.review" : {
+      "comment" : "Button in the preset banner. Opens the review sheet, where the preset's buttons can be changed before they are added.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review…"
+          }
+        }
+      }
+    },
+    "app-presets.review.add" : {
+      "comment" : "Button in the review sheet. Adds the checked rows to this app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Selected"
+          }
+        }
+      }
+    },
+    "app-presets.review.column.action" : {
+      "comment" : "Column header in the review sheet. The action a button triggers.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Action"
+          }
+        }
+      }
+    },
+    "app-presets.review.column.button" : {
+      "comment" : "Column header in the review sheet. The mouse button a row uses.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "app-presets.review.dont-suggest" : {
+      "comment" : "Checkbox in the review sheet. Stops the preset from being offered again for this app. %@ is the app name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't suggest this again for %@"
+          }
+        }
+      }
+    },
+    "app-presets.review.duplicate" : {
+      "comment" : "Warning in the review sheet. Shown when two checked rows use the same mouse button.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two checked rows use the same button. Change one of them to add these rows."
+          }
+        }
+      }
+    },
+    "app-presets.review.global-overlap" : {
+      "comment" : "Note in the review sheet. %1$@ is a list of mouse button names that also have a row for all apps. %2$@ is the app name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Also set for all apps: %1$@. In %2$@ these rows take precedence."
+          }
+        }
+      }
+    },
+    "app-presets.review.intro" : {
+      "comment" : "Explanation at the top of the review sheet of a built-in preset for an app.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose what to use. You can change the button or the action of any row, or untick it."
+          }
+        }
+      }
+    },
+    "app-presets.review.skip" : {
+      "comment" : "Button in the review sheet. Closes the sheet without adding anything.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        }
+      }
+    },
+    "app-presets.review.title" : {
+      "comment" : "Title of the review sheet of a built-in preset. %@ is the app name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended setup for %@"
+          }
+        }
+      }
+    },
+    "app-presets.summary.chrome" : {
+      "comment" : "Short description of the Google Chrome preset, shown in the banner.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "button 4 back, button 5 forward"
+          }
+        }
+      }
+    },
+    "app-presets.summary.teams" : {
+      "comment" : "Short description of the Microsoft Teams preset, shown in the banner.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "button 4 mic, button 5 camera"
+          }
+        }
+      }
+    },
+    "app-tabs.add.tooltip" : {
+      "comment" : "Tooltip of the + button that adds an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add App"
+          }
+        }
+      }
+    },
+    "app-tabs.alert.cancel" : {
+      "comment" : "Cancel button in the app tab alerts.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "app-tabs.global.tooltip" : {
+      "comment" : "Tooltip of the global tab in the Buttons tab strip. The global tab holds the buttons that apply to all apps.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Global"
+          }
+        }
+      }
+    },
+    "app-tabs.menu.remove" : {
+      "comment" : "Context menu item on an app tab. Removes the tab and its buttons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove App Tab…"
+          }
+        }
+      }
+    },
+    "app-tabs.picker.choose-other" : {
+      "comment" : "Button in the app picker. Opens a file chooser for apps that aren't open.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Other App…"
+          }
+        }
+      }
+    },
+    "app-tabs.picker.open-panel.message" : {
+      "comment" : "Message at the top of the file chooser that opens to pick an app for a new app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose an app to add as a tab."
+          }
+        }
+      }
+    },
+    "app-tabs.picker.search" : {
+      "comment" : "Placeholder of the search field in the app picker.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search open apps"
+          }
+        }
+      }
+    },
+    "app-tabs.remove.alert.confirm" : {
+      "comment" : "Confirm button of the alert that removes an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Tab"
+          }
+        }
+      }
+    },
+    "app-tabs.remove.alert.message" : {
+      "comment" : "Informative text of the alert that removes an app tab. Only shown if the tab has buttons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Its button settings are deleted too. Global settings are not affected."
+          }
+        }
+      }
+    },
+    "app-tabs.remove.alert.title" : {
+      "comment" : "Title of the alert that removes an app tab. %@ is the app name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove the %@ tab?"
+          }
+        }
+      }
+    },
+    "app-tabs.restore.alert.confirm" : {
+      "comment" : "Confirm button of the alert that deletes the buttons of an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Settings"
+          }
+        }
+      }
+    },
+    "app-tabs.restore.alert.message" : {
+      "comment" : "Informative text of the alert that deletes the buttons of an app tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The tab stays, so you can assign buttons again. Global settings are not affected."
+          }
+        }
+      }
+    },
+    "app-tabs.restore.alert.title" : {
+      "comment" : "Title of the alert that deletes the buttons of an app tab. %@ is the app name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all button settings for %@?"
+          }
+        }
+      }
+    },
     "app-version" : {
       "comment" : "Note: %@ will be the app version, e.g. '3.0.0 (22027)'",
       "localizations" : {
@@ -7139,6 +7475,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在Safari和其他應用程式中往前一頁"
+          }
+        }
+      }
+    },
+    "effect.key-sequence.separator" : {
+      "comment" : "Shown between the keyboard shortcuts of an action that presses several shortcuts one after another. Example: '⌘K then ⌘S'. Keep the spaces around the word.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " then "
           }
         }
       }

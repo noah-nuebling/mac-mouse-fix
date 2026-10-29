@@ -32,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 - (void)reloadAll;
 
+/// The app whose rows are shown and edited. nil = the global rows (rows without an app key).
+/// Change this, then call `reloadAll`.
+@property (nullable, nonatomic) NSString *scopeApp;
+
 @end
 
 NS_ASSUME_NONNULL_END
