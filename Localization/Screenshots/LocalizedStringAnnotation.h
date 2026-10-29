@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DisableSwiftBridging.h"
 #import "MFSimpleDataClass.h"
 
 mfdata_cls_h(StringAnnotation,
@@ -20,6 +21,10 @@ mfdata_cls_h(StringAnnotation,
     @property(readonly) NSString *key;
     @property(readonly) NSString *table;
     @property(readonly) NSRange   rangeInString;
+@end
+
+@interface NSString (MFLocalizedStringAnnotation)
+    - (MF_SWIFT_UNBRIDGED(NSString *)) withoutAnnotations NS_REFINED_FOR_SWIFT;
 @end
 
 @interface LocalizedStringAnnotation : NSObject

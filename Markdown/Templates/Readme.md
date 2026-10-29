@@ -148,12 +148,15 @@ key: macos-compat
 
 The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
   
-If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf2-latest). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.
-    
-If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
+If you're on macOS **10.11 El Capitan** or later, you can use the [latest version of Mac Mouse Fix 2](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf2-latest). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.
 ```
 comment: 
 ```
+
+<!--
+    [Sep 2026] Note on `macos-compatibility` section:
+    - MMF 2.2.6 lowered deployment target from 10.13 back down to 10.11 (See 68ce2c8) letting us simplify the text above. I didn't test on macOS 10.11 or 10.12. [Sep 2026]
+-->
 
 <a name="pricing"></a> 
 ```

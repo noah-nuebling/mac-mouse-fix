@@ -41,7 +41,8 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
 
 + (double)roundUp:(double)numToRound toMultiple:(double)multiple {
     /// Src: https://stackoverflow.com/a/3407254/10601702
-    
+    /// [Oct 2026] This is a subset of `roundToGrid()` - probably replace.
+
     if (multiple == 0) return numToRound;
     
     double remainder = fmod(numToRound, multiple);
@@ -72,16 +73,6 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     }
     
     return 0.0;
-}
-
-+ (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
-                                       mask:(CGEventMask)mask
-                                     option:(CGEventTapOptions)option
-                                  placement:(CGEventTapPlacement)placement
-                                   callback:(CGEventTapCallBack)callback {
-    
-    CFRunLoopRef rl = CFRunLoopGetMain();
-    return [self createEventTapWithLocation:location mask:mask option:option placement:placement callback:callback runLoop:rl];
 }
 
 + (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
@@ -130,22 +121,22 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
         
         DDLogDebug("Hiding pointer");
         
-//        CGSHideCursor(cid);
+        //CGSHideCursor(cid);
         CGDisplayHideCursor(kCGDirectMainDisplay);
-//        [NSCursor hide];
-        
+        //[NSCursor hide];
+
     } else {
         
         DDLogDebug("UNHiding pointer");
         
-//        CGSShowCursor(cid);
+        //CGSShowCursor(cid);
         CGDisplayShowCursor(kCGDirectMainDisplay); /// Do it twice for good measure.
         CGError result = CGDisplayShowCursor(kCGDirectMainDisplay);
         if (result != kCGErrorSuccess) {
             DDLogDebug("Unhiding pointer failed. CGError: %d", result);
         }
-//        [NSCursor unhide];
-        
+        //[NSCursor unhide];
+
     }
 }
 

@@ -75,6 +75,9 @@
 ///     Shorthand for creating an NSError with a debug description (Uses `NSDebugDescriptionErrorKey`)
 ///     Usage example:
 ///         `mferror(NSCocoaErrorDomain, NSPropertyListReadCorruptError, @"Deserialized plist object from %@ is not a mutable dictionary. Is %@", url, [result class]);`
+///     Update: [Oct 2026] This is retarded, like all the stuff rom this era (MFDataClass, MFCoding, MFSharedMacros, ...),
+///         but for errors you don't ever branch on, and just log it, does make some sense to have a macro for creating a generic (MFErrorDomain) error that just contains a string.
+///             We're using `mferror` for that now and should probably replace with something that only takes a string arg. (Maybe like `+[NSError mf_genericError:]`)
 
 #define mferror(domain_, code_, formatAndArgs_...) \
     [NSError errorWithDomain: (domain_) code: (code_) userInfo: @{ NSDebugDescriptionErrorKey: stringf(@"" formatAndArgs_) }]
@@ -85,6 +88,9 @@
 ///     Note on old investigation: [Aug 2025]
 ///         IIRC we did a longer investigation into writing custom messages into crash reports. I don't remember where. Maybe some side-repo? I remember finding some global c variable but it was ignored unless it was written to from the crash reporter module or something. I also remember discovering some elaborate private API (CFType-based I think), but not pursuing it further.
 ///     TODO: Move this into Logging.h when merging this code from master into feature-strings-catalog
+///
+///     Update: [Oct 2026] This is now mfrequire in Logging.h
+///         Delete all this SharedMacros.h stuff oh god.
 
 #define mfabort(format, args...) ({ \
     DDLogError("mfabort failure: " format, ## args); \
@@ -652,7 +658,7 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 
 /// NULL-safe wrappers around common CF methods
 #define MFCFRetain(cf)           (typeof(cf))  ({ __auto_type __cf = (cf); (!__cf ? NULL : CFRetain(__cf)); })                                                                  /// NULL-safe CFRetain || Note: Is a macro not a function for generic typing.
-#define MFCFAutorelease(cf)      (typeof(cf))  ({ __auto_type __cf = (cf); (!__cf ? NULL : CFAutorelease(__cf)); })                                                             /// NULL-safe CFAutorelease || Dicussion: Probably use CFBridgingRelease() instead (it is already NULL safe I think.). Autorelease might be bad since autoreleasepools aren't available in all contexts. E.g. when using `dispatch_async` with a queue that doesn't autorelease. Or when running on a CFRunLoop which doesn't drain a pool after every iteration. (Like the mainLoop does) See Quinn "The Eskimo"s write up: https://developer.apple.com/forums/thread/716261
+#define MFCFAutorelease(cf)      (typeof(cf))  ({ __auto_type __cf = (cf); (!__cf ? NULL : CFAutorelease(__cf)); })                                                             /// NULL-safe CFAutorelease || Dicussion: Probably use CFBridgingRelease() instead (it is already NULL safe I think.).
 #define MFCFRelease(cf)          (void)        ({ __auto_type __cf = (cf); if (__cf) CFRelease(__cf); })                                                                        /// NULL-safe CFRelease
 #define MFCFEqual(cf1, cf2)      (Boolean)     ({ __auto_type __cf1 = (cf1); __auto_type __cf2 = (cf2); ((__cf1 == __cf2) || (__cf1 && __cf2 && CFEqual(__cf1, __cf2))); })     /// NULL-safe CFEqual
 
@@ -692,49 +698,81 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 ///     - Caution: Things can break if you mix `int` and `uint` in the input values – due to problems with C's `<` operator. See https://stackoverflow.com/q/2084949/10601702
 #define mfclamp(x, min, max) (MAX((min), MIN((max), (x))))
 
-/// mfcycle
-///     - Generalization of modulo.
-///     - Is a macro to work with multiple types.
-///         ... should probably just make this a function that works on double.
-///     - Moves n into the half-open interval `[lower, upper)` (if includeUpper == false) or `(lower, upper]` (if includeUpper == true)
-///     - If lower > upper, the result will be mirrored (see code)  – feels like a natural extension of this operation?
-///     -`mfcycle(n, 0, z, false)` is equivalent to `n % z`
-///         ... Actually not quite true bc `%` is weird for negative inputs in C. Something about euclidian modulo iirc.
-/// Also see:
-///     [May 22 2025] mfround, mffloor, mfceil function in our IDAPython scripts – They use a similar idea of 'extending' round/floor/ceil
-///     Math.swift > cycle()
-#define mfcycle(n, lower, upper, includeUpper)                                              \
-(typeof((n)+(lower)+(upper)))                                                               \
-({                                                                                          \
-    typeof((n)+(lower)+(upper)) __n = (n);                                                  /** typeof((n)+(lower)+(upper))` should 'promote' the internal calculations to a type that can support them. E.g. if `n` is double but `lower` is int, the internal calculations (and return type) will be double */\
-    typeof(__n) __lower             = (lower);                                              /** We create local variables to prevent multiple-evaluation in case the macro args are complex expressions. || We prefix local vars with `__` to prevent conflicts in case a macro param is a variable of the same name. */ \
-    typeof(__n) __upper             = (upper);                                              \
-    bool __inclup                   = (includeUpper) != 0;                                  \
-    if (__upper == __lower) { __n = __lower; }                                              \
-    else {                                                                                  \
-        if (__lower > __upper) {                                                            /** Mirror – If we didn't, there'd be an infinite loop. */ \
-            swapvars(__lower, __upper);                                                     /** Mirror lower and upper along the center of the interval */ \
-            __inclup = !__inclup;                                                           \
-            __n = __upper + __lower - __n;                                                  /** Mirror n along the center of the interval. */ \
-        }                                                                                   \
-        typeof(__n) __stride = __upper - __lower;                                           \
-        while (1) {                                                                         \
-            bool __tooSmall;                                                                \
-            bool __tooLarge;                                                                \
-            if (!__inclup) {                    /** Include lower bound */                          \
-                __tooSmall = (__n     <  __lower);                                          \
-                __tooLarge = (__upper <= __n);                                              \
-            } else {                            /** Include upper bound */                          \
-                __tooSmall = (__n     <= __lower);                                          \
-                __tooLarge = (__upper <   __n);                                             \
-            }                                                                               \
-            if      (__tooSmall)    __n += __stride;                                        \
-            else if (__tooLarge)    __n -= __stride;                                        \
-            else                    break;                                                  \
-        }                                                                                   \
-    }                                                                                       \
-    __n;                                                                                    \
-})
+#if 0
+
+    /// mfcycle
+    ///     - Generalization of modulo.
+    ///     - Is a macro to work with multiple types.
+    ///         ... should probably just make this a function that works on double.
+    ///     - Moves n into the half-open interval `[lower, upper)` (if includeUpper == false) or `(lower, upper]` (if includeUpper == true)
+    ///     - If lower > upper, the result will be mirrored (see code)  – feels like a natural extension of this operation?
+    ///     -`mfcycle(n, 0, z, false)` is equivalent to `n % z`
+    ///         ... Actually not quite true bc `%` is weird for negative inputs in C. Something about euclidian modulo iirc.
+    /// Also see:
+    ///     [May 22 2025] mfround, mffloor, mfceil function in our IDAPython scripts – They use a similar idea of 'extending' round/floor/ceil
+    ///     Math.swift > cycle()
+    #define mfcycle(n, lower, upper, includeUpper)                                              \
+    (typeof((n)+(lower)+(upper)))                                                               \
+    ({                                                                                          \
+        typeof((n)+(lower)+(upper)) __n = (n);                                                  /** typeof((n)+(lower)+(upper))` should 'promote' the internal calculations to a type that can support them. E.g. if `n` is double but `lower` is int, the internal calculations (and return type) will be double */\
+        typeof(__n) __lower             = (lower);                                              /** We create local variables to prevent multiple-evaluation in case the macro args are complex expressions. || We prefix local vars with `__` to prevent conflicts in case a macro param is a variable of the same name. */ \
+        typeof(__n) __upper             = (upper);                                              \
+        bool __inclup                   = (includeUpper) != 0;                                  \
+        if (__upper == __lower) { __n = __lower; }                                              \
+        else {                                                                                  \
+            if (__lower > __upper) {                                                            /** Mirror – If we didn't, there'd be an infinite loop. */ \
+                swapvars(__lower, __upper);                                                     /** Mirror lower and upper along the center of the interval */ \
+                __inclup = !__inclup;                                                           \
+                __n = __upper + __lower - __n;                                                  /** Mirror n along the center of the interval. */ \
+            }                                                                                   \
+            typeof(__n) __stride = __upper - __lower;                                           \
+            while (1) {                                                                         \
+                bool __tooSmall;                                                                \
+                bool __tooLarge;                                                                \
+                if (!__inclup) {                    /** Include lower bound */                          \
+                    __tooSmall = (__n     <  __lower);                                          \
+                    __tooLarge = (__upper <= __n);                                              \
+                } else {                            /** Include upper bound */                          \
+                    __tooSmall = (__n     <= __lower);                                          \
+                    __tooLarge = (__upper <   __n);                                             \
+                }                                                                               \
+                if      (__tooSmall)    __n += __stride;                                        \
+                else if (__tooLarge)    __n -= __stride;                                        \
+                else                    break;                                                  \
+            }                                                                                   \
+        }                                                                                       \
+        __n;                                                                                    \
+    })
+
+    #if 0 /** Simpler non-macro version I didn't end up using [Oct 2026] */
+    double cycle(double x, double lo, double hi, const char *includedEnd) {
+
+        /// Generalization of modulo.
+        ///     `x % n` is equal to `cycle(x, 0, n, "lo")` (Except for negative x, where C module is weird in a way that I don't understand. I think ours is proper 'euclidian' modulo)
+        ///     Moves n into the half-open interval `[lo, hi)` (if includedEnd is "lo") or `(lo, hi]` (if includedEnd is "hi")
+
+        if (lo == hi) return lo;
+        if (lo > hi) {
+            double tmp = lo; lo = hi; hi = tmp;
+            x = hi + lo - x;             /** Mirror n along the center of the interval. */
+        }
+
+        double stride = hi - lo;
+        if (!strcmp(includedEnd, "lo")) {
+            while (x > lo) x += stride;
+            while (x <= hi) x -= stride;
+        }
+        else if (!strcmp(includedEnd, "hi")) {
+            while (x >= lo) x += stride;
+            while (x < hi)  x -= stride;
+        }
+        else mfrequire(false, @"Invalid argument");
+
+        return x;
+    }
+    #endif
+
+#endif
 
 /// Helper macros:`_scopeins_var` / `_scopeins_statement_start` / `_scopeins_statement_end`
 /// What:   Insert a variable declaration or statement into the scope following the macro

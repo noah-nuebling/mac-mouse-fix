@@ -108,23 +108,20 @@
         NSString *currentTab = MainAppState.shared.tabViewController.identifierOfSelectedTab;
         BOOL willSwitch = ![currentTab isEqual:@"general"];
         BOOL windowExists = self.window != nil;
-        
-        /// Get delays
-        double preSwitchDelay = willSwitch && !windowExists ? 0.1 : 0.0; /// Wait until the window exists so the switch works
-        double postSwitchDelay = willSwitch ? 0.5 : 0.0; /// Wait until the tab switch animation is done before disabling the helper
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * preSwitchDelay), dispatch_get_main_queue(), ^{
-            
+
+        mfdetachThread(NSQualityOfServiceUserInteractive, ^{
             if (willSwitch) {
-                [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"general" window:self.window];
+                if (!windowExists) usleep(1e6 * 0.1); /// Wait until the window exists so the switch works
+                mfrunAndWait(CFRunLoopGetMain(), ^{
+                    [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"general" window:self.window];
+                });
+                usleep(1e6 * 0.5); /// Wait until the tab switch animation is done before disabling the helper
             }
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * postSwitchDelay), dispatch_get_main_queue(), ^{
-                
+            mfrun(CFRunLoopGetMain(), ^{
                 [EnabledState.shared disable];
             });
         });
-        
+
     } else if ([path isEqual:@"restarthelper"]) {
         
         NSString *delay = queryItems[@"delay"];
@@ -185,7 +182,7 @@ static NSDictionary *sideButtonActions;
             ///
             ///     Update: [Jul 2025] We tried to set  .prefersCompactControlSizeMetrics for the entire app in one central place right here, but there was random jank where the controls flashed larger right after opening the window. So we're setting  `prefersCompactControlSizeMetrics` inside our window controllers, and only verify here. Just search for `prefersCompactControlSizeMetrics` to find all the places.
             
-            if (!runningPreRelease()) {
+            if (runningDebugMode()) {
                 [NSNotificationCenter.defaultCenter addObserverForName: /*@"_NSWindowDidBecomeVisible"*/ @"_NSWindowDidBecomeVisible" object: nil queue: nil usingBlock: ^void (NSNotification * _Nonnull notification) {
                     if (@available(macOS 26.0, *)) {
                         NSWindow *win = (NSWindow *)notification.object;
@@ -330,7 +327,7 @@ static NSDictionary *sideButtonActions;
         ///     It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
         /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
         ///  -> Override check-for-prereleases setting
-        if (runningPreRelease()) {
+        if (runningPrereleaseBuild()) {
             /// If this is a pre-release version itself, we activate updates to pre-releases
             checkForPrereleases = YES;
         } else {

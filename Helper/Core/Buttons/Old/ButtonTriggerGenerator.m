@@ -143,12 +143,12 @@ static NSMutableDictionary *_state;
         };
         [bs.holdTimer invalidate]; /// Probs unnecessary cause it gets killed by mouse up anyways
         [bs.levelTimer invalidate];
-        bs.holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+        bs.holdTimer = [NSTimer mf_scheduledTimerWithTimeInterval:0.25
                                                         target:self
                                                       selector:@selector(holdTimerCallback:)
                                                       userInfo:timerInfo
                                                        repeats:NO];
-        bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 /// System values (configure in System Preferences, access via NSEvent.doubleClickInterval) are either too long or too short. I prefer 0.25
+        bs.levelTimer = [NSTimer mf_scheduledTimerWithTimeInterval:0.25 /// System values (configure in System Preferences, access via NSEvent.doubleClickInterval) are either too long or too short. I prefer 0.25
                                                          target:self
                                                        selector:@selector(levelTimerCallback:)
                                                        userInfo:timerInfo

@@ -16,6 +16,7 @@
 #import "VectorSubPixelator.h"
 #import "ModificationUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "MFHIDEventImports.h"
 
 /**
  This generates fliud scroll events containing gesture data similar to the Apple Trackpad or Apple Magic Mouse driver.
@@ -37,25 +38,10 @@ static VectorSubPixelator *_scrollLinePixelator;
 
 static TouchAnimator *_momentumAnimator;
 
-static dispatch_queue_t _momentumQueue;
-/// ^ This class doesn't only act as an output module (aka event sender) but also as an output driver for momentumScroll events. For its role as a driver, it needs a dispatchQueue. Consider factoring the autoMomentumScroll stuff out of this class for clear separation.
-
-+ (void)initialize
-{
++ (void)initialize {
     if (self == [GestureScrollSimulator class]) {
-        
-        /// Init dispatch queue
-        
-        dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-        _momentumQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.gesture-scroll", attr);
-        
-        /// Init Pixelators
-        
         _scrollLinePixelator = [VectorSubPixelator biasedPixelator]; /// I think biased is only beneficial on linePixelator. Too lazy to explain.
-        
-        /// Momentum scroll
-        
-        _momentumAnimator = [[TouchAnimator alloc] init];
+        _momentumAnimator = [[TouchAnimator alloc] initWithPhaseShift: kVBLPhase_DefaultForEventSending runLoop: IOThread.runLoop name: @"GestureScrollSimulatorMomentum"];
         
     }
 }
@@ -77,8 +63,7 @@ static dispatch_queue_t _momentumQueue;
 */
 
 + (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll invertedFromDevice:(BOOL)invertedFromDevice {
-    
-    /// This function doesn't dispatch to _queue. It should only be called if you're already on _queue. Otherwise there will be race conditions with the other functions that execute on _queue.
+
     /// `autoMomentumScroll` should always be true, except if you are going to post momentumScrolls manually using `+ postMomentumScrollEvent`
     
     /// Debug
@@ -104,8 +89,7 @@ static dispatch_queue_t _momentumQueue;
     
     
     /// Stop momentum scroll
-    ///     Do it sync otherwise it will be stopped immediately after it's startet by this block
-    [GestureScrollSimulator stopMomentumScroll_Unsafe];
+    [GestureScrollSimulator stopMomentumScroll];
     
     /// Timestamps and static vars
 
@@ -243,57 +227,39 @@ static void (^_momentumScrollCallback)(void);
     ///
     ///     This is only used by `ModifiedDrag`.
     ///     It probably shouldn't be sued by other classes, because of its specific behaviour and because, other classes might override eachothers callbacks, which would lead to really bad issues in ModifiedDrag
-    
-    dispatch_async(_momentumQueue, ^{
-        
-        if (_momentumAnimator.isRunning && callback != NULL) {
-            /// ^ `&& callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe work properly. I'm not sure what I'm doing.
-            
-            DDLogError("Trying to set momentumScroll start callback while it's running. This can lead to bad issues and you probably don't want to do it.");
-            assert(false);
-        }
-        
-        _momentumScrollCallback = callback;
-    });
+
+    /// Validate
+    ///     - Old note: `callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe not trigger this
+    ///     - [Sep 2026] Note: Put `_momentumAnimator.isRunning` last in the boolean expression so it's not evaluated if `callback != NULL` since otherwise recursion check (readsAndWritesState()) of TouchAnimator is tripped. (It thinks reading isRunning during framecallback is illegal - frame callbacks should be able to interact with the animator - maybe put the frame callback outside the `readsAndWritesState()` check)
+    if (callback != NULL && _momentumAnimator.isRunning) {
+        DDLogError("Trying to set momentumScroll start callback while it's running. This can lead to bad issues and you probably don't want to do it.");
+        assert(false);
+    }
+
+    _momentumScrollCallback = callback;
 }
 
 /// Stop momentum scroll
 
-+ (void)suspendMomentumScroll {
-    dispatch_sync(_momentumQueue, ^{
-        [self stopMomentumScroll_Unsafe];
-    });
-}
 
 + (void)stopMomentumScroll {
-    
-    DDLogDebug("momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
-    
-    dispatch_async(_momentumQueue, ^{
-        [self stopMomentumScroll_Unsafe];
-    });
-}
-
-+ (void)stopMomentumScroll_Unsafe {
-    [_momentumAnimator cancel_forAutoMomentumScroll:YES];
+    if (runningDebugMode()) {
+        NSString *callerInfo = _momentumAnimator.isRunning ? [SharedUtility callerInfo] : @"<Omitted for performance>"; /// Otherwise twoFingerSwipe is extremely unresponsive for me right now [Oct 2026]
+        DDLogDebug("momentumScroll stop request. Caller: %@", callerInfo);
+    }
+    [_momentumAnimator cancel];
 }
 
 /// Momentum scroll main
 
 static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
-    dispatch_sync(_momentumQueue, ^{
-        startMomentumScroll_Unsafe(timeSinceLastInput, exitVelocity, stopSpeed, dragCoefficient, dragExponent, invertedFromDevice);
-    });
-}
-
-static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
     
     /// Debug
     
     DDLogDebug("momentumScroll start request");
     
-//    DDLogDebug("Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
-    
+    //DDLogDebug("Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
+
     /// Declare constants
     
     Vector zeroVector = (Vector){ .x = 0, .y = 0 };
@@ -309,28 +275,25 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     
     /// Notify other touch drivers
 
-//    (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
-    
+    //(void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
+
     /// Init animator
     
-    [_momentumAnimator resetSubPixelator]; /// Shouldn't we use the `_Unsafe` version here?
+    [_momentumAnimator resetSubPixelator];
     [_momentumAnimator linkToMainScreen];
-    
-    /// Start animator
-    
-    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, Vector currentSpeed) {
-        
-        NSMutableDictionary *p = [NSMutableDictionary dictionary];
-        
-        /// Reset subpixelators
-        [_scrollLinePixelator reset];
-        
-        /// Get animator params
-        
-        /// Get initial velocity
+
+    /// Reset subpixelators
+    [_scrollLinePixelator reset];
+
+    /// Get start params for animator
+    double duration = {};
+    Vector distanceVec = {};
+    DragCurve *animationCurve = {};
+    bool doStart = true;
+    {
+        assertRunLoop(_momentumAnimator.displayLink.runLoop);
+
         Vector initialVelocity = initalMomentumScrollVelocity_FromExitVelocity(exitVelocity);
-        
-        /// Get initial speed
         double initialSpeed = magnitudeOfVector(initialVelocity); /// Magnitude is always positive
         
         /// Stop momentumScroll immediately, if the initial Speed is too small
@@ -338,103 +301,97 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
             DDLogDebug("Not starting momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
             [GestureScrollSimulator stopMomentumScroll];
-            p[@"doStart"] = @(NO);
-            return p;
-        }
-        
-        /// Get drag animation curve
-        
-        DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient
-                                                                  exponent:dragExponent
-                                                              initialSpeed:initialSpeed
-                                                                 stopSpeed:stopSpeed];
-        
-        /// Get duration and distance for animation from DragCurve
-        
-        double duration = animationCurve.timeInterval.length;
-        double distance = animationCurve.distanceInterval.length;
-        
-        /// Get distanceVec
-        
-        Vector distanceVec = scaledVector(unitVector(initialVelocity), distance);
-        
-        /// Return
-        
-        p[@"vector"] = nsValueFromVector(distanceVec);
-        p[@"duration"] = @(duration);
-        p[@"curve"] = animationCurve;
-        
-        return p;
-        
-    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint subCurve) {
-        
-        /// Debug
-        DDLogDebug("Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);
-        
-        /// Get delta vectors
-        Vector vecScrollLine;
-        Vector vecScrollLineInt;
-        getDeltaVectors(deltaVec, _scrollLinePixelator, &vecScrollLine, &vecScrollLineInt, NULL);
-        
-        /// Get momentumPhase from animationPhase
-        
-        CGMomentumScrollPhase momentumPhase;
-        
-        if (animationPhase == kMFAnimationCallbackPhaseStart) {
-            momentumPhase = kCGMomentumScrollPhaseBegin;
-        } else if (animationPhase == kMFAnimationCallbackPhaseContinue) {
-            momentumPhase = kCGMomentumScrollPhaseContinue;
-        } else if (animationPhase == kMFAnimationCallbackPhaseEnd) {
-            momentumPhase = kCGMomentumScrollPhaseEnd;
-        } else if (animationPhase == kMFAnimationCallbackPhaseCanceled) {
-            momentumPhase = kCGMomentumScrollPhaseEnd;
-        } else {
-            assert(false);
-        }
-        
-        /// Validate
-        if (momentumPhase == kCGMomentumScrollPhaseEnd) {
-            assert(isZeroVector(deltaVec));
-        }
-        
-        /// Post event
-        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                       scrollVectorLine:vecScrollLine
-                                                    scrollVectorLineInt:vecScrollLineInt
-                                                      scrollVectorPoint:deltaVec
-                                                                  phase:kIOHIDEventPhaseUndefined
-                                                          momentumPhase:momentumPhase
-                                                     invertedFromDevice:invertedFromDevice];
-        
-        /// Simulate tap to prevent auto-momentumScroll
-        ///     [Jul 2025] Also see Scroll.m where we do the same thing
-        ///     Discussion: Currently we simulate the tap in 3 places:
-        ///         1. Cancellation of scrollwheel gesture phase. 2. Cancellation or end of scrollwheel momentum phase. 3. Cancellation or end of Click and Drag momentum phase (that's this code)
-        ///         -> We're not simulating the tap during Click and Drag gesture phase, because cancellation during this phase is currently impossible AFAIK. (Just like cancellation of a real Trackpad scroll during the gesture phase is impossible – lifting the finger will *end* the gesture phase not, *cancel* it.)
-        if (animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled) {
-        
-            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                           scrollVectorLine:zeroVector
-                                                        scrollVectorLineInt:zeroVector
-                                                          scrollVectorPoint:zeroVector
-                                                                      phase:kIOHIDEventPhaseMayBegin
-                                                              momentumPhase:kCGMomentumScrollPhaseNone
-                                                         invertedFromDevice:invertedFromDevice];
-                                                         
-            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                           scrollVectorLine:zeroVector
-                                                        scrollVectorLineInt:zeroVector
-                                                          scrollVectorPoint:zeroVector
-                                                                      phase:kIOHIDEventPhaseCancelled
-                                                              momentumPhase:kCGMomentumScrollPhaseNone
-                                                         invertedFromDevice:invertedFromDevice];
-        }
-        
-        /// Call momentumScrollStart callback
-        if (animationPhase == kMFAnimationCallbackPhaseStart) {
-            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
+            doStart = false;
+            goto endof_getParams;
         }
 
+        /// Get drag animation curve
+        animationCurve = [
+            [DragCurve alloc]
+            initWithCoefficient: dragCoefficient
+            exponent: dragExponent
+            initialSpeed: initialSpeed
+            stopSpeed: stopSpeed
+        ];
+
+        /// Get duration and distance
+        duration = animationCurve.timeInterval.length;
+        double distance = animationCurve.distanceInterval.length;
+        distanceVec = scaledVector(unitVector(initialVelocity), distance);
+    } endof_getParams:
+
+    /// Start the animator
+    if (doStart)
+    [_momentumAnimator
+        startWithDuration: duration
+        durationInFrames: -1
+        vector: distanceVec
+        curve: animationCurve
+        integerCallback: ^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint subCurve)
+    {
+
+        /// Debug
+        DDLogDebug("Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);
+
+        if (animationPhase != kMFAnimationCallbackPhaseStoppedBeforeStart) {
+
+            /// Get delta vectors
+            Vector vecScrollLine;
+            Vector vecScrollLineInt;
+            getDeltaVectors(deltaVec, _scrollLinePixelator, &vecScrollLine, &vecScrollLineInt, NULL);
+
+            /// Get momentumPhase from animationPhase
+
+            CGMomentumScrollPhase momentumPhase;
+            if      (animationPhase == kMFAnimationCallbackPhaseStart)      momentumPhase = kCGMomentumScrollPhaseBegin;
+            else if (animationPhase == kMFAnimationCallbackPhaseContinue)   momentumPhase = kCGMomentumScrollPhaseContinue;
+            else if (animationPhase == kMFAnimationCallbackPhaseEnd)        momentumPhase = kCGMomentumScrollPhaseEnd;
+            else if (animationPhase == kMFAnimationCallbackPhaseCanceled)   momentumPhase = kCGMomentumScrollPhaseEnd;
+            else                                                            mfrequire(false);
+
+            /// Validate
+            if (momentumPhase == kCGMomentumScrollPhaseEnd) {
+                assert(isZeroVector(deltaVec));
+            }
+
+            /// Post event
+            [GestureScrollSimulator postGestureScrollEventWithGestureVector: zeroVector
+                                                           scrollVectorLine: vecScrollLine
+                                                        scrollVectorLineInt: vecScrollLineInt
+                                                          scrollVectorPoint: deltaVec
+                                                                      phase: kIOHIDEventPhaseUndefined
+                                                              momentumPhase: momentumPhase
+                                                         invertedFromDevice: invertedFromDevice];
+
+            /// Simulate tap to prevent auto-momentumScroll
+            ///     [Jul 2025] Also see Scroll.m where we do the same thing
+            ///     Discussion: Currently we simulate the tap in 3 places:
+            ///         1. Cancellation of scrollwheel gesture phase. 2. Cancellation or end of scrollwheel momentum phase. 3. Cancellation or end of Click and Drag momentum phase (that's this code)
+            ///         -> We're not simulating the tap during Click and Drag gesture phase, because cancellation during this phase is currently impossible AFAIK. (Just like cancellation of a real Trackpad scroll during the gesture phase is impossible – lifting the finger will *end* the gesture phase not, *cancel* it.)
+            if (animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled) {
+
+                [GestureScrollSimulator postGestureScrollEventWithGestureVector: zeroVector
+                                                               scrollVectorLine: zeroVector
+                                                            scrollVectorLineInt: zeroVector
+                                                              scrollVectorPoint: zeroVector
+                                                                          phase: kIOHIDEventPhaseMayBegin
+                                                                  momentumPhase: kCGMomentumScrollPhaseNone
+                                                             invertedFromDevice: invertedFromDevice];
+
+                [GestureScrollSimulator postGestureScrollEventWithGestureVector: zeroVector
+                                                               scrollVectorLine: zeroVector
+                                                            scrollVectorLineInt: zeroVector
+                                                              scrollVectorPoint: zeroVector
+                                                                          phase: kIOHIDEventPhaseCancelled
+                                                                  momentumPhase: kCGMomentumScrollPhaseNone
+                                                             invertedFromDevice: invertedFromDevice];
+            }
+        }
+
+        /// Call momentumScrollStart callback
+        if (animationPhase == kMFAnimationCallbackPhaseStart || animationPhase == kMFAnimationCallbackPhaseStoppedBeforeStart) {
+            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
+        }
     }];
     
 }
@@ -541,7 +498,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Debug
     
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         
         static double tsLast = 0;
         double ts = CACurrentMediaTime();
@@ -596,6 +553,19 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     CGEventSetIntegerValueField(e22, 99, phase);
     CGEventSetIntegerValueField(e22, 123, momentumPhase);
 
+    if ((0)) {
+        /// Opus 5.5:
+        /// Attach IOHIDEvent
+        ///     [Sep 2026] Test: Safari only runs its own momentum animation (smooth even when Safari is busy) if the scroll event carries an IOHIDEvent. It reads `rawPlatformDelta` from ScrollX/Y. (See WebKit > WebEventFactory.mm and MomentumEventDispatcher.cpp)
+        ///     Timestamp matters: WebKit computes frame intervals from it.
+
+        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeScroll timestamp: mach_absolute_time() senderID: 0];
+        double deviceSign = invertedFromDevice ? -1 : 1; /// Opus 5.5 Raw deltas are in device direction, so undo the natural-scrolling flip.
+        [hidEvent setDoubleValue: deviceSign * vecScrollPoint.x * 2 forField: kIOHIDEventFieldScrollX];
+        [hidEvent setDoubleValue: deviceSign * vecScrollPoint.y * 2 forField: kIOHIDEventFieldScrollY];
+        CGEventSetHIDEvent(e22, hidEvent);
+    }
+
     /// Debug
     
     DDLogDebug("HNGG Sent event: %@", scrollEventDescription(e22));
@@ -605,7 +575,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     ///     Wow, posting this after the t29s6 events removed the little stutter when swiping between pages, nice!
     
     CGEventSetTimestamp(e22, eventTs);
-//    CGEventSetLocation(e22, eventLocation);
+    //CGEventSetLocation(e22, eventLocation);
     CGEventPost(kCGSessionEventTap, e22); /// Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but that will make the events feed back into our scroll event tap. That's not tooo bad, because we ignore continuous events anyways, still bad because CPU use and stuff.
     CFRelease(e22);
     
@@ -633,10 +603,11 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
         
         /// Phase
         CGEventSetIntegerValueField(e29, 132, phase);
-        
+
+
         /// Post t29s6 events
         CGEventSetTimestamp(e29, eventTs);
-//        CGEventSetLocation(e29, eventLocation);
+        //CGEventSetLocation(e29, eventLocation);
         CGEventPost(kCGSessionEventTap, e29);
         CFRelease(e29);
     }

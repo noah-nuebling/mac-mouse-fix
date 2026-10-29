@@ -9,10 +9,11 @@
 
 import Foundation
 
-@MainActor /// [Jun 2025] Don't think this has to be @MainActor but it's easier to just make all the licensing stuff main.
 enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea if this makes sense.
-    static func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponseDict: [String: Any]?, communicationError: NSError?, urlResponse: URLResponse?) { assert(Thread.isMainThread)
-        
+
+    @LicensingActor static func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponseDict: [String: Any]?, communicationError: NSError?, urlResponse: URLResponse?) {
+        assertRunLoop(licensingRunLoop())
+
         /// Overview:
         ///     Essentially, we send a json dict to a URL, and get a json dict back
         ///         (We also get a `communicationError` back, if the request times out, or the servers response is in an invalid format or something)
@@ -91,7 +92,7 @@ enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea i
             assert(false) /// I'm not sure this can actually happen.
             
             let error = NSError(domain: MFLicenseErrorDomain,
-                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                code: Int(kMFLicenseErrorCode_ServerResponseInvalid),
                                 userInfo: ["data": (serverData ?? "<nil>"),
                                            "urlResponse": (urlResponse ?? "<nil>"),
                                            "dataAsUTF8": (String(data: (serverData ?? Data()), encoding: .utf8) ?? "")])
@@ -118,7 +119,7 @@ enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea i
             assert(error__ != nil)
             
             let error = NSError(domain: MFLicenseErrorDomain,
-                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                code: Int(kMFLicenseErrorCode_ServerResponseInvalid),
                                 userInfo: ["data": serverData,
                                            "urlResponse": urlResponse,
                                            "dataAsUTF8": (String(data: serverData, encoding: .utf8) ?? ""),
@@ -131,7 +132,7 @@ enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea i
         /// Guard: JSON from server is a acually dict
         guard let jsonDict = jsonObject as? [String: Any] else {
             let error = NSError(domain: MFLicenseErrorDomain,
-                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                code: Int(kMFLicenseErrorCode_ServerResponseInvalid),
                                 userInfo: ["data": serverData,
                                            "urlResponse": urlResponse,
                                            "jsonSerializationResult": (jsonObject ?? "")])

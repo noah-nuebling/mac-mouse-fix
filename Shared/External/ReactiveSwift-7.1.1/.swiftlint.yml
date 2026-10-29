@@ -1,0 +1,10 @@
+disabled_rules:
+  - opening_brace
+included:
+  - Sources
+  - Tests
+
+trailing_comma:
+  mandatory_comma: true
+
+line_length: 200

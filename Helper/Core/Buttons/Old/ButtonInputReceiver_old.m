@@ -76,11 +76,11 @@ static void registerInputCallback() {
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
     
     /// Add to runLoop
-    ///     Running on `GlobalEventTapThread`. Used to run on main. We made this change as a hotfix to the StatusBarItem only reacting to mouseHover if you click and then move mouse outside of the menu and then back in.
+    ///     Running on `IOThread`. Used to run on main. We made this change as a hotfix to the StatusBarItem only reacting to mouseHover if you click and then move mouse outside of the menu and then back in.
     ///     This might have unforseen consequences. E.g. the stuff we call from the tap must dispatch to mainThread at some points, so this changes the threading model, and might introduce raceConditions
     ///     Edit: Yes this is causing race conditions. The click and drag gestures get stuck all the time now. Alternative solution: Run on main thread and just don't capture MB1.
 
-    CFRunLoopAddSource(/* GlobalEventTapThread.runLoop */ CFRunLoopGetMain(), runLoopSource, kCFRunLoopDefaultMode);
+    CFRunLoopAddSource(/* IOThread.runLoop */ CFRunLoopGetMain(), runLoopSource, kCFRunLoopDefaultMode);
     
     CFRelease(runLoopSource);
 }

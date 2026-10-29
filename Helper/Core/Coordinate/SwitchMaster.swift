@@ -122,19 +122,22 @@ import ReactiveSwift
     //
     // MARK: Debug
     //
-    
+
+    let readWriteTracker = MFReadWriteTracker()
     @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
-        
-        /// Note: [Mar 2025] This only has to be so complicated because our threading architecture is really bad. Once we move all input and SwitchMaster to GlobalEventTapThread.m, this won't be necessary.
-        if (runningPreRelease()) {
-            let invocationId = Int.random(in: 0...99999);
-            DDLogDebug("[\(invocationId)] SwitchMaster: \(message())")
-            ModifiedDrag.activationState { modifiedDragActivation in /// Note: [Mar 2025] This won't be necessary once we use GlobalEventTapThread.m
-                DDLogDebug("[\(invocationId)] SwitchMaster: EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
-                DDLogDebug("[\(invocationId)] SwitchMaster: MenuItem state - buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
-                DDLogDebug("[\(invocationId)] SwitchMaster: Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))");
-            }
-        }
+
+        if (!runningDebugMode()) { return; }
+        assertRunLoop(IOThread.runLoop())
+
+        let buttonsKilled = /*MenuBarItem.scrollItemIsEnabled()*/  config("General.buttonKillSwitch") as! Bool /// [Oct 2026] Used to go directly through `MenuBarItem.scrollItemIsEnabled` instead of `config()` but that's owned by mainThread. Not sure this makes sense.
+        let scrollKilled  = /*MenuBarItem.buttonsItemIsEnabled()*/ config("General.scrollKillSwitch") as! Bool
+
+        DDLogDebug("""
+            SwitchMaster: \(message())
+            EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(ModifiedDrag.debug_activationState().rawValue)
+            MenuItem state - buttonMenu: \(buttonsKilled ? 1 : 0), scrollMenu: \(scrollKilled ? 1 : 0)
+            Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))
+            """)
     }
     
     //
@@ -171,7 +174,10 @@ import ReactiveSwift
     
 
     @objc func lockDown() {
-        
+
+        assertRunLoop(IOThread.runLoop())
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
+
         /// Update state
         isLockedDown = true
         
@@ -198,7 +204,10 @@ import ReactiveSwift
     //
     
     @objc func helperStateChanged() {
-        
+
+        assertRunLoop(IOThread.runLoop())
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
+
         /// NOTES:
         /// - On listening to activeDevice
         ///     - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't update the active device when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
@@ -237,9 +246,12 @@ import ReactiveSwift
     //
     
     @objc func generalConfigChanged(generalConfig: NSDictionary) {
-        
+
+        assertRunLoop(IOThread.runLoop())
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
+
         /// Get raw
-        let btn = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
+        let btn  = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
         let scrl = generalConfig.object(forKey: "scrollKillSwitch") as! Bool
         
         /// Update state & set didChange
@@ -280,7 +292,10 @@ import ReactiveSwift
     
     private var latestDevices = NSArray()
     @objc func attachedDevicesChanged(devices: NSArray) {
-        
+
+        assertRunLoop(IOThread.runLoop())
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
+
         /// Update state
         self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
         self.someDeviceHasPointing = DeviceManager.someDeviceHasPointing()
@@ -308,14 +323,17 @@ import ReactiveSwift
         /// Debug
         logWithState("""
             Toggled due to attachedDevices change.
-            New devices: \(devices)
+            New devices: \(devices.debugDescription/** `debugDescription` prevents escaping linebreaks somehow [Oct 2026] */)
             """)
         
     }
     
     private var latestRemaps = NSDictionary()
     @objc func remapsChanged(remaps: NSDictionary) {
-        
+
+        assertRunLoop(IOThread.runLoop())
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
+
         /// Update state
         let result = self.modifierUsage_Point_Scroll(remaps)
         self.somekbModModifiesPointing = result.someKbModModifiesPointing
@@ -361,7 +379,10 @@ import ReactiveSwift
     
     private var latestScrollConfig = ScrollConfig.shared /// Not sure if this is a good initialization value
     @objc func scrollConfigChanged(scrollConfig: ScrollConfig) {
-        
+
+        assertRunLoop(IOThread.runLoop())
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
+
         /// Update state
         if Remap.addModeIsEnabled {
             /// This doesn't work because scrollConfig doesn't change for addMode, so we don't get a callback. We instead solved this in `concludeAddModeWithPayload:`
@@ -394,7 +415,10 @@ import ReactiveSwift
     
     private var latestModifiers = NSDictionary()
     @objc func modifiersChanged(modifiers: NSDictionary) {
-        
+
+        assertRunLoop(IOThread.runLoop())
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
+
         /// Call combined state updaters
         remapsOrModifiersChanged(remaps: latestRemaps, modifiers: modifiers)
         remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: modifiers, attachedDevices: latestDevices)
@@ -566,7 +590,7 @@ import ReactiveSwift
     private func togglePointingTap(modifications modificationsArg: NSDictionary?) {
         
         if isLockedDown || !userIsActive { /// Not sure if necessary
-            ModifiedDrag.deactivate()
+            ModifiedDrag.deactivate(withCancel: false)
             return
         }
         
@@ -594,7 +618,7 @@ import ReactiveSwift
 //                assert(false)
             }
         } else {
-            ModifiedDrag.deactivate()
+            ModifiedDrag.deactivate(withCancel: false)
         }
     }
     
@@ -604,10 +628,14 @@ import ReactiveSwift
         
         /// Note: [Mar 2025] We're never disabling the items (I think) – so why enable them here instead of just returning?
         /// Note: [Mar 2025] If we ever enable this code again, we should perhaps add a `if isLockedDown || !userIsActive` guard here like for all the other togglers.
-        
-        MenuBarItem.enableScrollItem(true)
-        MenuBarItem.enableButtonsItem(true)
-        
+
+        return;
+
+        if ((false)) { /// [Sep 2026] Disabled now. Still now clue why we ever did this.
+            MenuBarItem.enableScrollItem(true)
+            MenuBarItem.enableButtonsItem(true)
+        }
+
         if ((false)) {
             
             let scrollCanBeToggled =
@@ -928,7 +956,7 @@ import ReactiveSwift
 //            self.togglePointingTap(modifications: self.latestModifications)
 //        }
     
-//        if runningPreRelease() {
+//        if runningDebugMode() {
 //            SignalProducer<Any, Never>.merge(attachedDevicesSignal.map { $0 as Any }, remapsSignal.map { $0 as Any }, scrollConfigSignal.map { $0 as Any }, modifiersSignal.map { $0 as Any }).startWithValues { _ in
 //
 //                ModifiedDrag.activationState { modifiedDragActivation in

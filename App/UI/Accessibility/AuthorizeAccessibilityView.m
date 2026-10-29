@@ -101,7 +101,7 @@ AuthorizeAccessibilityView *_accViewController;
     /// New sheet method
     ///
     
-    dispatch_async(dispatch_get_main_queue(), ^{ /// Remove just don't work sometimes when we don't dispatch to mainQueue. Also dispatching add to be safe.
+    mfrun(CFRunLoopGetMain(), ^{ /// Remove just don't work sometimes when we don't dispatch to mainQueue. Also dispatching add to be safe.
         
         if (_accViewController == nil) {
             _accViewController = [[AuthorizeAccessibilityView alloc] initWithNibName:@"AuthorizeAccessibilityView" bundle:[NSBundle bundleForClass:[self class]]];
@@ -175,7 +175,7 @@ AuthorizeAccessibilityView *_accViewController;
     /// New sheet method
     ///
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    mfrun(CFRunLoopGetMain(), ^{
         
         if (_accViewController == nil) return;
         if (![MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
@@ -212,14 +212,14 @@ AuthorizeAccessibilityView *_accViewController;
 //        [NSAnimationContext.currentContext setCompletionHandler:^{
 ////            NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
 ////            [ToastController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0), dispatch_get_main_queue(), ^{
+//            [NSTimer mf_scheduledTimerWithTimeInterval: 0.0 mode: NSRunLoopCommonModes block: ^(NSTimer * _Nonnull timer) {
 //                // v This usually fails because the remote message port can't be created
 //                //      I think it happens because the helper kills itself after gaining accessibility access and is restarted by launchd too slowly. Weirdly, I think I remember that this used to work.
 //                NSSet *capturedButtons = [RemapTableUtility getCapturedButtons];
 //                [CaptureToasts showButtonCaptureToastWithBeforeSet:NSSet.set afterSet:capturedButtons];
 ////                NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
 ////                [ToastController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
-//            });
+//            }];
 //        }];
 //        baseView.animator.alphaValue = 1;
 //        baseView.hidden = NO;

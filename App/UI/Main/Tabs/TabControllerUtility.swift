@@ -56,6 +56,10 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "tr": 350,   /// 350 looks great. [Dec 2025]
                     "ru": 370,
                     "es": 370,   /// 370 fits better than 350 with the other tabs (which are all wider) [Dec 2025]
+                    "ja": 320,   /// 350 -> 320 to have more semantic information on second line instead of just particles. Looks good. [Sep 2026]
+                    "uk": 330,   /// 350 -> 330 Way the lines wrap feels more aesthetically pleasing and lines up with commas [Sep 2026]
+                    "nb": 350,   /// 350 looks great [Sep 2026]
+                    "it": 340,   /// 350 -> 340 makes text wrapping more aesthetic somehow (even though longer lines than English I think) (Questionable: Buttons tab is really wide by comparison) [Sep 2026]
                 ]
             case "scrolling":
                 map = [
@@ -70,23 +74,27 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "tr": 380,  /// 370 -> "Yakınlaştırma veya Uzaklaştırma" (H4T-Rp-t33.title) is no longer cut off [Dec 2025] || 380 -> "Kaydırma tekerleğini ..." (precise-scrolling-hint) is on 2 instead of 3 lines [Dec 2025]
                     "ru": 350,  /// 350 -> Bit more breathing room than 340. String `Прокручивайте точно...` has orphaned word, but inserting &nbsp; or making the tab wider (min 400) looks worse. [Dec 2025]
                     "es": 390,  /// 370 -> Stops "Modificadores de teclado:" labels from being cut off.  390 -> "Desplázate con precisión..." is on 2 lines instead of 3. [Dec 2025]
+                    "ja": 340,  /// 340 looks great [Sep 2026]
+                    "uk": 330,  /// 340 -> 330 Fits the words exactly/reduce unnecessary whitespace (long words, have to make it much wider to get different wrapping) [Sep 2026]
+                    "nb": 340,  /// 340 looks great [Sep 2026]
+                    "it": 370,  /// 340 -> 370 Smallest that doesn't make Scrolling > Speed > macOS hint wrap onto 3 lines [Sep 2026]
                 ]
             default:
                 fatalError("Calling this from unexpected tab: \(tabController)")
         }
         
-        var windowWidth = map[LocalizationUtility.currentLanguageCode() ?? ""]
-        if (windowWidth == nil) {
+        var hardcodedWindowWidth = map[MFLanguageCode()]
+        if (hardcodedWindowWidth == nil) {
             assert(false)
-            windowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]
+            hardcodedWindowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]
         }
         
-        if (windowWidth! >= 0) {
+        if (hardcodedWindowWidth! >= 0) {
             
             /// Set window width
             ///     Before, I used `lessThanOrEqualToConstant:` instead of `equalToConstant:` to make things more robust in case the layout naturally wants to be narrower.
             ///         But allowing textWrapping without specifying tabWidth leads to these weird ambiguities in the layout system I think. Wrote more about this elsewhere where we mentioned `applyHardcodedTabWidth` [Sep 2025]
-            tabController.view.widthAnchor.constraint(equalToConstant: windowWidth!).isActive = true;
+            tabController.view.widthAnchor.constraint(equalToConstant: hardcodedWindowWidth!).isActive = true;
             
             /// Enable text wrapping
             for t in widthControllingTextFields {
@@ -112,7 +120,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
             }
         }
         
-        print("TBS set windowWidth \(windowWidth!) for tab '\(tabName)' (\(tabController.view))")
+        print("TBS set windowWidth \(hardcodedWindowWidth!) for tab '\(tabName)' (\(tabController.view))")
         
     }
 }

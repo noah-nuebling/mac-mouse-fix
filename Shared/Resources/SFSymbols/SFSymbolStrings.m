@@ -10,6 +10,7 @@
 #import "SFSymbolStrings.h"
 #import "NSAttributedString+Additions.h"
 #import "NSImage+Additions.h"
+#import "Logging.h"
 
 ///
 /// This file offers methods for creating NSAttributedString instances that display an SFSymbol through an NSImage Attachment.
@@ -69,8 +70,9 @@
     
     /// Early return
     ///     If no symbol is found anywhere, just return the fallback string
+    mfassert(stringFallback, @"Programmer error: Passed nil as the stringFallback to `stringWithSymbolName:`");
     if (symbol == nil) {
-        return [[NSAttributedString alloc] initWithString:stringFallback];
+        return [[NSAttributedString alloc] initWithString: stringFallback ?: @""];
     }
     
     /// Image ->  textAttachment

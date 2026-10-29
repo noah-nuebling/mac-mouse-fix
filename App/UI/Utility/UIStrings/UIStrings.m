@@ -9,7 +9,6 @@
 
 #import "UIStrings.h"
 #import <Carbon/Carbon.h>
-#import "MASShortcut.h"
 #import "CGSHotKeys.h"
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
@@ -248,7 +247,10 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     ///     All the SF Symbols below should appear as 􀃬 in the source code, unless you have an SF Symbol-supporting font like SF Pro installed - or if you have force quit  Mac Mouse Fix the last time you ran it - which prevents it from unregistering the `CoolSFSymbols.otf` font which it registers as the app launches. If this happens, the `CoolSFSymbols.otf` font will also become unregistered after you you log out.
     ///
     ///     The `CoolSFSymbols.otf` font is registered/unregistered from AppDelegate.m at the time of writing.
-    
+    ///
+    /// [Oct 2026] Some of these have regular unicode versions like 􀆨 and 􀆡, while some from `getStringForKeyCode:` like `kVK_Tab` should have SF Symbol (because System Font can't render the unicode we're using)
+    ///     TODO: Unify the lookup mechanism for all: regular unicode if possible, otherwise SFSymbol in `CoolSFSymbols.otf`.
+
     NSDictionary *map = @{
         
         /// Symbolic Hotkeys
@@ -261,19 +263,19 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         
         /// System events
         ///     Note: All the SKHs are over 100 and the system events are under 100, so we can just put them all into one map. If there's a duplicate key in the literal, Xcode will warn us.
-        @(kMFSystemEventTypeBrightnessDown):        @[@"􀆫", @"sun.min"], /// The symbols will all appear as 􀃬 unless you have SF Fonts installed from the Apple Website. But in MMF they will appear properly since we ship a font.
-        @(kMFSystemEventTypeBrightnessUp):          @[@"􀆭", @"sun.max"],
-        @(kMFSystemEventTypeMediaBack):             @[@"􀊉", @"backward"],
-        @(kMFSystemEventTypeMediaPlayPause):        @[@"􀊇", @"playpause"],
-        @(kMFSystemEventTypeMediaForward):          @[@"􀊋", @"forward"],
-        @(kMFSystemEventTypeVolumeMute):            @[@"􀊠", @"speaker"],
-        @(kMFSystemEventTypeVolumeDown):            @[@"􀊤", @"speaker.wave.1"],
-        @(kMFSystemEventTypeVolumeUp):              @[@"􀊨", @"speaker.wave.3"],
-        @(kMFSystemEventTypeKeyboardBacklightDown): @[@"􀇭", @"light.min"],
-        @(kMFSystemEventTypeKeyboardBacklightUp):   @[@"􀇮", @"light.max"],
-        @(kMFSystemEventTypePower):                 @[@"􀆨", @"power"],
-        @(kMFSystemEventTypeCapsLock):              @[@"􀆡", @"capslock"], /// This symbol doesn't appear on US keyboards, but we disable capturing capslock anyways
-        
+        @(NX_KEYTYPE_BRIGHTNESS_DOWN):        @[@"􀆫", @"sun.min"], /// The symbols will all appear as 􀃬 unless you have SF Fonts installed from the Apple Website. But in MMF they will appear properly since we ship a font.
+        @(NX_KEYTYPE_BRIGHTNESS_UP):          @[@"􀆭", @"sun.max"],
+        @(NX_KEYTYPE_REWIND):                 @[@"􀊉", @"backward"],
+        @(NX_KEYTYPE_PLAY):                   @[@"􀊇", @"playpause"],
+        @(NX_KEYTYPE_FAST):                   @[@"􀊋", @"forward"],
+        @(NX_KEYTYPE_MUTE):                   @[@"􀊠", @"speaker"],
+        @(NX_KEYTYPE_SOUND_DOWN):             @[@"􀊤", @"speaker.wave.1"],
+        @(NX_KEYTYPE_SOUND_UP):               @[@"􀊨", @"speaker.wave.3"],
+        @(NX_KEYTYPE_ILLUMINATION_DOWN):      @[@"􀇭", @"light.min"],
+        @(NX_KEYTYPE_ILLUMINATION_UP):        @[@"􀇮", @"light.max"],
+        @(NX_POWER_KEY):                      @[@"􀆨", @"power"],
+        @(NX_KEYTYPE_CAPS_LOCK):              @[@"􀆡", @"capslock"], /// This symbol doesn't appear on US keyboards, but we disable capturing capslock anyways (doesn't work)
+
         /// Validation
         /// - We should get an assert fail if we don't comment this out
         /// - Notes:
@@ -281,31 +283,43 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         ///     - If this unicode character displays as 􀃬 but the ones above display properly, than means that SF Fonts are not registered but `CoolSFSymbols.otf` is.
         ///
         
-//        @"someUnsupportedSFSymbol1":                @[@"􁖎", NSNull.null],
+        //@"someUnsupportedSFSymbol1":                @[@"􁖎", NSNull.null],
+
+        /// [Oct 2026] Additional `NX_` constants from that header that we haven't seen in the wild, yet (and didn't know about until now)
+        #if 0
+        /* 5*/NX_KEYTYPE_HELP                ///< Probably the help key found on old Apple keyboards, Ins/Insert on Windows keyboards seems to be recogized as the Help key `kVK_Help` but it doesn't do anything.  [Oct 2026]
+        /* 8*/NX_UP_ARROW_KEY                ///< Not sure [Oct 2026]
+        /* 9*/NX_DOWN_ARROW_KEY              ///< Not sure [Oct 2026]
+        /*10*/NX_KEYTYPE_NUM_LOCK            ///< Num Lock on windows keyboards acts as clear under macOS and some modern Apple keyboadrs have this x symbol in the same spot. Should maybe suppor this [Oct 2026]
+        /*11*/NX_KEYTYPE_CONTRAST_UP         ///< Not sure [Oct 2026]
+        /*12*/NX_KEYTYPE_CONTRAST_DOWN       ///< Not sure [Oct 2026]
+        /*13*/NX_KEYTYPE_LAUNCH_PANEL        ///< Not sure [Oct 2026]
+        /*14*/NX_KEYTYPE_EJECT               ///< Probably the top right eject key when Macs still had optical disk drives - should maybe suppor this [Oct 2026]
+        /*15*/NX_KEYTYPE_VIDMIRROR           ///< Opus 5.5 says maybe display mirroring key found on first MacBook Pro. The icon looks like `rectangle.on.rectangle` [Oct 2026]
+        /*17*/NX_KEYTYPE_NEXT                ///< Not sure [Oct 2026]
+        /*18*/NX_KEYTYPE_PREVIOUS            ///< Not sure [Oct 2026]
+        /*23*/NX_KEYTYPE_ILLUMINATION_TOGGLE ///< Can't find any SFSymbol for this. Appears on original MBP I think - Icon looks like `light.min` but without the dots. (so just a dash) [Oct 2026]
+        /*25*/NX_KEYTYPE_MENU                ///< Not sure. Ideas: The context menu key that current full-size Apple keyboards have instead of the insert key. Opus 5.5 thinks it's the MENU key on Apple TV remote. Weird. [Oct 2026]
+        #endif
     };
-    
+
     NSArray *rmap = map[@(type)];
-    symbolUnicode = rmap[0];
-    symbolIdentifier = rmap[1];
-    
+    if (rmap && rmap != [NSNull null]) {
+        symbolUnicode = rmap[0];
+        symbolIdentifier = rmap[1];
+    }
+
     /// Validate
-    if (runningPreRelease()) {
-        for (NSNumber *typeNS in map) {
-            NSString *fallbackUnicode = map[typeNS][0];
-            BOOL fallbackCharIsSupported = [CoolSFSymbolsFont symbolCharacterIsDisplayable:fallbackUnicode];
-            if (!fallbackCharIsSupported) {
-                DDLogError("Error: Fallback character %@ for SFSymbol %@ is not supported by our CoolSFSymbols font. It will not display correctly unless the user has a font installed that can display SF Symbols. To fix this, generate a new font using the createsfsymbols.py script and replace the CoolSFSymbols.otf font included in the Mac Mouse Fix bundle", fallbackUnicode, map[typeNS][1]);
-                assert(false);
-            }
-        }
+    if (runningDebugMode())
+    for (NSNumber *typeNS in map) if (map[typeNS] != [NSNull null]) {
+        NSString *fallbackUnicode = map[typeNS][0];
+        BOOL fallbackCharIsSupported = [CoolSFSymbolsFont symbolCharacterIsDisplayable: fallbackUnicode];
+        mfassert(fallbackCharIsSupported, @"Error: Fallback character %@ for SFSymbol %@ is not supported by our CoolSFSymbols font. It will not display correctly unless the user has a font installed that can display SF Symbols. To fix this, generate a new font using the createsfsymbols.py script and replace the CoolSFSymbols.otf font included in the Mac Mouse Fix bundle", fallbackUnicode, map[typeNS][1]);
     }
     
     /// Validate
-    if ([symbolIdentifier isEqual: @"questionmark.square"]) {
-        DDLogWarn("No visualization programmed for system event with type: %d, flags: %llu", type, flags);
-        assert(false);
-    }
-    
+    mfassert(![symbolIdentifier isEqual: @"questionmark.square"], @"No visualization programmed for system event with type: %d, flags: %llu", type, flags);
+
     NSAttributedString *keyStr;
     if ((NO)) {
         /// TEST - always use the SF Symbol unicode directly
@@ -320,6 +334,111 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     return symbolStringWithModifierPrefix(flagsStr, keyStr);
 }
 
++ (NSString *) getStringForKeyCode: (CGKeyCode)vk {
+    /// [Sep 2026] Adapted for Mac Mouse Fix from MASShortcut.m > keyCodeString
+    ///     Small: Maybe rename methods in this file to standard Apple pattern so this is called `stringForVirtualKeyCode:`
+
+    // Some key codes don't have an equivalent
+    switch (vk) {
+        case kVK_F1: return @"F1";
+        case kVK_F2: return @"F2";
+        case kVK_F3: return @"F3";
+        case kVK_F4: return @"F4";
+        case kVK_F5: return @"F5";
+        case kVK_F6: return @"F6";
+        case kVK_F7: return @"F7";
+        case kVK_F8: return @"F8";
+        case kVK_F9: return @"F9";
+        case kVK_F10: return @"F10";
+        case kVK_F11: return @"F11";
+        case kVK_F12: return @"F12";
+        case kVK_F13: return @"F13";
+        case kVK_F14: return @"F14";
+        case kVK_F15: return @"F15";
+        case kVK_F16: return @"F16";
+        case kVK_F17: return @"F17";
+        case kVK_F18: return @"F18";
+        case kVK_F19: return @"F19";
+        case kVK_F20: return @"F20";
+
+        case kVK_Space:         return @" Space";
+        case kVK_Escape:        return /*@" Esc"*/@"⎋"; /// [Sep 2026] ⎋ is what AppKit uses in MenuBar, so it's familiar.
+        case kVK_Delete:        return @"⌫";
+        case kVK_ForwardDelete: return @"⌦";
+        case kVK_LeftArrow:     return @"◀";
+        case kVK_RightArrow:    return @"▶";
+        case kVK_UpArrow:       return @"▲";
+        case kVK_DownArrow:     return @"▼";
+        case kVK_Help:          return @"?⃝";
+        case kVK_PageUp:        return @"↑";
+        case kVK_PageDown:      return @"↓";
+        case kVK_End:           return @"⤓";
+        case kVK_Home:          return @"⤒";
+        case kVK_Tab:           return @"⇥"; /// [Sep 2026] This renders with Lucida Grande (instead of System font), says Claude.
+        case kVK_Return:        return @"⏎"; //@"↩";
+
+        // Keypad
+        case kVK_ANSI_Keypad0: return @"0";
+        case kVK_ANSI_Keypad1: return @"1";
+        case kVK_ANSI_Keypad2: return @"2";
+        case kVK_ANSI_Keypad3: return @"3";
+        case kVK_ANSI_Keypad4: return @"4";
+        case kVK_ANSI_Keypad5: return @"5";
+        case kVK_ANSI_Keypad6: return @"6";
+        case kVK_ANSI_Keypad7: return @"7";
+        case kVK_ANSI_Keypad8: return @"8";
+        case kVK_ANSI_Keypad9: return @"9";
+        case kVK_ANSI_KeypadDecimal:  return @".";
+        case kVK_ANSI_KeypadMultiply: return @"*";
+        case kVK_ANSI_KeypadPlus:     return @"+";
+        case kVK_ANSI_KeypadClear:    return @"⌧";
+        case kVK_ANSI_KeypadDivide:   return @"/";
+        case kVK_ANSI_KeypadEnter:    return @"⌅";
+        case kVK_ANSI_KeypadMinus:    return @"-";
+        case kVK_ANSI_KeypadEquals:   return @"=";
+
+    }
+    
+    // Everything else should be printable so look it up in the current ASCII capable keyboard layout
+    OSStatus error = noErr;
+    NSString *keystroke = nil;
+    TISInputSourceRef inputSource = TISCopyCurrentASCIICapableKeyboardLayoutInputSource();
+    if (inputSource) {
+        CFDataRef layoutDataRef = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+        if (layoutDataRef) {
+            UCKeyboardLayout *layoutData = (UCKeyboardLayout *)CFDataGetBytePtr(layoutDataRef);
+            UniCharCount length = 0;
+            UniChar  chars[256] = { 0 };
+            UInt32 deadKeyState = 0;
+            error = UCKeyTranslate(layoutData, (UInt16)vk, kUCKeyActionDisplay, 0, // No modifiers
+                                   LMGetKbdType(), kUCKeyTranslateNoDeadKeysMask, &deadKeyState,
+                                   sizeof(chars) / sizeof(UniChar), &length, chars);
+            keystroke = ((error == noErr) && length ? [NSString stringWithCharacters:chars length:length] : @"");
+        }
+        CFRelease(inputSource);
+    }
+    
+    // Validate keystroke
+    //if (runningDebugMode()) /// Opus says this might be necessary to protect us from UCKeyTranslate outputting unprintable characters, though I can't see any problem. [Sep 2026]
+    if (keystroke.length) {
+        static NSMutableCharacterSet *validChars = nil;
+        if (validChars == nil) {
+            validChars = [[NSMutableCharacterSet alloc] init];
+            [validChars formUnionWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
+            [validChars formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+            [validChars formUnionWithCharacterSet:[NSCharacterSet symbolCharacterSet]];
+        }
+        for (NSUInteger i = 0, length = keystroke.length; i < length; i++) {
+            if (![validChars characterIsMember:[keystroke characterAtIndex:i]]) {
+                keystroke = @"";
+                break;
+            }
+        }
+    }
+    
+    // Finally, we've got a shortcut!
+    return keystroke.uppercaseString;
+}
 
 + (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags font:(NSFont *)font {
     
@@ -334,9 +453,8 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
     
     /// Get keyboard key string from MASShortcut
-    MASShortcut *masShortcut = [MASShortcut shortcutWithKeyCode:keyCode modifierFlags:0];
-    NSString *keyStr = masShortcut.keyCodeString;
-    
+    NSString *keyStr = [UIStrings getStringForKeyCode: keyCode];
+
     if (![keyStr isEqual:@""]) {
         
         NSString *combinedString = stringf(@"%@%@", flagsStr, keyStr);
@@ -525,7 +643,7 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *modif
     
     /// See:
     /// - https://developer.apple.com/forums/thread/91225
-    /// - Locale.current.groupingSeparator
+    /// - Locale.current.groupingSeparator (Actually we should use `MFLocale()` if anything, not `Locale.current` – see `MFLocale()` [Feb 2026])
     
     NSMutableArray<NSString *> *sa = stringArray.mutableCopy;
     

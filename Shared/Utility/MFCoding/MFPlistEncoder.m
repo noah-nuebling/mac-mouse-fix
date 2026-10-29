@@ -17,6 +17,8 @@
 #import "UndeprecateSimpleUnboxing.h"
 #import "MFDefer.h"
 
+#import "Logging.h"
+
 #pragma mark - Failure macros
 ///     !! Keep in sync with MFPlistDecoder !!
 
@@ -104,7 +106,7 @@
     
     /// Validate plist result
     if (keyIsRoot)
-        if (runningPreRelease())
+        if (runningDebugMode())
             if (!CFPropertyListIsValid((__bridge void *)encodedObj, kCFPropertyListXMLFormat_v1_0)) /// Not sure what the XML format arg does.
                 failWithError(kMFNSCoderError_InternalInconsistency, @"The generated archive (%@) is not a valid property list.", encodedObj);
     
@@ -255,7 +257,7 @@
     /// Validate: result is plist
     ///     This will also catch nil or NSNull
     ///     > Therefore: We never return nil from this method except when calling failWithError() [Feb 2025]
-    if (runningPreRelease()) /// Turn this (possible sorta expensive) validation off in release builds.
+    if (runningDebugMode()) /// Turn this (possible sorta expensive) validation off in release builds.
         if (!MFPlistIsValidNode(result))
             failWithError(kMFNSCoderError_InternalInconsistency, @"The encoding result (%@) is not a valid plist node.", result);
     

@@ -40,16 +40,14 @@ NS_INLINE NSString *_Nullable MFNSErrorBasicGetReason(NSError *_Nonnull error) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void));
-bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void));
+NSString *MFLocale(void);
+NSString *MFLanguageCode(void);
+
 CFTimeInterval machTimeToSeconds(uint64_t tsMach);
 uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
+
 NSException * _Nullable tryCatch(void (^tryBlock)(void));
 void *offsetPointer(void *ptr, int byteOffset);
-bool runningPreRelease(void);
-bool runningMainApp(void);
-bool runningHelper(void);
-//bool runningAccomplice(void);
 
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name;
 + (NSString *)dumpClassInfo:(id)obj;
@@ -68,10 +66,10 @@ bool runningHelper(void);
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 + (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 + (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button;
-+ (NSString *)currentDispatchQueueDescription;
+//+ (NSString *)currentDispatchQueueDescription;
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
-+ (void)resetDispatchGroupCount:(dispatch_group_t)group;
+//+ (void)resetDispatchGroupCount:(dispatch_group_t)group;
 NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount);
 
 NS_ASSUME_NONNULL_END

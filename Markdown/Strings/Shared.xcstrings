@@ -28,6 +28,24 @@
             "value" : "Agradecimientos"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riconoscimenti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "謝辞"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takk"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44,6 +62,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teşekkürler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подяки"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Công nhận"
           }
         },
         "zh-Hans" : {
@@ -81,6 +111,24 @@
             "value" : "Botones del Ratón Capturados"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti del mouse catturati"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャプチャされたマウスボタン"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fanget museknapper"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -97,6 +145,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yakalanan Fare Düğmeleri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки миші захоплені"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã bắt được nút nhấn"
           }
         },
         "zh-Hans" : {
@@ -134,6 +194,24 @@
             "value" : "Ruedas de desplazamiento capturadas"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rotelle di scorrimento catturate"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャプチャされたスクロールホイール"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fanget rullehjul"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -150,6 +228,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yakalanan Kaydırma Düğmeleri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коліщатко захоплене"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã bắt được nút cuộn lăn"
           }
         },
         "zh-Hans" : {
@@ -187,6 +277,24 @@
             "value" : "Léame"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les meg"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -203,6 +311,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beni Oku"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прочитай мене"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
           }
         },
         "zh-Hans" : {
@@ -240,6 +360,24 @@
             "value" : "Soporte"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supporto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サポート"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Støtte"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -256,6 +394,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Destek"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підтримка"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trợ giúp"
           }
         },
         "zh-Hans" : {
@@ -293,6 +443,24 @@
             "value" : "¡Espero que esta guía haya sido útil!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spero che questa guida ti sia stata utile!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このガイドがお役に立てば幸いです！"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg håper denne veiledningen var nyttig!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -309,6 +477,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Umuyorum ki bu destek dokümanı yardımcı olmuştur!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіюсь цей посібник став вам у нагоді!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tôi mong hướng dẫn này có ích!"
           }
         },
         "zh-Hans" : {
@@ -346,6 +526,24 @@
             "value" : "¡Espero que esta información haya sido útil!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spero che queste informazioni ti siano state utili!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これらの内容が、皆さまのご参考になれば幸いです！"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg håper denne informasjonen var nyttig!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -362,6 +560,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Umarım bu bilgiler yararlı olmuştur."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіюсь ця інформація вам була корисною!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tôi mong thông tin này có ích!"
           }
         },
         "zh-Hans" : {
@@ -399,6 +609,24 @@
             "value" : "¡Espero que esta guía haya aclarado las cosas!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spero che questa guida abbia chiarito le cose!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このガイドで不明な点が解消されれば幸いです！"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg håper denne guiden oppklarte ting!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -415,6 +643,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Umarım bu doküman kafanızdaki soru işaretlerini kaldırmıştır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіюсь цей посібник розклав все по поличкам!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tôi mong hướng dẫn có mọi thứ bạn cần!"
           }
         },
         "zh-Hans" : {
@@ -452,6 +692,24 @@
             "value" : "¿Aún tiene preguntas? Haga clic [aquí]({url})."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hai ancora domande? Fai clic [qui]({url})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだご不明な点がありますか？ [こちら]({url})をクリックしてください。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Har du fortsatt spørsmål? Klikk [her]({url})."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -468,6 +726,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hâlâ sorularınız mı mevcut? [Buraya tıklayın]({url})."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Досі є запитання? Клацніть [тут]({url})."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bạn vẫn có câu hỏi? Nhấn [tại đây]({url})."
           }
         },
         "zh-Hans" : {
@@ -506,6 +776,24 @@
             "value" : "Este documento está traducido `{localization_progress}` al `{current_language}` [Ayudar a traducir]({url})"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo documento è stato tradotto in `{current_language}` al `{localization_progress}`\n[Aiuta a tradurre]({url})"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この文章は `{localization_progress}` `{current_language}`に翻訳されました\n[翻訳を手伝う]({url})"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dette dokumentet er `{localization_progress}` oversatt til `{current_language}`\n[Hjelp med å oversette]({url})"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -522,6 +810,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "`{localization_progress}` adındaki doküman `{current_language}` diline çevrilmiştir.\n[Çeviri için yardımcı olun]({url})"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Документ перекладено на `{localization_progress}` мовою `{current_language}`\n[Долучайтеся до перекладу]({url})"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tài liệu này đã được dịch `{localization_progress}` sang `{current_language}`\n[Bạn muốn giúp tôi dịch]({url})"
           }
         },
         "zh-Hans" : {
@@ -560,6 +860,24 @@
             "value" : "[🌎 ¡Ayudar a traducir!]({url})"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Ti piacerebbe aiutarci a tradurre?]({url})"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 翻訳を手伝ってください！]({url})"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Hjelp med å oversette!]({url})"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -576,6 +894,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 Çeviri için yardımcı olun!]({url})"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Долучайтеся до перекладу :)]({url})"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Bạn dịch giúp tôi nhé!]({url})"
           }
         },
         "zh-Hans" : {

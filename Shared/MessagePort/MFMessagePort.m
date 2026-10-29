@@ -71,22 +71,35 @@
 ///         I think the reason for this message is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
 ///         Checking if `localPort != nil` should detect this case
 
+#define IS_THIRD (!IS_HELPER && !IS_MAIN_APP) /** LocalizationScreenshotTaker [Sep 2026] */
+
+#if IS_HELPER
+    #define messagePortRunLoop() IOThread.runLoop
+#elif IS_MAIN_APP
+    #define messagePortRunLoop() CFRunLoopGetMain()
+#elif IS_THIRD
+    #define messagePortRunLoop() CFRunLoopGetMain()
+#endif
+
+
 @implementation MFMessagePort
 
+#if !IS_THIRD
 + (void)load_Manual {
     
     #pragma mark - Init
     
     /// Set up a local port for listening for incoming messages
-    
-    /// Validate
-    assert(runningMainApp() || runningHelper());
-    
+
     /// Log
     DDLogInfo("Initializing MessagePort...");
     
     /// Create port
-    CFStringRef messagePortName = (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper);
+    #if IS_HELPER
+        CFStringRef messagePortName = (__bridge void *)kMFBundleIDHelper;
+    #else
+        CFStringRef messagePortName = (__bridge void *)kMFBundleIDApp;
+    #endif
     CFMessagePortRef localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, NULL, NULL);
 
     /// Log
@@ -95,21 +108,22 @@
     /// Validate
     if (localPort == NULL) {
         
-        if (runningMainApp()) {
+        #if IS_MAIN_APP
             DDLogInfo("Failed to create a local message port. It will probably work anyway for some reason");
-        } else {
+        #elif IS_HELPER
             DDLogError("Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
             @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
-        }
-        
+        #endif
+
         return;
     }
         
     /// Add message port to main runLoop
     CFRunLoopSourceRef runLoopSource = CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
-    CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopCommonModes);
+    CFRunLoopAddSource(messagePortRunLoop(), runLoopSource, kCFRunLoopCommonModes);
     CFRelease(runLoopSource);
 }
+#endif
 
 NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
     
@@ -125,12 +139,10 @@ NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
     return map[@(errorCode)] ?: stringf(@"(%d)", errorCode);
 }
 
+#if !IS_THIRD
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
     #pragma mark Receive messages
-    
-    /// Validate
-    assert(runningMainApp() || runningHelper());
     
     /// Decode message
     NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
@@ -232,8 +244,11 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             [Config loadFileAndUpdateStates];
         }
         xxx(@"terminate") {
-    //            [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
-            [NSApp terminate:NULL];
+            mfrun(CFRunLoopGetMain(), ^{
+                [NSApp terminate: NULL];
+                //[NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
+            });
+
         }
         xxx(@"checkAccessibility") {
             BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
@@ -285,10 +300,21 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     /// Return response
     if (response != nil) {
-         return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
+         return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject: response];
     } else {
         return NULL;
     }
+}
+#endif
+
+static void invalidationCallback(CFMessagePortRef ms, void *info) { /// Helper for `sendMessage:` [Oct 2026]
+    /// Log state
+    #if IS_HELPER
+        NSString *name = @"Helper";
+    #else
+        NSString *name = @"MainApp";
+    #endif
+    DDLogInfo("Remote MessagePort invalidated in %@", name);
 }
 
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject<NSCoding> * _Nullable)payload toRemotePort:(NSString *)remotePortName waitForReply:(BOOL)waitForReply {
@@ -362,28 +388,25 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 ///
 /// Helper stuff
 ///
-
+#if !IS_THIRD
 + (NSObject *_Nullable)sendMessage:(NSString *)message withPayload:(NSObject<NSCoding> *)payload waitForReply:(BOOL)replyExpected {
         
     /// Convenience wrapper
     ///     Automatically sends the message to the helper if the mainApp is the sender, and sends to the mainApp if the helper is the sender.
     
-    /// Validate
-    assert(runningMainApp() || runningHelper());
-    
     /// Get remote port name
-    NSString *remotePortName = runningMainApp() ? kMFBundleIDHelper : kMFBundleIDApp;
-    
+    #if IS_MAIN_APP
+        NSString *remotePortName = kMFBundleIDHelper;
+    #else
+        NSString *remotePortName = kMFBundleIDApp;
+    #endif
+
     /// Call core
     NSObject *response = [self sendMessage:message withPayload:payload toRemotePort:remotePortName waitForReply:replyExpected];
     
     /// Return
     return response;
 }
-
-void invalidationCallback(CFMessagePortRef ms, void *info) {
-    /// Log state
-    DDLogInfo("Remote MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
-}
+#endif
 
 @end

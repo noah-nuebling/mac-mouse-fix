@@ -24,7 +24,7 @@
 ///
 /// -> Result:
 ///   - To match a PolynomialCappedAccelerationCurve() with degree (aka `curvature`) of `n`, place `n+1` Bezier points with
-///     `{ (x, y) | i in 0...n, x = (maxX-minX)*(n/i), y = minY if i == 0 else maxY }`
+///     `{ (x, y) | i in 0...n, x = minX + (maxX-minX)*(i/n), y = minY if i == 0 else maxY }`
 ///   - If you only use the first 3 and the last points, you will get a cubicBezier, which is 1. Overall very similar, 2. Has smoother curvature, since it's not as straight at the end 3. Should be more efficient to calculate (Don't know if that matters)
 ///
 /// Edit:
@@ -33,13 +33,23 @@
 /// - I can't really describe how this works, but based on the mental image I have in my head of how this changes as you increase the curvature, I think this is extremely close or even equivalent to interpolating between two integer-curved curves (like in the old implementation `BezierCappedAccelerationCurve_old_interpolating` or in `PolynomialCappedAccelerationCurves`)
 ///
 /// __Other thoughts__
-/// - (Not sure if we already wrote about this somewhere else. Maybe somewhere in PointerConfig or so?) Maybe the reason why downward sloping acceleration curves feel so good is that when you move slowly it's far easier to adjust the speed slightly than when you're moving fast. When you're moving fast, slight variations in speed will not be consciously noticable to you. When you make the curve slope downward you in some sense `normalize` the curve relative to the users ability to consciously adjust the speed.
+/// - (Not sure if we already wrote about this somewhere else. Maybe somewhere in PointerConfig or so?) Maybe the reason why downward sloping acceleration curves feel so good is that when you move (the input device) slowly it's far easier to adjust the speed slightly than when you're moving fast. When you're moving fast, slight variations in speed will not be consciously noticable to you. When you make the curve slope downward you in some sense `normalize` the curve relative to the users ability to consciously adjust the speed.
 ///     ... Not totally sure this makes sense. But either way downward sloping curves feel better and help accuracy for me.
 ///
 ///
 /// __Resources__
 /// - Desmos Project for PolynomialCapped curves: https://www.desmos.com/calculator/sdvkwmqnmk?lang=de
 /// - Desmos Project for n-point Bezier curves: https://www.desmos.com/calculator/4cqrr3f05o?lang=de
+///
+/// Update: [Oct 2026]
+///     Opus 5.5 findings:
+///     - Closed representation: `y = max − (max − min) · (1 − t)ⁿ⁻¹, with t = speed / range, from 0 to 1.`
+///     - rawAccel comparison:
+///         - With `n == 2` the curve is linear, (we knew that) with `n -> infinity` this curve becomes the 'natural' curve from rawAccel (aka `NaturalAccelerationCurve.swift`) (Natural curve never reaches y==yMax so you'd have to anchor at y==max*0.99 or something, not sure what we should do there, yet)
+///             - Apparrently, the generalization of this is the `q-exponential, a function from Tsallis statistics`, which might make it easier to have user-friendly dials for the curve, said Opus.
+///         - You can also fit the 'linear + gain' curve from rawAccel really closely to this
+///         - Opus says 'natural' and 'linear + gain' are the most popular in rawAccel, so that's good.
+///     - Source: https://claude.ai/share/40c4333a-3101-434e-8a0b-cb0437d50f4e (and the conversation after where it found the natural curve unification)
 
 import Foundation
 

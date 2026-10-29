@@ -7,6 +7,10 @@
 // --------------------------------------------------------------------------
 //
 
+/// @noGCDCleanup Add assertRunLoop to all the other/derived 'config' files.
+/// @noGCDCleanup Maybe add `readsAndWritesState()` checks to this file
+///         (Maybe also check if we made any stuff direct calls instead of deferred in this file, which would potentially introduce new reentrancy bugs)
+
 /// Notes:
 /// - [Aug 2025] MMF 3 doesn't support app-specific settings, so all the 'overrides' stuff doesn't apply currently.
 /// - We're using our custom coolKeyPath API all over this class, instead of Apple's key-value-coding API (aka KVC) (See valueForKeyPath:). The main reason we do this, is so that, when we set a value at a keypPath which doesn't exist, yet using the function `setConfig(NSString *keyPath, NSObject *value)` then the keyPath is created automatically, instead of just failing. This has the benefit, of being more robust and we don't need to make sure, that all keyPaths already exist in the defaultConfig. In all the other places where we use the coolKeyPath API in this class, we only do this to stay consistent (at the time of writing). I'm not sure, whether our coolKeyPath API is slower that the KVC API. We transitioned over to coolKeyPath API without testing speed.
@@ -35,22 +39,24 @@
 #import "HelperUtility.h"
 #import "MFMessagePort.h"
 #import "Locator.h"
+#import "SecureStorage.h"
 
 #if IS_HELPER
-#import "Mac_Mouse_Fix_Helper-Swift.h"
+    #import "Mac_Mouse_Fix_Helper-Swift.h"
+#elif IS_MAIN_APP
+    #import "Mac_Mouse_Fix-Swift.h"
 #endif
 
-#if IS_MAIN_APP
-#import "Mac_Mouse_Fix-Swift.h"
-#endif
-
-@implementation Config {
-    
+@implementation Config
+{
     NSString*_configFilePath; /// [Jun 2025] This is currently unused. We're using Locator.m instead.
     NSString *_bundleIDOfAppWhichCausesAppOverride;
 //    NSDictionary *_stringToEventFlagMask; /// Delete this
 }
-@synthesize config=_config, configWithAppOverridesApplied=_configWithAppOverridesApplied;
+@synthesize config=_config;
+#if IS_HELPER
+    @synthesize configWithAppOverridesApplied=_configWithAppOverridesApplied;
+#endif
 
 #pragma mark - Init & singleton instance
 
@@ -90,6 +96,8 @@ static Config *_instance;
 
 NSObject * _Nullable config(NSString *keyPath) {
     /// Convenience function for accessing config
+    assertRunLoop(configRunLoop()); 
+
     NSMutableDictionary *config = Config.shared.config;
     NSObject *result = [config objectForCoolKeyPath:keyPath];
     return result;
@@ -99,41 +107,42 @@ void setConfig(NSString *keyPath, NSObject *value) {
     /// Notes:
     /// - This doesn't write to file. Use commitConfig() for that
     /// - This create the keyPath if it doesn't exist in the config, yet
-    
-#if DEBUG
+    assertRunLoop(configRunLoop());
+
+    if (runningDebugMode())
     if ([Config.shared.config objectForCoolKeyPath:keyPath] == nil) {
         DDLogDebug("Setting value %@ to config at non-existent keyPath %@. The keypath will be created.", value, keyPath);
     }
-#endif
-    
+
     [Config.shared.config setObject:value forCoolKeyPath:keyPath];
 }
 void removeFromConfig(NSString *keyPath) {
+    assertRunLoop(configRunLoop());
+
     [Config.shared.config removeObjectForCoolKeyPath:keyPath];
 }
 
+#if IS_MAIN_APP
 static NSURL *defaultConfigURL(void) {
     /// `default_config` used to be known as `backup_config`
     ///     We used to get this only once on init, but that breaks after the user moves the app while it's open
     NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
     return [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
 }
-
+#endif
 
 void commitConfig(void) {
     /// Convenience function for notifying other modules of the changed config (and writing to file)
-    
-    /// Validate
-    assert(NSThread.isMainThread);
+    assertRunLoop(configRunLoop());
     
     /// Write to file
-    [Config.shared writeConfigToFile];
-    
+    writeConfigToFile();
+
     /// Notify other app (mainApp notifies helper, helper notifies mainApp
     [MFMessagePort sendMessage:@"configFileChanged" withPayload:nil waitForReply:NO];
     
     /// Update own state
-    [Config updateDerivedStates];
+    updateDerivedStates();
 }
 
 
@@ -144,40 +153,40 @@ void commitConfig(void) {
     ///     This method used to be called `handleConfigFileChange`
     ///     TODO: [Aug 2025] Consider:
     ///         Isn't it an error to call `[loadConfigFromFile]` without calling `[updateDerivedStates]` afterwards? - should we make loadConfigFromFile private?
+    assertRunLoop(configRunLoop());
+
     [self.shared loadConfigFromFile];
-    [self updateDerivedStates];
+    updateDerivedStates();
 }
 
-+ (void)updateDerivedStates {
-    
+static void updateDerivedStates(void) {
+
     /// Update states across the app that depend on the config.
     /// We should generally call this whenever the config changes.
-    
-#if IS_MAIN_APP
-    [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
 
-#endif
-    
-#if IS_HELPER
-    
-    /// Force update of internal state, (even the active app hastn't changed)
-    ///     (Not sure if we need to always do this or only after loading from file)
-    [self.shared loadOverridesForApp:@""];
-    
-    /// Notify other modules
-    [Remap reload];
-    [ScrollConfig reload];
-//    [Scroll decide];
-    [PointerConfig reload];
-    [GeneralConfig reload];
-    [MenuBarItem reload];
+    #if IS_MAIN_APP
+        [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
 
-#endif
+    #elif IS_HELPER
+        /// Force update of internal state, (even the active app hastn't changed)
+        ///     (Not sure if we need to always do this or only after loading from file)
+        loadOverridesForApp(@"");
+
+        /// Notify other modules
+        [Remap reload];
+        [ScrollConfig reload];
+        //[Scroll decide];
+        [PointerConfig reload];
+        [GeneralConfig reload];
+        [MenuBarItem reload];
+
+    #endif
     
 }
 
 #pragma mark - Overrides
 
+#if IS_HELPER
 - (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event {
     
     /// Unused in MMF 3
@@ -189,41 +198,34 @@ void commitConfig(void) {
     /// TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
     
     /// Validate
-    
-    assert(runningHelper());
-    
-#if IS_HELPER
-    
+    assertRunLoop(configRunLoop());
+
     /// Get bundleID
     NSRunningApplication *app = [HelperUtility appUnderMousePointerWithEvent:event];
     NSString *bundleID = app.bundleIdentifier;
-    
+
     /// Debug
     DDLogDebug("Loading overrides for app %@", bundleID);
-    
+
     /// Set internal state
     if (![_bundleIDOfAppWhichCausesAppOverride isEqual:bundleID]) {
-        [self loadOverridesForApp:bundleID];
+        loadOverridesForApp(bundleID);
         return YES;
     }
-#endif
     
     return NO;
 }
+#endif
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `self->_config` and writes the result into `_configWithAppOverridesApplied`.
-- (void)loadOverridesForApp:(NSString *)bundleID {
-    
-    /// Validate
-    assert(runningHelper());
-    
 #if IS_HELPER
-    
+static void loadOverridesForApp(NSString *bundleID) {
+
     /// Store app
-    _bundleIDOfAppWhichCausesAppOverride = bundleID;
-    
+    Config.shared->_bundleIDOfAppWhichCausesAppOverride = bundleID;
+
     /// Get overrides for app
-    NSDictionary *overrides = [self->_config objectForKey:kMFConfigKeyAppOverrides];
+    NSDictionary *overrides = [Config.shared->_config objectForKey:kMFConfigKeyAppOverrides];
     NSDictionary *overridesForThisApp;
     for (NSString *b in overrides.allKeys) {
         if ([bundleID isEqualToString:b]) {
@@ -231,16 +233,17 @@ void commitConfig(void) {
         }
     }
     if (overridesForThisApp) {
-        _configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to:self->_config] mutableCopy];
+        Config.shared->_configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to: Config.shared->_config] mutableCopy];
     } else {
-        _configWithAppOverridesApplied = self->_config;
+        Config.shared->_configWithAppOverridesApplied = Config.shared->_config;
     }
-#endif
 }
+#endif
 
 #pragma mark - Listen to filesystem changes
 /// This stuff is unused in MainApp (and can be removed entirely. Was just for testing.)
 
+#if IS_HELPER
 - (void)setupFSEventStreamCallback {
     
     /**
@@ -258,54 +261,57 @@ void commitConfig(void) {
      
      Edit: I have an idea for a fix! Simply disable the eventStream while the mainApp is open / while the messageport is connected! Maybe implement this as part of SwitchMaster
      */
-    
-    assert(runningHelper());
-    
-// #if IS_HELPER
-#if 0 /// Disable for now
-    
-    CFArrayRef pathsToWatch;
-    void *callbackInfo = NULL; /// Could put stream-specific data here.
-    if (@available(macOS 13.0, *)) { /// The old code causes a crash on Ventura (specifically trying to log the cfPath using DDLogInfo)
-        NSArray *pathsToWatchNS = @[_configFilePath];
-        pathsToWatch = (__bridge_retained CFArrayRef)pathsToWatchNS; /// `__bridge_retained` -> we need to release this manually
-    } else {
-        CFStringRef cfPath = (__bridge CFStringRef)_configFilePath.copy; /// Why are we copying this?
-        CFStringRef cfArray[1] = {cfPath};
-        pathsToWatch = CFArrayCreate(NULL, (const void **)cfArray, 1, NULL);
-    }
-    
-    
-    DDLogInfo("pathsToWatch : %@", (__bridge NSArray *)pathsToWatch);
-    
-    /// Create eventStream
-    /// Notes:
-    /// - Not sure if fileEvents flag is a good idea
-    /// - Flags ignoreSelf and markSelf seem redundant but this post (https://stackoverflow.com/a/37014613/10601702) says it's necessary. Still kind of unnecessary since Helper never writes to file I think.
-    /// - Latency is for optimization I think. Probably totally unnecessary here, but with noDefer it shouldn't make a difference.
-    /// - The flag kFSEventStreamCreateFlagUseExtendedData apparently makes a file "inode" available which is something like a low level id. Don't think that's useful for us though.
-    
-    CFAbsoluteTime latency = 300.0/1000.0;
-    FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagNoDefer | kFSEventStreamCreateFlagIgnoreSelf | kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagMarkSelf;
-    FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, flags);
-    
-    /// Start eventStream
-    FSEventStreamScheduleWithRunLoop(remapsFileEventStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
-    DDLogInfo("EventStreamStarted: %d", EventStreamStarted);
-    
-    /// Release stuff
-    ///     We might be leaking a bunch of things here in this class but it doesn't matter since it's only run once when the app starts up
-    CFRelease(pathsToWatch);
-    
-#endif
+
+    assertRunLoop(configRunLoop());
+    #if 0 /// Disable for now
+
+        CFRunLoopRef runLoop = configRunLoop();
+
+        CFArrayRef pathsToWatch;
+        void *callbackInfo = NULL; /// Could put stream-specific data here.
+        if (@available(macOS 13.0, *)) { /// The old code causes a crash on Ventura (specifically trying to log the cfPath using DDLogInfo)
+            NSArray *pathsToWatchNS = @[_configFilePath];
+            pathsToWatch = (__bridge_retained CFArrayRef)pathsToWatchNS; /// `__bridge_retained` -> we need to release this manually
+        } else {
+            CFStringRef cfPath = (__bridge CFStringRef)_configFilePath.copy; /// Why are we copying this?
+            CFStringRef cfArray[1] = {cfPath};
+            pathsToWatch = CFArrayCreate(NULL, (const void **)cfArray, 1, NULL);
+        }
+
+
+        DDLogInfo("pathsToWatch : %@", (__bridge NSArray *)pathsToWatch);
+
+        /// Create eventStream
+        /// Notes:
+        /// - Not sure if fileEvents flag is a good idea
+        /// - Flags ignoreSelf and markSelf seem redundant but this post (https://stackoverflow.com/a/37014613/10601702) says it's necessary. Still kind of unnecessary since Helper never writes to file I think.
+        /// - Latency is for optimization I think. Probably totally unnecessary here, but with noDefer it shouldn't make a difference.
+        /// - The flag kFSEventStreamCreateFlagUseExtendedData apparently makes a file "inode" available which is something like a low level id. Don't think that's useful for us though.
+
+        CFAbsoluteTime latency = 300.0/1000.0;
+        FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagNoDefer | kFSEventStreamCreateFlagIgnoreSelf | kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagMarkSelf;
+        FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, flags);
+
+        /// Start eventStream
+        FSEventStreamScheduleWithRunLoop(remapsFileEventStream, runLoop, kCFRunLoopDefaultMode);
+        BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
+        DDLogInfo("EventStreamStarted: %d", EventStreamStarted);
+
+        /// Release stuff
+        ///     We might be leaking a bunch of things here in this class but it doesn't matter since it's only run once when the app starts up
+        CFRelease(pathsToWatch);
+
+    #endif
 }
+#endif
 
 void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
     /// Disable for now (see setupFSEventStreamCallback for explanation)
     assert(false);
-    
+
+    assertRunLoop(configRunLoop());
+
     /// Gather info
     
     NSArray<NSString *> *paths = (__bridge NSArray *)((CFArrayRef)eventPaths);
@@ -329,14 +335,16 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
 
 #pragma mark - Read and write from file
 
-- (void)writeConfigToFile {
-    
+static void writeConfigToFile(void) {
+
+    Config *self = Config.shared;
+
     /**
      Writes the `self->_config` dictionary to the plist file at `_configURL`
      You probably want to use `commitConfig()` instead of this
      */
     
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         /// Try to catch crash bug
         ///     On [Feb 20 2025], running the new `3.0.4 Beta 1` I saw NSPropertyListSerialization crash (see stacktrace below)
         ///     My first idea is that this might be caused by our new MFPlistEncoder failing to produce a valid plist, but not sure.
@@ -375,8 +383,8 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     DDLogInfo("Wrote config to file.");
 }
 
-NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __autoreleasing _Nullable * _Nullable errPtr) {
-    
+static NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __autoreleasing _Nullable * _Nullable errPtr) {
+
     /// Local helper function for reading our `config.plist` file. [Aug 2025]
     ///
     /// Alternative implementations:
@@ -418,10 +426,13 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     /// [Aug 2025] Load data from plist file at `Locator.configURL` into `self->_config` class variable
     ///     This only really needs to be called when `Config` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
     ///         Update: [Aug 2025] Outdated comment – I think this was referring to the `Handle_FSEventStreamCallback` stuff which is disabled currently.
-    
+    /// [Sep 2026] Seems like this should be internal helper -> Look at removing callers and making this `static void`
+
+    assertRunLoop(configRunLoop());
+
     #if IS_MAIN_APP
-        [self _loadAndRepair];
-    #else
+        _loadAndRepair();
+    #elif IS_HELPER
         NSError *err = nil;
         NSMutableDictionary *config = (id)_readDictPlist(Locator.configURL, true, &err);
         if (!config || err) mfabort("Failed to read config file with error: %@. config: %@", err, config); /// [Aug 2025] Should we retry here before aborting?
@@ -436,9 +447,10 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
 
 #pragma mark - Repair
 
-- (void) _loadAndRepair {
-    
-    /// Internal helper for `-[loadConfigFromFile]`
+#if IS_MAIN_APP /// [Aug 2025] I think we don't run this on the helper because we think it's a good idea that only the mainApp mutates the config (?) ... Nope the helper manipulates the config in several places – See `commitConfig()` invocations.
+static void _loadAndRepair(void) {
+
+    Config *self = Config.shared;
 
     /// Old todos:
     ///     - Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
@@ -471,10 +483,6 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
         #define log(level, format, args...) \
             DDLog ## level ("_loadAndRepair: " format, ## args)
     }
-    
-    /// Asserts
-    assert(runningMainApp());       /// [Aug 2025] I think we don't run this on the helper because we think it's a good idea that only the mainApp mutates the config (?) ... Nope the helper manipulates the config in several places – See `commitConfig()` invocations.
-    assert(NSThread.isMainThread);  /// [Aug 2025] All the config stuff is not thread safe and should only ever run on one thread I think.
     
     /// Declare
     NSError *err = nil;
@@ -538,9 +546,16 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
                     
                     /// Move lastUseDate from config to SecureStorage.
                     NSObject *d = config(@"License.trial.lastUseDate");
-                    [SecureStorage set:@"License.trial.lastUseDate" value:d];
                     removeFromConfig(@"License.trial.lastUseDate");
-                    
+                    {
+                        NSMutableDictionary *dict = nil;
+                        SecureStorageReadError readErr = readSecureStorage(/*callerName*/@"Config._loadAndRepair", &dict);
+                        if (readErr != kSecureStorageReadError_UnexpectedError) { /// If there's a sporadic issue with the keychain, just drop the write, it's not critical. [Oct 2026]
+                            [dict setObject: d forCoolKeyPath: @"License.trial.lastUseDate"];
+                            (void)writeSecureStorage(/*callerName*/@"Config._loadAndRepair", dict, readErr);
+                        }
+                    }
+
                     currentVersion = 22;
                     
                 } else if (currentVersion == 22) {
@@ -571,9 +586,11 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
                     removeFromConfig(@"License.licenseReasonCache");
                     
                     currentVersion = 24;
-                    
-                } else {
-                    
+                }
+                /// [Oct 2026] added `License.licenseStateCacheHash_AgainstLicenseKey` and `License.licenseStateCacheHash_AgainstDeviceUID` and removed `License.licenseStateCacheHash`
+                ///     but it doesn't need migration here or a new configVersion
+                else {
+
                     log(Info, "No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
                     goto replace;
                 }
@@ -602,7 +619,9 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     #undef fail
     #undef log
 }
+#endif
 
+#if 0 /// Did some refactors and this is untested and unused at the moment.
 - (void) repairIncompleteAppOverrideForBundleID: (NSString *)bundleID                            /// Bundle ID of the app with the faulty override
                                relevantKeyPaths: (NSArray <NSString *> *)keyPathsToDefaultValues /// KeyPaths to the values of which at least one is missing
 {
@@ -610,8 +629,6 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     /// Repair incomplete App override
     ///     Do this by simply copying over the values from the default config
     ///     TODO: Check if this works
-    
-    assert(false); /// Did some refactors and this is untested and unused at the moment.
     
     DDLogInfo("Repairing incomplete appOverrides...");
     
@@ -625,6 +642,7 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     }
     commitConfig();
 }
+#endif
 
 //- (void)replaceCurrentConfigWithDefaultConfig {
 //    
@@ -646,7 +664,10 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
 //
 //}
 
+#if IS_MAIN_APP
 - (void)cleanConfig {
+    assertRunLoop(configRunLoop());
+
     NSMutableDictionary *appOverrides = self->_config[kMFConfigKeyAppOverrides];
     
     /// Note: We don't delete overrides for uninstalled apps because this might delete preinstalled overrides
@@ -671,6 +692,6 @@ static void removeLeaflessSubDicts(NSMutableDictionary *dict) {
         }
     }
 }
-
+#endif
 
 @end

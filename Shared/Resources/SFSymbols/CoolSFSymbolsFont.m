@@ -38,7 +38,7 @@
     
     /// Meant for debugging / validation. Maybe not fast. Don't use in production.
     
-    if (!runningPreRelease()) {
+    if (!runningDebugMode()) {
         DDLogWarn("symbolCharacterIsSupported called in a release build. I'm not sure how fast it is and it was just created for debugging/validation purposes.");
         return true;
     }

@@ -8,15 +8,12 @@
 //
 
 #import "LocalizationUtility.h"
+#import "SharedUtility.h" /// Just for `MFLocale()`
 
 @implementation LocalizationUtility
 
-+ (NSString *) currentLanguageCode {
-    return [NSLocale.currentLocale objectForKey: NSLocaleLanguageCode];
-}
-
 + (double)informationDensityOfCurrentLanguage {
-    return [self informationDensityOfLanguage: [self currentLanguageCode]];
+    return [self informationDensityOfLanguage: MFLanguageCode()];
 }
 
 + (double)informationDensityOfLanguage:(NSString *)languageCode {
@@ -60,6 +57,8 @@
         @"th": @1.2,   // Thai
         @"id": @0.9,   // Indonesian
         @"hi": @0.9,   // Hindi
+        @"bn": @1.2,   // Bangla
+        @"nb": @1.0,   // Norwegian Bokmål
     };
     
     NSNumber *resultNS = map[languageCode];

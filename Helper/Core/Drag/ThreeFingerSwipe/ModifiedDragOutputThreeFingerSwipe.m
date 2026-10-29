@@ -16,6 +16,7 @@
 #import "SymbolicHotKeys.h"
 #import "Config.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "CGSDisplays.h"
 
 @implementation ModifiedDragOutputThreeFingerSwipe
 
@@ -24,6 +25,7 @@
 static ModifiedDragState *_drag;
 
 static int16_t _nOfSpaces = 1;
+static NSSize _screenSize = {};
 
 /// On macOS 27 (Golden Gate), the WindowServer drops synthetic dockSwipe gesture events
 /// (`CGXSenderCanSynthesizeEvents()` compares the sender PID against the WindowServer's – not
@@ -95,18 +97,32 @@ static BOOL triggerVerticalSHK(BOOL draggedUp, CFTimeInterval now) {
 }
 
 + (void)handleBecameInUse {
-    /// Get number of spaces
-    ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
-    CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);
-    if (spaces != NULL) {
-        /// Full screen spaces appear twice for some reason so we need to filter duplicates
-        NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
-        _nOfSpaces = MAX((int16_t)1, (int16_t)uniqueSpaces.count);
-        CFRelease(spaces);
-    } else {
-        _nOfSpaces = 1;
+
+    NSScreen *screen = [NSScreen mainScreen];
+
+    /// Get `_screenSize`
+    ///     For use in `handleMouseInputWhileInUse`. Getting it here in case screen is detached mid-gesture, I guess? Didn't test [Sep 2026]
+    _screenSize = [screen frame].size;
+
+    /// Get `_nOfSpaces`
+    ///     For use in `handleMouseInputWhileInUse`. Getting it here for performance reasons. Not sure if significant.
+    {
+        /// Update [Sep 2026] Support multiple displays
+        ///     Haven't measured how fast this is. Probably fast. Alternative: Iterate each space (CGSCopySpaces) and ask CGS which display it belongs to.
+
+        NSArray *spacesInfo = CFBridgingRelease(CGSCopyManagedDisplaySpaces(CGSMainConnectionID()));
+        NSString *screenUUID = [screen mf_UUIDString];
+
+        /// Find the entry in spacesInfo info for `_screen`
+        NSDictionary *entry = nil;
+        for (NSDictionary *screenDict in spacesInfo)
+            if ([[screenDict objectForKey: @"Display Identifier"] isEqual: screenUUID])
+                { entry = screenDict; break; }
+
+        /// Count the spaces for `_screen`
+        _nOfSpaces = [[entry objectForKey: @"Spaces"] count];
     }
-    
+
     /// Reset state for the symbolic-hotkey fallback
     /// Note: `_lastVerticalSHK` / `_lastVerticalPostTime` are deliberately NOT reset – a follow-up drag
     /// should be able to close Mission Control, and the vertical cooldown guards mid-animation re-fires.
@@ -126,7 +142,7 @@ static BOOL triggerVerticalSHK(BOOL draggedUp, CFTimeInterval now) {
     }
 }
 
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY {
     
     if (useSymbolicHotKeyFallback()) {
         /// Deltas are already inverted for `naturalDirection` by ModifiedDrag before they reach this plugin.
@@ -162,20 +178,19 @@ static BOOL triggerVerticalSHK(BOOL draggedUp, CFTimeInterval now) {
     }
     
     /**
-    Horizontal dockSwipe scaling
-    This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly
-    I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
-    TODO: Test this on a vertical screen
+     Horizontal dockSwipe scaling
+     This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly
+     I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
+     TODO: Test this on a vertical screen
      */
-    CGSize screenSize = NSScreen.mainScreen.frame.size;
-    double originOffsetForOneSpace = _nOfSpaces == 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
+    double originOffsetForOneSpace = _nOfSpaces <= 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
     double spaceSeparatorWidth = 63;
-    double threeFingerScaleH = originOffsetForOneSpace / (screenSize.width + spaceSeparatorWidth);
-    
+    double threeFingerScaleH = originOffsetForOneSpace / (_screenSize.width + spaceSeparatorWidth);
+
     /// Vertical dockSwipe scaling
     ///     Not sure if it makes sense to scale this with screen height
-    double threeFingerScaleV = 1.0 / screenSize.height;
-    
+    double threeFingerScaleV = 1.0 / _screenSize.height;
+
     /// Get phase
     
     IOHIDEventPhaseBits eventPhase = _drag->firstCallback ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
@@ -191,8 +206,8 @@ static BOOL triggerVerticalSHK(BOOL draggedUp, CFTimeInterval now) {
     }
 }
 
-+ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
-    
++ (void) handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
+
     if (useSymbolicHotKeyFallback()) {
         
         CFTimeInterval now = CACurrentMediaTime();
@@ -225,13 +240,9 @@ static BOOL triggerVerticalSHK(BOOL draggedUp, CFTimeInterval now) {
     MFDockSwipeType type;
     IOHIDEventPhaseBits phase;
     
-    if (_drag->usageAxis == kMFAxisHorizontal) {
-        type = kMFDockSwipeTypeHorizontal;
-    } else if (_drag->usageAxis == kMFAxisVertical) {
-        type = kMFDockSwipeTypeVertical;
-    } else {
-        assert(false);
-    }
+    if      (_drag->usageAxis == kMFAxisHorizontal) type = kMFDockSwipeTypeHorizontal;
+    else if (_drag->usageAxis == kMFAxisVertical)   type = kMFDockSwipeTypeVertical;
+    else                                            assert(false);
     
     phase = cancel ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
     

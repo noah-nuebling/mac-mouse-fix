@@ -251,15 +251,15 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     
     /// Validate
     /// - no extra/misspelled criteria
-    #if DEBUG
+    if (runningDebugMode()) {
         NSMutableDictionary *criteriaMutable = criteria.mutableCopy;
         criteriaMutable[MFClassSearchCriterionProtocol] = nil;
         criteriaMutable[MFClassSearchCriterionSuperclass] = nil;
         criteriaMutable[MFClassSearchCriterionClassNamePrefix] = nil;
         criteriaMutable[MFClassSearchCriterionFrameworkName] = nil;
         assert(criteriaMutable.count == 0);
-    #endif
-    
+    }
+
     /// Preprocess namePrefix
     ///     -> Convert it to c string
     const char *namePrefix = NULL;

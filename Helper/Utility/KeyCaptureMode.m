@@ -12,6 +12,7 @@
 #import "ModificationUtility.h"
 #import "MFMessagePort.h"
 #import "Logging.h"
+#import "Threads.h"
 
 @implementation KeyCaptureMode
 
@@ -23,21 +24,32 @@
 CFMachPortRef _keyCaptureEventTap;
 
 + (void)enable {
-    
+    assertRunLoop(IOThread.runLoop);
+
     DDLogInfo("Enabling keyCaptureMode");
     
-    if (_keyCaptureEventTap == nil) {
-        _keyCaptureEventTap = [ModificationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
+    if (!_keyCaptureEventTap) {
+        _keyCaptureEventTap = [
+            ModificationUtility
+            createEventTapWithLocation: kCGHIDEventTap
+            mask: CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined)
+            option: kCGEventTapOptionDefault
+            placement: kCGHeadInsertEventTap
+            callback: keyCaptureModeCallback
+            runLoop: IOThread.runLoop
+        ];
     }
     CGEventTapEnable(_keyCaptureEventTap, true);
 }
 
 + (void)disable {
+    assertRunLoop(IOThread.runLoop);
     CGEventTapEnable(_keyCaptureEventTap, false);
 }
 
-CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
+CGEventRef _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    assertRunLoop(IOThread.runLoop);
+
     CGEventFlags flags  = CGEventGetFlags(event);
     
     NSDictionary *payload;
@@ -53,7 +65,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
                 @"flags": @(flags),
             };
             
-            [MFMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload waitForReply:NO];
+            [MFMessagePort sendMessage: @"keyCaptureModeFeedback" withPayload: payload waitForReply: NO];
             [KeyCaptureMode disable];
         }
         
@@ -72,7 +84,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
                 @"flags": @(flags),
             };
             
-            [MFMessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload waitForReply:NO];
+            [MFMessagePort sendMessage: @"keyCaptureModeFeedbackWithSystemEvent" withPayload: payload waitForReply: NO];
             [KeyCaptureMode disable];
         }
         
@@ -81,16 +93,16 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
     
     return nil;
 }
-bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
+static bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
     return true; /// keyCode 0 is 'A'
 }
 
-bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSystemDefinedEventType type) {
-    
-    BOOL isSub8 = (e.subtype == 8); /// 8 -> NSEventSubtypeScreenChanged
+static bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSystemDefinedEventType type) {
+
+    BOOL isSub8 = (e.subtype == 8); /// 8 -> Maybe `NX_SUBTYPE_AUX_CONTROL_BUTTONS` says Opus 5.5
     BOOL isKeyDown = (e.data1 & kMFSystemDefinedEventPressedMask) == 0;
     BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
-    BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
+    BOOL typeIsBlackListed = type == NX_KEYTYPE_CAPS_LOCK;
     
     BOOL isValid = isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
     

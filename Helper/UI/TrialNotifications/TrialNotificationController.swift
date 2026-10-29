@@ -19,36 +19,36 @@ class TrialNotificationController: NSWindowController {
     
     /// Outlets & actions
     
-    @IBOutlet var body: NSTextView!
-    @IBOutlet weak var bodyScrollView: NSScrollView!
-    
-    @IBOutlet weak var applePayBadge: NSImageView!
-    @IBOutlet weak var payButton: PayButton!
-    
-    @IBOutlet weak var trialSection: TrialSection!
-    
-    @IBAction func closeButtonClick(_ sender: Any) {
-        
+    @IBOutlet private var body: NSTextView!
+    @IBOutlet private weak var bodyScrollView: NSScrollView!
+
+    @IBOutlet private weak var applePayBadge: NSImageView!
+    @IBOutlet private weak var payButton: PayButton!
+
+    @IBOutlet private weak var trialSection: TrialSection!
+
+    @IBAction private func closeButtonClick(_ sender: Any) {
+
         /// Close notification
         self.close()
         
         /// Wait for close animation to finish
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                
+        assertRunLoop(CFRunLoopGetMain())
+        Timer.mf_scheduledTimer(withTimeInterval: 0.5, mode: .common) { timer in
             /// Disable helper
             HelperServices.disableHelperFromHelper()
-        })
+        }
     }
     
     /// Vars
-    var trackingArea: NSTrackingArea? = nil
-    var darkModeObservation: NSKeyValueObservation? = nil
-    var trialSectionManager: TrialSectionManager! = nil
-    var spaceSwitchObservation: Any? = nil
-    
+    private var trackingArea: NSTrackingArea? = nil
+    private var darkModeObservation: NSKeyValueObservation? = nil
+    private var trialSectionManager: TrialSectionManager! = nil
+    private var spaceSwitchObservation: Any? = nil
+
     /// Init
-    override init(window: NSWindow?) {
-        
+    private override init(window: NSWindow?) {
+
         if window == nil {
             super.init(window: nil)
             let nib = NSNib(nibNamed: "TrialNotificationController", bundle: nil)
@@ -71,7 +71,7 @@ class TrialNotificationController: NSWindowController {
     }
     
     /// Lifecycle
-    override func windowDidLoad() {
+    /*private*/ override func windowDidLoad() {
         super.windowDidLoad()
 
         /// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
@@ -82,7 +82,7 @@ class TrialNotificationController: NSWindowController {
         }
     }
     
-    deinit {
+    /*private*/ deinit {
         if let obs = self.spaceSwitchObservation {
             NSWorkspace.shared.notificationCenter.removeObserver(obs)
         }
@@ -90,14 +90,11 @@ class TrialNotificationController: NSWindowController {
     
     /// Interface
     
-    var firstAppearance = true
-    
+    private var firstAppearance = true
+
     @objc func open(licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState, triggeredByUser: Bool) {
-        
-        /// Validate
-        
-        assert(Thread.isMainThread)
-        
+        assertRunLoop(CFRunLoopGetMain())
+
         /// Unwrap window
         
         guard let window = self.window else { return }
@@ -164,8 +161,8 @@ class TrialNotificationController: NSWindowController {
             bodyHeight.isActive = true
             
             /// TESTING: Set contentView width
-//            window.contentView?.setFrameSize(NSSize(width: 1000, height: 600))
-            
+            //window.contentView?.setFrameSize(NSSize(width: 1000, height: 600))
+
             /// Create effectView
             ///     HACK: Using contentView.frame instead of window.frame here. Not sure why works.
             ///     Material .popover matches real notifications and looks great, but in darkmode it makes our links unreadable over a bright background. Calendar.app also uses the .popover material and it displays links. It fixes this issue by using a much brighter link color. But we're just using a darker, less translucent material (.underWindowBackground) as and easy fix.
@@ -269,13 +266,12 @@ class TrialNotificationController: NSWindowController {
             //            window.contentView = nil
             //            effect.addSubview(ogContent)
             //            window.contentView = effect
-//
-//            /// Style window
-//            window.titlebarAppearsTransparent = true
-//            window.titleVisibility = .hidden
-//            window.isOpaque = false
-//            window.backgroundColor = .clear
-            
+            /// Style window
+            //window.titlebarAppearsTransparent = true
+            //window.titleVisibility = .hidden
+            //window.isOpaque = false
+            //window.backgroundColor = .clear
+
             
         }
         firstAppearance = false
@@ -316,8 +312,9 @@ class TrialNotificationController: NSWindowController {
         setFrameWithCoolAnimation(animStartFrame, newFrame, window)
     }
     
-    @objc override func close() {
-        
+    /*private*/ override func close() {
+        assertRunLoop(CFRunLoopGetMain())
+
         /// Unwrap window and screen
         guard
             let window = self.window,
@@ -330,7 +327,7 @@ class TrialNotificationController: NSWindowController {
         
         /// Animate
         setFrameWithCoolAnimation(start, end, window, onComplete: {
-            DispatchQueue.main.async {
+            mfrun(CFRunLoopGetMain()) {
                 super.close()
             }
         })
@@ -338,36 +335,33 @@ class TrialNotificationController: NSWindowController {
     
     /// Swap trialSection -> activate license on hover
 
-    
-    override func mouseEntered(with event: NSEvent) {
-        
-        DispatchQueue.main.async {
+    /*private*/ override func mouseEntered(with event: NSEvent) {
+
+        mfrun(CFRunLoopGetMain()) {
             self.trialSectionManager.showAlternate(animate: true, hAnchor: .leading)
         }
     }
 
-    override func mouseExited(with event: NSEvent) {
-            
-        DispatchQueue.main.async {
+    /*private*/ override func mouseExited(with event: NSEvent) {
+
+        mfrun(CFRunLoopGetMain()) {
             self.trialSectionManager.showInitial(animate: true, hAnchor: .leading)
         }
     }
     
     /// Helper stuff
-    var animator: DynamicSystemAnimator? = nil
-    fileprivate func setFrameWithCoolAnimation(_ animStartFrame: NSRect, _ newFrame: NSRect, _ window: NSWindow, onComplete: (() -> ())? = nil) {
-        
+    private var animator: DynamicSystemAnimator? = nil
+    private func setFrameWithCoolAnimation(_ animStartFrame: NSRect, _ newFrame: NSRect, _ window: NSWindow, onComplete: (() -> ())? = nil) {
+
         /// Animate window in
         ///     Note: We're doing the same thing in ResizingTabWindow. -> Think about abstracting this away
         
         let animation = CASpringAnimation(speed: 3.5, damping: 1.0)
-        animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.1, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering)
+        animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.1, phaseShift: kVBLPhase_DefaultForAppKitUpdates, runLoop: CFRunLoopGetMain(), name: "TrialNotification")
         animator!.start(distance: 1.0, callback: { value in
             var f = SharedUtilitySwift.interpolateRects(value, animStartFrame, newFrame)
             f = NSIntegralRectWithOptions(f, .alignAllEdgesNearest)
-            DispatchQueue.main.sync {
-                window.setValue(f, forKey: "frame")
-            }
+            window.setValue(f, forKey: "frame")
         }, onComplete: {
             onComplete?()
         })

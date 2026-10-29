@@ -14,12 +14,27 @@
 #import "VectorUtility.h"
 #import "IOHIDEventTypes.h"
 #import "DisableSwiftBridging.h"
+//#import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "DisplayLink.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Forward declaration
 ///     So that typedef works
 @protocol ModifiedDragOutputPlugin;
+
+/// Coalescable event declaration
+@interface CoalescableEvent : NSObject @end
+    @interface CoalescableEvent_Delta : CoalescableEvent
+        @property (nonatomic) double deltaX;
+        @property (nonatomic) double deltaY;
+        @property (nonatomic) CGPoint pointerLocation;
+    @end
+
+    @interface CoalescableEvent_Deactivation : CoalescableEvent
+        @property (nonatomic) bool cancelled;
+    @end
 
 /// Typedefs
 
@@ -35,16 +50,16 @@ typedef struct {
     int64_t usageThreshold;
     
     NSDictionary *effectDict;
-//    NSDictionary *initialModifiers;
-    
+    //NSDictionary *initialModifiers;
+
     bool naturalDirection; /// Content follows mouse movement
     
     MFStringConstant type;
     id<ModifiedDragOutputPlugin> outputPlugin;
     
     MFModifiedInputActivationState activationState;
-//    Device *modifiedDevice;
-    
+    //Device *modifiedDevice;
+
     CFTimeInterval initTime;
     bool isSuspended;
     
@@ -53,48 +68,36 @@ typedef struct {
     CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
     bool firstCallback;
-    
-    dispatch_queue_t queue;
-    
-} ModifiedDragState;
 
+    CGDirectDisplayID displayID;
+
+    bool coalesceEvents;
+    NSMutableArray<CoalescableEvent *> *pendingCoalescableEvents;
+    uint64_t lastVBLTimeThatProcessedCoalescableEvents;
+
+} ModifiedDragState;
 
 /// Plugin Declaration
 
 @protocol ModifiedDragOutputPlugin <NSObject>
-
-+ (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
-+ (void)handleBecameInUse;
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event;
-+ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
-+ (void)suspend; /// See OutputCoordinator
-+ (void)unsuspend;
-
+    + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
+    + (void)handleBecameInUse;
+    + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY;
+    + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
+    //+ (void)suspend; /// See OutputCoordinator
+    //+ (void)unsuspend;
 @end
 
 /// Modified Drag Declaration
 
 @interface ModifiedDrag : NSObject
 
-+ (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback;
-
 + (void)load_Manual;
-
-//+ (NSDictionary *)initialModifiers;
-//+ (CGEventTapProxy)tapProxy;
 + (void)initializeDragWithDict:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
-
-//+ (void)modifiedScrollHasBeenUsed;
-
-//+ (void (^ _Nullable)(void))suspend;
-
-+ (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
 
-//+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
++ (MFModifiedInputActivationState) debug_activationState;
 
-
-CGPoint getRoundedPointerLocation(void); /// Making this public for testing. Remove.
 @end
 
 NS_ASSUME_NONNULL_END

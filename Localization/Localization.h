@@ -13,5 +13,5 @@
 
 #import <Foundation/Foundation.h>
 
-#define MFLocalizedString(key, comment) _MFLocalizedString((key))
-NSString *_MFLocalizedString(NSString *key);
+#define MFLocalizedString(key, comment) _MFLocalizedString((key), /*fallBackToEmptyString*/false)
+NSString *_MFLocalizedString(NSString *key, bool fallBackToEmptyString);

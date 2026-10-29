@@ -28,9 +28,7 @@
 static ModifiedDragState *_drag;
 
 static TouchAnimator *_smoothingAnimator;
-//static DynamicSystemAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
-static dispatch_group_t _momentumScrollWaitGroup;
 
 #pragma mark - Init
 
@@ -38,19 +36,22 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Setup smoothingAnimator
     ///  Notes:
-    /// - When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
-    ///     - Edit: Using the `_smoothingAnimator` forces us to use some very very error prone parallel code. I should seriously consider if this is the best approach.
+    /// - When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their
+    ///     custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
+    ///     - Edit: Using the `_smoothingAnimator` forces complicated `continuation` code.
     ///         Maybe you could just introduce a delay between the last two events? I feel like the lack of that delay causes most of the erratic behaviour.
+    ///     @afterNoGCDTodo [Oct 2026] In Safari (heavy load), I observe much more erratic momentum speeds after 'No more dispatch queues' refactor! Possibly `CommonEventTap` will fix this.
     ///
-    /// - Using a TouchAnimator here might not be the best choice. We made the TouchAnimator primarily for scrollwheel input. But then we started using it here too. In both situations we needed pretty different functionality so now it's this weird swiss army knife hybrid. For example it supports Vectors which we don't need for scroll wheel input and it supports generating touchPhases which we don't need for click and drag. The reason we did this is we had so much trouble getting the TouchAnimator to be free of multithreading bugs so we thought there was less potential for error if we only implement that stuff once. But we might get some performance improvements and simpler code if we make a separate animator for the dragSmoothing.
-    
-    _smoothingAnimator = [[TouchAnimator alloc] init];
-//    _smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
-    
-    /// Setup smoothingGroup
-    ///     It allows us to wait until the _smoothingAnimator is done.
-    
-    _momentumScrollWaitGroup = dispatch_group_create();
+    /// - Using a TouchAnimator here might not be the best choice. We made the TouchAnimator primarily for scrollwheel input. But then we started using it here too.
+    ///     In both situations we needed pretty different functionality so now it's this weird swiss army knife hybrid. For example it supports Vectors which we don't
+    ///     need for scroll wheel input and it supports generating touchPhases which we don't need for click and drag. The reason we did this is we had so much trouble
+    ///     getting the TouchAnimator to be free of multithreading bugs so we thought there was less potential for error if we only implement that stuff once.
+    ///     But we might get some performance improvements and simpler code if we make a separate animator for the dragSmoothing.
+    ///         Update: [Oct 2026] 'No more dispatch queues' refactor removed the multithreading! But it seems to work fine.
+    ///
+
+    _smoothingAnimator = [[TouchAnimator alloc] initWithPhaseShift: kVBLPhase_DefaultForEventSending runLoop: IOThread.runLoop name: @"TwoFingerSwipeSmoothing"];
+    //_smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
     
     /// Make cursor settable
     [ModificationUtility makeCursorSettable];
@@ -62,13 +63,16 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Store drag state
     _drag = dragStateRef;
-    
-    /// Stop momentum scroll
-    ///     Notes:
-    ///     - I think we should remove the initializeWithDragState: method from the protocol entirely (Update: Not totally sure why I thought this) All of the scrollStop interactions between I still have to think about.
-    ///     - Initially, here, we just called [GestureScrollSimulator stopMomentumScroll], then later we replaced it with [Scroll resetState], which stops both the momentumScroll animator and the scrollwheel animator.
-    ///     - On the trackpad driver, scrolling seems to stop whenever any clicks or gestures come in. Maybe we should do a similar type of top-down management of when scrolling is stopped, instead of doing it here. Feels sorta hacky to do it here.
 
+    /// Cancel the smoothing animator
+    ///     TODO-ish?: [Oct 2026] There's a race where a `threeFingerSwipe` could start trying to freeze the pointer before the smoothingAnimator finishes (Tried but could never trigger it, window maybe too small or I did it wrong.) but still ...
+    ///         -> Freezing should probably be managed by ModifiedDrag.m to an extent to allow such coordinations. [Sep 2026]
+    [_smoothingAnimator cancel]; /// Sends `kMFAnimationCallbackPhaseCanceled` or `kMFAnimationCallbackPhaseStoppedBeforeStart` to our callback, guaranteeing that the continuation for the last gesture (the pointer-unfreeze) runs [Sep 2026]
+
+    /// Stop scrolling
+    ///     - This calls `[GestureScrollSimulator stopMomentumScroll]` - triggering the `continuation` for the last gesture immediately. [Sep 2026]
+    ///     - Forgot why exactly we're stopping *all* scrolling here. I think it's what I ended up expecting as user, so good UX? [Sep 2026]
+    ///         - Older note: On the trackpad driver, scrolling seems to stop whenever any clicks or gestures come in. Maybe we should do a similar type of top-down management of when scrolling is stopped, instead of doing it here.
     [Scroll resetState];
 }
 
@@ -86,13 +90,13 @@ static dispatch_group_t _momentumScrollWaitGroup;
     [_smoothingAnimator linkToMainScreen];
 }
 
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY {
     
     /**
      scrollSwipe scaling
-     A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
-     Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
-     So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow.
+        A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
+        Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
+        So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow.
      */
     double twoFingerScale = 1.0;
     
@@ -104,53 +108,61 @@ static dispatch_group_t _momentumScrollWaitGroup;
 
     /// Values that the block should copy instead of reference
     IOHIDEventPhaseBits firstCallback = _drag->firstCallback;
-    
-    /// Start cool dynamic system animator
-    
-//    if (firstCallback) {
-//        eventPhase = kIOHIDEventPhaseBegan;
-//    }
-//    [_smoothingAnimator animateWithDistance:(Vector){ .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale} callback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint) {
-//
-//        /// Debug
-//
-//
-//        if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
-//
-//             if (_smoothingAnimatorShouldStartMomentumScroll) {
-//                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
-//             }
-//
-//            _smoothingAnimatorShouldStartMomentumScroll = false;
-//
-//            return;
-//        }
-//
-//        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES];
-//
-//        eventPhase = kIOHIDEventPhaseChanged;
-//    }];
-    
-    /// Start animator
-    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, Vector currentSpeed) {
 
-        NSMutableDictionary *p = [NSMutableDictionary dictionary];
-        
+    /// Start animator
+
+    #if 0 /// Old code using dynamic system animator
+
+    if (firstCallback) {
+        eventPhase = kIOHIDEventPhaseBegan;
+    }
+    [_smoothingAnimator animateWithDistance:(Vector){ .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale} callback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint) {
+
+        /// Debug
+
+
+        if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
+
+             if (_smoothingAnimatorShouldStartMomentumScroll) {
+                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
+             }
+
+            _smoothingAnimatorShouldStartMomentumScroll = false;
+
+            return;
+        }
+
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES];
+
+        eventPhase = kIOHIDEventPhaseChanged;
+    }];
+
+    #else /// Use TouchAnimator
+
+    /// Get animator params
+    Vector combinedVec = {};
+    Curve *curve = {};
+    double duration = -1;
+    int durationInFrames = -1;
+    bool doStart = true;
+    {
+        assertRunLoop(_smoothingAnimator.displayLink.runLoop);
+
         /// Get delta
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
-        Vector combinedVec = addedVectors(currentVec, valueLeft);
+        combinedVec = addedVectors(currentVec, _smoothingAnimator.animationValueLeft);
 
         /// Get Phase
         if (firstCallback) eventPhase = kIOHIDEventPhaseBegan;
         
         /// Debug
-
-        static double lastTs = 0;
-        double ts = CACurrentMediaTime();
-        double tsDiff = ts - lastTs;
-        lastTs = ts;
-
-        DDLogDebug("twoFinger SmoothingAnimator start - time since last: %f", tsDiff * 1000);
+        if (runningDebugMode()) {
+            static double lastTs = 0;
+            double ts = CACurrentMediaTime();
+            double tsDiff = ts - lastTs;
+            lastTs = ts;
+            DDLogDebug("twoFinger SmoothingAnimator start - time since last: %f", tsDiff * 1000);
+        }
 
         /// Get return values
         ///
@@ -162,154 +174,132 @@ static dispatch_group_t _momentumScrollWaitGroup;
         ///     - For 3 frameTimes we get almost no erratic behaviour.
         ///   - I'm on a 60 hz screen and I don't have a 120 hz screen to test. To make sure we also prevent erratic behaviour on an 120 hz screen, we are setting the duration to 3.0/60.0 seconds instead of 3 frames. 3.0/60.0 also doesn't seem to cause erratic behaviour when setting my monitor to 30hz.
         ///     - TODO: Set duration to 3 frames instead of 3.0/60.0 seconds if that doesn't lead to erratic behaviour on 120 hz screens.
-        
+        ///         @afterNoGCDTodo
+
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn("twoFinger Not starting baseAnimator since combinedMagnitude is 0.0");
-            p[@"doStart"] = @NO;
+            doStart = false;
         } else {
-            p[@"vector"] = nsValueFromVector(combinedVec);
-            p[@"curve"] = ScrollConfig.linearCurve;
-            p[@"duration"] = @(3.0/60.0);
-//            p[@"durationInFrames"] = @3;
+            curve = ScrollConfig.linearCurve;
+            duration = 3.0/60.0;
+            //durationInFrames = 3;
         }
 
         /// Debug
+        if (runningDebugMode()) {
+            static Vector scrollDeltaSum = { .x = 0, .y = 0};
+            scrollDeltaSum.x += fabs(currentVec.x);
+            scrollDeltaSum.y += fabs(currentVec.y);
+            DDLogDebug("twoFinger Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
+            DDLogDebug("twoFinger Value left pre-animator: (%f, %f)", _smoothingAnimator.animationValueLeft.x, _smoothingAnimator.animationValueLeft.y);
+        }
+    }
 
-        static Vector scrollDeltaSum = { .x = 0, .y = 0};
-        scrollDeltaSum.x += fabs(currentVec.x);
-        scrollDeltaSum.y += fabs(currentVec.y);
-        DDLogDebug("twoFinger Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
-        DDLogDebug("twoFinger Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
+    /// Start the animator
+    if (doStart)
+    [_smoothingAnimator
+        startWithDuration: duration
+        durationInFrames: durationInFrames
+        vector: combinedVec
+        curve: curve
+        integerCallback: ^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint subCurve)
+    {
+        if (runningDebugMode()) {
+            //static double scrollDeltaSummm = 0;
+            //scrollDeltaSummm += fabs(valueDeltaD);
+            //DDLogDebug("Delta sum in-animator: %f", scrollDeltaSummm);
+            DDLogDebug(" twoFinger smoothingAnimator callback - delta: (%f, %f), phase: %d, shouldStartMomentumScroll: %d", deltaVec.x, deltaVec.y, animatorPhase, _smoothingAnimatorShouldStartMomentumScroll);
+        }
 
-        /// Return
-
-        return p;
-
-    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint subCurve) {
-
-        /// Debug
-
-//        static double scrollDeltaSummm = 0;
-//        scrollDeltaSummm += fabs(valueDeltaD);
-//        DDLogDebug("Delta sum in-animator: %f", scrollDeltaSummm);
-
-        DDLogDebug(" twoFinger smoothingAnimator callback - delta: (%f, %f), phase: %d, shouldStartMomentumScroll: %d", deltaVec.x, deltaVec.y, animatorPhase, _smoothingAnimatorShouldStartMomentumScroll);
-        
-        if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
-
+        if (animatorPhase == kMFAnimationCallbackPhaseEnd || animatorPhase == kMFAnimationCallbackPhaseCanceled || animatorPhase == kMFAnimationCallbackPhaseStoppedBeforeStart) {
              if (_smoothingAnimatorShouldStartMomentumScroll) {
-                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
+                 [GestureScrollSimulator postGestureScrollEventWithDeltaX: 0 deltaY: 0 phase: kIOHIDEventPhaseEnded autoMomentumScroll: YES invertedFromDevice: _drag->naturalDirection];
              }
-
             _smoothingAnimatorShouldStartMomentumScroll = false;
-
-            return;
+        } else {
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX: deltaVec.x deltaY: deltaVec.y phase: eventPhase autoMomentumScroll: YES invertedFromDevice: _drag->naturalDirection];
+            eventPhase = kIOHIDEventPhaseChanged;
         }
-
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
-
-        eventPhase = kIOHIDEventPhaseChanged;
 
     }];
+    #endif
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
     
     /// Handle cancelation
-    
     if (cancelation) {
-        if (_smoothingAnimator.isRunning) {
+        mfassert(false); /// [Sep 2026] Dead code - should remove the `cancelation` arg since it is never used. (Credits to Opus 5.5 for finding this)
+        if (_smoothingAnimator.isRunning) /// [Sep 2026] This seems a bit stupid but harmless (Shouldn't -cancel be a no-op if it's not running?)
             [_smoothingAnimator cancel];
-        }
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
-        [GestureScrollSimulator suspendMomentumScroll];
-        
+
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX: 0 deltaY: 0 phase: kIOHIDEventPhaseEnded autoMomentumScroll: YES invertedFromDevice: _drag->naturalDirection];
+        [GestureScrollSimulator stopMomentumScroll];
+
         [PointerFreeze unfreeze];
 
         return;
     }
-    
-    /// Handle non-cancelation
-    
-    /// Setup waiting for momentumScroll
-    
-    DDLogDebug("twoFinger Entering _momentumScrollWaitGroup");
-    dispatch_group_enter(_momentumScrollWaitGroup);
-    
-    [GestureScrollSimulator afterStartingMomentumScroll:^{
-        
-        DDLogDebug("twoFinger Leaving _momentumScrollWaitGroup");
-        dispatch_group_leave(_momentumScrollWaitGroup);
-        
-        /// Delete momentumScroll callback
-        ///     App will crash if `dispatch_group_leave()` is called again!
-        [GestureScrollSimulator afterStartingMomentumScroll:NULL];
-    }];
-    
-    /// Start momentumScroll
-    
-    if (_smoothingAnimator.isRunning) { /// Let `_smoothingAnimator` start momentumScroll
-        _smoothingAnimatorShouldStartMomentumScroll = YES;
-        DDLogDebug("twoFinger Set _smoothingAnimatorShouldStartMomentumScroll = YES");
-    } else { /// Start momentumScroll directly
-        DDLogDebug("twoFinger Starting momentumScroll directly");
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
+    else {
+
+        /// Handle non-cancelation
+
+
+        /// Crash if continuation (below) times out [Oct 2026]
+        ///     We added this before 'No more dispatch queues' refactor when this was prone to deadlocks. Now I don't think this can permanently freeze anymore?
+        ///     But still good to have a failsafe against freezing the user's pointer (really bad). [Oct 2026]
+        NSTimer *continuationTimeout = [NSTimer timerWithTimeInterval: /** Crash after 2 seconds */2.0 repeats: NO block:^(NSTimer * _Nonnull timer) {
+            if (!runningDebugMode()) /// Make failures more noticable in debug mode I guess [Oct 2026]
+                [PointerFreeze unfreeze]; /// If we don't do this, I guess the pointer could stay hidden after crash? Not sure. Don't remember ever noticing this making a difference in the last years [Oct 2026]
+            DDLogError("twoFinger continuation timed out. Aborting");
+            abort();
+        }];
+
+        /// Setup continuation of this method (unfreezing the pointer) after momentumScroll starts
+        ///     Explanation: [Oct 2026] In case the user moved the puppetCursor (See `PointerFreeze.m`) outside the scrolled window/view,
+        ///         we have to send the `kIOHIDEventScrollMomentumStart` event at the `_drag->usageOrigin` *before*
+        ///         warping the real cursor to the puppet cursor (`[PointerFreeze unfreeze]`) - that is necessary for the momentum scroll to apply to window/view the user was scrolling.
+        ///             [Oct 2026] I thought we explained this somewhere else already but I don't know where. Maybe deleted it at start of 'No more dispatch queues' refactor? Should consolidate or cross-reference.
+        ///         It makes the code a lot more complicated but is essential to nice UX.
+        ///         Why so complicated?: Maybe there's a less complicated way. Feel like the architecture of GestureScrollSimulator having its own internal animator might stupid and causing this complication [Oct 2026]
+        void (^continuation)(void) = ^{
+            DDLogDebug("twoFinger continuing deactivation after momentumScroll start.");
+            [PointerFreeze unfreeze];
+            [GestureScrollSimulator afterStartingMomentumScroll: NULL];
+            [continuationTimeout invalidate];
+        };
+        [GestureScrollSimulator afterStartingMomentumScroll: continuation];
+
+        /// Let `_smoothingAnimator` start momentumScroll
+        if (_smoothingAnimator.isRunning) { DDLogDebug("twoFinger Setting _smoothingAnimatorShouldStartMomentumScroll = YES");
+                                            _smoothingAnimatorShouldStartMomentumScroll = YES; }
+        /// Start momentumScroll directly
+        else { DDLogDebug("twoFinger Starting momentumScroll directly");
+               [GestureScrollSimulator postGestureScrollEventWithDeltaX: 0 deltaY: 0 phase: kIOHIDEventPhaseEnded autoMomentumScroll: YES invertedFromDevice: _drag->naturalDirection]; }
     }
-    
-    /// Wait until momentumScroll has been started
-    ///     We want to wait for momentumScroll so it is started before the warp. That way momentumScroll will work, even if we moved the pointer outside the scrollView that we started scrolling in.
-    ///     Waiting here will also block all other items on `_twoFingerDragQueue`
-    
-    ///     This whole `_momentumScrollWaitGroup` thing is pretty risky, because if there is any race condition and we don't leave the group properly, then we need to crash the app
-    ///     It's really hard to avoid race conditions here though the different  eventTap threads that control ModifiedDrag and all the different nested dispatch queues of ModifiedDrag and its smoothingAnimator and the GestureScrollSimulator queue and it's momentumAnimator's queue and then all those animators have displayLinks with their own queues.... All of these queues call each other in a mix of synchronous and asynchronous, and it all needs to work perfectly without race conditions or deadlocks... Really hard to keep track of.
-    ///     If we manage to figure this out, this will make for a great user experience though.
-    ///         - Update: We mostly made this work after TONS of blood sweat and tears, but there are still very rare crashes from `dispatch_group_wait()` timing out because `dispatch_group_leave()` isn't called while we're waiting. A (pretty hacky) workaround for some of the crashes might be to build a `dispatch_group_reset()` function. To do this we could get the current count of the `dispatch_group` from the debug description, and then reset the count to 0. We could use this to replace `dispatch_group_leave()` which decrements the count by 1. Currently, the problem is that if the count is already 0 then calling `dispatch_group_leave()` causes a crash, so we need to make absolutely sure that our calls to `dispatch_group_enter()` and `dispatch_group_leave()` are balanced, which is super hard due to race conditions. But if we could use a `dispatch_group_reset()` method, then we could possibly recover when the `dispatch_group_wait()` times out instead of crashing.
-    
-    /// Wait for momentumScroll to start
-    
-    DDLogDebug("twoFinger Waiting for dispatch group");
-    intptr_t rt = dispatch_group_wait(_momentumScrollWaitGroup, dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC));
-    
-    if (rt != 0) {
-        
-        /// Log error
-        DDLogError("twoFinger _momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Will crash.", _momentumScrollWaitGroup.debugDescription);
-        
-        /// Clean up
-        ///     Unhide mouse pointer
-        if (!runningPreRelease()) {
-            [PointerFreeze unfreeze]; /// Only in release so the crashes are more noticable in prereleases
+}
+
+#if 0
+    + (void)suspend {
+        [PointerFreeze unfreeze];
+    }
+
+    + (void)unsuspend {
+
+        /// Convert and add vectors to get current pointer location
+        Vector usageOrigin = { .x = _drag->usageOrigin.x, .y = _drag->usageOrigin.y };
+        Vector pointerPosVec = addedVectors(usageOrigin, _drag->originOffset);
+        CGPoint pointerPos = CGPointMake(pointerPosVec.x, pointerPosVec.y);
+
+        pointerPos = getRoundedPointerLocation();
+
+        /// Freeze pointer
+        if (OtherConfig.freezePointerDuringModifiedDrag) {
+            [PointerFreeze freezePointerAtPosition:pointerPos];
+        } else {
+            [PointerFreeze freezeEventDispatchPointAtPosition:pointerPos];
         }
-        
-        /// Crash
-        assert(false);
-        exit(EXIT_FAILURE); /// Make sure it also quits in release builds
     }
-    
-    /// Unfreeze dispatch point
-    
-    [PointerFreeze unfreeze];
-}
-
-+ (void)suspend {
-//    [PointerFreeze unfreeze];
-}
-
-+ (void)unsuspend {
-    
-//    /// Convert and add vectors to get current pointer location
-//    Vector usageOrigin = { .x = _drag->usageOrigin.x, .y = _drag->usageOrigin.y };
-//    Vector pointerPosVec = addedVectors(usageOrigin, _drag->originOffset);
-//    CGPoint pointerPos = CGPointMake(pointerPosVec.x, pointerPosVec.y);
-//
-//    pointerPos = getRoundedPointerLocation();
-//
-//    /// Freeze pointer
-//    if (OtherConfig.freezePointerDuringModifiedDrag) {
-//        [PointerFreeze freezePointerAtPosition:pointerPos];
-//    } else {
-//        [PointerFreeze freezeEventDispatchPointAtPosition:pointerPos];
-//    }
-}
+#endif
 
 @end

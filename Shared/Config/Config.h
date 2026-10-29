@@ -10,11 +10,21 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-NS_ASSUME_NONNULL_BEGIN
+#if IS_HELPER
+    #import "Threads.h"
+#endif
+
+/// RunLoop
+static inline CFRunLoopRef configRunLoop(void) CF_RETURNS_NOT_RETAINED {
+    #if IS_HELPER
+        return IOThread.runLoop;
+    #elif IS_MAIN_APP
+        return CFRunLoopGetMain();
+    #endif
+}
 
 @interface Config : NSObject
 
-#pragma mark - For both
 
 /// Singleton
 + (Config *)shared;
@@ -34,21 +44,21 @@ void setConfig(NSString *keyPath, NSObject *value);
 void removeFromConfig(NSString *keyPath);
 void commitConfig(void);
 
-/// Repair
-- (void) repairIncompleteAppOverrideForBundleID: (NSString *)bundleID                           
-                               relevantKeyPaths: (NSArray <NSString *> *)keyPathsToDefaultValues;
-- (void) cleanConfig;
-
-#pragma mark - For Helper
-
-/// Overrides
-- (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event;
-@property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied; /// [Aug 2025] This could just be an ivar
-
 /// React
 + (void)loadFileAndUpdateStates;
 
+/// Repair
+#if IS_MAIN_APP
+    //- (void) repairIncompleteAppOverrideForBundleID: (NSString *)bundleID
+    //                               relevantKeyPaths: (NSArray <NSString *> *)keyPathsToDefaultValues;
+    - (void) cleanConfig;
+#endif
+
+/// Overrides
+#if IS_HELPER
+    - (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event;
+    @property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied; /// [Aug 2025] This could just be an ivar
+#endif
 
 @end
 
-NS_ASSUME_NONNULL_END

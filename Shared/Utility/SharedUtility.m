@@ -9,88 +9,67 @@
 
 #import "SharedUtility.h"
 #import "Locator.h"
-#import "Config.h"
+//#import "Config.h"
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
 #import "Logging.h"
-#import "MFSemaphore.h"
+#import "MFGate.h"
 #import "SharedMacros.h"
 
 @implementation SharedUtility
 
-#pragma mark - runLoops
+#pragma mark - MFLocales
 
-void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void)) {
+/// TODO: Why is this in SharedUtility.m, and not in Localization.m / LocalizationUtility.m? [Feb 2026]
+
+NSString *MFLocale(void) {
+
+    /// Return the app's current locale code
+    /// E.g. `en`, `de`, `pt-BR`, `fr`, `zh-Hans`, ...
+    ///
+    /// These codes are also found:
+    ///     - In the .pbxproj (under `knownRegions`)
+    ///     - In the .xcstrings files (under `localizations`)
+    ///     - In our Python scripts that localize the website and markdown-files [Feb 2026]
+    ///
+    /// Alternative APIs:
+    ///     These return the *System Settings'* locale (not the *app's* locale):
+    ///         - `[NSLocale currentLocale]`     (aka `Locale.currentLocale` in Swift),
+    ///         - `[NSLocale preferredLocale]` (private)
+    ///         (We're using these deliberately in the `LicenseUtility.currentRegionCode`)
+    ///     - These return the *app's* locale:
+    ///         - `[[NSBundle mainBundle] preferredLocalizations]` (Currently using this [Feb 2026])
+    ///         - `[NSLocale preferredLanguages]`                                       (Not sure what the difference is [Feb 2026])
+    ///         - `[[[NSUserDefaults standardUserDefaults] objectForKey: @"AppleLanguages"] firstObject]` (Not sure what the difference is [Feb 2026])
+    ///     - See: https://stackoverflow.com/questions/1522210/nslocale-currentlocale-always-returns-en-us-not-users-current-language
+    ///         - See this (about `@"AppleLanguages"`): https://developer.apple.com/library/archive/qa/qa1391/_index.html
+    ///
+    /// Usage tip:
+    ///     The resulting strings can be passed as 'locale identifiers' to `[NSLocale localeWithLocaleIdentifier:]`, `[NSLocale componentsFromLocaleIdentifier:]` and related APIs.
+    ///
+    /// Current usage pattern: [Feb 2026]
+    ///     - When we need to get the **app's locale/language**, we always use `MFLocale()` or (`MFLanguageCode()`)
+    ///     - When we need to get the **system locale** (for freeCountry mechanism), we use `NSLocale.currentLocale` (aka `Locale.current` in Swift)
+    ///     - We use `NSLocale.preferredLocale` (private) in one instance, IIRC because we were recreating Apple framework disassembly, and they used that – not totally sure how this behaves.
     
-    /// Usage:
-    ///     `modes` arg:
-    ///     - Pass nil to fall back to the default value.
-    ///     - You can also pass a single NSRunLoopMode (instead of an array of NSRunLoopModes)
-    
-    /// Meta-Discussion: Which API to use to perform stuff on a different runLoop?
-    ///     - `dispatch_async()`? Maybe, but only works on the mainRunLoop (?). Also I'd like to use the lower-level APIs directly. It also doesn't let us control the runLoopMode.
-    ///     - `-[NSRunLoop performInModes:block:]`? Maybe, but the docs say NSRunLoop APIs aren't thread-safe.
-    ///         Sidenote: Uses CFRunLoopPerformBlock() under-the-hood.
-    ///         Sidenote: The simpler variant -[NSRunLoop performBlock:] only runs in the default mode based on my assembly-investigations.
-    ///     - `-[NSObject performSelector:onThread:...]`? Should work, is flexible (can be delayed, and canceled just like NSTimer, can also be awaited like `dispatch_sync`) but the API is cumbersome for simple stuff. - maybe we could wrap it?
-    ///     - `CFRunLoopPerformBlock()`? >> Yes sounds good. <<
-    ///
-    /// Sidenote: NSRunLoop vs CFRunLoop:
-    ///     They are not the same. NSRunLoop is a higher-level wrapper around CFRunLoop. Every NSThread has an NSRunLoop. NSRunLoop APIs are generally not thread safe (according to the docs), while CFRunLoop APIs seem to be.
-    ///
-    /// Discussion: Which runLoop mode(s) to use?
-    ///     In MMF, we're usually processing user input. When we run that stuff on the mainThread, we want it to have the highest priority on the thread to maximize responsiveness.
-    ///     Using `NSRunLoopCommonModes`, our workload runs if the runLoop is in default, modal, or eventTracking mode (by default) (Source: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16)
-    ///     To run our workload with higher priority, we can run our workload in *all modes*.
-    ///     To run our workload with *even higher* priority, we could run the runLoop in a custom mode. But I'm not sure how to do that [Jan 2025]
-    ///
-    /// Thread-safety:
-    ///     Should be pretty thread-safe as far as I can tell.
-    ///
-    /// Future plans:
-    ///     TODO: (Over time) Replace uses of `dispatch_async()` with MFCFRunLoopPerform().
-    ///     (Also (over time): remove DispatchQueues in favour of NSThread and NSRunLoop – so we can reduce thread count and gain more control over threading behavior.)
-    
-    if (modes && modes.count == 0) {
-        assert(false && "modes should not be an empty array. Pass nil for the default value.");
-        modes = nil;
+    NSString *result = [[[NSBundle mainBundle] preferredLocalizations] firstObject]; /// I've only ever seen this contain one entry [Feb 2026]
+    if (!result) {
+        assert(false); /// Don't think this can happen [Feb 2026]
+        result = @"en";
     }
-    if (!modes) {
-        if ((1))    modes = (id)NSRunLoopCommonModes;                       /// Using CommonModes should grant our workload pretty high priorty || Note that we're passing the mode directly (instead of passing an array of modes) – that also works.
-        else        modes = CFBridgingRelease(CFRunLoopCopyAllModes(rl));   /// Passing all modes should grant our workload very high priority. Could this lead to unforseen problems? ... Not using this for now out of fear and terror. Ahhhhh.
-    }
-    CFRunLoopPerformBlock(rl, (__bridge void *)modes, workload);
-    CFRunLoopWakeUp(rl);
+    return result;
 }
 
-bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void)) {
-    
-    /// Variant of MFCFRunLoopPerform which waits for the workload to complete (or does the workload immediately if `rl` is the current runLoop.)
-    ///     Sort of an analog to `dispatch_sync()` (if `MFCFRunLoopPerform()` was `dispatch_async()`)
-    ///     Returns `true` if waiting timed out. `false` otherwise.
-    ///     Pass `timeout <= 0` to disable the timeout.
-    ///
-    /// Caution: If you don't pass a timeout, this can lead to deadlocks!
-    ///     (Deadlocks can happen if you're waiting for a thread which (indirectly) waits for you. As long as `workload` doesn't wait for anything/acquire any locks, there can't be deadlocks.)
-    
-    bool didTimeOut = false;
-    
-    if (CFEqual(rl, CFRunLoopGetCurrent())) {
-        workload();
-        return didTimeOut;
+NSString *MFLanguageCode(void) {
+    /// Returns just the first part of the `MFLocale()` e.g. zh for zh-Hans, or pt for pt-Br
+    ///     ... This is pretty unnecessary – we should probably stop using this and just use MFLocale() directly. [Feb 2026]
+    auto result = [[NSLocale componentsFromLocaleIdentifier: MFLocale()] objectForKey: NSLocaleLanguageCode];
+    if (!result) {
+        assert(false); /// Don't think this can happen [Feb 2026]
+        result = @"en";
     }
-    
-    NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow: timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
-    
-    MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits: 0];
-    MFCFRunLoopPerform(rl, modes, ^{
-        workload();
-        [semaphore releaseUnit];
-    });
-    didTimeOut = [semaphore acquireUnit: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?
-    
-    return didTimeOut;
+    return (id)result;
 }
 
 #pragma mark - Time
@@ -308,89 +287,6 @@ static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_
     free(propertyList);
 }
 
-#pragma mark - Check if pointer is object
-
-
-#pragma mark - Check if this is a prerelease version
-
-bool runningPreRelease(void) {
-    
-    /// TODO: [Apr 16 2025] Move this into Logging.h
-
-#if IS_XC_TEST
-    assert(false);
-    return true;
-#else
-    
-    /// Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
-    
-    static BOOL _isCached = NO;
-    static BOOL _runningPrerelease = NO;
-    
-    if (_isCached) {
-        
-        return _runningPrerelease;
-        
-    } else{
-        
-        
-        /// Check debug configuration
-        
-#if DEBUG
-        _runningPrerelease = YES;
-#endif
-        
-        /// Check app name for 'beta' or 'alpha'
-        ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
-        ///     Notes:
-        ///     - Why are we using the 'localized' search? What does that do?
-        ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
-        
-        if (!_runningPrerelease) {
-            
-            NSString *versionName = Locator.bundleVersionShort;
-            if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
-                _runningPrerelease = YES;
-            }
-        }
-        
-        /// Update flag
-        _isCached = YES;
-        
-        /// Return
-        return _runningPrerelease;
-    }
-#endif
-}
-
-#pragma mark - Check which executable is running
-/// TODO: Maybe move this to `Locator.m`
-/// TODO: Make these NS_INLINE
-
-inline bool runningMainApp(void) {
-    
-#if IS_MAIN_APP
-    return true;
-#endif
-    return false;
-
-//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
-}
-inline bool runningHelper(void) {
-    
-#if IS_HELPER
-    return true;
-#endif
-    return false;
-    
-//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
-}
-//bool runningAccomplice(void) {
-//    
-//    /// Return YES if called by accomplice
-//    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
-//}
-
 #pragma mark - Use command-line tools
 
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError *_Nullable * _Nullable)errorPtr {
@@ -454,7 +350,7 @@ inline bool runningHelper(void) {
     }
     
     /// Debug
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         NSString *errorDesc = @"";
         if (errorPtr != NULL && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;
@@ -591,9 +487,9 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     DDLogInfo("PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
 }
 
-+ (NSString *)currentDispatchQueueDescription {
-    return dispatch_get_current_queue().description;
-}
+//+ (NSString *)currentDispatchQueueDescription {
+//    return dispatch_get_current_queue().description;
+//}
 
 /// For debugging.
 + (void)printInvocationCountWithId:(NSString *)strId {
@@ -829,6 +725,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     return dstMutable;
 }
 
+#if 0
 + (void)resetDispatchGroupCount:(dispatch_group_t)group {
     /// Reset smoothing group counter to 0
     /// This doesn't work, don't use this.
@@ -852,5 +749,6 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
         dispatch_group_leave(group);
     }
 }
+#endif
 
 @end

@@ -138,7 +138,7 @@ avail
     ///     Note this when using:
     ///     - Caution: If any of the observedObjects are retained inside the callbackBlock -> retain cycle!
     ///     - If one of the observed objects is deallocated during the observation, the latest value will appear as 'nil' in the subsequent callbacks triggered by any of the other objects updating, unless the value is retained elsewhere. (The observedObjects don't retain the latest values to help prevent reference cycles).
-    ///     - The callbackBlock will be executed on the thread where the underlying value was changed, as soon as the value change happens. That means the callback might run on different threads concurrently. You can use `pthread`, `dispatch_async` `@synchronized()` or similar to handle concurrency inside the callback.
+    ///     - The callbackBlock will be executed on the thread where the underlying value was changed, as soon as the value change happens. That means the callback might run on different threads concurrently. You can use `pthread`, `mfrun` `@synchronized()` or similar to handle concurrency inside the callback.
     ///     - The returned array of MFObservers can be used to cancel observation prematurely using `[MFObserver cancelObservers:arrayOfObservers]`.
     + (NSArray<MFObserver *> *_Nonnull)observeLatest2:(NSArray<NSArray *> *_Nonnull)objectsAndKeypaths block:(MFObserver_CallbackBlock_Latest2 _Nonnull)callbackBlock;
     + (NSArray<MFObserver *> *_Nonnull)observeLatest3:(NSArray<NSArray *> *_Nonnull)objectsAndKeypaths block:(MFObserver_CallbackBlock_Latest3 _Nonnull)callbackBlock;

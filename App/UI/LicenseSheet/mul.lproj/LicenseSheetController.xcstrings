@@ -32,13 +32,31 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Back"
+            "value" : "Retour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indietro"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "뒤로"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbake"
           }
         },
         "pt-BR" : {
@@ -57,6 +75,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
           }
         },
         "vi" : {
@@ -177,13 +201,31 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saisir votre clé de licence"
+            "value" : "Veuillez saisir votre clé de licence"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inserisci la tua chiave di licenza"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスキーを入力"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스 키를 입력하세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skriv inn lisensnøkkelen din"
           }
         },
         "pt-BR" : {
@@ -202,6 +244,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisans Anahtarını Girin"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введіть ваш ліцензійний ключ"
           }
         },
         "vi" : {

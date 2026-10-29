@@ -1,4 +1,23 @@
 
+Update [Oct 2026]
+
+Removed the concept of MFDisplayLinkWorkType entirely in favor of `VBLPhase`.
+
+Here's what was still in the codebase
+
+/// MFDisplayLinkWorkType [Sep 2026]
+///     Attempt to delay events to different point in target app's 'frame cycle' to improve smoothness of scrolling in earlier 3.0.0 point releases.
+///         Caused deadlocks > moved code into`Old MFDisplayLinkWorkType stuff.md` and restored the 3.0.0 version of this code.
+///     Now, we don't have deadlocks anymore ([Sep 2026], after 'No more dispatch queues' refactor), so we could give it another try.
+typedef enum {
+    /// Optimize the scheduling of the DisplayLinkCallback invocations for graphics drawing. Use this if you want to draw graphics inside the DisplayLinkCallback.
+    kMFDisplayLinkWorkTypeGraphicsRendering = 0,
+    /// Optimize the scheduling of the DisplayLinkCallback invocations for event sending. Use this if you want to send CGEvents to other apps inside the DisplayLinkCallback.
+    kMFDisplayLinkWorkTypeEventSending,
+} MFDisplayLinkWorkType;
+
+---
+
 [Aug 23 2025] Below is a backup of 
     - The `DisplayLink.m > displayLinkCallback()` function, before we're deleting it and rewriting it.
     - The `DisplayLink.m > mapInSharedMemoryForDisplay:` method and its helper function, which never worked IIRC.
@@ -32,7 +51,7 @@
         __auto_type workload = ^void (DisplayLinkCallbackTimeInfo timeInfo) {
             
             /// Check requestedState
-            if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
+            if (self->_requestedState == kMFDisplayLinkStateStopped) {
                 DDLogDebug("DisplayLink.m: (%@) callback called after requested stop. Returning", [self identifier]);
                 return;
             }
@@ -151,7 +170,7 @@
             
             /// Add debug logging to workload
             
-            if (runningPreRelease()) {
+            if (runningDebugMode()) {
                 
                 workload = ^(DisplayLinkCallbackTimeInfo timeInfo){
                     

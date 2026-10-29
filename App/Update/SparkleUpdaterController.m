@@ -14,6 +14,8 @@
 #import "HelperServices.h"
 #import "CoolSUComparator.h"
 #import "Logging.h"
+#import "Threads.h"
+#import "NSTimer+Additions.h"
 
 // See https://sparkle-project.org/documentation/customization/
 
@@ -301,10 +303,10 @@ int getMajorVersion(NSString *version) {
     /// - Not sure what the delay should be. Did zero testing. 1.0 is probably much higher than necessary, but seems to work alright.
     /// - The optimal delay for the diffent stuff we do here might also be different. But it works ok.
     /// - Update: Changed delay to 0.0, for snappier ux. Still works perfect. I think we just need to dispatch to `main_queue` so this stuff happens on the next runLoop iteration or sth.
-    
+
     float delayInSeconds = 0.0;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
+    assertRunLoop(CFRunLoopGetMain());
+    [NSTimer mf_scheduledTimerWithTimeInterval: delayInSeconds mode: NSRunLoopCommonModes block: ^(NSTimer * _Nonnull timer) {
         /// Prevent Sparkle from storing its own skippedVersion
         ///     By deleting the default Sparkle key from user defaults.
         ///
@@ -321,7 +323,7 @@ int getMajorVersion(NSString *version) {
         
         /// Check for updates again. Due to our custom updating logic, this might present a minor update right after the user skipped a major update.
         [updater checkForUpdatesInBackground];
-    });
+    }];
 }
 
 + (void)enablePrereleaseChannel:(BOOL)pre {

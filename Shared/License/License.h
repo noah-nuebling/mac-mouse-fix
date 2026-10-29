@@ -133,9 +133,9 @@ MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 
 /// MARK: Custom errors
 ///     Notes:
-///     - Most of these are thrown in Gumroad.swift, but `kMFLicenseErrorCodeNoInternetAndNoCache` and `kMFLicenseErrorCodeEmailAndKeyNotFound` are thrown in Licensing.swift.
-///     - Overall these should cover everything that can go wrong. With the `kMFLicenseErrorCodeGumroadServerResponseError` catching all the weird edge cases like a refunded license.
-///     - The `kMFLicenseErrorCodeGumroadServerResponseError` also catches the case when a user just enters a wrong license.
+///     - Most of these are thrown in Gumroad.swift, but `kMFLicenseErrorCode_NoInternetAndNoCache` and `kMFLicenseErrorCode_EmailAndKeyNotFound` are thrown in Licensing.swift.
+///     - Overall these should cover everything that can go wrong. With the `kMFLicenseErrorCode_GumroadServerResponseError` catching all the weird edge cases like a refunded license.
+///     - The `kMFLicenseErrorCode_GumroadServerResponseError` also catches the case when a user just enters a wrong license.
 ///     - These could be used to inform the user about what's wrong.
 ///
 ///     General:
@@ -147,12 +147,13 @@ MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 
 static const NSErrorDomain _Nonnull MFLicenseErrorDomain = @"MFLicenseErrorDomain";
 typedef NSInteger MFLicenseErrorCode;
-    //const MFLicenseErrorCode kMFLicenseErrorCodeMismatchedEmails               = 1;       /// Not using emails for authentication anymore. Just licenseKeys
-    static const MFLicenseErrorCode kMFLicenseErrorCodeInvalidNumberOfActivations   = 2;    /// The license is valid as per the server but it has been activated a suspicious number of times.
-    static const MFLicenseErrorCode kMFLicenseErrorCodeGumroadServerResponseError   = 3;    /// The Gumroad server has responded with `success: false`
-    static const MFLicenseErrorCode kMFLicenseErrorCodeServerResponseInvalid        = 4;    /// The server response does not follow the expected format.
-//    static const MFLicenseErrorCode kMFLicenseErrorCodeKeyNotFound                  = 5;
-//    static const MFLicenseErrorCode kMFLicenseErrorCodeNoInternetAndNoCache         = 6;    /// Oct 2024: Should rename this to noServerAndNoCache - since there are other reasons that we might not get a clear response from the server about whether a license is valid or not
+    //const MFLicenseErrorCode kMFLicenseErrorCode_MismatchedEmails                    = 1;    /// Not using emails for authentication anymore. Just licenseKeys
+    static const MFLicenseErrorCode kMFLicenseErrorCode_InvalidNumberOfActivations   = 2;    /// The license is valid as per the server but it has been activated a suspicious number of times.
+    static const MFLicenseErrorCode kMFLicenseErrorCode_GumroadServerResponseError   = 3;    /// The Gumroad server has responded with `success: false`
+    static const MFLicenseErrorCode kMFLicenseErrorCode_ServerResponseInvalid        = 4;    /// The server response does not follow the expected format.
+    //static const MFLicenseErrorCode kMFLicenseErrorCode_KeyNotFound                  = 5;
+    //static const MFLicenseErrorCode kMFLicenseErrorCode_NoInternetAndNoCache         = 6;    /// Should rename this to noServerAndNoCache - since there are other reasons that we might not get a clear response from the server about whether a license is valid or not [Oct 2024]
+    static const MFLicenseErrorCode kMFLicenseErrorCode_KeychainError                = 7;    ///  `SecureStorage.m` failed to store the licenseKey in the keychain. [Oct 2026]
 
 static const NSErrorDomain _Nonnull MFLicenseConfigErrorDomain = @"MFLicenseConfigErrorDomain";
 typedef NSInteger MFLicenseConfigErrorCode;

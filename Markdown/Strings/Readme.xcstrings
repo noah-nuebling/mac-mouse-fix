@@ -28,6 +28,24 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -41,6 +59,18 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "vi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -81,6 +111,24 @@
             "value" : "¡Haz que Tu Ratón de $10 sea Mejor que un Trackpad de Apple!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rendi il tuo mouse da €10 migliore di un trackpad Apple!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "格安マウスで、Appleトラックパッドを超える体験を！"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gjør musen din til 10 dollar bedre enn en Apple-styreflate!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -97,6 +145,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "10 Dolarlık Farenizi Apple İzleme Dörtgeninden Daha İyi Bir Hale Getirin!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зробіть свою мишу за 10 доларів кращою, ніж трекпед Apple!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biến chuột $10 của bạn tốt hơn Apple Trackpad"
           }
         },
         "zh-Hans" : {
@@ -134,6 +194,24 @@
             "value" : "Sitio Web&nbsp;↗"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sito web&nbsp;↗"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウェブサイト&nbsp;↗"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Website&nbsp;↗"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -150,6 +228,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İnternet Sitesi&nbsp;"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сайт&nbsp;↗"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Website&nbsp;↗"
           }
         },
         "zh-Hans" : {
@@ -188,6 +278,24 @@
             "value" : "Ayuda&nbsp;&amp;&nbsp;Comentarios"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto&nbsp;e&nbsp;feedback"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプとフィードバック"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help&nbsp;&amp;&nbsp;Feedback"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -204,6 +312,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yardım&nbsp;&amp;&nbsp;Geribildirim"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Довідка&nbsp;та&nbsp;відгуки"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hỗ trợ&nbsp;&amp;&nbsp;Phản hồi"
           }
         },
         "zh-Hans" : {
@@ -241,6 +361,24 @@
             "value" : "Lanzamientos"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リリース"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utgivelser"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +395,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sürümler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Релізи"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phát hành"
           }
         },
         "zh-Hans" : {
@@ -294,6 +444,24 @@
             "value" : "Agradecimientos"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riconoscimenti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "謝辞"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takk"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -310,6 +478,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teşekkürler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подяки"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Công nhận"
           }
         },
         "zh-Hans" : {
@@ -348,6 +528,24 @@
             "value" : "Descargas"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダウンロード"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedlastinger"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -364,6 +562,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İndirme"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Викачане"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tải xuống"
           }
         },
         "zh-Hans" : {
@@ -401,6 +611,24 @@
             "value" : "Mac Mouse Fix es una aplicación que mejora tu ratón.\n\n¡Quiero convertir Mac Mouse Fix en el mejor controlador de ratón *de todos los tiempos*! Por el momento todavía faltan algunas funciones, pero creo que ya **convierte los ratones normales en los mejores dispositivos de entrada para Mac** en algunos aspectos. Al mismo nivel o incluso mejor que un Apple Trackpad o un ratón Logitech MX Master.\n\nPara obtener más información sobre cómo exactamente Mac Mouse Fix mejora tu ratón, visita el [sitio web]({url})."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix è un'app che migliora il tuo mouse.\n\nVoglio trasformare Mac Mouse Fix nel miglior driver per mouse *di tutti i tempi*! Al momento mancano ancora alcune funzioni, ma penso che sotto certi aspetti **trasformi i mouse normali nei migliori dispositivi di input per Mac**. Al livello di un trackpad Apple o di un mouse Logitech MX Master, se non meglio.\n\nPer maggiori informazioni su come Mac Mouse Fix migliora il tuo mouse, visita il [sito web]({url})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixは、お使いのマウスをより快適にするアプリです。\n\n私は、Mac Mouse Fixを**史上最高**のマウスドライバーにしたいと考えています！現時点ではまだ足りない機能もありますが、いくつかの点においては、すでに**普通のマウスをMacにとって最高の入力デバイスへと進化させている**と自負しています。それは、AppleのトラックパッドやLogitech（ロジクール）のMX Masterマウスと同等、あるいはそれ以上の体験です。\n\nMac Mouse Fixがどのようにマウスを強化するのか、より詳しい情報は[ウェブサイト]({url})をご覧ください。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix er en app som gjør musen din bedre.\n\nJeg vil gjøre Mac Mouse Fix til den beste musedriveren *gjennom tidene*! Noen funksjoner mangler fortsatt for øyeblikket, men jeg tror den allerede **gjør vanlige muser til de beste inndataenhetene for Mac** på noen måter. På samme nivå, eller enda bedre, enn en Apple Trackpad eller en Logitech MX Master-mus.\n\nFor mer informasjon om hvordan Mac Mouse Fix forbedrer musen din, besøk [nettstedet]({url})."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -417,6 +645,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix, farenizi daha iyi hale getiren bir uygulamadır.\n\nMac Mouse Fix'i *tüm zamanların* en iyi fare sürücüsüne dönüştürmek istiyorum! Bazı özellikler şu anda eksik ama şimdiden **normal fareleri Mac'ler için en iyi farelere** dönüştürebiliyor. Bir Apple Trackpad veya Logitech MX Master fareyle aynı seviyede, hatta daha da iyi.\n\nMac Mouse Fix'in farenizi tam olarak nasıl geliştirdiği hakkında daha fazla bilgi için [internet sitesini]({url}) ziyaret edin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix - це програма, яка робить вашу мишу кращою.\n\nЯ хочу перетворити Mac Mouse Fix на найкращий драйвер миші *всіх часів*! На даний момент деякі функції все ще відсутні, але я думаю, що це вже **перетворює звичайну мишу на найкращий пристрій введення для Mac** певним чином. На тому ж рівні, або навіть кращому, ніж трекпед Apple чи миша Logitech MX Master.\n\nДля отримання додаткової інформації про те, як саме Mac Mouse Fix покращує вашу мишу, відвідайте [сайт]({url})."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix là ứng dụng làm cho chuột của bạn xịn hơn.\n\nTôi muốn Mac Mouse Fix thành trình điều khiển chuột tốt nhất *mọi thời đại*! Một số tính năng vẫn còn thiếu lúc này, nhưng tôi nghĩ nó đã **biến chuột thông thường thành thiết bị đầu vào tốt nhất cho Macs** theo cách nào đó. Ở cùng mức hoặc thậm chí hay hơn Apple Trackpad hoặc chuột Logitech MX Master. \n\nNếu bạn cần nhiều thông tin hơn về Mac Mouse Fix đã nâng cấp chuột của bạn, truy cập [website]({url})."
           }
         },
         "zh-Hans" : {
@@ -454,6 +694,24 @@
             "value" : "## Funciones\n\nConsulta el [sitio web]({url_1}) para ver un resumen de las funciones de Mac Mouse Fix, ¡incluidas demostraciones en vídeo!\n\nPara más detalles, consulta los [Lanzamientos]({url_2})."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Funzioni\n\nVisita il [sito web]({url_1}) per una panoramica delle funzioni di Mac Mouse Fix, con tanto di video dimostrativi!\n\nPer maggiori dettagli, consulta le [Release]({url_2})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##主な機能\nMac Mouse Fixの機能の概要については、[ウェブサイト]({url_1})をご覧ください。デモ動画も公開されています！\n\n詳細については、[リリース]({url_2})をご確認ください。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Funksjoner\n\nSe [nettstedet]({url_1}) for en oversikt over funksjonene til Mac Mouse Fix, inkludert videodemonstrasjoner!\n\nFor mer informasjon, se [Utgivelser]({url_2})."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -470,6 +728,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Özellikler\n\nMac Mouse Fix'in özelliklerine gözatmak ve video örnekleri için [internet sitesine]({url_1}) bakın!\n\nDaha fazla bilgi için [Sürümlere]({url_2}) bakın."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Можливості\n\nОзнайомтеся з оглядом можливостей Mac Mouse Fix, включаючи відеодемонстрації, на [вебсайті]({url_1})!\n\nДля отримання детальнішої інформації див. [Випуски]({url_2})."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Tính năng\n\nXem [website]({url_1}) về tổng quan những tính năng của Mac Mouse Fix, bao gồm cả video demo!\n\nCụ thể hơn nữa, xem tại [Phát hành]({url_2})."
           }
         },
         "zh-Hans" : {
@@ -507,6 +777,24 @@
             "value" : "## Instalación\n\nDescarga la última versión de Mac Mouse Fix en el [sitio web]({url_1}).\n\n¡También puedes instalar Mac Mouse Fix a través de [Homebrew]({url_2})! Simplemente escribe el siguiente comando en el terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nPuedes descargar versiones anteriores de Mac Mouse Fix en [Lanzamientos]({url_3})."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Installazione\n\nScarica l'ultima versione di Mac Mouse Fix dal [sito web]({url_1}).\n\nPuoi anche installare Mac Mouse Fix tramite [Homebrew]({url_2})! Basta digitare il seguente comando nel Terminale:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nPuoi scaricare le versioni precedenti di Mac Mouse Fix nella sezione [Release]({url_3})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##インストール\nMac Mouse Fixの最新バージョンは、[ウェブサイト]({url_1})からダウンロードできます。\n\nまた、[Homebrew]({url_2}) を使ってインストールすることもできます！ ターミナルに以下のコマンドを入力してください：\n\n```bash\nbrew install mac-mouse-fix\n```\n\n以前のバージョンのMac Mouse Fixは、[リリース]({url_3})からダウンロードいただけます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Installasjon\n\nLast ned den nyeste versjonen av Mac Mouse Fix på [nettstedet]({url_1}).\n\nDu kan også installere Mac Mouse Fix via [Homebrew]({url_2})! Bare skriv inn følgende kommando i terminalen:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nDu kan laste ned eldre versjoner av Mac Mouse Fix under [Utgivelser]({url_3})."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -525,6 +813,18 @@
             "value" : "## Kurulum\n\nMac Mouse Fix'in en son sürümünü [internet sitesinden]({url_1}) indirin.\n\nMac Mouse Fix'i [Homebrew]({url_2}) ile de kurabilirsiniz. Sadece şu komutları Terminal'de kullanın.\n\n```bash\nbrew install mac-mouse-fix\n```\n\nMac Mouse Fix'in daha eski sürümlerini de [sürümler]({url_3}) kısmından indirebilirsiniz."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Встановлення\n\nЗавантажте останню версію Mac Mouse Fix на [вебсайті]({url_1}).\n\nВи також можете встановити Mac Mouse Fix через [Homebrew]({url_2})! Просто введіть таку команду в терміналі:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nВи можете завантажити старіші версії Mac Mouse Fix у розділі [Випуски]({url_3})."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Cách cài đặt\n\nTải phiên bản mới nhất của Mac Mouse Fix tại [website]({url_1}).\n\nBạn cũng có thể cài thông qua [Homebrew]({url_2})! Chỉ cần gõ lệnh sau vào terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nBạn có thể tải phiên bản cũ hơn của Mac Mouse Fix tại [Phát hành]({url_3}).\n"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -538,50 +838,80 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Kompatibilita s macOS\n\nNejnovější verze Mac Mouse Fix je určena pro **macOS 11 Big Sur** nebo novější.\n\nPokud používáte macOS **10.15 Catalina**, macOS **10.14 Mojave** nebo macOS **10.13 High Sierra**, můžete použít [nejnovější verzi Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 a novější mohou na vašem počítači stále fungovat, ale budou mít vizuální problémy a některé funkce nemusí fungovat správně.\n\nPokud používáte macOS **10.12 Sierra** nebo **10.11 El Capitan**, můžete použít Mac Mouse Fix [2.2.0]({url_2}) nebo starší verzi."
+            "state" : "needs_review",
+            "value" : "## Kompatibilita s macOS\n\nNejnovější verze Mac Mouse Fix je určena pro **macOS 11 Big Sur** nebo novější.\n\nPokud používáte macOS **10.11 El Capitan** nebo novější, můžete použít [nejnovější verzi Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 a novější mohou na vašem počítači stále fungovat, ale budou mít vizuální problémy a některé funkce nemusí fungovat správně."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## macOS-Kompatibilität\n\nDie neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.\n\nWenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2]({url_1}) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.\n\nWenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0]({url_2}) oder früher verwenden."
+            "value" : "## macOS-Kompatibilität\n\nDie neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.\n\nWenn du macOS **10.11 El Capitan** oder später benutzt, kannst du die [neueste Version von Mac Mouse Fix 2]({url}) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## macOS compatibility\n\nThe latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.\n    \nIf you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0]({url_2}) or below."
+            "value" : "## macOS compatibility\n\nThe latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.11 El Capitan** or later, you can use the [latest version of Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Compatibilidad con macOS\n\nLa última versión de Mac Mouse Fix está diseñada para **macOS 11 Big Sur** o posterior.\n\nSi utilizas **macOS 10.15 Catalina**, **macOS 10.14 Mojave** o **macOS 10.13 High Sierra**, puedes usar la [última versión de Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 y versiones posteriores podrían seguir funcionando en tu máquina, pero tendrán problemas visuales y es posible que algunas funciones no funcionen correctamente.\n\nSi utilizas **macOS 10.12 Sierra** o **10.11 El Capitan**, puedes usar Mac Mouse Fix [2.2.0]({url_2}) o anterior."
+            "state" : "needs_review",
+            "value" : "## Compatibilidad con macOS\n\nLa última versión de Mac Mouse Fix está diseñada para **macOS 11 Big Sur** o posterior.\n\nSi utilizas **macOS 10.11 El Capitan** o posterior, puedes usar la [última versión de Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 y versiones posteriores podrían seguir funcionando en tu máquina, pero tendrán problemas visuales y es posible que algunas funciones no funcionen correctamente."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## Compatibilità con macOS\n\nL'ultima versione di Mac Mouse Fix è pensata per **macOS 11 Big Sur** o successivi.\n  \nSe usi macOS **10.11 El Capitan** o successivi, puoi usare l'[ultima versione di Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 e successivi potrebbero comunque funzionare sul tuo Mac, ma presenteranno problemi grafici e alcune funzioni potrebbero non funzionare correttamente."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "##macOSの互換性\nMac Mouse Fixの最新バージョンは、macOS 11 Big Sur以降に対応しています。\n\nmacOS 10.11 El Capitan以降をご利用の場合は、[Mac Mouse Fix 2 の最新バージョン]({url})をお使いいただけます。Mac Mouse Fix 3.0.0以降も動作する可能性はありますが、画面表示の不具合や一部の機能が正しく動作しない場合があります。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## macOS-kompatibilitet\n\nDen nyeste versjonen av Mac Mouse Fix er laget for **macOS 11 Big Sur** eller nyere.\n\nHvis du bruker macOS **10.11 El Capitan** eller nyere, kan du bruke [nyeste versjon av Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 og nyere kan fortsatt fungere på maskinen din, men de vil ha visuelle problemer, og noen funksjoner fungerer kanskje ikke som de skal."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Compatibilidade com macOS\n\nA versão mais recente do Mac Mouse Fix foi desenvolvida para **macOS 11 Big Sur** ou superior.\n\nSe você estiver usando macOS **10.15 Catalina**, macOS **10.14 Mojave** ou macOS **10.13 High Sierra**, pode utilizar a [versão mais recente do Mac Mouse Fix 2]({url_1}). O Mac Mouse Fix 3.0.0 e versões posteriores ainda podem funcionar na sua máquina, mas podem apresentar problemas visuais e algumas funcionalidades podem não funcionar corretamente.\n\nSe você estiver usando macOS **10.12 Sierra** ou **10.11 El Capitan**, pode utilizar o Mac Mouse Fix [2.2.0]({url_2}) ou versões anteriores.\n"
+            "state" : "needs_review",
+            "value" : "## Compatibilidade com macOS\n\nA versão mais recente do Mac Mouse Fix foi desenvolvida para **macOS 11 Big Sur** ou superior.\n\nSe você estiver usando macOS **10.11 El Capitan** ou superior, pode utilizar a [versão mais recente do Mac Mouse Fix 2]({url}). O Mac Mouse Fix 3.0.0 e versões posteriores ainda podem funcionar na sua máquina, mas podem apresentar problemas visuais e algumas funcionalidades podem não funcionar corretamente."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Совместимость с macOS\n\nПоследняя версия Mac Mouse Fix разработана для **macOS 11 Big Sur** или более поздних версий.\n  \nЕсли вы используете macOS **10.15 Catalina**, macOS **10.14 Mojave** или macOS **10.13 High Sierra**, вы можете использовать [последнюю версию Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 и более поздние версии могут по-прежнему работать на вашем компьютере, но у них будут проблемы с отображением, и некоторые функции могут работать некорректно.\n    \nЕсли вы используете macOS **10.12 Sierra** или **10.11 El Capitan**, вы можете использовать Mac Mouse Fix [2.2.0]({url_2}) или более раннюю версию."
+            "state" : "needs_review",
+            "value" : "## Совместимость с macOS\n\nПоследняя версия Mac Mouse Fix разработана для **macOS 11 Big Sur** или более поздних версий.\n  \nЕсли вы используете macOS **10.11 El Capitan** или более позднюю версию, вы можете использовать [последнюю версию Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 и более поздние версии могут по-прежнему работать на вашем компьютере, но у них будут проблемы с отображением, и некоторые функции могут работать некорректно."
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## macOS Uyumluluğu\n\nMac Mouse Fix'in en son sürümü **mac OS 11 Big Sur** ve sonrası için tasarlandı.\n\nEğer **macOS 10.15 Catalina**, **macOS 10.14 Mojave** veya **macOS 10.13 High Sierra** kullanıyorsanız [Mac Mouse Fix 2'nin son sürümünü]({url_1}) kullanabilirsiniz. Mac Mouse Fix 3.0.0 ve sonrası aygıtınızda çalışabilir fakat görüntü hataları ve beklenmedik program hataları ile karşılaşabilirsiniz.\n\nEğer **macOS 10.12 Sierra** veya **macOS 10.11 El Capitan** kullanıyorsanız [Mac Mouse Fix 2.2.0]({url_2}) veya altını kullanabilirsiniz."
+            "state" : "needs_review",
+            "value" : "## macOS Uyumluluğu\n\nMac Mouse Fix'in en son sürümü **mac OS 11 Big Sur** ve sonrası için tasarlandı.\n\nEğer **macOS 10.11 El Capitan** veya sonrasını kullanıyorsanız [Mac Mouse Fix 2'nin son sürümünü]({url}) kullanabilirsiniz. Mac Mouse Fix 3.0.0 ve sonrası aygıtınızda çalışabilir fakat görüntü hataları ve beklenmedik program hataları ile karşılaşabilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## Сумісність з macOS\n\nОстання версія Mac Mouse Fix створена для **macOS 11 Big Sur** або новішої версії.\n\nЯкщо ви використовуєте macOS **10.11 El Capitan** або новішу версію, ви можете використовувати [останню версію Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 і новіші версії все ще можуть працювати на вашому комп’ютері, але матимуть візуальні проблеми, а деякі функції можуть працювати некоректно."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## Tương thích macOS\n\nPhiên bản mới nhất của Mac Mouse Fix dùng cho các phiên bản **macOS 11 Big Sur** và sau đó.\n\nNếu bạn đang sử dụng macOS **10.11 El Capitan** hoặc mới hơn, bạn có thể dùng [bản mới nhất của Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 và sau đó có thể hoạt động nhưng sẽ có vài lỗi về hiển thị hoặc một số tính năng hoạt động không đúng."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## macOS 兼容性\n\n最新版本的 Mac Mouse Fix 专为 **macOS 11 Big Sur** 或更高版本设计。\n  \n如果你使用的是 macOS **10.15 Catalina**、macOS **10.14 Mojave** 或 macOS **10.13 High Sierra**，可以使用 [Mac Mouse Fix 2 的最新版本]({url_1})。Mac Mouse Fix 3.0.0 及更高版本可能仍能在这些系统上运行，但会出现视觉瑕疵，且部分功能可能无法正常使用。\n    \n如果你使用的是 macOS **10.12 Sierra** 或 **10.11 El Capitan**，可以使用 Mac Mouse Fix [2.2.0]({url_2}) 或更低版本。"
+            "state" : "needs_review",
+            "value" : "## macOS 兼容性\n\n最新版本的 Mac Mouse Fix 专为 **macOS 11 Big Sur** 或更高版本设计。\n  \n如果你使用的是 macOS **10.11 El Capitan** 或更高版本，可以使用 [Mac Mouse Fix 2 的最新版本]({url})。Mac Mouse Fix 3.0.0 及更高版本可能仍能在这些系统上运行，但会出现视觉瑕疵，且部分功能可能无法正常使用。"
           }
         }
       }
@@ -613,6 +943,24 @@
             "value" : "## Precios\n\nConsulta el [sitio web]({url}) para ver un resumen de los precios de Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 y versiones anteriores seguirán siendo gratuitas para siempre."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Prezzi\n\nVisita il [sito web]({url}) per una panoramica dei prezzi di Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 e versioni precedenti resteranno gratuiti per sempre."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##料金について\n\nMac Mouse Fix 3 の料金体系については、[ウェブサイト]({url})でご確認いただけます。<br>\nなお、Mac Mouse Fix 2以前のバージョンは、今後も永久に無料で提供されます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Priser\n\nSe [nettstedet]({url}) for en oversikt over prisene for Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 og eldre vil forbli gratis for alltid."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -629,6 +977,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ücretlendirme\n\n[İnternet sitesine]({url}) göz atarak Mac Mouse Fix 3'ün fiyatlandırmasına bakabilirsiniz.<br>\n\nMac Mouse Fix 2 ve altı sonsuza dek ücretsiz kalacaktır.\n"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Ціни\n\nДив. [вебсайт]({url}) для ознайомлення з цінами на Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 та раніші версії залишаться безкоштовними назавжди."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Giá\n\nCoi taij [website]({url}) để biết tổng quan giá cho Mac Mouse Fix 3.<br>\n\nMac Mouse Fix 2 và thấp hơn sẽ được miễn phí mãi mãi."
           }
         },
         "zh-Hans" : {
@@ -666,6 +1026,24 @@
             "value" : "## Desinstalación\n\nDesinstala Mac Mouse Fix simplemente moviéndolo a la papelera.\n\nSin embargo, quedarán archivos en tu sistema. Para deshacerte de estos archivos, recomiendo la impresionante aplicación [AppCleaner de FreeMacSoft]({url}).\n\nEn macOS, no es factible que las aplicaciones eliminen estos archivos sobrantes por sí mismas al eliminarlas. Por eso recomiendo encarecidamente utilizar una aplicación como AppCleaner."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Disinstallazione\n\nPer disinstallare Mac Mouse Fix basta spostarlo nel Cestino. \n\nTuttavia, sul tuo sistema resteranno dei file. Per eliminarli ti consiglio la fantastica app [AppCleaner di FreeMacSoft]({url}).\n\nSu macOS le app non possono eliminare da sole questi file residui quando le elimini. Per questo ti consiglio vivamente di usare un'app come AppCleaner."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##アンインストール\n\nMac Mouse Fixをアンインストールするには、アプリをゴミ箱へ移動するだけです。\n\nただし、その場合はシステム内に関連ファイルが残ります。これらのファイルを完全に削除するには、非常に便利なツールである[FreeMacSoft の AppCleaner]({url})の使用をお勧めします。\n\nmacOS の仕様上、アプリを削除した際に、そのアプリ自身が残存ファイルを削除することはできません。そのため、AppCleanerのようなアプリの使用を強くお勧めしています。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Avinstallering\n\nAvinstaller Mac Mouse Fix ved å flytte den til søppelbøtten.\n\nDet vil imidlertid være filer igjen på systemet ditt. For å bli kvitt disse filene anbefaler jeg den fantastiske [AppCleaner av FreeMacSoft]({url}).\n\nUnder macOS er det ikke mulig for apper å slette disse gjenværende filene selv når du sletter appen. Derfor anbefaler jeg på det sterkeste å bruke en app som AppCleaner."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -682,6 +1060,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Uygulamayı Kaldırma\n\nMac Mouse Fix uygulamasını çöp kutusuna taşıyarak kaldırın.\n\nFakat, bu yöntem ile sisteminizde birkaç dosya kalacaktır. Bunları da kaldırmak için [FreeMacSoft tarafından geliştirilen AppCleaner]({url}) uygulamasını kullanabillirsiniz.\n\nmacOS bazında uygulamalar kaldırıldığında bu dosyaların silinmesi pek mümkün değildir. Bu yüzden AppCleaner kullanmanızı tavsiye ederim."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Видалення\n\nВидаліть Mac Mouse Fix, просто перемістивши його в Смітник.\n\nОднак у вашій системі залишаться файли. Щоб позбутися цих файлів, я рекомендую чудову програму [AppCleaner від FreeMacSoft]({url}).\n\nУ macOS програми не можуть самостійно видаляти ці залишкові файли під час видалення програми. Тому я наполегливо рекомендую використовувати таку програму, як AppCleaner."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Gỡ cài đặt\n\nGỡ cài đặt Mac Mouse Fix bằng cách đơn giản là chuyển ứng dụng vô trong thùng rác.\n\nTuy nhiên, sẽ có nhiều tệp tin vẫn còn ở trong hệ thống. Để xoá bỏ chúng, tôi đề xuất bạn xài ứng dụng tuyệt vời này [AppCleaner by FreeMacSoft]({url}).\n\nỞ macOS, bạn không thể tự tay xoá hết những tệp tin đó. Đó là lý do tôi xuyên bạn nên xài những ứng dụng khư AppCleaner."
           }
         },
         "zh-Hans" : {
@@ -719,6 +1109,24 @@
             "value" : "## Lo que dice la gente\n\n¡Muchas gracias a todos los que comparten su entusiasmo por Mac Mouse Fix!<br>\nEn el [sitio web]({url}) puedes encontrar una colección de cosas bonitas que la gente ha dicho sobre la aplicación."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Cosa dice la gente\n\nGrazie mille a tutti quelli che condividono il proprio entusiasmo per Mac Mouse Fix!<br>\nSul [sito web]({url}) trovi una raccolta di belle parole spese da chi usa l'app."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##ユーザーの声\n\nMac Mouse Fixを応援してくださる皆さまに、心より感謝申し上げます！<br>\n[ウェブサイト]({url})では、このアプリを気に入ってくださった皆さまから寄せられた、たくさんの素敵なコメントを掲載しています。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Hva folk sier\n\nTusen takk til alle som deler sin begeistring for Mac Mouse Fix!<br>\nPå [nettstedet]({url}) finner du en samling av hyggelige ting folk har sagt om appen."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -735,6 +1143,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Yorumlar\n\nMac Mouse Fix'e olan heyecanı paylaşan herkese çok teşekkür ederim. [İnternet sitesinde]({url}) insanların yorumlarını gösteren bir koleksiyonu inceleyebilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Що кажуть люди\n\nВелике спасибі всім, хто ділиться своїм захопленням від Mac Mouse Fix!<br>\nНа [вебсайті]({url}) ви можете знайти добірку приємних відгуків про програму."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Điều mọi người nói\n\nCám ơn rất nhiều tới mọi người đã chia sẻ về niềm vui của họ về Mac Mouse Fix!<br>\nTrên [website]({url}) bạn có thể tìm thấy rất nhiều người nói tốt về ứng dụng."
           }
         },
         "zh-Hans" : {
@@ -772,6 +1192,24 @@
             "value" : "## Consejos"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Consigli"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## ヒント"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Tips"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -788,6 +1226,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Öneriler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Поради"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Mẹo"
           }
         },
         "zh-Hans" : {
@@ -825,6 +1275,24 @@
             "value" : "**Gestiona ventanas con un simple Clic y arrastrar**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Gestisci le finestre con un semplice clic e trascina**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**クリックしてドラッグするだけ！ウィンドウを簡単に整理**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Administrer vinduer med et enkelt klikk og dra**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -841,6 +1309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Bir tık ve sürükleme ile pencelereri yönetin**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Керуйте вікнами просто за допомогою Клацання та Перетягування**"
           }
         },
         "zh-Hans" : {
@@ -878,6 +1352,24 @@
             "value" : "[Swish]({url}) es mi forma favorita de gestionar ventanas en macOS. Con un simple deslizamiento en tu trackpad, te permite colocar cualquier ventana para que ocupe la mitad, un cuarto o toda la pantalla.\n\nSwish está diseñado para gestos de trackpad, ¡pero con Mac Mouse Fix puedes usarlo desde cualquier ratón de terceros! Simplemente ve a Mac Mouse Fix y configura la acción \"Clic y Arrastrar\" de cualquier botón en \"Desplazamiento y Navegación\" y luego podrás ajustar ventanas con un simple Clic y arrastrar.\n\nCualquier cosa que puedas hacer con un deslizamiento de dos dedos en un trackpad de Apple funciona igual de bien con la función \"Desplazamiento y navegación\" de Mac Mouse Fix."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Swish]({url}) è il mio modo preferito per gestire le finestre su macOS. Con un semplice scorrimento sul trackpad, ti permette di posizionare qualsiasi finestra in modo che occupi metà, un quarto o l'intero schermo.\n\nSwish è pensato per i gesti del trackpad, ma con Mac Mouse Fix puoi usarlo con qualsiasi mouse di terze parti! Basta andare in Mac Mouse Fix, impostare l'azione 'clic e trascina' di un pulsante su 'Scorri e naviga', e poi potrai agganciare le finestre con un semplice clic e trascina.\n\nTutto ciò che puoi fare scorrendo con due dita su un trackpad Apple funziona altrettanto bene con la funzione 'Scorri e naviga' di Mac Mouse Fix."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Swish]({url})は、macOSでウィンドウを管理するツールとして、私の一押しのアプリです。トラックパッドをスワイプするだけで、ウィンドウを画面の半分、4分の1、または全画面に素早く配置できます。\n\nSwishは本来トラックパッドのジェスチャ向けに設計されていますが、Mac Mouse Fixを使えば、一般的なサードパーティ製マウスでも同じように操作可能です！Mac Mouse Fixの設定で、任意のボタンの'クリックとドラッグ'アクションを'スクロールとナビゲート'に設定するだけで、簡単なクリックとドラッグでウィンドウをスナップできるようになります。\n\nAppleのトラックパッドでの2本指スワイプで行える操作はすべて、Mac Mouse Fixの'スクロールとナビゲート'機能でも同様に快適に動作します"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Swish]({url}) er min favorittmåte å administrere vinduer på macOS. Med et enkelt sveip på styreflaten kan du plassere et hvilket som helst vindu slik at det tar opp halvparten, en fjerdedel eller hele skjermen.\n\nSwish er designet for styreflatebevegelser, men med Mac Mouse Fix kan du bruke det fra en hvilken som helst tredjepartsmus! Bare gå til Mac Mouse Fix og sett en hvilken som helst knapps «Klikk og dra»-handling til «Bla og naviger», så kan du feste vinduer med et enkelt klikk og dra.\n\nAlt du kan gjøre med et sveip med to fingre på en Apple-styreflate fungerer like bra med «Bla og naviger»-funksjonen i Mac Mouse Fix."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -893,7 +1385,13 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Swish]({url}) uygulaması, macOS üstünde pencere yönetimi sağlayan favori uygulamamdır. İzleme dörtgeni üzerinde yapılan basit bir kaydırma ile bir pencerenin pozisyonunu yarım, çeyrek veya tam ekran olarak pozisyonlandırabiliyorsunuz.\n\nFakat, Swish sadece İzleme Dörtgeni ile beraber çalışabiliyor. Mac Mouse Fix'i bütün üçüncü parti fareler ile kullanabilirsiniz. Herhangi bir \"Tıkla ve Sürükle\" aksiyonu ile \"Kaydır ve Yönlendir\" ataması yaparak siz de pencelererinizi basit bir tık ve kaydırma ile pozisyonlandırabilirsiniz.\n\nBir izleme dörtgeninde yapacağınız iki parmakla kaydırma aksiyonu Mac Mouse Fix'deki \"Kaydır ve Yönlendir\" aksiyonu ile başarılı bir şekilde çalışmaktadır."
+            "value" : "[Swish]({url}) uygulaması, macOS üstünde pencere yönetimi sağlayan favori uygulamamdır. İzleme dörtgeni üzerinde yapılan basit bir kaydırma ile bir pencerenin pozisyonunu yarım, çeyrek veya tam ekran olarak pozisyonlandırabiliyorsunuz.\n\nFakat, Swish sadece İzleme Dörtgeni ile beraber çalışabiliyor. Mac Mouse Fix'i bütün üçüncü parti fareler ile kullanabilirsiniz. Herhangi bir \"Tıkla ve Sürükle\" eylemi ile \"Kaydır ve Yönlendir\" ataması yaparak siz de pencelererinizi basit bir tık ve kaydırma ile pozisyonlandırabilirsiniz.\n\nBir izleme dörtgeninde yapacağınız iki parmakla kaydırma aksiyonu Mac Mouse Fix'deki \"Kaydır ve Yönlendir\" eylemi ile başarılı bir şekilde çalışmaktadır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Swish]({url}) – мій улюблений спосіб керування вікнами в macOS. Простим проведенням по трекпеду ви можете розмістити будь-яке вікно на половину, чверть або весь екран.\n\nSwish створено для жестів трекпеда, але з Mac Mouse Fix його можна використовувати з будь-якою мишею!Просто призначте для будь-якої кнопки дію 'Клацання та Перетягування' на функцію 'Прокрутка та Навігація' і ви зможете миттєво прикріплювати вікна.\n\nУсе, що можна зробити проведенням двома пальцями по трекпеду Apple, так само добре працює з функцією 'Прокрутка та Навігація' в Mac Mouse Fix."
           }
         },
         "zh-Hans" : {
@@ -931,6 +1429,24 @@
             "value" : "**Controla el brillo de la pantalla, el volumen del audio o la reproducción multimedia directamente desde el ratón**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Controlla la luminosità dello schermo, il volume o la riproduzione multimediale direttamente dal mouse**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**画面の明るさ、音量、メディア再生をマウスから直接コントロール**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Styr skjermens lysstyrke, lydvolum eller medieavspilling direkte fra musen**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -947,6 +1463,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Ekran parlaklığını, ses seviyesini ve medya kontrollerini direkt farenizden ayarlayın**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Керуйте яскравістю екрана, гучністю звуку або відтворенням мультимедіа прямо з миші**"
           }
         },
         "zh-Hans" : {
@@ -984,6 +1506,24 @@
             "value" : "Mac Mouse Fix te permite usar **cualquier tecla de tu teclado** directamente desde el ratón, incluso teclas especiales que solo se encuentran en los teclados de Apple y que te permiten controlar el brillo de la pantalla, el Volumen del Audio, la Reproducción Multimedia y más.\n\nSi no tienes un teclado de Apple a mano, **mantén pulsada Opción (⌥)** para elegir las teclas especiales de Apple."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix ti permette di usare **qualsiasi tasto della tastiera** direttamente dal mouse -\nanche i tasti speciali presenti solo sulle tastiere Apple, che permettono di controllare la luminosità dello schermo, il volume, la riproduzione multimediale e altro ancora.\n\nSe non hai una tastiera Apple a portata di mano, **tieni premuto Opzione (⌥)** per scegliere i tasti speciali Apple."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを使えば、**キーボードのあらゆるキー**をマウスから直接操作できます。\n画面の明るさ、音量、メディア再生などをコントロールする、Appleキーボード特有の特殊キーも例外ではありません。\n\n手元に Appleキーボードがない場合は、**Option (⌥) **を押しながら選択することで、これらの特殊なAppleキーを指定できるようになります。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med Mac Mouse Fix kan du bruke **hvilken som helst tast på tastaturet** direkte fra musen –\ntil og med spesialtaster som bare finnes på Apple-tastaturer, og som lar deg kontrollere skjermens lysstyrke, lydvolum, medieavspilling og mer.\n\nHvis du ikke har et Apple-tastatur for hånden, **holder du inne option (⌥)** for å velge de spesielle Apple-tastene."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1000,6 +1540,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix farenizdeki butonlarla **klavyenizdeki herhangi bir tuşu**, hatta herhangi özel/yönlendirme tuşlarını (ses seviyesi, parlaklık, medya) bile kullanmanızı sağlar.\n\nEğer bir Apple klavyeniz yoksa, **Option (⌥))** tuşunu kullanarak da özel Apple tuşlarını seçebilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix дозволяє використовувати **будь-яку клавішу на клавіатурі** безпосередньо з миші — навіть спеціальні клавіші, які є лише на клавіатурах Apple, що дозволяють керувати яскравістю екрана, гучністю звуку, відтворенням мультимедіа та іншим.\n\nЯкщо у вас під рукою немає клавіатури Apple, **утримуйте Option (⌥)**, щоб вибрати спеціальні клавіші Apple."
           }
         },
         "zh-Hans" : {
@@ -1037,6 +1583,24 @@
             "value" : "## Preguntas"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Domande"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## よくある質問"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Spørsmål"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1053,6 +1617,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Sorular"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Запитання"
           }
         },
         "zh-Hans" : {
@@ -1090,6 +1660,24 @@
             "value" : "**¿Es Mac Mouse Fix nativo en Apple Silicon?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Mac Mouse Fix è nativo su Apple Silicon?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse FixはAppleシリコンにネイティブ対応していますか？"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Er Mac Mouse Fix støttet på Apple Silicon?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1106,6 +1694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Mac Mouse Fix Apple Silicon (M-serisi) çiplerle çalışıyor mu?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи працює Mac Mouse Fix нативно на Apple Silicon?**"
           }
         },
         "zh-Hans" : {
@@ -1143,6 +1737,24 @@
             "value" : "Sí, Mac Mouse Fix se ejecuta 100% de forma nativa en Apple Silicon."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì, Mac Mouse Fix funziona in modo 100% nativo su Apple Silicon."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "はい。Mac Mouse Fixは、Appleシリコン上で100%ネイティブに動作します。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja, Mac Mouse Fix kjører 100 % på Apple Silicon."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1159,6 +1771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Evet, Mac Mouse Fix M-serisi çiplerle %100 uyumlu çalışmaktadır. "
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Так, Mac Mouse Fix працює на 100% нативно на Apple Silicon."
           }
         },
         "zh-Hans" : {
@@ -1196,6 +1814,24 @@
             "value" : "**¿Por qué hay un retraso cuando hago clic?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Perché c'è un ritardo quando faccio clic?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**クリックしたときに遅延（タイムラグ）が発生するのはなぜですか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Hvorfor er det en forsinkelse når jeg klikker?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1212,6 +1848,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Neden tıklarımda bir gecikme var?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чому виникає затримка при клацанні?**"
           }
         },
         "zh-Hans" : {
@@ -1250,6 +1892,24 @@
             "value" : "Cuando haces clic, Mac Mouse Fix podría esperar para ver si vas a hacer doble clic.<br>\nPara eliminar el retraso de un botón, elimina cualquier acción de \"Doble Clic\" para ese botón."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando fai clic, Mac Mouse Fix potrebbe attendere per vedere se stai per fare doppio clic.<br>\nPer eliminare il ritardo per un pulsante, elimina tutte le azioni 'doppio clic' per quel pulsante."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリックした際、Mac Mouse Fixはダブルクリックが行われるかどうかを判別するために待機することがあります。<br>\n特定のボタンの遅延を解消するには、そのボタンに割り当てられている'ダブルクリック'アクションをすべて削除してください。\n"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Når du klikker, kan det hende at Mac Mouse Fix venter for å se om du skal dobbeltklikke.<br>\nFor å fjerne forsinkelsen for en knapp, slett eventuelle «Dobbeltklikk»-handlinger for den knappen."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1264,8 +1924,14 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bir tıklama yaptığınızda, Mac Mouse Fix acaba çift tık mı gerçekleştirilecek diye kontrol edecektir.<br>\nBir butonda bu gecikmeyi kaldırmak için o butona atanmış herhangi bir  \"Çift Tık\" aksiyonunu kaldırın."
+            "state" : "translated",
+            "value" : "Bir tıklama yaptığınızda, Mac Mouse Fix acaba çift tık mı gerçekleştirilecek diye kontrol edecektir.<br>\nBir butonda bu gecikmeyi kaldırmak için o butona atanmış herhangi bir  \"Çift Tık\" eylemini kaldırın."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коли ви клацаєте, Mac Mouse Fix може чекати, щоб побачити, чи не збираєтеся ви зробити подвійне клацання.<br>\nЩоб прибрати затримку для кнопки, видаліть усі дії для 'Подвійного клацання' цієї кнопки."
           }
         },
         "zh-Hans" : {
@@ -1303,6 +1969,24 @@
             "value" : "**¿Puedo abrir App Exposé mediante un gesto de Clic y arrastrar?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Posso aprire Finestre dell'applicazione (App Exposé) con un gesto di clic e trascina?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**クリックとドラッグのジェスチャで、App Exposéを起動できますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Kan jeg åpne App Exposé med en klikk-og-dra-bevegelse?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1318,7 +2002,13 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Tıkla ve Sürükle aksiyonu ile Exposé'yi açabilir miyim?**"
+            "value" : "**Tıkla ve Sürükle eylemi ile Exposé'yi açabilir miyim?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи можу я відкрити App Exposé за допомогою жесту 'Клацання та перетягування'?**"
           }
         },
         "zh-Hans" : {
@@ -1356,6 +2046,24 @@
             "value" : "Sí. Simplemente elige la acción 'Espacios y Mission Control' y luego haz Clic y arrastrar *hacia abajo*.\n\nSi esto no funciona, es probable que el gesto de trackpad 'App Exposé' esté deshabilitado en tu Mac.<br>\nPuedes habilitar el gesto en Ajustes del Sistema o ejecutando el siguiente comando en el terminal:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì! Basta scegliere l'azione 'Spaces e Mission Control' e poi fare clic e trascinare *verso il basso*.\n\nSe non funziona, probabilmente è perché il gesto del trackpad per 'App Exposé' è disattivato sul tuo Mac.<br>\nPuoi attivare il gesto nelle Impostazioni di Sistema o eseguendo il seguente comando nel Terminale:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "はい！'デスクトップとMission Control'アクションを選択して、クリックしたまま*下*にドラッグするだけです。\n\nもしうまく動作しない場合は、お使いの Mac でトラックパッドの'App Exposé'ジェスチャが無効になっている可能性があります。<br>\nこのジェスチャを有効にするには、システム設定で設定するか、ターミナルで以下のコマンドを実行してください：\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja! Bare velg handlingen «Mellomrom og oppdragskontroll», og klikk og dra *ned*.\n\nHvis dette ikke fungerer, er det sannsynligvis fordi «App Exposé»-styreflatebevegelsen er deaktivert på Mac-en din.<br>\nDu kan aktivere bevegelsen under Systeminnstillinger eller ved å kjøre følgende kommando i terminalen:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1371,7 +2079,13 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evet! Sadece aksiyon olarak \"Spaces ve Mission Control\"'ü seçin ve tıkayıp aşağıya kaydırın.\n\nEğer bu çalışmaz ise Mac'inizde Exposé hareketi kapalı olabilir.<br>\nBu hareketi Sistem Ayarları üzerinden veya aşağıdaki komutu Terminal'e yapıştırarak açabilirsiniz.\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```\n"
+            "value" : "Evet! Sadece eylem olarak \"Spaces ve Mission Control\"'ü seçin ve tıkayıp aşağıya kaydırın.\n\nEğer bu çalışmaz ise Mac'inizde Exposé hareketi kapalı olabilir.<br>\nBu hareketi Sistem Ayarları üzerinden veya aşağıdaki komutu Terminal'e yapıştırarak açabilirsiniz.\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```\n"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Так! Просто виберіть дію 'Spaces & Mission Control', а потім Клацніть і Перетягніть *вниз*.\n\nЯкщо це не працює, ймовірно, жест трекпеда 'App Exposé' вимкнено на вашому Mac.<br>\nВи можете увімкнути цей жест у Системних параметрах або виконавши таку команду в терміналі:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
           }
         },
         "zh-Hans" : {
@@ -1409,6 +2123,24 @@
             "value" : "**¿Hay 'Ajustes específicos de la aplicación' o 'Perfiles'?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Esistono 'Impostazioni specifiche per app' o 'Profili'?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**'アプリごとの設定'や'プロファイル'機能はありますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Finnes det «Appspesifikke innstillinger» eller «Profiler»?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1425,6 +2157,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**'Uygulamaya özel ayarlar' veya 'Profiller' mevcut mu?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи існують 'Налаштування для окремих програм' або 'Профілі'?**"
           }
         },
         "zh-Hans" : {
@@ -1463,6 +2201,24 @@
             "value" : "En Mac Mouse Fix 2, puedes **desactivar funciones como el Desplazamiento suave** en `Más... > Ajustes específicos de la aplicación`.\n\nEn Mac Mouse Fix 3, esta función aún no existe. <br>\nTanto los 'ajustes específicos de la aplicación' como los 'ajustes específicos del ratón' están planificados, pero aún no tengo un cronograma de cuándo se lanzarán.\n\n**Consejo:** Hasta que lleguen los 'ajustes específicos de la aplicación' a Mac Mouse Fix 3, puedes hacer esto:\n\n  - Abre la pestaña `General`\n  - Activa `Mostrar en la barra de menú`\n  - Ahora puedes **desactivar funciones como el Desplazamiento suave** directamente desde la Barra de menú\n\nTambién me interesa saber cuál es tu *caso de uso*. No dudes en enviar una [solicitud de función]({url}). Tu aporte ayudará a que la función sea lo mejor posible cuando llegue."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Mac Mouse Fix 2, puoi **disattivare funzioni come lo scorrimento fluido** in `More... > App-specific settings`.\n\nIn Mac Mouse Fix 3, questa funzione non esiste ancora. <br>\nSono previste sia le 'impostazioni specifiche per app' sia le 'impostazioni specifiche per mouse', ma non ho ancora una data di rilascio.\n\n**Consiglio:** finché le 'impostazioni specifiche per app' non arriveranno in Mac Mouse Fix 3, puoi fare così:\n- Apri la scheda `Generali`\n- Attiva `Mostra nella barra dei menu`\n- Ora puoi **disattivare funzioni come lo scorrimento fluido** direttamente dalla barra dei menu\n\nMi interessa anche sapere qual è il tuo *caso d'uso*. Sentiti libero di inviare una [richiesta di funzione]({url}). Il tuo contributo aiuterà a rendere la funzione la migliore possibile quando arriverà."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix 2 では、詳細... > アプリごとの設定から**なめらかなスクロールなどの機能を無効化**することができます。\n\nMac Mouse Fix 3では、この機能はまだ実装されていません。<br>\n'アプリごとの設定'と'マウスごとの設定'の両方を計画中ですが、リリース時期についてはまだ未定です。\n\n**ヒント:** Mac Mouse Fix 3に'アプリごとの設定'が追加されるまでは、以下の方法で対応可能です：\n-`一般`タブを開く\n-`メニューバーに表示`をオンにする\n-これで、メニューバーから直接**なめらかなスクロールなどの機能を無効化**できるようになります\n\nまた、皆様がどのような*ユースケース*をお考えかについても、ぜひお聞かせください。お気軽に [機能リクエスト]({url}) をお送りください。いただいたご意見は、機能の実装時により良いものにするための大きな助けになります。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I Mac Mouse Fix 2 kan du **deaktivere funksjoner som jevn rulling** under «Mer... > Appspesifikke innstillinger».\n\nI Mac Mouse Fix 3 finnes ikke denne funksjonen ennå. <br>\nBåde «appspesifikke innstillinger» og «musspesifikke innstillinger» er planlagt, men jeg har ingen tidslinje for når de vil bli lansert ennå.\n\n**Tips:** Inntil «appspesifikke innstillinger» kommer i Mac Mouse Fix 3, kan du gjøre dette:\n- Åpne fanen «Generelt»\n- Slå på «Vis i menylinjen»\n- Nå kan du **deaktivere funksjoner som jevn rulling** direkte fra menylinjen\n\nJeg er også interessert i å høre hva ditt *brukstilfelle* er. ​​Send gjerne inn en [funksjonsforespørsel]({url}). Dine innspill vil bidra til å gjøre funksjonen så god som mulig når den kommer."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1479,6 +2235,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 2'de **Akıcı Kaydırma** gibi özellikleri `More... > App-specific settings` üzerinden kapatabilirsiniz.\n\nMac Mouse Fix 3 için ise bu özellik henüz mevcut değil. <br>\nHem 'uygulamaya özel ayarlar' hem de 'fareye özel ayarlar' planlandı ama henüz bunlar için bir zaman veya yayınlama planım bulunmuyor.\n\n**Öneri:** 'Uygulamaya özel ayarlar' Mac Mouse Fix 3'e eklenene kadar bunu yapabilirsiniz:\n- 'Genel' sekmesini açın\n- 'Menu Bar'da göster' ayarını aktifleştirin.\n- Artık **akıcı kaydırma** gibi özellikleri Menu Bar'dan hızlıca açıp kapatabilirsiniz.\n\nBu özellikleri *nasıl kullandığınızı* da merak etmekteyim ve duymak isterim. Lütfen bu durumda benden bir [özellik istemeyi]({url}) unutmayın. İstekleriniz uygulamadaki özelliklerin en iyi şekilde olmasını destekleyecektir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У Mac Mouse Fix 2, ви могли **disable features like Smooth Scrolling** під `More... > App-specific settings`.\n\nУ Mac Mouse Fix 3, ця функція досі відсутня. <br>\nПараметри для окремих програм та параметри для конкретних мишей уже в планах, проте я ще не маю точних термінів їхнього випуску.\n\n**Порада:** Доки параметри для програм не з’явилися в Mac Mouse Fix 3:\n- Відкрийте `Головну` сторінку\n- Увімкніть `Show in Menu Bar`\n- Тепер ви можете **вимкнути такі функції, як Плавна прокрутка** просто зі смуги меню\n\nМені також цікаво дізнатися про ваш *сценарій використання*. Не соромтеся надсилати [запити на нові функції]({url}). Ваші відгуки допоможуть зробити цю функцію максимально зручною, коли вона з’явиться."
           }
         },
         "zh-Hans" : {
@@ -1516,6 +2278,24 @@
             "value" : "**¿Es compatible mi ratón?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Il mio mouse è supportato?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**自分のマウスは対応していますか？\n**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Støttes musen min?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1532,6 +2312,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Farem destekleniyor mu?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи підтримується моя миша?**"
           }
         },
         "zh-Hans" : {
@@ -1569,6 +2355,24 @@
             "value" : "Probablemente. Si quieres saberlo con seguridad, lo mejor es descargar Mac Mouse Fix y probarlo.\n\nMac Mouse Fix funciona muy bien con la mayoría de los ratones. Sin embargo, en ciertos ratones diseñados para usarse con software de controlador propietario como Logitech Options, Mac Mouse Fix no puede reconocer todos los botones en este momento.\n\nEsto se debe a que estos ratones se comunican con tu ordenador utilizando un protocolo especial y propietario, en lugar del protocolo USB estándar.<br>\nMe encantaría añadir compatibilidad total para estos ratones en algún momento, pero es muchísimo trabajo y no será pronto."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Probabilmente sì. Se vuoi essere sicuro, la cosa migliore è scaricare Mac Mouse Fix e provarlo.\n\nMac Mouse Fix funziona molto bene con la maggior parte dei mouse. Tuttavia, su alcuni mouse progettati per essere usati con software driver proprietari come Logitech Options, al momento Mac Mouse Fix non riesce a riconoscere tutti i pulsanti. \n\nIl motivo è che questi mouse comunicano con il computer tramite un protocollo speciale e proprietario, anziché con il protocollo USB standard.<br>\nMi piacerebbe aggiungere la piena compatibilità con questi mouse prima o poi, ma è un lavoro enorme e non arriverà a breve."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "おそらく大丈夫です。確実に知りたい場合は、Mac Mouse Fixをダウンロードして実際に試してみるのが一番です。\n\nMac Mouse Fixは、ほとんどのマウスで非常に快適に動作します。ただし、Logitech Optionsなどの独自のドライバーソフトウェアでの使用を前提とした特定のマウスでは、現時点ではすべてのボタンを認識できない場合があります。\n\nこれは、これらのマウスが標準的な USBプロトコルではなく、メーカー独自の特殊なプロトコルを使用してコンピュータと通信しているためです。<br>\n将来的にはこれらのマウスにも完全に対応したいと考えていますが、膨大な作業が必要になるため、すぐの実現は難しい状況です。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sannsynligvis. Hvis du vil vite det sikkert, er det best å laste ned Mac Mouse Fix og prøve det ut.\n\nMac Mouse Fix fungerer veldig bra med de fleste mus. På visse mus som er designet for bruk med proprietær driverprogramvare, som Logitech Options, kan imidlertid ikke Mac Mouse Fix gjenkjenne alle knappene for øyeblikket.\n\nDet er fordi disse musene kommuniserer med datamaskinen din ved hjelp av en spesiell, proprietær protokoll, i stedet for standard USB-protokoll.<br>\nJeg skulle gjerne lagt til full kompatibilitet for disse musene på et tidspunkt, men det er mye arbeid, og det kommer ikke med det første."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1585,6 +2389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Muhtemelen. Eğer emin olmak istiyorsanız bunun en iyi yolu Mac Mouse Fix'i indirmek ve denemek olacaktır.\n\nMac Mouse Fix çoğu fare ile başarılı bir şekilde çalışmaktadır. Fakat, Mac Mouse Fix; Logitech Options gibi özel sürücüler ile çalışan farelerin düğmelerinin hepsini algılayamayabilir.\n\nBunun nedeni, bu tür farelerin Mac'iniz ile USB protokolü yerine özel bir protokol kullanıyor olmasıdır.<br>\nTabii ki bunlar için tam uyumluluk eklemeyi isterim ama bu çok büyük bir iş ve yakın bir zamanda gelmeyecektir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скоріш за все так. Якщо ви сумніваєтесь, завантажте Mac Mouse Fix безкоштовно і перевірте.\n\nMac Mouse Fix працює файно з більшістю мишок. Однак на певних мишках, призначених для використання з стороннім програмним забезпеченням для драйверів (наприклад Logitech Options), Mac Mouse Fix може не розпізнати всі клавіші. \n\nЦе тому, що ці мишки спілкуються з комп'ютером за допомогою спеціального, власного протоколу замість стандартного протоколу USB.<br>\nЯ хотів би додати повну сумісність для цих мишей в якийсь момент, але то є вагон роботи, тому не скоро з'явиться."
           }
         },
         "zh-Hans" : {
@@ -1622,6 +2432,24 @@
             "value" : "**Algunos botones de mi ratón no son reconocidos**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Alcuni pulsanti del mio mouse non vengono riconosciuti**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**マウスの一部のボタンが認識されません**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Noen knapper på musen min gjenkjennes ikke**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1638,6 +2466,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Faremdeki bazı düğmeler algılanmıyor** "
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Деякі кнопки на моїй миші не розпізнані**"
           }
         },
         "zh-Hans" : {
@@ -1675,6 +2509,24 @@
             "value" : "Consulta la pregunta **\"¿Es compatible mi ratón?\"** más arriba."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vedi la domanda **'Il mio mouse è supportato?'** qui sopra."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上記の質問**自分のマウスは対応していますか？**をご覧ください。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se spørsmålet **'Støttes musen min?'** ovenfor."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1691,6 +2543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lütfen üstteki **Farem destekleniyor mu?** sorusuna göz atın."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Див. запитання **'Чи підтримується моя миша?'** вище."
           }
         },
         "zh-Hans" : {
@@ -1728,6 +2586,24 @@
             "value" : "**¿Es compatible el Magic Mouse?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**La Magic Mouse è supportata?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Magic Mouseは対応していますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Støttes Magic Mouse?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1744,6 +2620,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Apple Magic Mouse destekleniyor mu?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи підтримується Magic Mouse?**"
           }
         },
         "zh-Hans" : {
@@ -1781,6 +2663,24 @@
             "value" : "Es posible que añada funciones en el futuro que mejoren el Apple Magic Mouse, pero actualmente, Mac Mouse Fix no tiene ningún efecto en él."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In futuro potrei aggiungere funzioni che migliorano la Apple Magic Mouse, ma al momento Mac Mouse Fix non ha alcun effetto su di essa."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将来的にはApple Magic Mouseの機能を拡張するような機能を追加するかもしれませんが、現時点では、Mac Mouse FixはMagic Mouseに対しては何の効果もありません。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg kan legge til funksjoner i fremtiden som forbedrer Apple Magic Mouse, men for øyeblikket har Mac Mouse Fix ingen effekt på den."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1797,6 +2697,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Belki ileride Apple Magic Mouse'un özelliklerini zenginleştirecek birkaç geliştirme yapabilirim ama şu an Mac Mouse Fix'in onun üzerinde bir etkisi yok."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Я можу додати функції в майбутньому, які покращать Apple Magic Mouse, але зараз Mac Mouse Fix не впливає на неї."
           }
         },
         "zh-Hans" : {
@@ -1834,6 +2740,24 @@
             "value" : "**¿Son compatibles las ruedas de desplazamiento inclinables?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Le rotelle di scorrimento inclinabili sono supportate?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**チルトホイール（左右スクロール）に対応していますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Støttes vippbare rullehjul?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1850,6 +2774,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Eğilebilen kaydırma tekerlekleri destekleniyor mu?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи підтримуються коліщатка з нахилом?**"
           }
         },
         "zh-Hans" : {
@@ -1887,6 +2817,24 @@
             "value" : "Algunos ratones te permiten inclinar la rueda de desplazamiento hacia la izquierda o hacia la derecha para desplazarte horizontalmente. Mac Mouse Fix hará que esto se sienta más natural y fácil de controlar. Sin embargo, actualmente no es posible activar otras acciones, como cambiar entre escritorios, inclinando la rueda de desplazamiento. Me encantaría implementar esta función en algún momento, pero es muchísimo trabajo y no será pronto."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alcuni mouse permettono di inclinare la rotellina a sinistra o a destra per scorrere in orizzontale. Mac Mouse Fix rende questo gesto più naturale e facile da controllare. Tuttavia, al momento non è possibile attivare altre azioni, come il passaggio da uno Space all'altro, inclinando la rotellina. Mi piacerebbe implementare questa funzione prima o poi, ma è un lavoro enorme e non arriverà a breve."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一部のマウスでは、スクロールホイールを左右に傾けて横スクロールを行うことができます。Mac Mouse Fixを使用すると、この操作がより自然で制御しやすくなります。ただし、現在のところ、ホイールを傾けてデスクトップを切り替えるといった他のアクションを割り当てることはできません。将来的にはこの機能を実装したいと考えていますが、膨大な作業が必要になるため、すぐの実現は難しい状況です。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noen mus lar deg vippe rullehjulet til venstre eller høyre for å rulle horisontalt. Mac Mouse Fix vil få dette til å føles mer naturlig og lett å kontrollere. Imidlertid er det foreløpig ikke mulig å utløse andre handlinger, for eksempel å bytte mellom skrivebord, ved å vippe rullehjulet. Jeg vil gjerne implementere denne funksjonen på et tidspunkt, men det er mye arbeid, og det kommer ikke snart."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1902,7 +2850,13 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bazı fareler kaydırma tekerleklerini sağa veya sola eğmenize olanak sağlar. Mac Mouse Fix bunu daha kolay ve doğal olarak kontrol etmenizi sağlar. Fakat, şu anda bu butonlar ile diğer aksiyonları aktifleştiremezsiniz.\n\nTabii ki bunlar için de tam uyumluluk eklemeyi isterim ama bu çok büyük bir iş ve yakın bir zamanda gelmeyecektir."
+            "value" : "Bazı fareler kaydırma tekerleklerini sağa veya sola eğmenize olanak sağlar. Mac Mouse Fix bunu daha kolay ve doğal olarak kontrol etmenizi sağlar. Fakat, şu anda bu butonlar ile diğer eylemleri aktifleştiremezsiniz.\n\nTabii ki bunlar için de tam uyumluluk eklemeyi isterim ama bu çok büyük bir iş ve yakın bir zamanda gelmeyecektir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деякі миші дають змогу нахиляти коліщатко ліворуч або праворуч для горизонтального прокручування. Mac Mouse Fix зробить це природнішим і простішим у керуванні. Однак зараз неможливо призначити інші дії (наприклад, перемикання між робочими столами) на нахил коліщатка. Я хотів би реалізувати цю функцію, але це потребує величезної роботи, тому найближчим часом вона не з’явиться."
           }
         },
         "zh-Hans" : {
@@ -1940,6 +2894,24 @@
             "value" : "**Desactivar la aceleración del puntero**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Disattivare l'accelerazione del puntatore**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ポインタ加速をオフにする**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Slå av pekerakselerasjon**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1956,6 +2928,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**İmleç ivmelendirmeyi kapatmak**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Вимкнення прискорення вказівника**"
           }
         },
         "zh-Hans" : {
@@ -1993,6 +2971,24 @@
             "value" : "Mac Mouse Fix no te permite desactivar la aceleración del puntero, pero si utilizas **macOS 14 Sonoma** o posterior, puedes desactivar la aceleración del puntero en `Ajustes del Sistema > Ratón > Avanzado... > Aceleración del puntero`.\n\nPlaneo añadir formas realmente buenas de mejorar la aceleración del puntero en el futuro, pero no estoy seguro de cuándo estará disponible."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix non permette di disattivare l'accelerazione del puntatore, ma se usi **macOS 14 Sonoma** o versioni successive, puoi disattivarla in `Impostazioni di Sistema > Mouse > Avanzate... > Accelerazione del puntatore`.\n\nHo in programma di aggiungere in futuro modi davvero efficaci per migliorare l'accelerazione del puntatore, ma non so ancora quando arriveranno."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix自体にはポインタ加速をオフにする機能はありませんが、**macOS 14 Sonoma**以降をお使いであれば、`システム設定 > マウス > 詳細... > ポインタの加速`からオフに設定することができます。\n\n将来的には、ポインタ加速をより使いやすく改善する素晴らしい機能を追加する予定ですが、実装時期についてはまだ未定です。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix lar deg ikke slå av pekerakselerasjonen, men hvis du bruker **macOS 14 Sonoma** eller nyere, kan du slå av pekerakselerasjonen under \"Systeminnstillinger > Mus > Avansert... > Pekerakselerasjon\".\n\nJeg planlegger å legge til veldig fine måter å forbedre pekerakselerasjonen på i fremtiden, men jeg er ikke sikker på når det kommer."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2009,6 +3005,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix imlecinizin ivmelendirmesini kapatamaz ama eğer **macOS 14 Sonoma** veya daha yüksek bir sürümü kullanıyorsanız `Sistem Ayarları > Fare > Gelişmiş... > İmleç İvmelendirme` ayarını kapatabilirsiniz.\n\nİmleç ivmelendirmeyi geliştirecek birkaç yol düşünüyorum ama ne zaman ekleyeceğine dair bir fikrim bulunmuyor."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix не дозволяє вимкнути прискорення вказівника, але якщо ви використовуєте **macOS 14 Sonoma** або новішу версію, ви можете вимкнути прискорення вказівника в меню `Системні параметри > Миша > Додатково... > Прискорення вказівника`.\n\nЯ планую додати дійсно зручні способи покращення прискорення вказівника в майбутньому, але я не впевнений, коли це станеться."
           }
         },
         "zh-Hans" : {
@@ -2046,6 +3048,24 @@
             "value" : "**¿Cuál es la diferencia entre Mac Mouse Fix 2 y 3?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Qual è la differenza tra Mac Mouse Fix 2 e 3?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Mac Mouse Fix 2と3の違いは何ですか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Hva er forskjellen mellom Mac Mouse Fix 2 og 3?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2062,6 +3082,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Mac Mouse Fix 2 ile 3 arasındaki fark nedir?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Яка різниця між Mac Mouse Fix 2 та 3?**"
           }
         },
         "zh-Hans" : {
@@ -2099,6 +3125,24 @@
             "value" : "**Monetización:** <br>\nMac Mouse Fix 2 es 100% gratuito y planeo seguir dándole soporte. <br>\nMac Mouse Fix 3 es gratuito durante 30 días, y luego cuesta unos pocos dólares para poseerlo.\n\n**Funciones:** <br>\nAquí tienes una [comparativa de funciones]({url_1}). La escribí poco después del lanzamiento de Mac Mouse Fix 3, por lo que puede estar ligeramente desactualizada. <br>\nTambién puedes descargar Mac Mouse Fix [2]({url_2}) y [3]({url_3}) de forma gratuita para evaluarlos tú mismo."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Monetizzazione:** <br>\nMac Mouse Fix 2 è gratuito al 100% e ho intenzione di continuare a supportarlo. <br>\nMac Mouse Fix 3 è gratuito per 30 giorni, poi costa pochi euro per averlo per sempre. \n\n**Funzioni:** <br>\nEcco un [confronto delle funzioni]({url_1}). L'ho scritto poco dopo l'uscita di Mac Mouse Fix 3, quindi potrebbe essere leggermente datato. <br>\nPuoi anche scaricare gratuitamente Mac Mouse Fix [2]({url_2}) e [3]({url_3}) per valutarli di persona!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**収益化について：** <br>\nMac Mouse Fix 2は完全に無料であり、今後もサポートを継続する予定です。<br>\nMac Mouse Fix 3は 30 日間の無料トライアルが可能で、その後は数ドルの買い切り価格となります。\n\n**機能について： **<br>\n[機能の比較]({url_1}) はこちらからご確認いただけます。これは Mac Mouse Fix 3のリリース直後に作成されたものなので、一部の内容が古い可能性があります。<br>\nMac Mouse Fix [2]({url_2}) と [3]({url_3}) はどちらも無料でダウンロードできますので、ぜひご自身で実際に試して比較してみてください！"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Inntektsgenerering:** <br>\nMac Mouse Fix 2 er 100 % gratis, og jeg planlegger å fortsette å støtte den. <br>\nMac Mouse Fix 3 er gratis i 30 dager, og koster deretter noen få dollar å eie.\n\n**Funksjoner:** <br>\nHer er en [funksjonssammenligning]({url_1}). Jeg skrev den kort tid etter at Mac Mouse Fix 3 ble utgitt – så den kan være litt utdatert. <br>\nDu kan også laste ned Mac Mouse Fix [2]({url_2}) og [3]({url_3}) gratis for å vurdere dem selv!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2115,6 +3159,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Ücretlendirme** <br>\nMac Mouse Fix 2 tamamen ücretsiz ve onu desteklemeye devam etmeyi planlıyorum. <br>\nMac Mouse Fix 3 ise 30 gün için ücretsiz, sonrasında da birkaç Türk Lirası ile satın alınabilir.\n\n**Özellikler** <br>\n[Buradan]({url_1}) bir özellik kıyaslamasına göz atabilirsiniz. Bunu Mac Mouse Fix 3'ü yayınladığımda oluşturmuştum, bu yüzden biraz eski olabilir. <br>\nBunun yanı sıra, Hem Mac Mouse Fix 2]({url_2}) hem de [3]({url_3})'ü ücretsiz bir şekilde indirerek kendiniz de deneyebilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Монетизація:** <br>\nMac Mouse Fix 2 на 100% безкоштовний і я планую продовжувати його підтримувати. <br>\nMac Mouse Fix 3 безкоштовний протягом 30 днів, а потім коштує кілька баксів. \n\n**Функції:** <br>\nОсь [порівняння функцій]({url_1}). Я написав його незабаром після виходу Mac Mouse Fix 3 - тому він може бути трохи застарілим. <br>\nВи також можете завантажити Mac Mouse Fix [2]({url_2}) і [3]({url_3}) безкоштовно, щоб порівняти їх самостійно!"
           }
         },
         "zh-Hans" : {
@@ -2152,6 +3202,24 @@
             "value" : "**¿Recopila Mac Mouse Fix mis datos?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Mac Mouse Fix raccoglie i miei dati?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Mac Mouse Fixはデータを収集しますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Samler Mac Mouse Fix inn dataene mine?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2168,6 +3236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Mac Mouse Fix verilerimi topluyor mu?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи збирає Mac Mouse Fix мої дані?**"
           }
         },
         "zh-Hans" : {
@@ -2205,6 +3279,24 @@
             "value" : "Mac Mouse Fix no tiene anuncios y no recopila ninguna información personal sobre ti.\n\nSin embargo, en el momento en que compras la aplicación, el proveedor de ventas Gumroad.com recopila cierta información personal, como tu dirección de correo electrónico, y esta información es visible para mí. Esto es necesario para poder emitir reembolsos, enviar una clave de licencia a tu correo electrónico, etc. No puedo desactivar esto. Para obtener más información sobre los datos recopilados al comprar Mac Mouse Fix, consulta la [Política de privacidad de Gumroad]({url})."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix non contiene pubblicità e non raccoglie alcuna informazione personale su di te.\n\nTuttavia, nel momento in cui acquisti l'app, il fornitore di vendita Gumroad.com raccoglie alcune informazioni personali, come il tuo indirizzo email, e queste informazioni sono visibili a me. Ciò è necessario per poter emettere rimborsi, inviare una chiave di licenza alla tua email e così via. Non posso disattivarlo. Per saperne di più sui dati raccolti quando acquisti Mac Mouse Fix, consulta l'[Informativa sulla privacy di Gumroad]({url})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixには広告はなく、お客様の個人情報を収集することもありません。\n\nただし、アプリをご購入いただく際、販売プラットフォームであるGumroad.comがメールアドレスなどの一部の個人情報を収集し、その情報は開発者である私からも確認できるようになります。これは、返金の対応やライセンスキーの送付などのために必要な情報です。システムの都合上、この収集を無効にすることはできません。購入時に収集されるデータの詳細については、[Gumroadのプライバシーポリシー]({url})をご確認ください。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix har ingen annonser, og den samler ingen personlig informasjon om deg.\n\nMen i det øyeblikket du kjøper appen, samler salgsleverandøren Gumroad.com inn personlig informasjon, for eksempel e-postadressen din, og denne informasjonen er synlig for meg. Dette er nødvendig for å kunne utstede refusjoner, sende en lisensnøkkel til e-posten din osv. Jeg kan ikke slå av dette. For å lære mer om dataene som samles inn når du kjøper Mac Mouse Fix, se [Gumroads retningslinjer for personvern]({url})."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2221,6 +3313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix reklam içermez ve sizin hakkınızda herhangi bir veri toplamaz.\n\nFakat, şu anda uygulamayı satın aldığınızda, sağlayıcı olan Gumroad.com, e-posta adresiniz gibi sizin hakkınızda kişisel bilgileri toplar ve bunlar bana da görünür olur. Bu da iade, lisans anahtarı gönderimi gibi nedenlerden dolayı zorunludur ve bunu kapatmak benim kontrolümde değildir.\n\nMac Mouse Fix'i satın aldığınızda toplanan veriler hakkında bilgi almak için [Gumroad Gizlilik Politikası]({url})'nı inceleyebilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix не має реклами та не збирає жодної особистої інформації про вас.\n\nОднак у момент купівлі програми постачальник послуг Gumroad.com збирає деяку особисту інформацію, таку як ваша електронна адреса, і ця інформація видима для мене. Це необхідно для повернення коштів, надсилання ліцензійного ключа на вашу електронну пошту тощо. Я не можу це вимкнути. Щоб дізнатися більше про дані, що збираються під час купівлі Mac Mouse Fix, див. [Політику конфіденційності Gumroad]({url})."
           }
         },
         "zh-Hans" : {
@@ -2258,6 +3356,24 @@
             "value" : "**¿En cuántos dispositivos puedo usar mi licencia?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Su quanti dispositivi posso usare la mia licenza?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**1つのライセンスで何台のデバイスまで使用できますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Hvor mange enheter kan jeg bruke lisensen min på?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2274,6 +3390,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisansımı kaç adet cihazda kullanabilirim?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**На скількох пристроях я можу використовувати свою ліцензію?**"
           }
         },
         "zh-Hans" : {
@@ -2307,8 +3429,26 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tu licencia funciona en **todos tus Mac**.<br>\nEl objetivo es que simplemente puedas comprar una licencia, activarla y no tener que preocuparte por ella nunca más.<br>\nSi inicias sesión con la misma cuenta de Apple, ¡la licencia incluso se sincronizará automáticamente con tus otros dispositivos a través de iCloud!\n\nSi tienes problemas para activar tu licencia, puedes [enviarme un correo electrónico]({url}).<br>\nA veces tardo un poco en responder. Pido disculpas por esto. ¡Pero me pondré en contacto contigo!\n\nHay una restricción:<br>\nLas licencias no están destinadas a ser compartidas públicamente. Una licencia está destinada a una persona. Las licencias compartidas públicamente pueden ser invalidadas. (¡Tu madre no es 'el público' y compartirla con ella está bien!)"
+            "state" : "translated",
+            "value" : "Tu licencia funciona en **todos tus Mac**. <br>\nEl objetivo es que simplemente puedas comprar una licencia, activarla y no tener que preocuparte por ella nunca más. <br>\nSi inicias sesión con la misma cuenta de Apple, ¡la licencia incluso se sincronizará automáticamente con tus otros dispositivos a través de iCloud!\n\nSi tienes problemas para activar tu licencia, puedes [enviarme un correo electrónico]({url}). <br>\nA veces tardo un poco en responder. Pido disculpas por esto. ¡Pero me pondré en contacto contigo!\n\nHay una restricción: <br>\nLas licencias no están destinadas a ser compartidas públicamente. Una licencia está destinada a una persona. Las licencias compartidas públicamente pueden ser invalidadas. (Compartirla con tu mamá está bien.)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua licenza funziona su **tutti i tuoi Mac**. <br>\nL'obiettivo è che tu possa semplicemente acquistare una licenza, attivarla e non doverti più preoccupare di nulla. <br>\nSe accedi con lo stesso Apple Account, la licenza si sincronizzerà persino automaticamente con gli altri tuoi dispositivi tramite iCloud!\n\nSe riscontri problemi nell'attivazione della licenza, puoi [inviarmi un'email]({url}). <br>\nA volte ci metto un po' a rispondere. Mi dispiace. Ma ti risponderò!\n\nC'è una sola restrizione: <br>\nLe licenze non sono pensate per essere condivise pubblicamente. Una licenza è pensata per una sola persona. Le licenze condivise pubblicamente potrebbero essere invalidate. (Condividerla con tua madre va bene.)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスはお持ちの**すべてのMac**でご利用いただけます。<br>\n一度ライセンスを購入して有効化すれば、あとは何も心配せずに使い続けられるようにすることを目指しています。<br>\n同じAppleアカウントでログインしていれば、iCloudを通じて他のデバイスにもライセンスが自動的に同期されます！\n\nライセンスの有効化で問題が発生した場合は、[こちらからメールでお問い合わせ]({url})ください。<br>\n返信にお時間をいただく場合があります。ご不便をおかけして申し訳ありませんが、必ずお返事いたします！\n\nひとつだけ制限事項があります：<br>\nライセンスを不特定多数の人と共有することは禁止されています。1つのライセンスは、お一人様につき1つです。公開・共有されたライセンスは無効化される場合があります。（お母さんと共有するくらいなら大丈夫ですよ。）"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisensen din fungerer på **alle Mac-ene dine**. <br>\nMålet er at du bare kan kjøpe en lisens, aktivere den og aldri trenger å bekymre deg for den igjen. <br>\nHvis du logger på med samme Apple-konto, vil lisensen til og med synkroniseres automatisk til de andre enhetene dine via iCloud!\n\nHvis du støter på problemer med å aktivere lisensen din, kan du [sende meg en e-post]({url}). <br>\nNoen ganger bruker jeg litt tid på å svare. Jeg beklager dette. Men jeg kommer tilbake til deg!\n\nDet er én begrensning: <br>\nLisenser er ikke ment å deles offentlig. Én lisens er ment for én person. Offentlig delte lisenser kan bli ugyldige. (Det er greit å dele med moren din.)"
           }
         },
         "pt-BR" : {
@@ -2325,8 +3465,14 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lisansınız **size ait bütün Mac'lerde** çalışır.<br>\nBuradaki amaç sizin sadece bir lisans satın aldıktan ve aktifleştirdikten sonra tekrar derdine düşmemenizdir.<br>\nEğer diğer Mac'lerde aynı Apple hesabı ile giriş yaparsanız iCloud sayesinde lisansınız diğer cihazlara da aktarılacaktır!\n\nEğer lisans aktivasyonunda problem yaşıyorsanız [bana bir E-Posta gönderin]({url}).<br>\nBazen dönütlerim gecikebiliyor, bunun için üzgünüm; ama geri dönüş yapacağım!\n\nAma bu konuda sadece bir engel bulunuyor:<br>\nLisanslar herkesle paylaşmak için değil, bir lisans bir kişi için geçerlidir. Herkese açık olarak paylaşılmış lisanslar geçersiz kılınacaktır. (Buradaki herkes örneğin anneniz değil, onunla paylaşmanız tabii ki bir sorun değildir!)"
+            "state" : "translated",
+            "value" : "Lisansınız **size ait bütün Mac'lerde** çalışır.<br>\nBuradaki amaç sizin sadece bir lisans satın aldıktan ve aktifleştirdikten sonra tekrar derdine düşmemenizdir.<br>\nEğer diğer Mac'lerde aynı Apple hesabı ile giriş yaparsanız iCloud sayesinde lisansınız diğer cihazlara da aktarılacaktır!\n\nEğer lisans aktivasyonunda problem yaşıyorsanız [bana bir E-Posta gönderin]({url}).<br>\nBazen cevaplarım gecikebiliyor, bunun için üzgünüm; ama geri dönüş yapacağım!\n\nAma bu konuda sadece bir engel bulunuyor:<br>\nLisanslar herkesle paylaşmak için değil, bir lisans bir kişi için geçerlidir. Herkese açık olarak paylaşılmış lisanslar geçersiz kılınacaktır. (Buradaki herkes örneğin anneniz değil, onunla paylaşmanız tabii ki bir sorun değildir!)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша ліцензія працює на **всіх ваших комп’ютерах Mac**. <br>\nМета полягає в тому, щоб ви могли просто купити ліцензію, активувати її та більше ніколи про це не турбуватися. <br>\nЯкщо ви увійдете за допомогою того самого облікового запису Apple, ліцензія навіть автоматично синхронізується з іншими вашими пристроями через iCloud!\n\nЯкщо ви зіткнетеся з проблемами під час активації ліцензії, ви можете [надіслати мені е-лист]({url}). <br>\nІноді я довго відповідаю. Вибачте за це. Але я обов'язково вам відповім!\n\nЄ одне обмеження: <br>\nЛіцензії не призначені для публічного поширення. Одна ліцензія призначена для однієї особи. Публічно поширені ліцензії можуть бути анульовані. (Поділитися з мамою — це нормально.)"
           }
         },
         "zh-Hans" : {
@@ -2364,6 +3510,24 @@
             "value" : "**¿Funcionará mi licencia con futuras versiones?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**La mia licenza funzionerà con le versioni future?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**1つのライセンスで今後のバージョンも使用できますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Vil lisensen min fungere med fremtidige versjoner?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2380,6 +3544,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisansım gelecek sürümler için de geçerli mi?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи працюватиме моя ліцензія з майбутніми версіями?**"
           }
         },
         "zh-Hans" : {
@@ -2417,6 +3587,24 @@
             "value" : "Tu licencia cubre todas las versiones de Mac Mouse Fix 3.x.\n\nLas versiones futuras, como la 4.0, podrían requerir una nueva compra, pero intentaré evitarlo, a menos que sea necesario para apoyar el desarrollo continuo de la aplicación."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua licenza copre tutte le versioni 3.x di Mac Mouse Fix.\n\nLe versioni future, come la 4.0, potrebbero richiedere un nuovo acquisto, ma cercherò di evitarlo, a meno che non sia necessario per sostenere lo sviluppo continuo dell'app."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このライセンスは、Mac Mouse Fix 3.xのすべてのバージョンに対応しています。\n\n将来的に4.0などの新しいメジャーバージョンが登場した際、新たにライセンスの購入が必要になる可能性があります。しかし、アプリの継続的な開発を支えるためにどうしても不可避な状況でない限り、極力そのような事態（再購入の必要性）は避けたいと考えています。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisensen din dekker alle Mac Mouse Fix 3.x-versjoner.\n\nFremtidige versjoner, som 4.0, kan kreve et nytt kjøp, men jeg skal prøve å unngå dette, med mindre det er nødvendig for å støtte den fortsatte utviklingen av appen."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2433,6 +3621,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansınız bütün Mac Mouse Fix 3.x sürümleri için geçerli olacaktır.\n\nMac Mouse Fix 4 ve gelecek sürümleri başka satın alımlar isteyebilir fakat bundan uygulamayı geliştirmem mümkün olduğunca uzak kalmaya çalışacağım."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша ліцензія поширюється на всі версії Mac Mouse Fix 3.x.\n\nМайбутні версії, наприклад 4.0, можуть вимагати нової покупки, але я намагатимуся уникати цього, якщо це не буде необхідно для підтримки подальшої розробки програми."
           }
         },
         "zh-Hans" : {
@@ -2470,6 +3664,24 @@
             "value" : "**¿Existe una política de reembolso?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Esiste una politica di rimborso?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**返金ポリシーはありますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Finnes det refusjonsregler?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2486,6 +3698,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**İade politikanız nedir?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи є політика повернення?**"
           }
         },
         "zh-Hans" : {
@@ -2523,6 +3741,24 @@
             "value" : "No hay una política de reembolso oficial, pero la aplicación es gratuita durante 30 días.\n\nSi experimentas algún problema después de comprar la aplicación, simplemente ponte en contacto conmigo y haré todo lo posible para ayudarte."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non esiste una politica di rimborso ufficiale, ma l'app è gratuita per 30 giorni.\n\nSe riscontri problemi dopo aver acquistato l'app, contattami e farò del mio meglio per aiutarti."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公式な返金ポリシーは設けておりませんが、30日間の無料トライアル期間があります。\n\nご購入後に問題が発生した場合は、お気軽にお問い合わせください。解決に向けて、できる限りのサポートをさせていただきます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Det er ingen offisiell refusjonspolicy, men appen er gratis i 30 dager.\n\nHvis du opplever problemer etter å ha kjøpt appen, er det bare å ta kontakt med meg, så skal jeg gjøre mitt beste for å hjelpe."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2539,6 +3775,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resmi bir iade politikası bulunmuyor ama uygulama 30 gün boyunca ücretsizdir.\n\nEğer uygulamada bir problem yaşarsanız lütfen bana ulaşın, sizlere yardımcı olmak için elimden geleni yapacağım."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Офіційної політики повернення коштів немає, але програма безкоштовна протягом 30 днів.\n\nЯкщо після купівлі програми у вас виникнуть проблеми, просто зв’яжіться зі мною, і я зроблю все можливе, щоб допомогти."
           }
         },
         "zh-Hans" : {
@@ -2576,6 +3818,24 @@
             "value" : "**¿Mac Mouse Fix seguirá siendo de código abierto ahora que está monetizado?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Mac Mouse Fix resterà open source ora che è a pagamento?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**有料化されましたが、Mac Mouse Fixは今後もオープンソースであり続けますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Vil Mac Mouse Fix fortsatt være åpen kildekode nå som det er inntektsgenerert?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2592,6 +3852,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Mac Mouse Fix ücretli olmasına rağmen hala açık kaynaklı kalacak mı?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи залишиться Mac Mouse Fix продуктом із відкритим вихідним кодом тепер, коли він монетизується?**"
           }
         },
         "zh-Hans" : {
@@ -2629,6 +3895,24 @@
             "value" : "Sí, ¡Mac Mouse Fix seguirá siendo de código abierto!\n\nAnimo a cualquiera a utilizar el código fuente de Mac Mouse Fix en sus propios proyectos, siempre y cuando no lancen una simple copia de Mac Mouse Fix.\n\nInfórmate sobre los detalles en la [Licencia MMF]({url}) bajo la cual están licenciados Mac Mouse Fix 3 y versiones posteriores."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì, Mac Mouse Fix resterà open source!\n\nInvito chiunque a usare il codice sorgente di Mac Mouse Fix nei propri progetti, purché non rilasci una semplice copia di Mac Mouse Fix.\n\nScopri i dettagli nella [MMF License]({url}), con cui è distribuito Mac Mouse Fix 3 e successivi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "はい、Mac Mouse Fixはこれからもオープンソースであり続けます！\n\nMac Mouse Fixの単なるコピーを公開しない限り、どなたでもご自身のプロジェクトでソースコードを活用していただくことを歓迎します。\n\nMac Mouse Fix 3 以降に適用される[MMF ライセンス]({url})にて、詳細をご確認いただけます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja, Mac Mouse Fix vil fortsatt være åpen kildekode!\n\nJeg oppfordrer alle til å bruke kildekoden til Mac Mouse Fix i sine egne prosjekter, så lenge de ikke gir ut en enkel kopi av Mac Mouse Fix.\n\nFinn ut mer om detaljene i [MMF-lisensen]({url}) som Mac Mouse Fix 3 og nyere er lisensiert under."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2645,6 +3929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Evet, Mac Mouse Fix hala açık kaynaklı olacak!\n\nMac Mosue Fix'in kaynak kodlarını herkesin kullanması için destek veriyorum, tabii basitçe bir Mac Mouse Fix kopyası yapmadıkları durumda.\n\n[MMF Lisansı detayları]({url})'na bakarak Mac Mouse Fix 3 ve sonrasının lisans detaylarına göz atabilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Так, Mac Mouse Fix залишиться продуктом із відкритим вихідним кодом!\n\nЯ заохочую будь-кого використовувати вихідний код Mac Mouse Fix у своїх власних проєктах, доки вони не випускатимуть просту копію Mac Mouse Fix.\n\nДізнайтеся про подробиці в [Ліцензії MMF]({url}), за якою ліцензуються Mac Mouse Fix 3 та пізніші версії."
           }
         },
         "zh-Hans" : {
@@ -2682,6 +3972,24 @@
             "value" : "**¿Puedo obtener Mac Mouse Fix gratis si ya hice una donación?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Posso avere Mac Mouse Fix gratis se ho già fatto una donazione?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**以前に寄付をしたことがありますが、無料でMac Mouse Fixを利用できますか？**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Kan jeg få Mac Mouse Fix gratis hvis jeg allerede har donert?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2698,6 +4006,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Bağış yaptıysam Mac Mouse Fix'i ücretsiz bir şekilde alabilir miyim?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чи можу я отримати Mac Mouse Fix безкоштовно якщо я вже задонатив?**"
           }
         },
         "zh-Hans" : {
@@ -2735,6 +4049,24 @@
             "value" : "Sí. Si donaste a través de PayPal, haz clic [aquí]({url}) para recibir una **licencia gratuita**."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì! Se hai donato tramite PayPal, fai clic [qui]({url}) per ricevere una **licenza gratuita**."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "はい！ PayPalを通じて寄付された方は、[こちら]({url})をクリックして無料ライセンスを受け取ることができます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja! Hvis du donerte via PayPal, klikk [her]({url}) for å motta en **gratis lisens**."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2751,6 +4083,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Evet! Eğer PayPal üzerinden bağış yaptıysanız, [buraya]({url}) tıklayarak **ücretsiz lisansınızı** alabilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Так! Якщо ви задонатили через PayPal, клацніть [тут]({url}) щоб отримати **безкоштовну ліцензію**."
           }
         },
         "zh-Hans" : {
@@ -2788,6 +4126,24 @@
             "value" : "## Cómo puedes contribuir\n\nHay varias formas de ayudar al proyecto.<br>\n¡Consulta los [Agradecimientos]({url}) para obtener más información sobre quién ha contribuido ya!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Come puoi contribuire\n\nCi sono diversi modi per aiutare il progetto.<br>\nConsulta i [Riconoscimenti]({url}) per scoprire chi ha già contribuito!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##貢献する方法\n\nプロジェクトを支援する方法はいくつかあります。<br>\nすでに貢献してくださった方々については、[謝辞]({url})をご覧ください！"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Hvordan du kan bidra\n\nDet er flere måter å hjelpe prosjektet på.<br>\nSjekk ut [Acknowledgements]({url}) for mer informasjon om hvem som allerede har bidratt!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2804,6 +4160,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Nasıl destek olabilirsiniz\n\nBu projeye destek olmanın birden fazla yolu var.<br>\n[Teşekkürler]({url}) kısmına bakarak bu projeye destek olan herkese bakabilirsiniz!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Як ви можете задонатити\n\nЄ кілька варіантів як ви можете допомогти.<br>\nОгляньте [Acknowledgements]({url}) для отримання додаткової інформації про те, хто вже зробив свій внесок!"
           }
         },
         "zh-Hans" : {
@@ -2841,6 +4203,24 @@
             "value" : "**Dar comentarios**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Dare un feedback**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**フィードバックを送る**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Gi tilbakemelding**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2857,6 +4237,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Geribildirim**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Надіслати відгук**"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**提交反馈**"
           }
         }
       }
@@ -2888,6 +4280,24 @@
             "value" : "Puedes ayudar compartiendo tus **ideas**, **problemas** y **comentarios** a través del [Asistente de comentarios]({url})."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi aiutare condividendo le tue **idee**, i tuoi **problemi** e i tuoi **feedback** tramite il [Feedback Assistant]({url})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[フィードバック・アシスタント]({url})を通じて、あなたの**アイデア**、**不具合**、**フィードバック**をお聞かせください。開発の大きな助けになります。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan hjelpe ved å dele dine **ideer**, **problemer** og **tilbakemeldinger** via [Feedback Assistant]({url})."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2904,6 +4314,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Fikirleriniz**, **problemleriniz**, ve **geribildirimlerinizi** [Geribildirim Asistanı]({url})'nı kullanarak paylaşabilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви можете допомогти, поділившись своїми **ідеями**, **проблемами** та **відгуками** через [Помічник із відгуків]({url})."
           }
         },
         "zh-Hans" : {
@@ -2941,6 +4357,24 @@
             "value" : "**Contribuir con dinero**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Contribuire con denaro**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**開発を支援する**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Bidra med penger**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2957,6 +4391,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Bağış yapmak**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Задонатити**"
           }
         },
         "zh-Hans" : {
@@ -2994,6 +4434,24 @@
             "value" : "Espero poder mantenerme económicamente a través de Mac Mouse Fix. De esa manera, puedo seguir mejorando y trabajando en la aplicación. Si deseas ayudar, puedes:\n\n1.  Comprar Mac Mouse Fix haciendo clic en el botón de la aplicación o haciendo clic [aquí]({url_1}).\n2.  Darme una [propina]({url_2}) en PayPal. No gano mucho dinero con esto, pero siempre es lindo y motivador recibir una donación.\n3.  [Patrocinarme]({url_3}) en GitHub. Un patrocinio mensual es una excelente manera de apoyar el proyecto y ayudarme a tener un ingreso más estable."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spero di riuscire a mantenermi economicamente grazie a Mac Mouse Fix. In questo modo posso continuare a migliorare e a lavorare sull'app. Se vuoi aiutarmi, puoi:\n1. Acquistare Mac Mouse Fix facendo clic sul pulsante nell'app, oppure facendo clic [qui]({url_1}).\n2. Lasciarmi una [mancia]({url_2}) su PayPal. Non ne ricavo molto, ma ricevere una donazione è sempre dolce e motivante.\n3. [Sponsorizzarmi]({url_3}) su GitHub. Uno sponsor mensile è un ottimo modo per sostenere il progetto e aiutarmi ad avere un reddito più stabile."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私は Mac Mouse Fixを通じて経済的に自立することを目指しています。そうすることで、今後もアプリの改善や開発に専念し続けることができます。もし活動を支援していただけるなら、以下の方法があります：\n1.アプリ内のボタン、または[こちら]({url_1})をクリックしてMac Mouse Fixを購入する。\n2.PayPalで[チップを送る]({url_2})。これによる大きな収益はありませんが、寄付をいただけると純粋に嬉しく、開発の励みになります。\n3.GitHubで[スポンサーになる]({url_3})。マンスリースポンサーシップは、プロジェクトを支え、私の収入を安定させるための大きな助けとなります。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg håper å kunne opprettholde meg selv økonomisk gjennom Mac Mouse Fix. På den måten kan jeg fortsette å forbedre og jobbe med appen. Hvis du vil hjelpe, kan du:\n1. Kjøp Mac Mouse Fix ved å klikke på knappen i appen, eller klikke [her]({url_1}).\n2. [Tips meg]({url_2}) på PayPal. Jeg får ikke mye penger av dette, men det er alltid fint og motiverende å få en donasjon.\n3. [Spons meg]({url_3}) på GitHub. En månedlig sponsing er en fin måte å støtte prosjektet og hjelpe meg med å få en mer stabil inntekt."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3010,6 +4468,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'i kendim finansal olarak destekleyebilmeyi umuyorum. Bu sayede, uygulamayı geliştirmeyi sağlayabilirim. Yardımcı olmak isterseniz:\n1. [Buradan]({url_1}) veya uygulama üzerinden Mac Mouse Fix'i satın alın.\n2. Bana [PayPal üzerinden bağış yapın]({url_2}). Bundan çok fazla bağış almıyorum, ama yine de bağış almak tatlı ve motive edici.\n3. Bana [GitHub üzerinden sponsor olun]({url_3}). Aylık bir sponsorluk projeyi desteklemek için çok iyi bir yoldur ve düzenli bir gelirim olmasını da sağlar."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Я сподіваюся фінансово підтримувати себе через Mac Mouse Fix. Таким чином я зможу продовжувати вдосконалювати програму та працювати над нею. Якщо ви хочете допомогти, ви можете:\n1. Купити Mac Mouse Fix, клацнувши кнопку в програмі або клацнувши [тут]({url_1}).\n2. [Залишити чайові]({url_2}) через PayPal. Я не отримую від цього багато грошей, але це завжди приємно та мотивує отримати пожертву.\n3. [Стати спонсором]({url_3}) на GitHub. Щомісячне спонсорство — чудовий спосіб підтримати проєкт і допомогти мені мати стабільніший дохід."
           }
         },
         "zh-Hans" : {
@@ -3047,6 +4511,24 @@
             "value" : "**Añadir traducciones**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Aggiungere traduzioni**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**翻訳を追加する**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Legge til oversettelser**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3063,6 +4545,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Dil çevirisi ekleme**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Додавання перекладів**"
           }
         },
         "zh-Hans" : {
@@ -3100,6 +4588,24 @@
             "value" : "Mac Mouse Fix está disponible en inglés, alemán, así como en los idiomas listados en los [Agradecimientos]({url_1}).\n\nSi deseas **ayudar a traducir el proyecto**, consulta la [Guía de traducción]({url_2}).<br>\nSi quieres **informar de traducciones faltantes o no óptimas**, eso también es muy útil. La mejor manera de informar sobre problemas es comentando en la [Guía de traducción]({url_3})."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix è disponibile in inglese, tedesco e nelle lingue elencate nei [Riconoscimenti]({url_1}).\n\nSe vuoi **aiutare a tradurre il progetto**, consulta la [Guida alla traduzione]({url_2}).<br>\nSe vuoi **segnalare traduzioni mancanti o migliorabili**, è altrettanto utile. Il modo migliore per segnalare problemi è commentare sotto la [Guida alla traduzione]({url_3})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixは、英語、ドイツ語、および[謝辞]({url_1})に記載されている言語で利用可能です。\n\nプロジェクトの翻訳をお手伝いいただける場合は、[翻訳ガイド]({url_2})をご覧ください。<br>\n**翻訳の漏れや不自然な箇所の報告**も、大変助かります。問題を報告するには、[翻訳ガイド]({url_3})のコメント欄でお知らせいただくのが一番確実です。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix er tilgjengelig på engelsk, tysk samt språkene som er oppført i [Acknowledgements]({url_1}).\n\nHvis du vil **hjelpe med å oversette prosjektet**, kan du se [oversettelsesveiledningen]({url_2}).<br>\nHvis du vil **rapportere manglende eller suboptimale oversettelser**, er det også veldig nyttig. Den beste måten å rapportere problemer på er ved å kommentere under [Oversettelsesveiledningen]({url_3})."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3116,6 +4622,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix; İngilizce, Almanca, Türkçe ve [Teşekkürler]({url_1}) kısmında belirtilen tüm dillerde mevcuttur.\n\nEğer projenin **çevirisine yardımcı olmak isterseniz**, [Çeviri Kılavuzu]({url_2})'na bakarak bilgi edinebilirsiniz.<br>\nAyrıca, **eksik veya hatalı çevirileri bildirmek isterseniz** -ki bu çok yardımcı olmaktadır- bunları yeniden [Çeviri Kılavuzu]({url_3})'na yorum yapabilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix доступний англійською, німецькою, а також мовами, перерахованими в [Подяках]({url_1}).\n\nЯкщо ви хочете **допомогти перекласти проєкт**, дивіться [Посібник із перекладу]({url_2}).<br>\nЯкщо ви хочете **повідомити про відсутні або невдалі переклади**, це також дуже корисно. Найкращий спосіб повідомити про проблеми — це залишити коментар під [Посібником із перекладу]({url_3})."
           }
         },
         "zh-Hans" : {
@@ -3153,6 +4665,24 @@
             "value" : "**Contribuir con código**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Contribuire con il codice**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**コントリビューション**"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Bidragskode**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3169,6 +4699,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Projenin kaynak koduna destek olma**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Внесок у код**"
           }
         },
         "zh-Hans" : {
@@ -3206,6 +4742,24 @@
             "value" : "Si deseas contribuir con código, ¡eso es genial\\! Estaré encantado con cualquier [solicitud de extracción]({url}).\n\nSin embargo, es posible que no acepte todas las solicitudes de extracción. Si quieres asegurarte de que tu trabajo no se desperdicie, puedes enviar una solicitud de extracción inicial que solo *describa* los cambios que deseas realizar, pero que contenga poco o ningún código. Luego podré darte mi opinión y decirte si adoptaría los cambios que deseas realizar de esa manera."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se vuoi contribuire con il codice, è fantastico! Sarò felice di ricevere qualsiasi [pull request]({url}).\n\nTuttavia, potrei non accettare tutte le pull request. Se vuoi essere sicuro che il tuo lavoro non vada sprecato, puoi inviare una pull request iniziale che *descriva* soltanto le modifiche che vuoi apportare, ma contenga poco o nessun codice. Così posso darti un feedback e dirti se adotterei le modifiche che intendi fare."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コントリビューションをお考えであれば、それは素晴らしいことです！ どんな[プルリクエスト]({url})も大歓迎です。\n\nただし、すべてのプルリクエストを採用できるとは限りません。せっかくの作業が無駄にならないように、まずは*変更したい内容を説明するだけ*の（コードをほとんど、あるいは全く含まない）初期のプルリクエストを提出していただくことをお勧めします。そうすれば、私からフィードバックを行い、その変更を提案された方法で採用するかどうかをお伝えすることができます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis du vil bidra med kode, er det kjempebra! Jeg vil være glad for alle [pull requests]({url}).\n\nImidlertid godtar jeg kanskje ikke alle pull-forespørsler. Hvis du vil forsikre deg om at arbeidet ditt ikke er bortkastet, kan du sende inn en innledende pull-forespørsel som bare *beskriver* endringene du ønsker å gjøre, men som inneholder lite eller ingen kode. Da kan jeg gi deg tilbakemelding og fortelle deg om jeg ville tatt i bruk de endringene du ønsker å gjøre på den måten."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3222,6 +4776,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eğer projenin koduna destek olmak istiyorsanız, muhteşem! Bütün [Pull Request]({url})'lere açığım.\n\nFakat, tüm Pull Request'leri kabul etmeyebilirim. Eğer işinizin boşa gitmeyeceğine emin olmak isterseniz bir ön Pull Request göndererek kodun *neresini* değiştireceğinizi minimum ya da sıfır kod ile açıklarsanız sizlere bu konuda geribildirim ve onay verebilirim."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Якщо ви хочете зробити свій внесок у код, це чудово! Я буду радий будь-яким [запитам на внесення змін (pull requests)]({url}).\n\nОднак я можу прийняти не всі запити. Якщо ви хочете переконатися, що ваша робота не буде марною, ви можете надіслати початковий запит, який лише *описує* зміни, які ви хочете внести, але містить мало або зовсім не містить коду. Тоді я зможу дати вам відгук і сказати, чи прийму я такі зміни."
           }
         },
         "zh-Hans" : {
@@ -3259,6 +4819,24 @@
             "value" : "**¡Gracias** a todos los que ya han contribuido y me han apoyado en el intento de hacer el mejor controlador de ratón *de todos los tiempos*! :)🚀"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Grazie** a tutti quelli che hanno già contribuito e mi hanno sostenuto nel tentativo di realizzare il miglior driver per mouse *di tutti i tempi*! :)🚀"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**史上最高**のマウスドライバーを作るために、すでに貢献し、私を支えてくださっている皆様、本当に**ありがとうございます**！(^^)🚀"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Takk** til alle som allerede har bidratt og støttet meg i forsøket på å lage den beste musedriveren *gjennom tidene*! :)🚀"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3275,6 +4853,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*Tüm zamanların* en iyi fare sürücüsünü yapmak için destek olan herkese çok **teşekkür ederim!** :)🚀"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Дякую** всім, хто вже зробив свій внесок і підтримав мене у прагненні створити найкращий драйвер для миші *всіх часів*! :)🚀"
           }
         },
         "zh-Hans" : {
@@ -3312,6 +4896,24 @@
             "value" : "**¿Cómo puedo orbitar alrededor de objetos en aplicaciones 3D como Blender?**"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Come posso orbitare attorno agli oggetti in app 3D come Blender?**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blender などの 3D アプリで、オブジェクトの周囲を回転させるにはどうすればよいですか？"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Hvordan kan jeg gå i bane rundt objekter i 3D-apper som Blender?**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3328,6 +4930,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Blender gibi 3D uygulamalarda yörüngede dönmeyi nasıl yapabilirim?**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Як обертатися навколо об'єктів у 3D-програмах, таких як Blender?**"
           }
         },
         "zh-Hans" : {
@@ -3365,6 +4973,24 @@
             "value" : "En aplicaciones 3D como Blender, normalmente se hace Clic y arrastrar con el botón central del ratón para orbitar alrededor de los objetos.<br>\nPero si asignas acciones al botón central del ratón en Mac Mouse Fix, esto ya no funcionará.\n\nPara solucionarlo, conozco 2 opciones:\n\n1.  Asignar el clic y arrastrar de uno de los botones de tu ratón a la función \"Desplazamiento y navegación\". Esta función simula el deslizamiento con 2 dedos en un Apple Trackpad. ¡Esto te permitirá, entre otras cosas, orbitar en aplicaciones 3D!\n2.  *Descapturar* el botón central del ratón eliminando todas las acciones asignadas a él en Mac Mouse Fix. Consulta [esta guía]({url}) para obtener más información."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nelle app 3D come Blender, di solito si orbita attorno agli oggetti facendo clic e trascinando con il pulsante centrale del mouse.<br>\nMa se assegni delle azioni al pulsante centrale in Mac Mouse Fix, questo non funzionerà più.\n\nPer risolvere, conosco 2 opzioni:\n1. Assegna il clic e trascina di uno dei pulsanti del mouse alla funzione 'Scorri e naviga'. Questa funzione simula lo scorrimento con 2 dita su un trackpad Apple. Tra le altre cose, ti permetterà di orbitare nelle app 3D! \n2. *Smetti di catturare* il pulsante centrale eliminando tutte le azioni assegnate ad esso in Mac Mouse Fix. Consulta [questa guida]({url}) per maggiori informazioni."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blender などの 3D アプリでは、通常、中央のマウスボタンをクリックしてドラッグすることで、オブジェクトの周囲を回転させます。<br>\nしかし、Mac Mouse Fixでホイールボタンにアクションを割り当てると、この標準的な操作が機能しなくなります。\n\nこれを解決するには、2 つの方法があります：\nマウスのいずれかのボタンの'クリックしてドラッグ'操作に、'スクロールとナビゲート'機能を割り当てます。この機能は Apple トラックパッドでの「2 本指スワイプ」をシミュレートするものです。これにより、3D アプリでのオービット操作などが可能になります！\nMac Mouse Fixでホイールボタンに割り当てられているすべてのアクションを削除し、ボタンをアンキャプチャします。詳細については、[こちらのガイド]({url})をご覧ください。\n"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I 3D-apper som Blender klikker og drar du vanligvis den midtre museknappen for å gå i bane rundt objekter.<br>\nMen hvis du tilordner handlinger til den midtre museknappen i Mac Mouse Fix, vil ikke dette fungere lenger.\n\nFor å løse dette vet jeg om 2 alternativer:\n1. Tilordne å klikke og dra en av museknappene til 'Rull og naviger'-funksjonen. Denne funksjonen simulerer sveiping med 2 fingre på en Apple styreflate. Dette vil blant annet la deg kretse i 3D-apper!\n2. *Fjerne* den midterste museknappen ved å slette alle handlinger som er tilordnet den i Mac Mouse Fix. Se [denne veiledningen]({url}) for mer informasjon."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3380,7 +5006,13 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Blender gibi 3D uygulamalarında normalde orta düğme ile Tıkla ve Sürükle aksiyonuyla yörüngede hareket edebilirsiniz.<br>\nFakat, Mac Mouse Fix üzerinde orta tuşa bir aksiyon ayarlarsanız bu çalışmayacaktır.\n\nBunu çözmek için 2 yol billiyorum:\n1. Tıkla ve Sürükle komutunu farenizin herhangi bir düğmesine atayın. Bu özellik İzleme Dörtgeninde 2 parmakla kaydırma özelliğini simüle eder. Bu 3D uygulamalarda yörüngede dönme özelliğini sağlar.\n2. Orta düğmenin *yakalanmasını* tüm aksiyonları Mac Mouse Fix üzerinden silerek kaldırın. [Buradan]({url}) daha fazla bilgi sahibi olun."
+            "value" : "Blender gibi 3D uygulamalarında normalde orta düğme ile Tıkla ve Sürükle eylemiyle yörüngede hareket edebilirsiniz.<br>\nFakat, Mac Mouse Fix üzerinde orta tuşa bir eylem ayarlarsanız bu çalışmayacaktır.\n\nBunu çözmek için 2 yol billiyorum:\n1. Tıkla ve Sürükle komutunu farenizin herhangi bir düğmesine atayın. Bu özellik İzleme Dörtgeninde 2 parmakla kaydırma özelliğini simüle eder. Bu 3D uygulamalarda yörüngede dönme özelliğini sağlar.\n2. Orta düğmenin *yakalanmasını* tüm eylemleri Mac Mouse Fix üzerinden silerek kaldırın. [Buradan]({url}) daha fazla bilgi sahibi olun."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У 3D програмах як-от Blender, ви зазвичай Клацаєете та Перетягуєте Середню Кнопку Миші, щоб обертатися навколо об'єктів.<br>\nАле якщо ви назначаєте дії на Середню Кнопку Миші у Mac Mouse Fix, вона не працюватиме.\n\nЩоб вирішити це, я маю 2 варіанти:\n1. Призначте клацання та перетягування однієї з кнопок миші до функції 'Прокрутка та Навігація'. Ця функція імітує проведення двома пальцями по трекпеду Apple. Це, з-поміж іншого, дозволить вам обертати камеру в 3D-програмах! \n2. *Скасуйте захоплення* середньої кнопки миші, видаливши всі призначені їй дії в Mac Mouse Fix. Дивіться [цей посібник]({url}) для отримання додаткової інформації."
           }
         },
         "zh-Hans" : {

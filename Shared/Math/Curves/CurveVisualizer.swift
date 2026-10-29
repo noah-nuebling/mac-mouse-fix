@@ -112,13 +112,13 @@ struct CurveVisualizer_View: View {
     }
     
     @objc class func setCurveTrace1(_ trace: [P]) { /// Interface – call this to create a window that draws the curve
-        MFCFRunLoopPerform(CFRunLoopGetMain(), nil) {
+        mfrun(CFRunLoopGetMain()) {
             _initPlot()
             _viewCtrl!.rootView.curveTrace1 = trace
         }
     }
     @objc class func setCurveTrace2(_ trace: [P]) { /// Interface
-        MFCFRunLoopPerform(CFRunLoopGetMain(), nil) {
+        mfrun(CFRunLoopGetMain()) {
             _initPlot()
             _viewCtrl!.rootView.curveTrace2 = trace
         }

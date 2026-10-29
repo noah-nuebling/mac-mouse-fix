@@ -11,11 +11,15 @@ Este documento está traducido `98%` al `🇪🇸 Español` [Ayudar a traducir](
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   **🇪🇸 Español**\
+  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Readme.md)\
+  [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Readme.md)\
   [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
+  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Readme.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
   [🌎 ¡Ayudar a traducir!](https://redirect.macmousefix.com/?locale=es&target=mmf-localization-contribution)
 </details>
 
@@ -148,9 +152,12 @@ Puedes descargar versiones anteriores de Mac Mouse Fix en [Lanzamientos](https:/
 
 La última versión de Mac Mouse Fix está diseñada para **macOS 11 Big Sur** o posterior.
 
-Si utilizas **macOS 10.15 Catalina**, **macOS 10.14 Mojave** o **macOS 10.13 High Sierra**, puedes usar la [última versión de Mac Mouse Fix 2](https://redirect.macmousefix.com/?locale=es&target=mmf2-latest). Mac Mouse Fix 3.0.0 y versiones posteriores podrían seguir funcionando en tu máquina, pero tendrán problemas visuales y es posible que algunas funciones no funcionen correctamente.
+Si utilizas **macOS 10.11 El Capitan** o posterior, puedes usar la [última versión de Mac Mouse Fix 2](https://redirect.macmousefix.com/?locale=es&target=mmf2-latest). Mac Mouse Fix 3.0.0 y versiones posteriores podrían seguir funcionando en tu máquina, pero tendrán problemas visuales y es posible que algunas funciones no funcionen correctamente.
 
-Si utilizas **macOS 10.12 Sierra** o **10.11 El Capitan**, puedes usar Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) o anterior.
+<!--
+    [Sep 2026] Note on `macos-compatibility` section:
+    - MMF 2.2.6 lowered deployment target from 10.13 back down to 10.11 (See 68ce2c8) letting us simplify the text above. I didn't test on macOS 10.11 or 10.12. [Sep 2026]
+-->
 
 <a name="pricing"></a> 
 ## Precios
@@ -325,15 +332,15 @@ En el [sitio web](https://macmousefix.com/) puedes encontrar una colección de c
 
 - **¿En cuántos dispositivos puedo usar mi licencia?**
   
-  Tu licencia funciona en **todos tus Mac**.<br>
-  El objetivo es que simplemente puedas comprar una licencia, activarla y no tener que preocuparte por ella nunca más.<br>
+  Tu licencia funciona en **todos tus Mac**. <br>
+  El objetivo es que simplemente puedas comprar una licencia, activarla y no tener que preocuparte por ella nunca más. <br>
   Si inicias sesión con la misma cuenta de Apple, ¡la licencia incluso se sincronizará automáticamente con tus otros dispositivos a través de iCloud!
   
-  Si tienes problemas para activar tu licencia, puedes [enviarme un correo electrónico](https://redirect.macmousefix.com/?locale=es&target=mailto-noah).<br>
+  Si tienes problemas para activar tu licencia, puedes [enviarme un correo electrónico](https://redirect.macmousefix.com/?locale=es&target=mailto-noah). <br>
   A veces tardo un poco en responder. Pido disculpas por esto. ¡Pero me pondré en contacto contigo!
   
-  Hay una restricción:<br>
-  Las licencias no están destinadas a ser compartidas públicamente. Una licencia está destinada a una persona. Las licencias compartidas públicamente pueden ser invalidadas. (¡Tu madre no es 'el público' y compartirla con ella está bien!)
+  Hay una restricción: <br>
+  Las licencias no están destinadas a ser compartidas públicamente. Una licencia está destinada a una persona. Las licencias compartidas públicamente pueden ser invalidadas. (Compartirla con tu mamá está bien.)
 
   <!-- ^^^ Note: ChatGPT tells me I should mention that ppl can still use the license after they *upgrade* to a new device. Don't think that's necessary -->
   <!-- ^^^ TODO: Consider linking / copying this on the (Gumroad) checkout page. Ppl may not find it here. -->

@@ -21,3 +21,12 @@
 @inlinable func DDLogInfo(_ message: @autoclosure () -> String)    { if OSLog.default.isEnabled(type: .info)      { os_log(.info,    log: OSLog.default, "%{public}s", message()); } }
 @inlinable func DDLogDebug(_ message: @autoclosure () -> String)   { if OSLog.default.isEnabled(type: .debug)     { os_log(.debug,   log: OSLog.default, "%{public}s", message()); } }
 @inlinable func DDLogVerbose(_ message: @autoclosure () -> String) { if OSLog.default.isEnabled(type: .default)   { os_log(.default, log: OSLog.default, "%{public}s", message()); } }
+
+/// Wrap mfassert() and mfrequire() for Swift
+@inline(__always) func mfassert(_ condition: @autoclosure () -> Bool, _ reason: @autoclosure () -> String? = nil, file: String = #fileID, line: Int = #line, function: String = #function) {
+    if _slowPath(!condition()) { _mfassertrequire_failure(false, "<swift>", reason(), file, Int32(line), function) }
+}
+
+@inline(__always) func mfrequire(_ condition: @autoclosure () -> Bool, _ reason: @autoclosure () -> String? = nil, file: String = #fileID, line: Int = #line, function: String = #function) {
+    if _slowPath(!condition()) { _mfassertrequire_failure(true, "<swift>", reason(), file, Int32(line), function) }
+}

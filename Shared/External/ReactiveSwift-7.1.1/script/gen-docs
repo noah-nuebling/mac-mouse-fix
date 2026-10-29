@@ -1,0 +1,97 @@
+#!/bin/bash
+
+if [[ -z "$TRAVIS_TAG" ]]; then
+    echo "Not a tag build. Abort."
+    exit 0
+fi
+
+if [[ -z "$RAC_CIBOT_TOKEN" ]]; then
+    echo "CI bot token is undefined. Abort."
+    exit 0
+fi
+
+if [[ -z "$RAC_CIBOT_USERNAME" ]]; then
+    echo "CI bot username is undefined. Abort."
+    exit 0
+fi
+
+echo "Documentation builder. The tag is \`${TRAVIS_TAG}\`."
+
+rvm use 2.3
+gem install jazzy
+jazzy
+
+if [[ $? -ne 0 ]]; then
+    echo "Jazzy has failed. Aborting the push."
+    exit 1
+fi
+
+brew install hub
+export GITHUB_TOKEN=${RAC_CIBOT_TOKEN}
+
+# Clone the master branch of the website.
+git clone -b master --single-branch https://${RAC_CIBOT_TOKEN}@github.com/ReactiveCocoa/ReactiveCocoa.github.io.git RACSite
+cd ./RACSite
+
+# Fork the repo without fetching it.
+hub fork --no-remote
+git remote add cibot https://${RAC_CIBOT_TOKEN}@github.com/${RAC_CIBOT_USERNAME}/ReactiveCocoa.github.io.git 
+git checkout master
+
+# Create a new branch for the release.
+git checkout -b ras-${TRAVIS_TAG}
+
+DOC_PATH=./reactiveswift/docs/${TRAVIS_TAG}
+
+# Copy the generated docs.
+mkdir -p ${DOC_PATH}
+cp -r ../docs/. ${DOC_PATH}
+
+# Copy the icons, and archive the docset.
+rm ${DOC_PATH}/docsets/ReactiveSwift.tgz
+
+DOCSET_IMG_PATH=${DOC_PATH}/docsets/ReactiveSwift.docset/Contents/Resources/Documents/Logo/PNG
+mkdir -p ${DOCSET_IMG_PATH}
+cp ../Logo/PNG/logo-Swift.png ${DOCSET_IMG_PATH}/logo-Swift.png
+cp ../Logo/PNG/JoinSlack.png ${DOCSET_IMG_PATH}/JoinSlack.png
+cp ../Logo/PNG/Docs.png ${DOCSET_IMG_PATH}/Docs.png
+cp ../Logo/Icons/docset-icon.png ${DOC_PATH}/docsets/ReactiveSwift.docset/icon.png
+cp ../Logo/Icons/docset-icon@2x.png ${DOC_PATH}/docsets/ReactiveSwift.docset/icon@2x.png
+tar --exclude='.DS_Store' -cvzf ${DOC_PATH}/docsets/ReactiveSwift.tgz -C ${DOC_PATH}/docsets/ .
+rm -rf ${DOC_PATH}/docsets/ReactiveSwift.docset/
+
+# Copy image assets used by README.md.
+mkdir -p ${DOC_PATH}/Logo/PNG/
+cp ../Logo/PNG/logo-Swift.png ${DOC_PATH}/Logo/PNG/logo-Swift.png
+cp ../Logo/PNG/JoinSlack.png ${DOC_PATH}/Logo/PNG/JoinSlack.png
+cp ../Logo/PNG/Docs.png ${DOC_PATH}/Logo/PNG/Docs.png
+
+# Fix all readme links.
+perl -0777 -i -pe 's/"Documentation\/([a-zA-Z0-9-_\.]+)\.md/"\L$1\.html/g' ${DOC_PATH}/*.html
+perl -0777 -i -pe 's/"(a-zA-Z0-9-_\.]+)\.md/"\L$1\.html/g' ${DOC_PATH}/*.html
+
+git add ${DOC_PATH}
+
+# Ensure Jekyll is not running in `docs`.
+touch ./reactiveswift/docs/.nojekyll
+git add ./reactiveswift/docs/.nojekyll
+
+# Update the `latest` symlink.
+ln -sfn ${TRAVIS_TAG}/ reactiveswift/docs/latest
+git add ./reactiveswift/docs/latest
+
+# Update the docset feed.
+rm ./reactiveswift/docs/ReactiveSwift.xml 
+/bin/cp -f ../script/feed.xml.template ./reactiveswift/docs/ReactiveSwift.xml
+sed -i -- "s/FRAMEWORK_VERSION/${TRAVIS_TAG}/g" ./reactiveswift/docs/ReactiveSwift.xml
+git add ./reactiveswift/docs/ReactiveSwift.xml
+
+# Commit and push to the fork.
+git commit -m "Documentation: ReactiveSwift ${TRAVIS_TAG}"
+git push -u cibot ras-${TRAVIS_TAG}
+
+# Open a pull request in the main repo.
+hub pull-request -m "Documentation: ReactiveSwift ${TRAVIS_TAG}" -h "${RAC_CIBOT_USERNAME}:ras-${TRAVIS_TAG}"
+
+cd ..
+rm -rf ./RACSite

@@ -5,6 +5,20 @@
 //  Created by Noah Nübling on 24.07.21.
 //
 
+/// [Sep 2026] Opus 5.5 findings:
+///     - For the 'advanced' interface we can use pchip algorithm!!
+///     - Makes it super easy to make **any** curve via point and click (tested with some rawAccel curves and our `BezierCappedAccelerationCurve`/`PolynomialCappedAccelerationCurve`)
+///     - Easier than bezier with 2 handles for each point as you'd see in design programs
+///     - Other details we thought about:
+///         - Curve import could accept traces and convert to pchip via fitting algorithm - find point that's the most wrong - put a point there - at the end maybe try to prune some points.
+///         - Sharp edges require you to put points close together - maybe allow zooming in and out, alternatively have a 'sharpness' param for each point.
+///         - Curve export could export trace to be compatible with rawAccel I guess?
+///         - Drawing:
+///             - Sample curve, then use NSBezierPath with enough straighline sections to look smooth.
+///     - Other:
+///         Opus says Blender and some other editors uses this.
+///     - Source: https://claude.ai/share/40c4333a-3101-434e-8a0b-cb0437d50f4e
+
 import Cocoa
 import ReactiveSwift
 import ReactiveCocoa

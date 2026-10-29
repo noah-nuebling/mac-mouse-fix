@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+!default.xcworkspace
+xcuserdata
+profile
+*.moved-aside
+PlaygroundUtility.remap
+*.xctimeline
+*.xcscmblueprint
+*.o
+
+# SwiftPM
+.build
+Packages
+.swiftpm
+
+# Carthage
+Carthage/Build
+
+# Jazzy
+docs

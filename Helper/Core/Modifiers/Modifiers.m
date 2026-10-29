@@ -64,7 +64,7 @@ static NSMutableDictionary *_modifiers;
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
         _kbModEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, kbModsChanged, NULL);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _kbModEventTap, 0);
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+        CFRunLoopAddSource(IOThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
         
 //        /// Enable/Disable eventTap based on Remap.remaps
@@ -112,7 +112,7 @@ static CFMachPortRef _kbModEventTap;
     ///         - The helper's build-number was 24405, that was probably the feature-strings-catalog branch - the master branch is currently around 22000 (master around the 3.0.3 release right now.) (I'm writing this on the master branch.)
     ///         - This crash actually appeared like 10 times within 1.5 hours, but I didn't notice anything.
     ///         - This might be a quirk in macOS (I've seen a lot of weird crashes lately on macOS 15.0) or there might be a race condition on the initialization process.
-    ///         - We plan to create a unified 'input thread' that handles all the input coming from the user synchronously. Maybe that could help here as well if this is a race-condition.
+    ///         - We plan to create a unified 'IOThread' that handles all the input coming from the user synchronously. Maybe that could help here as well if this is a race-condition.
     ///         - Update (2 days later - 27.09.2024) on one of these crashes (not sure if it was exactly the one I discussed above but the stack-track looked the same) I saw the following timestamps:
     ///             "captureTime" : "2024-09-25 11:57:41.3923 +0200",
     ///             "procLaunch" : "2024-09-25 11:49:20.5558 +0200",
@@ -186,7 +186,9 @@ static CFMachPortRef _kbModEventTap;
     ///             My intuition is though that this complicates things, and has higher likelyhood to lead to weird unexpected behaviour or bugs.
     ///
     /// TODO: @crash Implement Solution Idea 2.
-    
+    ///
+    /// Update: [Sep 2026] Didn't read the above but might be fixed after 'No more dispatch queues' refactor
+
     _kbModPriority = priority;
     CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
 }
@@ -266,7 +268,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     DDLogDebug("buttonMods changed to: %@", newModifiers);
     
     /// Assert change
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         NSArray *oldModifiers = _modifiers[kMFModificationPreconditionKeyButtons];
         assert(![newModifiers isEqualToArray:oldModifiers]);
     }

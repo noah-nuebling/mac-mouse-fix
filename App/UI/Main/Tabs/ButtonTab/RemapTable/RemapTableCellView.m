@@ -13,8 +13,14 @@
 @implementation RemapTableCellView
 
     #if 0
-        - (void) setFrame: (NSRect)frame {
-            DDLogDebug(@"wrapdbg: setFrame: (%p) %@", self, NSStringFromRect(frame));
+        - (void) setFrame: (NSRect)frame { /// This override only exists for the 'wrapdbg' debugging
+            NSInteger row = -1;
+            if ([self superview]) {
+                NSInteger row = [(NSTableView *)[[self superview] superview] rowForView: self];
+                if (row == 1) {
+                    DDLogDebug(@"wrapdbg: setFrame: (%p) (row: %ld) %@", self, row, NSStringFromRect(frame));
+                }
+            }
             [super setFrame: frame];
         }
     #endif

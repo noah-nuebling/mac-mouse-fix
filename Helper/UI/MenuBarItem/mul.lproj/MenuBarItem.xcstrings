@@ -35,10 +35,28 @@
             "value" : "Boutons"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "버튼"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knapper"
           }
         },
         "pt-BR" : {
@@ -57,6 +75,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Düğmeler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки"
           }
         },
         "vi" : {
@@ -180,10 +204,28 @@
             "value" : "Défilement"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorrimento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "스크롤"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rulling"
           }
         },
         "pt-BR" : {
@@ -202,6 +244,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка"
           }
         },
         "vi" : {
@@ -264,10 +312,28 @@
             "value" : "Ouvrir Mac Mouse Fix..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri Mac Mouse Fix..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを開く…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 열기..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Mac mouse fix..."
           }
         },
         "pt-BR" : {
@@ -286,6 +352,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'i Aç..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрити Mac Mouse Fix..."
           }
         },
         "vi" : {

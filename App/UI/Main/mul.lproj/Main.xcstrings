@@ -157,10 +157,28 @@
             "value" : "Annuler"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annulla"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "실행 취소"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angre"
           }
         },
         "pt-BR" : {
@@ -179,6 +197,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geri Al"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відмінити"
           }
         },
         "vi" : {
@@ -241,10 +265,28 @@
             "value" : "Consulter les guides ou demander à la communauté..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulta le guide o chiedi alla community..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ガイドを見る／コミュニティに相談…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "커뮤니티에서 질문 또는 정보 얻기..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se guider eller spør fellesskapet..."
           }
         },
         "pt-BR" : {
@@ -263,6 +305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kılavuzları Görüntüleyin veya Topluluğa Sorun..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переглянути посібники або запитати спільноту..."
           }
         },
         "vi" : {
@@ -386,10 +434,28 @@
             "value" : "Vérifier les mises à jour..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifica aggiornamenti..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新を確認…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "업데이트 확인..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se etter oppdateringer..."
           }
         },
         "pt-BR" : {
@@ -408,6 +474,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Güncellemeleri kontrol et..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевірити оновлення"
           }
         },
         "vi" : {
@@ -531,10 +603,28 @@
             "value" : "Désactivée"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disattivata"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "끔"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Av"
           }
         },
         "pt-BR" : {
@@ -553,6 +643,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kapalı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вимк."
           }
         },
         "vi" : {
@@ -615,10 +711,28 @@
             "value" : "Précision"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precisione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精密さ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "정밀하게 스크롤"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Presisjon"
           }
         },
         "pt-BR" : {
@@ -637,6 +751,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hassas Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точність"
           }
         },
         "vi" : {
@@ -695,14 +815,32 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Demander une nouvelle fonctionnalité"
+            "state" : "translated",
+            "value" : "Proposer une nouvelle fonctionnalité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuta a tradurre"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳に協力する"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "기능개선 요청하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hjelp med å oversette"
           }
         },
         "pt-BR" : {
@@ -723,10 +861,16 @@
             "value" : "Çeviri için yardımcı ol"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Долучитись до перекладу"
+          }
+        },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Đề xuất tính năng mới"
+            "state" : "translated",
+            "value" : "Trợ giúp dịch"
           }
         },
         "zh-Hans" : {
@@ -783,10 +927,28 @@
             "value" : "Supprimer"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "삭제"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slett"
           }
         },
         "pt-BR" : {
@@ -805,6 +967,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sil"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити"
           }
         },
         "vi" : {
@@ -867,10 +1035,28 @@
             "value" : "Défiler à l'horizontal"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri in orizzontale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "横スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "수평 스크롤"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rull horisontalt"
           }
         },
         "pt-BR" : {
@@ -889,6 +1075,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yatay Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Горизонтальна прокрутка"
           }
         },
         "vi" : {
@@ -951,10 +1143,28 @@
             "value" : "Modifier"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編集"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "편집"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redigere"
           }
         },
         "pt-BR" : {
@@ -973,6 +1183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Düzenle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редагування"
           }
         },
         "vi" : {
@@ -1035,10 +1251,28 @@
             "value" : "Remerciements"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riconoscimenti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "謝辞"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "법적 공지"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takk"
           }
         },
         "pt-BR" : {
@@ -1057,6 +1291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teşekkürler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подяки"
           }
         },
         "vi" : {
@@ -1119,10 +1359,28 @@
             "value" : "Normale"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普通"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "보통"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
           }
         },
         "pt-BR" : {
@@ -1141,6 +1399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Normal"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Звичайна"
           }
         },
         "vi" : {
@@ -1261,13 +1525,31 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importante"
+            "value" : "Haute"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "부드럽게"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Høy"
           }
         },
         "pt-BR" : {
@@ -1286,6 +1568,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yüksek"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Висока"
           }
         },
         "vi" : {
@@ -1348,10 +1636,28 @@
             "value" : "Défiler avec précision"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri con precisione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精密スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "정밀 스크롤"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rull presist"
           }
         },
         "pt-BR" : {
@@ -1370,6 +1676,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hassas Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точна прокрутка"
           }
         },
         "vi" : {
@@ -1432,10 +1744,28 @@
             "value" : "Déplacez-vous entre les pages dans Safari en défilant horizontalement, et bien plus"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passa da una pagina all'altra in Safari scorrendo in orizzontale, e altro ancora"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safariでの横スクロールによるページ移動などに対応"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Safari에서 수평 스크롤 등의 동작을 통해 페이지 간에 이동합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flytte mellom sider i Safari ved å rulle horisontalt, og mer"
           }
         },
         "pt-BR" : {
@@ -1454,6 +1784,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Safari'de yatay kaydırma yaparak sayfalar arasında geçiş yapma ve fazlası"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переходьте між сторінками в Safari, прокручуючи горизонтально, і не тільки"
           }
         },
         "vi" : {
@@ -1507,7 +1843,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permite activar o desactivar rápidamente funciones como el desplazamiento suave"
+            "value" : "Permite activar o desactivar rápidamente funciones como el desplazamiento suave."
           }
         },
         "fr" : {
@@ -1516,10 +1852,28 @@
             "value" : "Permet d'activer ou de désactiver rapidement\nles fonctionnalités comme le défilement doux"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti permette di attivare o disattivare rapidamente funzioni come lo scorrimento fluido"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スムーズスクロールなどの機能をすばやくオン/オフできます"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "부드러운 스크롤과 같은 기능을 손쉽게 켜거나\n끌 수 있습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lar deg raskt slå av eller på funksjoner som jevn rulling"
           }
         },
         "pt-BR" : {
@@ -1540,9 +1894,15 @@
             "value" : "Akıcı kaydırma gibi özellikleri hızlıca açıp kapatmanızı sağlar"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дозволяє швидко перемикати такі функції, як плавна прокрутка"
+          }
+        },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cho phép bạn tắt hoặc bật nhanh các tính năng như\ncuộn mượt mà"
           }
         },
@@ -1600,10 +1960,28 @@
             "value" : "Main Menu"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu principale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メインメニュー"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "메인 메뉴"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hovedmeny"
           }
         },
         "pt-BR" : {
@@ -1622,6 +2000,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ana Menü"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Головне меню"
           }
         },
         "vi" : {
@@ -1684,10 +2068,28 @@
             "value" : "Tout ramener au premier plan"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porta tutto in primo piano"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてを手前に移動"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "모두 앞으로 가져오기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bring alle frem"
           }
         },
         "pt-BR" : {
@@ -1706,6 +2108,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hepsini Öne Getir"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Усі наперед"
           }
         },
         "vi" : {
@@ -1768,10 +2176,28 @@
             "value" : "Mac Mouse Fix restera activé après l'avoir fermé"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix resta attivo anche dopo aver chiuso l'app"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを終了した後も、Mac Mouse Fixは有効なままです"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mac Mouse Fix는 창을 닫아도 동작합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix forblir aktivert etter at du har avsluttet appen"
           }
         },
         "pt-BR" : {
@@ -1788,13 +2214,19 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mac Mouse Fix kapatıldığında aktif kalacaktır"
+            "state" : "translated",
+            "value" : "Mac Mouse Fix, uygulama kapatıldığında aktif kalacaktır"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix залишається ввімкненим після того, як ви закриєте програму"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mac Mouse Fix vẫn được bật khi bạn đóng nó"
           }
         },
@@ -1852,7 +2284,25 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -1871,6 +2321,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -1936,10 +2392,28 @@
             "value" : "Ne plus me le rappeler"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non ricordarmelo più"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後表示しない"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "다시 알리지 않기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke minn meg på det igjen"
           }
         },
         "pt-BR" : {
@@ -1958,6 +2432,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bir daha hatırlatma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не нагадуй мені знову"
           }
         },
         "vi" : {
@@ -2020,10 +2500,28 @@
             "value" : "Rapide"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速い"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "빠름"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Høy"
           }
         },
         "pt-BR" : {
@@ -2042,6 +2540,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yüksek"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Висока"
           }
         },
         "vi" : {
@@ -2165,10 +2669,28 @@
             "value" : "Masquer Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを非表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 가리기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skjul Mac Mouse Fix"
           }
         },
         "pt-BR" : {
@@ -2187,6 +2709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'i Gizle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сховати Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -2249,10 +2777,28 @@
             "value" : "Signaler un bug"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invia un feedback"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックを送信"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "버그 제보하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send tilbakemelding"
           }
         },
         "pt-BR" : {
@@ -2273,10 +2819,16 @@
             "value" : "Hata Bildirimi Yap"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіслати відгук"
+          }
+        },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gửi báo cáo lỗi"
+            "state" : "translated",
+            "value" : "Gửi ý kiến"
           }
         },
         "zh-Hans" : {
@@ -2394,10 +2946,28 @@
             "value" : "À propos"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリについて"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "정보"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
           }
         },
         "pt-BR" : {
@@ -2416,6 +2986,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hakkında"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Про програму"
           }
         },
         "vi" : {
@@ -2606,10 +3182,28 @@
             "value" : "Acheter Mac Mouse Fix..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acquista Mac Mouse Fix..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを購入…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 구입..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kjøp Mac Mouse Fix..."
           }
         },
         "pt-BR" : {
@@ -2628,6 +3222,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'i Satın Al"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Купити Mac Mouse Fix..."
           }
         },
         "vi" : {
@@ -2690,10 +3290,28 @@
             "value" : "Boutons"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "버튼"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knapper"
           }
         },
         "pt-BR" : {
@@ -2712,6 +3330,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Düğmeler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки"
           }
         },
         "vi" : {
@@ -2890,10 +3514,28 @@
             "value" : "Aide"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "도움말"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hjelp"
           }
         },
         "pt-BR" : {
@@ -2912,6 +3554,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yardım"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Довідка"
           }
         },
         "vi" : {
@@ -2974,10 +3622,28 @@
             "value" : "Modérée"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Media"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普通"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "보통"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium"
           }
         },
         "pt-BR" : {
@@ -2996,6 +3662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Orta"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Середня"
           }
         },
         "vi" : {
@@ -3058,10 +3730,28 @@
             "value" : "Général"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generali"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "일반"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generell"
           }
         },
         "pt-BR" : {
@@ -3080,6 +3770,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Genel"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загальні"
           }
         },
         "vi" : {
@@ -3133,7 +3829,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desplazarse rápidamente"
+            "value" : "Desplazarse Rápidamente"
           }
         },
         "fr" : {
@@ -3142,10 +3838,28 @@
             "value" : "Défiler rapidement"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri rapidamente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "軽快にスクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "고속 스크롤"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rull raskt"
           }
         },
         "pt-BR" : {
@@ -3164,6 +3878,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hızlı Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Швидка прокрутка"
           }
         },
         "vi" : {
@@ -3226,10 +3946,28 @@
             "value" : "Obtenir de l'aide"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ottieni aiuto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプを表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "도움말 보기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Få Hjelp"
           }
         },
         "pt-BR" : {
@@ -3248,6 +3986,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yardım Al"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримати допомогу"
           }
         },
         "vi" : {
@@ -3310,10 +4054,28 @@
             "value" : "Tout afficher"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra tutto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべて見る"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "모두 보기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis alle"
           }
         },
         "pt-BR" : {
@@ -3332,6 +4094,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hepsini Göster"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показати всі"
           }
         },
         "vi" : {
@@ -3394,10 +4162,28 @@
             "value" : "Fenêtre"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウインドウ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "윈도우"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vindu"
           }
         },
         "pt-BR" : {
@@ -3416,6 +4202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pencere"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вікно"
           }
         },
         "vi" : {
@@ -3478,10 +4270,28 @@
             "value" : "Aide"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "도움말"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hjelp"
           }
         },
         "pt-BR" : {
@@ -3500,6 +4310,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yardım"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Довідка"
           }
         },
         "vi" : {
@@ -3562,10 +4378,28 @@
             "value" : "Lente"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bassa"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "遅い"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "느림"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lav"
           }
         },
         "pt-BR" : {
@@ -3584,6 +4418,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Düşük"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Низька"
           }
         },
         "vi" : {
@@ -3646,7 +4486,25 @@
             "value" : "macOS"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS"
@@ -3665,6 +4523,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS"
@@ -3840,10 +4704,28 @@
             "value" : "Défilement naturel"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inverti direzione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール方向を反転"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "방향 반전"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omvendt retning"
           }
         },
         "pt-BR" : {
@@ -3862,6 +4744,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ters Yöne Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зворотний напрямок"
           }
         },
         "vi" : {
@@ -3985,10 +4873,28 @@
             "value" : "Services"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servizi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービス"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "서비스"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tjenester"
           }
         },
         "pt-BR" : {
@@ -4007,6 +4913,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Servisler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сервіси"
           }
         },
         "vi" : {
@@ -4069,10 +4981,28 @@
             "value" : "Zoomer ou dézoomer"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrandisci o riduci"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拡大・縮小"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "확대/축소"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forstørre In eller Ut"
           }
         },
         "pt-BR" : {
@@ -4090,7 +5020,13 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakınlaştır / Uzaklaştır"
+            "value" : "Yakınlaştırma veya Uzaklaştırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Масштаб"
           }
         },
         "vi" : {
@@ -4214,7 +5150,25 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -4233,6 +5187,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -4298,10 +5258,28 @@
             "value" : "Options..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzioni..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オプション…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "옵션..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valg..."
           }
         },
         "pt-BR" : {
@@ -4320,6 +5298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seçenekler..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Параметри..."
           }
         },
         "vi" : {
@@ -4382,10 +5366,28 @@
             "value" : "Copier"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コピー"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "복사하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiere"
           }
         },
         "pt-BR" : {
@@ -4404,6 +5406,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kopyala"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопіювати"
           }
         },
         "vi" : {
@@ -4466,10 +5474,28 @@
             "value" : "Annuler"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripeti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "실행 복귀"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gjør om"
           }
         },
         "pt-BR" : {
@@ -4488,6 +5514,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yeniden Yap"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторити"
           }
         },
         "vi" : {
@@ -4550,10 +5582,28 @@
             "value" : "Afficher dans la barre des menus"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra nella barra dei menu"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メニューバーに表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "메뉴 막대에서 보기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis i menylinjen"
           }
         },
         "pt-BR" : {
@@ -4572,6 +5622,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Menu Bar'da Göster"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показувати в рядку меню"
           }
         },
         "vi" : {
@@ -4634,10 +5690,28 @@
             "value" : "Fenêtre"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウインドウ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "윈도우"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vindu"
           }
         },
         "pt-BR" : {
@@ -4656,6 +5730,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pencere"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вікно"
           }
         },
         "vi" : {
@@ -4718,7 +5798,25 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -4737,6 +5835,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -4802,10 +5906,28 @@
             "value" : "Défilement"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorrimento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "스크롤"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruller"
           }
         },
         "pt-BR" : {
@@ -4824,6 +5946,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка"
           }
         },
         "vi" : {
@@ -4947,10 +6075,28 @@
             "value" : "Vitesse :"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocità:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速度"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "속도:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hastighet:"
           }
         },
         "pt-BR" : {
@@ -4969,6 +6115,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hız:"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Швидкість:"
           }
         },
         "vi" : {
@@ -5092,10 +6244,28 @@
             "value" : "Restaurer les paramètres par défaut..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina predefiniti..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初期設定に戻す…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "기본값으로 재설정..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gjenopprett standardinnstillinger..."
           }
         },
         "pt-BR" : {
@@ -5114,6 +6284,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Varsayılanları Yükle..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відновити стандартні параметри..."
           }
         },
         "vi" : {
@@ -5176,10 +6352,28 @@
             "value" : "Édition"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編集"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "편집"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redigere"
           }
         },
         "pt-BR" : {
@@ -5198,6 +6392,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Düzenle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редагування"
           }
         },
         "vi" : {
@@ -5260,10 +6460,28 @@
             "value" : "Recevoir les versions bêta"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricevi le versioni beta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベータ版を入手する"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "베타 버전 가져오기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Få Beta Versjoner"
           }
         },
         "pt-BR" : {
@@ -5282,6 +6500,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beta Sürümlerini Al"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримувати бета-версії"
           }
         },
         "vi" : {
@@ -5344,10 +6568,28 @@
             "value" : "Boutons"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "버튼"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knapper"
           }
         },
         "pt-BR" : {
@@ -5366,6 +6608,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Düğmeler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки"
           }
         },
         "vi" : {
@@ -5422,10 +6670,28 @@
             "value" : "Mantén pulsadas Comando (⌘) y Mayús (⇧), luego haz clic en este icono para mostrar el archivo de configuración de Mac Mouse Fix en el Finder."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tieni premuti Comando (⌘) e Maiuscole (⇧), poi fai clic su questa icona per mostrare nel Finder il file di configurazione di Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command (⌘)とShift (⇧)を押しながらこのアイコンをクリックすると、Mac Mouse Fixの設定ファイルをFinderで表示します。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold inne Kommando (⌘) og Shift (⇧), og klikk deretter på dette ikonet for å vise konfigurasjonsfilen til Mac Mouse Fix i Finder"
           }
         },
         "pt-BR" : {
@@ -5446,10 +6712,16 @@
             "value" : "Finder'da Mac Mouse Fix'in yapılandırma dosyasını görüntülemek için Command (⌘) ve Shift (⇧) tuşlarına basılı tutarken bu simgeye tıklayın"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Утримуйте Command (⌘) та Shift (⇧), потім клацніть на цю піктограму, щоб відкрити файл конфігурації Mac Mouse Fix у Finder"
+          }
+        },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
+            "state" : "translated",
+            "value" : "Giữ phím Command (⌘) và phím Shift (⇧), sau đó nhấn vào biểu tượng để mở cài đặt Mac Mouse Fix trong Finder"
           }
         },
         "zh-Hans" : {
@@ -5506,10 +6778,28 @@
             "value" : "Déplacez le pointeur de la souris à l'intérieur du champ « + », puis *cliquez* sur un bouton de la souris pour lui affecter une action.\nVous pouvez aussi utiliser le *double-clic*, le *clic et déplacement* et bien d'autres."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sposta il puntatore del mouse nel campo '+', poi fai *clic* con un pulsante del mouse per assegnargli un'azione.\nPuoi anche fare *doppio clic*, *clic e trascina* e altro ancora."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「＋」の枠内にマウスポインターを移動させ、マウスボタンを*クリック*してアクションを割り当てます。\n*ダブルクリック*や*クリックとドラッグ*なども設定可能です。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "마우스 포인터를 '+' 영역 위에 두고, 마우스 버튼을 *클릭*하여 액션을 할당할 수 있습니다.\n*이중 클릭*이나 *클릭 및 드래그* 등의 동작도 가능합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flytt musepekeren innenfor «+»-feltet, og *Klikk* deretter på en museknapp for å tilordne en handling til den.\n\nDu kan også *Dobbeltklikke*, *Klikke og dra* og mer."
           }
         },
         "pt-BR" : {
@@ -5526,14 +6816,20 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bir düğmeye aksiyon ataması yapmak için fare imlecinizi '+' alanına getirin ve bir düğmeye tıklayın.\nDilerseniz *Çift Tıklama*, *Tıklama ve Kaydırma* ve daha fazlasını yapabilirsiniz."
+            "state" : "translated",
+            "value" : "Bir düğmeye eylem ataması yapmak için fare imlecinizi '+' alanına getirin ve bir düğmeye tıklayın.\nDilerseniz *Çift Tıklama*, *Tıklama ve Kaydırma* ve daha fazlasını yapabilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перемістіть вказівник в поле '+', а потім *клацніть* кнопку, щоб призначити їй дію. Ви також можете використати *Подвійне клацання*, *Клацання та Перетягування* тощо."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Di chuyển con trỏ chuột vào trong ô '+', sau đó *kích* một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể *kích đôi*, *kích và kéo* và nhiều hành động khác. Đừng ngại khám phá nhé."
+            "state" : "translated",
+            "value" : "Di chuyển con trỏ chuột vào trong ô '+', sau đó *nhấn* nút của chuột để gán một hành động cho nó.  Bạn cũng có thể *nhấn đôi*, *nhấn và kéo* và nhiều hành động khác nữa."
           }
         },
         "zh-Hans" : {
@@ -5590,10 +6886,28 @@
             "value" : "Simulation du trackpad"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulazione trackpad"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トラックパッドをシミュレーション"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "트랙패드 시뮬레이션"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styreflatesimulering"
           }
         },
         "pt-BR" : {
@@ -5614,6 +6928,12 @@
             "value" : "İzleme Dörtgeni Simülasyonu"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Симуляція трекпеда"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5623,7 +6943,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模擬触控板"
+            "value" : "模拟触控板"
           }
         },
         "zh-Hant" : {
@@ -5674,10 +6994,28 @@
             "value" : "Minimiser"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riduci a icona"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "しまう"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "최소화"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimer"
           }
         },
         "pt-BR" : {
@@ -5696,6 +7034,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Küçült"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Згорнути"
           }
         },
         "vi" : {
@@ -5819,10 +7163,28 @@
             "value" : "Tout sélectionner"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona tutto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全てを選択"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "전체 선택"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg Alle"
           }
         },
         "pt-BR" : {
@@ -5841,6 +7203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hepsini Seç"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибрати все"
           }
         },
         "vi" : {
@@ -5903,10 +7271,28 @@
             "value" : "Visiter le site web"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visita il sito web"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウェブサイトを表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "웹사이트 방문하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besøk Hjemmesiden"
           }
         },
         "pt-BR" : {
@@ -5925,6 +7311,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İnternet Sitesini ziyaret et"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відвідати вебсайт"
           }
         },
         "vi" : {
@@ -6048,10 +7440,28 @@
             "value" : "Créé par Noah Nuebling"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creato da Noah Nuebling"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Created by Noah Nuebling"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Noah Nuebling 제작"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skapt av Noah Nuebling"
           }
         },
         "pt-BR" : {
@@ -6070,6 +7480,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Noah Nuebling tarafından geliştirildi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Створено Ноа Нюблінгом"
           }
         },
         "vi" : {
@@ -6193,10 +7609,28 @@
             "value" : "M'envoyer un e-mail"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrivimi un'email"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メールを送信"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "이메일 보내기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send meg en Epost"
           }
         },
         "pt-BR" : {
@@ -6215,6 +7649,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bana E-Posta Gönder"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіслати мені е-лист"
           }
         },
         "vi" : {
@@ -6277,10 +7717,28 @@
             "value" : "Défilement"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorrimento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "스크롤"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruller"
           }
         },
         "pt-BR" : {
@@ -6299,6 +7757,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка"
           }
         },
         "vi" : {
@@ -6422,10 +7886,28 @@
             "value" : "Couper"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taglia"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切り取り"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "오려두기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klipp"
           }
         },
         "pt-BR" : {
@@ -6444,6 +7926,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kes"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вирізати"
           }
         },
         "vi" : {
@@ -6506,10 +7994,28 @@
             "value" : "Général"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generali"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "일반"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generell"
           }
         },
         "pt-BR" : {
@@ -6528,6 +8034,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Genel"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загальні"
           }
         },
         "vi" : {
@@ -6590,10 +8102,28 @@
             "value" : "Masquer les autres"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi altri"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "他を非表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "기타 가리기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skjul andre"
           }
         },
         "pt-BR" : {
@@ -6612,6 +8142,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Diğerlerini Gizle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сховати інші"
           }
         },
         "vi" : {
@@ -6674,10 +8210,28 @@
             "value" : "Activer Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを有効化"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 사용"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiver Mac Mouse Fix"
           }
         },
         "pt-BR" : {
@@ -6696,6 +8250,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'i Aktifleştir"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увімкнути Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -6758,10 +8318,28 @@
             "value" : "Fermer"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiudi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "닫기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lukk"
           }
         },
         "pt-BR" : {
@@ -6780,6 +8358,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kapat"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрити"
           }
         },
         "vi" : {
@@ -6842,10 +8426,28 @@
             "value" : "Coller"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incolla"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "貼り付け"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "붙여넣기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lim inn"
           }
         },
         "pt-BR" : {
@@ -6864,6 +8466,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yapıştır"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставити"
           }
         },
         "vi" : {
@@ -6987,10 +8595,28 @@
             "value" : "Vous serez prévenu d'une nouvelle mise à jour\n lorsque vous ouvrirez cette fenêtre"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riceverai una notifica degli aggiornamenti quando apri questa finestra"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このウィンドウを開くと、更新通知が表示されます。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "이 창을 열 때마다 업데이트를 확인합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du vil bli varslet om oppdateringer når du åpner dette vinduet"
           }
         },
         "pt-BR" : {
@@ -7011,9 +8637,15 @@
             "value" : "Bu pencereyi açtığınızda güncellemeler hakkında bilgilendirileceksiniz"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви отримаєте сповіщення про оновлення, коли відкриєте це вікно"
+          }
+        },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bạn sẽ được thông báo về các cập nhật khi bạn mở\ncửa sổ này"
           }
         },
@@ -7129,13 +8761,31 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Douceur :"
+            "value" : "Fluidité :"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fluidità:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滑らかさ："
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "부드러운 스크롤:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smidighet:"
           }
         },
         "pt-BR" : {
@@ -7154,6 +8804,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Akıcılık:"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Плавність:"
           }
         },
         "vi" : {
@@ -7216,10 +8872,28 @@
             "value" : "Vérifier les mises à jour"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifica aggiornamenti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新を確認"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "업데이트 확인"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sjekk for Oppdateringer"
           }
         },
         "pt-BR" : {
@@ -7238,6 +8912,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Güncellemeleri Kontrol Et"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевірити оновлення"
           }
         },
         "vi" : {
@@ -7300,10 +8980,28 @@
             "value" : "Achetez-moi un milkshake :)"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offrimi un milkshake :)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ミルクシェイクをご馳走する(^^)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "밀크쉐이크 사주기 :)"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kjøp meg en milkshake :)"
           }
         },
         "pt-BR" : {
@@ -7322,6 +9020,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bana bir milkshake alın :)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пригости мене Мілкшейком :)"
           }
         },
         "vi" : {
@@ -7384,10 +9088,28 @@
             "value" : "À propos de Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni su Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixについて"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix에 관하여"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om Mac Mouse Fix"
           }
         },
         "pt-BR" : {
@@ -7406,6 +9128,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix Hakkında"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Про Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -7468,10 +9196,28 @@
             "value" : "Quitter Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci da Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを終了"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 종료"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avslutt Mac Mouse Fix"
           }
         },
         "pt-BR" : {
@@ -7490,6 +9236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'ten Çık"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершити Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -7565,10 +9317,28 @@
             "value" : "Raccourcis clavier :"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasti di modifica:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修飾キー："
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "보조 키:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tastaturmodifikatorer:"
           }
         },
         "pt-BR" : {
@@ -7587,6 +9357,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Klavye Değiştiricileri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модифікатори клавіатури:"
           }
         },
         "vi" : {
@@ -7649,10 +9425,28 @@
             "value" : "À propos"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "정보"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
           }
         },
         "pt-BR" : {
@@ -7671,6 +9465,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hakkında"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Про програму"
           }
         },
         "vi" : {
@@ -7855,10 +9655,28 @@
             "value" : "Services"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servizi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービス"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "서비스"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tjenester"
           }
         },
         "pt-BR" : {
@@ -7877,6 +9695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Servisler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сервіси"
           }
         },
         "vi" : {
@@ -8000,10 +9824,28 @@
             "value" : "Activer une licence..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva licenza..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを有効にする…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스 활성화..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiver lisens..."
           }
         },
         "pt-BR" : {
@@ -8022,6 +9864,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansı Aktifleştir..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активувати ліцензію..."
           }
         },
         "vi" : {
@@ -8145,7 +9993,25 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -8164,6 +10030,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -8229,10 +10101,28 @@
             "value" : "Réduire/agrandir"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拡大"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "확대/축소"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forstørre"
           }
         },
         "pt-BR" : {
@@ -8251,6 +10141,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yakınlaştırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Масштабування"
           }
         },
         "vi" : {
@@ -8313,10 +10209,28 @@
             "value" : "Voir sur GitHub"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dai un'occhiata su GitHub"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHubで確認"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub에서 보기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sjekk det ut på GitHub"
           }
         },
         "pt-BR" : {
@@ -8335,6 +10249,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub'da Göz Atın"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переглянути на GitHub"
           }
         },
         "vi" : {

@@ -16,6 +16,8 @@
 
 #import "objc/runtime.h"
 
+#import "Logging.h"
+
 #pragma mark - Failure macros
 ///     !! Keep in sync with MFPlistEncoder !!
 
@@ -358,7 +360,7 @@
     });
     
     /// Validate [result class]
-    if (runningPreRelease()) /// Not running this in release builds since I'm not sure it makes sense, and I don't want the decode to fail over incorrect and unnecessary validation.
+    if (runningDebugMode()) /// Not running this in release builds since I'm not sure it makes sense, and I don't want the decode to fail over incorrect and unnecessary validation.
         if (self->_requiresSecureCoding)
             if (!isclass(result, resultClass))
                 failWithError(kMFNSCoderError_InternalInconsistency, @"decoding result %@ with class %@ is not of expected class: %@. plist node found in archive: %@", result, [result class], resultClass, valueFromArchive); /// Note that [result class] could be a subclass of resultClass in case [[resultClass alloc] initWithCoder:] returned a subclass of resultClass. I think that can happen for class-clusters.

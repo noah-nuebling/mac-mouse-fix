@@ -63,10 +63,11 @@ class ScrollTabController: NSViewController {
         /// Remove focus
         ///     Sometimes, one of the modifierCapture fields is randomly selected. This hopefully prevents that.
         ///     Need to do asynAfter 0.0 seconds for it to work (I think - not well tested) that makes it do it on the next runLoop cycle I think.
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0, execute: {
+
+        assertRunLoop(CFRunLoopGetMain())
+        Timer.mf_scheduledTimer(withTimeInterval: 0.0, mode: .common) { timer in
             MainAppState.shared.window?.makeFirstResponder(nil)
-        })
+        }
         
         /// Turn off killswitch
         
@@ -287,7 +288,7 @@ class ScrollTabController: NSViewController {
         let allFlags = SignalProducer<(String, UInt), Never>.merge(horizontalMod.producer.map{ ("h", $0) }, zoomMod.producer.map{ ("z", $0) }, swiftMod.producer.map{ ("s", $0) }, preciseMod.producer.map{ ("p", $0) })
         allFlags.startWithValues { (src, flags) in
             
-//            DispatchQueue.main.async { /// Need to dispatch async to prevent weird crashes inside ReactiveSwift. Edit: When / why did we comment this out? Seems to not be needed anymore
+//            mfrun(CFRunLoopGetMain()) { /// Need to dispatch async to prevent weird crashes inside ReactiveSwift. Edit: When / why did we comment this out? Seems to not be needed anymore
                 
                 /// Delete the modifiers which the user just set - delete them for all the other scroll modifications
                 ///     So you can't set two different modifications to the same modifier

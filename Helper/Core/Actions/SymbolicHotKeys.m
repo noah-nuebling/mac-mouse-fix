@@ -82,6 +82,7 @@
 #import <Carbon/Carbon.h>
 #import "SharedUtility.h"
 #import "MFDefer.h"
+#import "Threads.h"
 
 @implementation SymbolicHotKeys
 
@@ -109,7 +110,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 
     DDLogDebug("[SymbolicHotKeys +post:] called on thread: %@", NSThread.currentThread);
     
-    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{ /// Should we use the `_sync` variant here? Might be more responsive? 
+    mfrun(CFRunLoopGetMain(), ^{ /// Should we use `mfrunAndWait()` variant here? Might be more responsive? 
         
         /// Run everything on mainThread
         ///     Reasons:
@@ -671,7 +672,7 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
     /// Gather state used in cacheKey:
     ///     Optimization Idea: [Aug 2025] If the `currentKBLayout_InputSource` is standard US (ABC) *and* the `currentKBType_MF` is ANSI *and* the `currentLanguageCode` is a LTR language, then we could just return the input immediately as an optimization. (I think.) But the caching is probably fine as well.
     NSString *currentKBLayout_Name = (__bridge id)TISGetInputSourceProperty(currentKBLayout_InputSource, kTISPropertyKeyLayoutName);
-    NSString *currentLanguageCode = [[NSLocale preferredLocale] languageCode];  /// [Aug 2025] Using private `NSLocale.preferredLocale`. `NSLocale.currentLocale` only returns locales that the current app supports. (I think)
+    NSString *currentLanguageCode = [[NSLocale preferredLocale] languageCode];  /// [Aug 2025] Using private `NSLocale.preferredLocale`. (IIRC `.preferredLocale` is what we saw in Apple framework disassembly, so we emulated that – but I might be misremembering [Feb 2026]) `NSLocale.currentLocale` only returns locales that the current app supports. (I think) (Update: Comments in MFLocales()  contradict this [Feb 2026])
     MFKeyboardType currentKBType_MF = MFKeyboardTypeCurrent();
     uint32_t currentKBType_TIC;
     if (@available(macOS 12.0, *))  currentKBType_TIC = [NSTextInputContext _currentKeyboardType];     /// [Aug 2025] Disassembly: Asserts mainThread, calls `KBGetLayoutType(LMGetKbdLast())` and then maps the resulting ANSI, JIS, ISO constants to 0,1,2 (and -1 on unknown). Sidenote: `LMGetKbdLast()` returns `MFKeyboardType`

@@ -8,14 +8,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <IOKit/hidsystem/ev_keymap.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Constants : NSObject
 
-/// UI Strings
+/// Errors [Oct 2026]
 
-#define kMFThanksPattern @"thanks\\.[0-9][0-9]"
+#define MFErrorDomain @"MFErrorDomain" /// TODO: [Oct 2026] Only use this error domain and gather all the error codes. (Also unify or whatever with mf_genericError, and mferror)
 
 /// Input processing
 
@@ -263,26 +264,10 @@ typedef enum {
 ///  NSEvents with type systemDefined and subtype 8 are fired when pressing some keys on Apple keyboards
 ///         All the interesting info is in the `data1` field
 
-typedef enum {
-
-    /// These types are found in the `data1` field, shifted left by 16 bits
-    
-    kMFSystemEventTypeBrightnessDown = 3,
-    kMFSystemEventTypeBrightnessUp = 2,
-    kMFSystemEventTypeMediaBack = 16 + 4,
-    kMFSystemEventTypeMediaPlayPause = 16 + 0,
-    kMFSystemEventTypeMediaForward = 16 + 3,
-    kMFSystemEventTypeVolumeMute = 7,
-    kMFSystemEventTypeVolumeDown = 1,
-    kMFSystemEventTypeVolumeUp = 0,
-    
-    kMFSystemEventTypeKeyboardBacklightDown = 22,
-    kMFSystemEventTypeKeyboardBacklightUp = 21,
-    
-    kMFSystemEventTypePower = 6,
-    kMFSystemEventTypeCapsLock = 4, /// Should probably disable remapping to this. Doesn't work
-    
-} MFSystemDefinedEventType;
+/// These types are found in the `data1` field, shifted left by 16 bits
+///     Cases defined in `ev_keymap.h`, e.g. `NX_KEYTYPE_SOUND_UP`
+///     Also see `getStringForSystemDefinedEventOrSymbolicHotKey` which lists what we know about each [Sep 2026]
+typedef int MFSystemDefinedEventType; 
 
 enum {
     /// More definitions for the `data1` field

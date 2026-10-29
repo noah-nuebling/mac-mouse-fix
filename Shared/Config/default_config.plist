@@ -32,7 +32,9 @@
 		<dict/>
 		<key>licenseStateCache</key>
 		<string></string>
-		<key>licenseStateCacheHash</key>
+		<key>licenseStateCacheHash_AgainstLicenseKey</key>
+		<data></data>
+		<key>licenseStateCacheHash_AgainstDeviceUID</key>
 		<data></data>
 	</dict>
 	<key>General</key>

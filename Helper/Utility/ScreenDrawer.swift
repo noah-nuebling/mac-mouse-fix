@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// [Aug 2025] Optimization:
+/// [Aug 2025] Optimization idea:
 ///     - We optimized this for MMF 3.0.5 by overriding sendEvent()
 ///     - Quote from https://medium.com/@avaidyam/the-secret-life-of-core-animation-e0966f942a71:
 ///         "However, if you're creating a CGSWindow, the fast way to get a CALayer on-screen is to create a CGSSurfaceand bind a CAView to it. The header for CAView is incomplete, but it looks trivial to work with, as it then manages the surface for you."
@@ -32,12 +32,14 @@ import Cocoa
     /// Init
     
     @objc func load_Manual() {
-        
+
+        assertRunLoop(CFRunLoopGetMain());
+
         /// Using  `load_Manual` instead of `init`. See PointerFreeze -> `load_Manual` for explanation
         
         /// Create canvas window
         
-        canvas = Canvas.init(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
+        canvas = Canvas(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
         
         /// Configure canvas window
 
@@ -48,6 +50,7 @@ import Cocoa
         canvas.ignoresMouseEvents = true /// Mouse events should pass through
         canvas.acceptsMouseMovedEvents = false /// Don't track mouse moving
         canvas.collectionBehavior = [.stationary, .moveToActiveSpace] /// Make unaffected by Mission Control and Exposé
+        canvas.animationBehavior = .none; /// [Sep 2026] Prevent the macOS 26 window-animations from creating move effect (opening) / smudge effect (closing)
 
         /// Set contentView
         canvas.contentView = CanvasContent()
@@ -71,7 +74,9 @@ import Cocoa
     /// Drawing
     
     @objc func draw(view: NSView, atFrame frameInScreen: NSRect, onScreen screen: NSScreen) {
-        
+
+        assertRunLoop(CFRunLoopGetMain());
+
         /// Optimization
         ///     Trying to disable autolayout. Not sure if this works/improves performance
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -106,12 +111,14 @@ import Cocoa
         CATransaction.commit()
     }
     @objc func move(view: NSView, toOrigin newOrigin: NSPoint) {
-        
+
+        assertRunLoop(CFRunLoopGetMain());
+
         ///
         /// Validate
         ///
         
-//        guard let canvas = canvas else { fatalError() }
+        //guard let canvas = canvas else { fatalError() }
         guard (view.superview!.isEqual(to: canvas.contentView)) else { fatalError() }
         /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investigate.
         
@@ -127,8 +134,8 @@ import Cocoa
         
         /// Sol 1
         
-//        view.setFrameOrigin(newOrigin)
-        
+        //view.setFrameOrigin(newOrigin)
+
         /// Sol 2
         
         view.wantsLayer = true
@@ -138,15 +145,17 @@ import Cocoa
     }
     
     @objc func undraw(view: NSView) {
-        
+
+        assertRunLoop(CFRunLoopGetMain());
+
         /// Guard view is drawn
         guard view.superview!.isEqual(to: canvas.contentView) else {
             fatalError("Idk dude Swift value semantics or sth uchh")
         }
         
         /// Debug
-//        DDLogDebug("Superview: \(view), canvas: \(canvas)")
-        
+        //DDLogDebug("Superview: \(view), canvas: \(canvas)")
+
         /// Remove view
         ///     Maybe we should just make it invisible instead?
         view.removeFromSuperview()
@@ -158,13 +167,12 @@ import Cocoa
         
         /// Update Canvas
         ///     Not necessary
-//            canvas.displayIfNeeded()
-            
+            //canvas.displayIfNeeded()
     }
     
-    @objc func flush() {
-//        guard let canvas = canvas else { fatalError() }
-//        canvas.orderOut(nil);
+    private func flush() {
+        //guard let canvas = canvas else { fatalError() }
+        //canvas.orderOut(nil);
         canvas.contentView = CanvasContent()
     }
     
@@ -215,22 +223,22 @@ fileprivate class Canvas: NSWindow {
     
     
     override func mouseMoved(with event: NSEvent) {
-//        DDLogError("Mouse MOVEDDD")
+        //DDLogError("Mouse MOVEDDD")
     }
     override func mouseDragged(with event: NSEvent) {
-//        DDLogError("Mouse DRAGGEDDD")
+        //DDLogError("Mouse DRAGGEDDD")
     }
     override func mouseEntered(with event: NSEvent) {
-//        DDLogError("Mouse ENTEREDDD")
+        //DDLogError("Mouse ENTEREDDD")
     }
     override func mouseExited(with event: NSEvent) {
-//        DDLogError("Mouse EXITEDDDD")
+        //DDLogError("Mouse EXITEDDDD")
     }
-//    override func layoutIfNeeded() {
+    //override func layoutIfNeeded() {
     /// Developer docs say to not override this
-//        return nil
-//    }
-    override func sendEvent(_ event: NSEvent) { /// [Jul 2025] This cuts twoFinger Click and Drag CPU usage from 40% to 20% on my 2018 Mac Mini! (Using 1000 HZ polling rate) ––– I think before, the NSWindow was trying to process all the mouseMoved events, 
+        //return nil
+    //}
+    override func sendEvent(_ event: NSEvent) { /// [Jul 2025] This cuts twoFinger Click and Drag CPU usage from 40% to 20% on my 2018 Mac Mini! (Using 1000 HZ polling rate) ––– I think before, the NSWindow was trying to process all the mouseMoved events,
         return
     }
 }

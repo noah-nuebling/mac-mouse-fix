@@ -63,9 +63,9 @@ extension NSAttributedString {
     func _secretMessages() -> NSArray {
         return ___secretMessages() as! NSArray
     }
-    func withoutSecretMessages() -> NSAttributedString {
-        return __withoutSecretMessages() as! NSAttributedString
-    }
+    //func withoutSecretMessages() -> NSAttributedString {
+    //    return __withoutSecretMessages() as! NSAttributedString
+    //}
 }
 
 extension NSString {
@@ -85,6 +85,15 @@ extension NSString {
         return __withoutSecretMessages() as! NSString
     }
     
+}
+
+extension NSString {
+
+    /// LocalizedStringAnnotation.h
+
+    func withoutAnnotations() -> NSString {
+        return __withoutAnnotations() as! NSString
+    }
 }
 
 #endif

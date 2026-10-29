@@ -26,6 +26,8 @@
 #import <Foundation/Foundation.h>
 #import "HelperUtility.h"
 #import "Logging.h"
+#import "Threads.h"
+#import "NSTimer+Additions.h"
 
 @implementation TouchSimulator
 
@@ -93,8 +95,12 @@ static NSMutableDictionary *_swipeInfo;
     CFRelease(event);
 }
 
-+ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice {
-    
++ (void) postDockSwipeEventWithDelta: (double)d type: (MFDockSwipeType)type phase: (IOHIDEventPhaseBits)phase invertedFromDevice: (BOOL)invertedFromDevice {
+
+    /// @afterNoGCDTodo The pinch DockSwipes no longer work in Mission Control (extremely niche, but I do use them sometimes. [Oct 2026] )
+
+    assertRunLoop(IOThread.runLoop);
+
     /// macOS 27 fix notes: (CGEventFields are now ignored, instead it relies on an IOHIDEvent) (See exploration in FixDockSwipes.m)
     ///     Update: [Jul 2026] Attaching the IOHIDEvent must go through `SLEventSetIOHIDEvent` – the hardcoded CGEvent
     ///         offsets in `CGEventSetIOHIDEvent` broke when the struct layout shifted. See CGEventHIDEventBridge.m.
@@ -141,7 +147,7 @@ static NSMutableDictionary *_swipeInfo;
     
     /// Debug
     
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         static CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
         CFTimeInterval ts = CACurrentMediaTime();
         CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
@@ -152,14 +158,14 @@ static NSMutableDictionary *_swipeInfo;
                    //"prevOriginOffset: %@ "
                    //"type: %@, "
                    "phase: %@, "
-                   "timeSinceLast: %@"
+                   "timeSinceLast: %.2f"
                    ,
                    @(d),
                    //@(_dockSwipeLastDelta),
                    //@(_dockSwipeOriginOffset),
                    //@(type),
                    @(phase),
-                   @(timeDiff));
+                   timeDiff * 1000);
     }
     
     /// Determine exitSpeed
@@ -306,21 +312,11 @@ static NSMutableDictionary *_swipeInfo;
     if (e29) CGEventPost(kCGSessionEventTap, e29); /// This is NULL on macOS 27. Doesn't cause issues but logs `invalid CGEvent: 0x0` error.
     
     if (phase == kIOHIDEventPhaseBegan) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            /// Invalidate scheduled double-send
-            /// Notes:
-            ///     - We invalidate the double/triple send timers here, since otherwise, the double/triple-sent end events can cancel the new gesture.
-            ///     - Docs say timers must be scheduled and invalidated from the same thread. That's why we dispatch to the main thread.
-            ///     - Threading is a bit messy. We should probably have a unified output-event thread, where we do all this.
-            ///     - Race condition? – Since we dispatch_async() right above, in edge-cases, the gesture might still be canceled right after the kIOHIDEventPhaseBegan events are sent. A unified output-event thread should allow us to fix this.
-            
-            if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
-            if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
-            _doubleSendTimer = nil;
-            _tripleSendTimer = nil;
-        });
+
+        if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
+        if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
+        _doubleSendTimer = nil;
+        _tripleSendTimer = nil;
         
     } else if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
 
@@ -332,33 +328,23 @@ static NSMutableDictionary *_swipeInfo;
 
         /// Put the events into a dict
         ///     Note: The `events` dict retains the events, and the timers retain the events dict -> Once the timers are invalidated, the events are automatically released.
-        ///     Edit: We didn't release the events in MMF 3.0.0 Beta 6. I wonder why I didn't notice this? (Should leak a little bit of memory.) We then moved to using `__bridge_transfer`
-        ///                 On 28.08.2024 we moved to using `__bridge` and simply calling `CFRelease()` afterwards. (That's the same as using `__bridge_transfer`, which I find confusing.)
+        ///     Edit: We didn't release the events in MMF 3.0.0 Beta 6. I wonder why I didn't notice this? (Should leak a little bit of memory.)
 
         NSMutableDictionary *events = [NSMutableDictionary new];
         events[@"e30"] = (__bridge id)e30;
         events[@"e29"] = (__bridge id)e29;
-        
-        /// Dispatch to main queue
+            
+        /// Invalidate existing timers
         /// Notes:
-        ///     - 27.08.2024 (macOS Sequoia Beta) - The double/triple send didn't work. I fixed it by adding  `dispatch_async(dispatch_get_main_queue()`. Not sure how long this had been broken. (Fixed in e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b)
-        ///     - Might worsen responsivity to do this on the main thread? I feel like we should simplify the threading of the entire app so there are 4 threads: input events, output events, ui (main thread) and background (stuff like checking for updates)
-        ///         - Update: [ Apr 2025] We plan to simplify threading now. grep for IOThread
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            /// Invalidate existing timers
-            /// Notes:
-            ///     - Docs say timers must be scheduled and invalidated from the same thread. We should be doing that since we dispatch everything to the main queue
-            
-            if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
-            if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
+        ///     - Docs say timers must be scheduled and invalidated from the same thread. We should be doing that since we dispatch everything to the main queue
 
-            /// Schedule new timers
-            
-            _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
-            _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
-        });
+        if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
+        if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
+
+        /// Schedule new timers
+        assertRunLoop(IOThread.runLoop);
+        _doubleSendTimer = [NSTimer mf_scheduledTimerWithTimeInterval: 0.2 mode: NSDefaultRunLoopMode block: ^(NSTimer *timer) { [self dockSwipeTimerFiredWithEvents: events]; }];
+        _tripleSendTimer = [NSTimer mf_scheduledTimerWithTimeInterval: 0.5 mode: NSDefaultRunLoopMode block: ^(NSTimer *timer) { [self dockSwipeTimerFiredWithEvents: events]; }];
         
     }
     
@@ -370,9 +356,8 @@ static NSMutableDictionary *_swipeInfo;
     _dockSwipeLastDelta = d;
 }
 
-+ (void)dockSwipeTimerFired:(NSTimer *)timer {
-    
-    NSDictionary *events = timer.userInfo;
++ (void)dockSwipeTimerFiredWithEvents:(NSDictionary *)events {
+
     CGEventRef e30 = (__bridge CGEventRef)events[@"e30"];
     CGEventRef e29 = (__bridge CGEventRef)events[@"e29"];
     

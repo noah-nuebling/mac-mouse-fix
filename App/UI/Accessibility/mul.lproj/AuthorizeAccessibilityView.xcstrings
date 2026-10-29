@@ -25,8 +25,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tener Acceso a Accesibilidad permite a Mac Mouse Fix \ninterceptar señales de tu ratón y teclado."
+            "state" : "translated",
+            "value" : "Tener Acceso a Accesibilidad permite a Mac Mouse Fix \ninterceptar señales de tu ratón y teclado"
           }
         },
         "fr" : {
@@ -35,10 +35,28 @@
             "value" : "L'accès à l'accessibilité autorise Mac Mouse Fix à \nintercepter les signaux de votre souris et de votre clavier"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'accesso di Accessibilità consente a Mac Mouse Fix di\nintercettare i segnali del mouse e della tastiera"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクセシビリティ権限により、Mac Mouse Fixが\nマウスやキーボードの信号を受け取れるようになります。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mac Mouse Fix가 마우스 및 키보드 신호에 \n접근하려면 손쉬운 사용 접근 권한이 필요합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med tilgjengelighetstilgang kan Mac Mouse Fix fange opp signaler fra musen og tastaturet"
           }
         },
         "pt-BR" : {
@@ -55,14 +73,20 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Erişilebilirlik Erişimi, Mac Mouse Fix'in \nfare ve klavyenizden gelen sinyalleri yakalamasını sağlar"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дозвіл Доступності дозволяє Mac Mouse Fix захопити сигнал з вашої миші та клавіатури"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nhận quyền truy cập Trợ năng cho phép Mac Mouse Fix \ncan thiệp vào tín hiệu từ chuột và bàn phím"
+            "state" : "translated",
+            "value" : "Mở quyền truy cập Trợ năng cho phép Mac Mouse Fix \ncan thiệp vào tín hiệu từ chuột và bàn phím"
           }
         },
         "zh-Hans" : {
@@ -119,10 +143,28 @@
             "value" : "Aide"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "도움말"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hjelp"
           }
         },
         "pt-BR" : {
@@ -141,6 +183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yardım"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Довідка"
           }
         },
         "vi" : {
@@ -203,10 +251,28 @@
             "value" : "Ouvrir les réglages « Confidentialité et sécurité »"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri le impostazioni di 'Privacy e sicurezza'"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'プライバシーとセキュリティ'設定を開く"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "'개인정보 보호 및 보안' 설정을 엽니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne innstillingene for 'Personvern og sikkerhet'"
           }
         },
         "pt-BR" : {
@@ -227,10 +293,16 @@
             "value" : "'Gizlilik ve Güvenlik' Ayarlarını açın"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрийте параметр 'Приватність і безпека'"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mở cài đặt 'Riêng tư & Bảo Mật' Settings"
+            "value" : "Mở cài đặt 'Riêng tư & Bảo Mật' ở Cài đặt"
           }
         },
         "zh-Hans" : {
@@ -287,10 +359,28 @@
             "value" : "Activer « Mac Mouse Fix Helper »"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva 'Mac Mouse Fix Helper'"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Mac Mouse Fix Helper'を有効にする"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "'Mac Mouse Fix Helper' 항목을 허용합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slå på 'Mac Mouse Fix Helper'"
           }
         },
         "pt-BR" : {
@@ -309,6 +399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'Mac Mouse Fix Helper' yardımcı uygulamasını çalıştırın"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увімкніть 'Mac Mouse Fix Helper'"
           }
         },
         "vi" : {
@@ -371,7 +467,25 @@
             "value" : "1."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "1."
@@ -390,6 +504,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "1."
@@ -455,10 +575,28 @@
             "value" : "Maintenez Maj (⇧) et cliquez sur cette icône pour afficher « Mac Mouse Fix Helper.app » dans le Finder"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tieni premuto Shift (⇧) sulla tua tastiera e fai clic su questa icona per mostrare 'Mac Mouse Fix Helper.app' nel Finder"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shift (⇧)を押しながらこのアイコンをクリックすると、Finderで「Mac Mouse Fix Helper.app」が表示されます"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finder에서 'Mac Mouse Fix Helper.app' 파일 위치를 열어보려면 Shift (⇧) 키를 누른 상태에서 이 아이콘을 클릭하세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold Shift (⇧) nede og klikk på dette ikonet for å vise «Mac Mouse Fix Helper.app» i Finder"
           }
         },
         "pt-BR" : {
@@ -477,6 +615,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finder'da 'Mac Mouse Fix Helper.app' uygulamasını görüntülemek için Shift (⇧) tuşuna basılı tutarken bu simgeye tıklayın"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Утримуйте Shift (⇧) і клацніть на цю піктограму, щоб відкрити 'Mac Mouse Fix Helper.app' у Finder"
           }
         },
         "vi" : {
@@ -539,10 +683,28 @@
             "value" : "Autoriser l'accès à l'accessibilité à Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concedi a Mac Mouse Fix l'accesso di Accessibilità"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixにアクセシビリティの許可を与える"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix에 손쉬운 사용 접근 권한 허용"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gi tilgjengelighetstilgang til Mac Mouse Fix"
           }
         },
         "pt-BR" : {
@@ -561,6 +723,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'e Erişilebilirlik Erişimi Verin"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надайте Mac Mouse Fix дозвіл Доступності"
           }
         },
         "vi" : {
@@ -623,7 +791,25 @@
             "value" : "2."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2."
@@ -642,6 +828,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2."
@@ -707,10 +899,28 @@
             "value" : "Annuler"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annulla"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "취소"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avbryt"
           }
         },
         "pt-BR" : {
@@ -729,6 +939,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İptal"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скасувати"
           }
         },
         "vi" : {

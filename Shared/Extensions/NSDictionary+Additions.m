@@ -12,7 +12,7 @@
 ///     - This should work on nested data structures made up of dictionaries and arrays and leaves
 ///     - We're doing somewhat similar stuff (recursing over nested array + dictionary structures) in [SharedUtility + deepMutableCopyOf:]
 ///     - I think we might have already implemented a dictionary cleanup function somewhere for AppOverridePanel or the config.
-///     - This should be useful whereever we store data. So for the config, the SecureStorage.swift, and NSUserDefaults (if we use that)
+///     - This should be useful whereever we store data. So for the config, the SecureStorage.m, and NSUserDefaults (if we use that)
 
 #import "NSDictionary+Additions.h"
 #import "NSArray+Additions.h"
@@ -50,7 +50,8 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     /// - The regex Matches all "." not preceded by "\" The actual, unescaped patterns is `(?<!\\)\.`
     /// - `\0` is the NULL character. Previously we used `@"<;jas;jfds;lfjasdf THIS IS A TEMPORARY REPLACEMENT STRING>"`
     /// - Update: [Oct 2025] IIRC, this was only needed because we used bundle identifiers as keys in our config.plist for the `OverridePanel.m` feature. However, this feature is currently disabled in MMF 3. Also couldn't we avoid using period in our config.plist keys somehow?
-    
+    ///     - Update: [Oct 2026] We could also simply split keyPaths by `/` instead of `.`
+
     /// Replace unescaped "." chars in the keyPath with temporary separator
     
     NSString *regex = @"(?<!\\\\)\\.";
@@ -84,11 +85,12 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     
     /// Should function similar to `- setValue:forKeyPath:`
     /// Differences:
-    /// Will create all dicts in the keyPath that don't exist, yet.
-    /// If a key in the keyPath contains "." characters they can be escaped with "\.".
-    /// All "\" will be removed from keys before parsing.
-    ///     -> For example he keyPath @"a\.bc.d\\\\\ef" will be treated as two keys: @"a.bc" and @"def"
-    
+    ///     - Will create all dicts in the keyPath that don't exist, yet.
+    ///     - Will make all immutable dictionaries on the keypath mutable.
+    ///     - If a key in the keyPath contains "." characters they can be escaped with "\.".
+    ///     - All "\" will be removed from keys before parsing.
+    ///         -> For example he keyPath @"a\.bc.d\\\\\ef" will be treated as two keys: @"a.bc" and @"def"
+
     NSArray * keys = coolKeyPathToKeyArray(keyPath);
     
     [self setObject:object forCoolKeyArray:keys];

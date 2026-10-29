@@ -326,9 +326,10 @@ class TabViewController: NSTabViewController {
                 guard let currentTab = self.identifierOfSelectedTab() else { return }
                 let currentTabWillBeDisabled = !alwaysEnabledTabs.contains(currentTab)
                 if currentTabWillBeDisabled {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: { /// Why are we delaying this?
+                    assertRunLoop(CFRunLoopGetMain());
+                    Timer.mf_scheduledTimer(withTimeInterval: 0.01, mode: .common) { timer in /// Why are we delaying this?
                         self.coolSelectTab(identifier: "general", window: self.window)
-                    })
+                    }
                 }
             }
         }
@@ -656,7 +657,7 @@ class TabViewController: NSTabViewController {
             windowResizeTimer!.invalidate()
             windowResizeTimer = nil
         }
-        windowResizeTimer = Timer.scheduledTimer(withTimeInterval: duration+0.1, repeats: false, block: { (timer) in
+        windowResizeTimer = Timer.mf_scheduledTimer(withTimeInterval: duration+0.1, mode: .default, block: { (timer) in
             /// Note: Adding 0.1 to duration avoids occasional jank. I guess the springAnimation.settlingDuration is sometimes underestimated.
             
             /// After the resize animation, we can add the constraints back in

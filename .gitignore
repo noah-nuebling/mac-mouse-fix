@@ -20,6 +20,9 @@ sudopass.sh
 # All contents of folders named xcuserdata
 xcuserdata/
 
+# mac-mouse-fix-scripts cache
+mmfscriptscache/
+
 # Carthage derived data
 # Carthage/
 
