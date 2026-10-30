@@ -267,7 +267,14 @@ import Cocoa
 //        if HelperState.shared.isLockedDown { return kMFScrollInversionNonInverted }
         return c("reverseDirection") as! Bool ? kMFScrollInversionInverted : kMFScrollInversionNonInverted
     }()
-    
+
+    @objc lazy var u_invertHorizontalDirection: MFScrollInversion = {
+        /// Same as `u_invertDirection`, but for horizontal input (tilt wheels, horizontal buttons, ...). Used by `ScrollUtility.m`.
+        /// `Scroll.reverseHorizontalDirection` is deliberately absent from `default_config.plist`. `Config` doesn't merge defaults into existing user configs, so for users who never changed it the key is missing and we follow `Scroll.reverseDirection`. That keeps their horizontal behaviour unchanged.
+        let horizontal = (c("reverseHorizontalDirection") as? Bool) ?? (c("reverseDirection") as! Bool)
+        return horizontal ? kMFScrollInversionInverted : kMFScrollInversionNonInverted
+    }()
+
     // MARK: Old Invert Direction
     /// Rationale: We used to have the user setting be "Natural Direction" but we changed it to being "Reverse Direction". This is so it's more transparent to the user when Mac Mouse Fix is intercepting the scroll input and also to have the SwitchMaster more easily decide when to turn the scrolling tap on or off. Also I think the setting is slightly more intuitive this way.
     

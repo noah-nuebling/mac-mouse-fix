@@ -9044,6 +9044,50 @@
         }
       }
     },
+    "horizontal-direction.label" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horizontal Direction:"
+          }
+        }
+      }
+    },
+    "horizontal-direction.not-reversed" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Reversed"
+          }
+        }
+      }
+    },
+    "horizontal-direction.reversed" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reversed"
+          }
+        }
+      }
+    },
+    "horizontal-direction.same-as-vertical" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same as Vertical"
+          }
+        }
+      }
+    },
     "is-disabled-toast" : {
       "comment" : "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.",
       "localizations" : {
