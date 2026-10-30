@@ -226,6 +226,12 @@ import Foundation
         EnabledState.shared.producer.startWithValues { enabled in
             if enabled { ButtonTabController.initRemaps() }
         }
+        // A temporary HID++ capture must also end when the window/app closes
+        // or loses focus, even if AppKit doesn't deliver mouseExited.
+        for name in [NSWindow.willCloseNotification, NSWindow.didResignKeyNotification,
+                     NSApplication.willTerminateNotification, NSApplication.didResignActiveNotification] {
+            NotificationCenter.default.addObserver(self, selector: #selector(cancelTemporaryAddMode(_:)), name: name, object: nil)
+        }
         /// Add trackingArea
         createTrackingArea()
         
@@ -233,6 +239,16 @@ import Foundation
         addField.coolInit()
     }
     
+    @objc private func cancelTemporaryAddMode(_ notification: Notification) {
+        if let window = notification.object as? NSWindow, window !== view.window { return }
+        if pointerIsInsideAddField { mouseExited_Internal(dueToAddModeFeeback: false) }
+    }
+
+    override func viewWillDisappear() {
+        if pointerIsInsideAddField { mouseExited_Internal(dueToAddModeFeeback: false) }
+        super.viewWillDisappear()
+    }
+
     func createTrackingArea() {
         trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self)
         self.addField.addTrackingArea(trackingArea)

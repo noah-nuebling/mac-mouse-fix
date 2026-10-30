@@ -8,6 +8,7 @@
 //
 
 #import "Device.h"
+#import "Config.h"
 #import "ModifiedDrag.h"
 #import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
@@ -133,6 +134,16 @@
         
         /// Store result
         _nOfButtons = maxButtonNumber;
+#if IS_HELPER
+        // Expose the two virtual buttons to SwitchMaster and the ordinary binding UI.
+        NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
+        NSNumber *pid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
+        NSString *transport = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDTransportKey));
+        if (vid.intValue == 0x046D && pid.intValue == 0xB023 && [transport hasPrefix:@"Bluetooth"] &&
+            [(NSNumber *)config(@"General.logitechMXMaster3SpecialButtons") boolValue]) {
+            _nOfButtons = MAX(_nOfButtons, 7);
+        }
+#endif
         
 #if IS_HELPER
         
