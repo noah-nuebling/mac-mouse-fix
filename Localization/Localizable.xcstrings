@@ -12690,6 +12690,17 @@
         }
       }
     },
+    "reverse-click-and-drag-direction-toggle" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reverse Click & Drag Direction"
+          }
+        }
+      }
+    },
     "revive-toast" : {
       "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up \"orphaned\" on a separate line from the \"Menu Bar\" text.\n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. The feature is aimed at temporarily disabling specific features while working with an incompatible app. To permanently disable the features, users should change the settings in the main app instead of the menu bar. Perhaps you can phrase this so it's a bit more obvious than in English? But really, the design should change.\n\nNote 4: The word 'enable' in this context doesn't necessarily have to match the 'Enable Mac Mouse Fix' switch I think.",
       "localizations" : {
