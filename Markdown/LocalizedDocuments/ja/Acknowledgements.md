@@ -94,6 +94,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **10月 2026**
 
+- 🇩🇪&nbsp;Mathias&nbsp;Strümpfel
 - 🇺🇸&nbsp;Tim&nbsp;Fuehner
 - 🇭🇰&nbsp;Zt - "給歲月以文明，而不是給文明以歲月。"
 - 🇦🇺&nbsp;Iain&nbsp;D

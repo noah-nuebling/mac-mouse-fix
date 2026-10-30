@@ -94,6 +94,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **říjen 2026**
 
+- 🇩🇪&nbsp;Mathias&nbsp;Strümpfel
 - 🇺🇸&nbsp;Tim&nbsp;Fuehner
 - 🇭🇰&nbsp;Zt - "給歲月以文明，而不是給文明以歲月。"
 - 🇦🇺&nbsp;Iain&nbsp;D
