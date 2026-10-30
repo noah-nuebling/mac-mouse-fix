@@ -9549,6 +9549,17 @@
         }
       }
     },
+    "launch-at-login-toggle" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch at login"
+          }
+        }
+      }
+    },
     "license-button.activate" : {
       "comment" : "",
       "localizations" : {
@@ -14613,6 +14624,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在Safari、地圖和其他應用程式中放大或縮小\n \n效果相當於在Apple觸控板上兩指分開或收合"
+          }
+        }
+      }
+    },
+    "start-hidden-toggle" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start hidden"
           }
         }
       }
