@@ -56,6 +56,7 @@
 #import "MFMessagePort.h"
 #import "Remap.h"
 #import "SharedUtility.h"
+#import "Config.h"
 
 #import "HelperUtility.h"
 
@@ -490,7 +491,10 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGP
         /// Edit2: The problem was that the it fell back to naturalDirection = false when the userDefaults didn't contain a value for `com.apple.swipescrolldirection`, which is the case if the user has never edited the `natural scroll direction` system setting. But if `com.apple.swipescrolldirection` doesn't exist, then the scroll direction is actually natural on Apple Trackpad and Magic Mouse. So if we fall back to natural scroll direction, it should match Trackpad/Magic mouse behaviour and users should be happy.
     
         NSNumber *systemScrollDirection = [NSUserDefaults.standardUserDefaults objectForKey:@"com.apple.swipescrolldirection"];
-        _drag.naturalDirection = systemScrollDirection == nil ? true : systemScrollDirection.boolValue;
+        /// `Scroll.reverseClickAndDragDirection` flips the system setting. Missing key (existing configs) means false.
+        ///     Flipping `naturalDirection` flips both the delta sign (see `handleMouseInputWhileInUse`) and `invertedFromDevice` in the output plugins. So the drag behaves as if the system setting was flipped, for Spaces & Mission Control and Scroll & Navigate alike.
+        bool reverseClickAndDragDirection = ((NSNumber *)config(@"Scroll.reverseClickAndDragDirection")).boolValue;
+        _drag.naturalDirection = (systemScrollDirection == nil ? true : systemScrollDirection.boolValue) != reverseClickAndDragDirection;
         
         /// Notify output plugin
         [_drag.outputPlugin handleBecameInUse];
