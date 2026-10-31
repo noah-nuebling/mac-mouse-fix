@@ -18,6 +18,7 @@ class ScrollTabController: NSViewController {
     var smooth = ConfigValue<String>(configPath: "Scroll.smooth")
     var trackpad = ConfigValue<Bool>(configPath: "Scroll.trackpadSimulation")
     var reverseDirection = ConfigValue<Bool>(configPath: "Scroll.reverseDirection")
+    var reverseHorizontal = ConfigValue<Bool>(configPath: "Scroll.reverseHorizontalDirection")
     var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
     var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
     var horizontalMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.horizontal")
@@ -111,6 +112,56 @@ class ScrollTabController: NSViewController {
         /// Natural direction
         reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
         reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
+
+        /// Reverse horizontal direction
+        /// Notes:
+        /// - Created in code, and inserted into the same stack right below `reverseDirectionToggle`.
+        /// - Horizontal direction is a popup with three states. "Same as Vertical" removes `Scroll.reverseHorizontalDirection` from the config, so the setting follows `Scroll.reverseDirection` again. "Reversed" and "Not Reversed" store true or false. See `u_invertHorizontalDirection` in `ScrollConfig.swift`.
+        ///     A checkbox can't show the "follow" state without a third, mixed state, which reads as "partly on".
+        let horizontalDirectionLabel = NSTextField(labelWithString: MFLocalizedString("horizontal-direction.label", comment: "Label of the popup in the Scrolling tab that sets the direction of horizontal scrolling. Keep it short."))
+        let horizontalDirectionPicker = NSPopUpButton(frame: .zero, pullsDown: false)
+        let horizontalDirectionItems: [(identifier: String, title: String)] = [
+            ("follow", MFLocalizedString("horizontal-direction.same-as-vertical", comment: "Option of the horizontal direction popup in the Scrolling tab. The horizontal direction then follows the Reverse Direction checkbox above it.")),
+            ("reversed", MFLocalizedString("horizontal-direction.reversed", comment: "Option of the horizontal direction popup in the Scrolling tab. Horizontal scrolling is reversed.")),
+            ("normal", MFLocalizedString("horizontal-direction.not-reversed", comment: "Option of the horizontal direction popup in the Scrolling tab. Horizontal scrolling is not reversed.")),
+        ]
+        for item in horizontalDirectionItems {
+            horizontalDirectionPicker.addItem(withTitle: item.title)
+            horizontalDirectionPicker.lastItem?.identifier = NSUserInterfaceItemIdentifier(item.identifier)
+        }
+        let horizontalDirectionRow = NSStackView(views: [horizontalDirectionLabel, horizontalDirectionPicker])
+        horizontalDirectionRow.orientation = .horizontal
+        horizontalDirectionRow.alignment = .centerY
+        /// Created in code, so hug with required priority. Otherwise it stretches while the tab measures its height. See `CommunitySettingsView.hugVertically()`.
+        horizontalDirectionRow.setHuggingPriority(.required, for: .vertical)
+        horizontalDirectionRow.setContentHuggingPriority(.required, for: .vertical)
+        horizontalDirectionRow.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        if let stack = reverseDirectionToggle.superview as? NSStackView, let index = stack.arrangedSubviews.firstIndex(of: reverseDirectionToggle) {
+            stack.insertArrangedSubview(horizontalDirectionRow, at: index + 1)
+        } else {
+            assertionFailure("reverseDirectionToggle is not inside an NSStackView")
+        }
+
+        /// Horizontal direction: the popup shows the explicit choice. A missing key means "Same as Vertical".
+        let horizontalDirectionMode: SignalProducer<String, Never> = ReactiveConfig.shared.producer.map({ (cfg: NSDictionary) -> String in
+            guard let explicit = cfg.object(forCoolKeyPath: "Scroll.reverseHorizontalDirection") as? Bool else { return "follow" }
+            return explicit ? "reversed" : "normal"
+        }).skipRepeats()
+
+        horizontalDirectionPicker.reactive.selectedIdentifier <~ horizontalDirectionMode.map({ NSUserInterfaceItemIdentifier($0) })
+        horizontalDirectionPicker.reactive.selectedIdentifiers.observeValues { [weak self] identifier in
+            self?.setHorizontalDirectionMode(identifier?.rawValue ?? "follow")
+        }
+
+        /// The effective value (follows the vertical checkbox while the key is missing) is still used for the capture-relevant settings below
+        let reverseHorizontalEffective: SignalProducer<Bool, Never> = ReactiveConfig.shared.producer.map({ (cfg: NSDictionary) -> Bool in
+            if let explicit = cfg.object(forCoolKeyPath: "Scroll.reverseHorizontalDirection") as? Bool {
+                return explicit
+            }
+            return (cfg.object(forCoolKeyPath: "Scroll.reverseDirection") as? Bool) ?? true
+        }).skipRepeats()
+
         
         /// Scroll speed
         scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
@@ -229,7 +280,8 @@ class ScrollTabController: NSViewController {
         ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://redirect.macmousefix.com/?target=mmf-captured-buttons-guide - or create a new guide.
         
         let modProducer = SignalProducer.combineLatest(horizontalMod.producer, zoomMod.producer, swiftMod.producer, preciseMod.producer) /// We could reuse this down in the Keyboard modifier section, but currently, we're not
-        let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseDirection.producer, scrollSpeed.producer, modProducer).combinePrevious()
+        let reverseAnyProducer = SignalProducer.combineLatest(reverseDirection.producer, reverseHorizontalEffective).map({ $0.0 || $0.1 })
+        let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseAnyProducer, scrollSpeed.producer, modProducer).combinePrevious()
             
         captureProducer.startWithValues { (previous, current) in
             
@@ -324,4 +376,20 @@ class ScrollTabController: NSViewController {
 //            }
         }
     }
+
+    /// Writes the horizontal direction popup's choice to the config.
+    ///     "Same as Vertical" removes the key, because `ConfigValue.set` can only store values.
+    private func setHorizontalDirectionMode(_ mode: String) {
+        switch mode {
+        case "reversed":
+            reverseHorizontal.set(true)
+        case "normal":
+            reverseHorizontal.set(false)
+        default:
+            guard reverseHorizontal.get() != nil else { return }
+            removeFromConfig(reverseHorizontal.keyPath)
+            commitConfig()
+        }
+    }
+
 }
