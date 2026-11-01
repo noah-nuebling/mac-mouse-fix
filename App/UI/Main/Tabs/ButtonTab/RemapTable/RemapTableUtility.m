@@ -54,7 +54,8 @@
 + (NSPopUpButton *)getPopUpButtonAtRow:(NSUInteger)popUpRow fromTableView:(NSTableView *)tv {
     
     NSInteger tableColumn = [tv columnWithIdentifier:@"effect"];
-    NSView *cell = [tv viewAtColumn:tableColumn row:popUpRow makeIfNecessary:NO];
+    // A newly inserted Button 7 row can still be outside the realized viewport.
+    NSView *cell = [tv viewAtColumn:tableColumn row:popUpRow makeIfNecessary:YES];
     NSPopUpButton *popUpButton = cell.subviews[0];
     
     if (![popUpButton isKindOfClass:NSPopUpButton.class]) {

@@ -8,6 +8,7 @@
 //
 
 #import "RemapTableController.h"
+#import "NSTimer+Additions.h"
 #import "Config.h"
 #import "Constants.h"
 #import "Utility_App.h"
@@ -590,6 +591,14 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         return triggerMatches && modificationPreconditionMatches;
     }];
     NSAssert(existingIndexes.count <= 1, @"Duplicate remap triggers found in table");
+    // Unlike ordinary buttons, an unbound Mode Shift must retain its firmware
+    // action. Don't save an implicit default when the user cancels its menu.
+    BOOL usesModeShift = [RemapTableUtility triggerButtonForRow:rowDictToAdd] == 7;
+    for (NSDictionary *modifier in rowDictToAdd[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons]) {
+        if ([modifier[kMFButtonModificationPreconditionKeyButtonNumber] isEqual:@7]) usesModeShift = YES;
+    }
+    BOOL provisionalModeShift = existingIndexes.count == 0 && usesModeShift &&
+        [(NSNumber *)config(@"General.logitechMXMaster3SpecialButtons") boolValue];
     NSIndexSet *toHighlightIndexSet;
     if (existingIndexes.count == 0) {
         /// Fill out effect in payload with first effect from effects table (to make behaviour appropriate when user doesn't choose any effect)
@@ -626,8 +635,8 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         /// Update table size
         [(RemapTableView *)self.tableView updateSizeWithAnimation];
         
-        /// Write new row to file (to make behaviour appropriate when user doesn't choose any effect)
-        [self writeToConfig];
+        /// Button 7 is committed only after an explicit menu choice.
+        if (!provisionalModeShift) [self writeToConfig];
     } else {
         toHighlightIndexSet = existingIndexes;
     }
@@ -654,7 +663,26 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     NSTableView *tv = self.tableView;
     NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
     double delay = existingIndexes.count == 1 ? 0.0 : 0.2;
-    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:delay];
+    if (!provisionalModeShift) {
+        [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:delay];
+    } else {
+        [NSTimer mf_scheduledTimerWithTimeInterval:delay mode:NSRunLoopCommonModes block:^(NSTimer *timer) {
+            __block BOOL selected = NO;
+            id observer = [NSNotificationCenter.defaultCenter addObserverForName:NSMenuDidSendActionNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+                NSMenu *menu = note.object;
+                while (menu.supermenu) menu = menu.supermenu;
+                if (menu == popUpButton.menu) selected = YES;
+            }];
+            [popUpButton performClick:nil];
+            [NSNotificationCenter.defaultCenter removeObserver:observer];
+            if (selected) {
+                [self writeToConfig];
+            } else {
+                NSUInteger row = [self.groupedDataModel indexOfObject:rowDictToAdd];
+                if (row != NSNotFound) [self removeRow:row];
+            }
+        }];
+    }
     
     /// Capture notifs
     /// 
