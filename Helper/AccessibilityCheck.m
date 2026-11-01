@@ -105,7 +105,7 @@
     [UNIXSignals load_Manual];
     
     /// Set up CocoaLumberjack
-    [Logging setUpDDLog];
+    //[Logging setUpDDLog];
     DDLogInfo("Accessibility Check - Mac Mosue Fix begins logging excessively");
     
     

@@ -41,11 +41,6 @@ Old logLevel logic (When we were still using CocoaLumberjack)
 #import <os/log.h>
 #import "SharedMacros.h"
 
-@interface Logging : NSObject
-    + (void)setUpDDLog;
-    + (void)flushLog;
-@end
-
 /// TODO: Once we actually collect logs, make everything {public} by default [Oct 2026]
 ///     - the app doesn't know anything sensitive except $3 license key,
 ///         and local logs aren't more accessible than the users's license email anyways,
@@ -56,6 +51,23 @@ Old logLevel logic (When we were still using CocoaLumberjack)
 #define DDLogDebug(msg...)      ({ if (os_log_type_enabled(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG))    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG,   msg); })
 #define DDLogInfo(msg...)       ({ if (os_log_type_enabled(OS_LOG_DEFAULT, OS_LOG_TYPE_INFO))     os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_INFO,    msg); })
 //#define DDLogVerbose(msg...)    ({ if (os_log_type_enabled(OS_LOG_DEFAULT, OS_LOG_TYPE_DEFAULT))  os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEFAULT, msg); }) /// Unused
+
+#if 0 /// TODO: Adopt these [Oct 2026]
+
+    /// Persisted to disk for a while, even when `!runningDebugMode()` (Says Claude, [Oct 2026])
+    ///     Use this by default
+    #define mflog(msg...)           os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEFAULT, msg)
+
+    /// Persisted just like regular `mflog()`, `os_log` also dumps some additional diagnostic info. (Says Claude, [Oct 2026])
+    ///     Use this after detecting a problem you'd wanna analyze
+    #define mflogError(msg...)      os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_FAULT, msg)
+
+    /// Not persisted unless `runningDebugMode()` or in an `os_activity` that called `mflogError()` afterwards. (Says Claude, [Oct 2026]) (We're not currently using `os_activity` [Oct 2026])
+    ///     Use this for per-event/per-frame logs to prevent pushing regular logs out of the persisted ring-buffer (Says Claude, [Oct 2026])
+    ///     (TODO: Make `runningDebugMode()` actually persist things)
+    #define mflogFrequent(msg...)   os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_INFO, msg)
+
+#endif
 
 /// mfassert() and mfrequire()
 ///     TODO: Use this consistently
@@ -77,9 +89,9 @@ static inline void _mfassertrequire_failure(bool require, const char *conditionS
     DDLogError( /// Even in release builds, we log failed asserts as errors [Oct 2026]
         "mfassert() or mfrequire() failed."
         "\n  Condition: %s"  /// I feel like this is not actually useful, we just need some unique identifier for the assert, could be reason or location [Oct 2026]
-        "\n  Reason:    %@"
+        "\n  Reason:    %{public}@"
         "\n  Location:  %s:%d (inside %s)"
-        "\n  Callers: %@",
+        "\n  Callers: %{public}@",
         conditionStr,
         reason.length ? reason : @"<>",
         file, line, function,

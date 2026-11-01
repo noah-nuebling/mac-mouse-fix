@@ -199,7 +199,7 @@ static NSDictionary *sideButtonActions;
         }
         
         /// Setup CocoaLumberjack logging
-        [Logging setUpDDLog];
+        //[Logging setUpDDLog];
         DDLogInfo("Main App starting up...");
         
         /// Remove restart the app untranslocated if it's currently translocated
