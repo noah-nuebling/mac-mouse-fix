@@ -315,7 +315,7 @@ void SwitchMaster_RemapsChanged(NSDictionary *remaps) {
 
         /// Update `_state->_eventsModifiedByDefault`
         MFEventType eventsModifiedByDefault = [RemapsAnalyzer eventsModifiedByModifications: [Remap modificationsWithModifiers: @{}]];
-        mfrequire(!(eventsModifiedByDefault & kMFEventType_Sensor)); /// MMF never wants to intercept Pointer events without a modifier held [Oct 2026]
+        mfrequire(!(eventsModifiedByDefault & kMFEventType_Sensor)); /// MMF never wants to intercept Pointer events without a modifier held. This would break the users mouse. [Oct 2026] Update: Maybe we should filter this out instead of crashing to make hand-editing config.plist safer?
         _state->_eventsModifiedByDefault = (_state->_eventsModifiedByDefault & kMFEventType_ScrollWheel) | eventsModifiedByDefault; /// Override everything except `kMFEventType_ScrollWheel`, which is controlled by another function [Oct 2026]
     }
 

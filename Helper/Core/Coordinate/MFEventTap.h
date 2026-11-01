@@ -71,14 +71,15 @@
 
         #define kMFEventType_Experiment                 ((MFEventType)1 << 5) /// [Oct 2026] Experimenting with other CGEventTypes is a little more difficult due to the MFEventType abstraction, but can still be done through something like this.
 
-        #if __swift__
+        #if !__swift__
+            static_assert(kMFMaxButtonNumber == 32, ""); /// All the `32` literals in this file are really `kMFMaxButtonNumber` [Oct 2026]
+            #define kMFEventType_Button(buttonIndex)        ({ mfassert((buttonIndex) >= 0 && (buttonIndex) < 32, @"kMFEventType_Button arg out of range"); \
+                                                               ((MFEventType)1 << (CLIP((buttonIndex), 0, 31) + _kMFEventType_ButtonShift)); }) /// Why the CLIP()? IIRC Apple APIs max out at 32 buttons, but Claude says HID usages can go much higher. [Oct 2026]
+        #else
             #define _kMFEventType_ButtonShift 32
             static inline MFEventType MFEventType_Button(CGMouseButton buttonIndex) { mfassert(buttonIndex >= 0 && buttonIndex < 32, @"MFEventType_Button arg out of range");
                                                                                       return ((MFEventType)1 << (CLIP((buttonIndex), 0, 31) + _kMFEventType_ButtonShift)); }
             #undef _kMFEventType_ButtonShift
-        #else
-            #define kMFEventType_Button(buttonIndex)        ({ mfassert((buttonIndex) >= 0 && (buttonIndex) < 32, @"kMFEventType_Button arg out of range"); \
-                                                               ((MFEventType)1 << (CLIP((buttonIndex), 0, 31) + _kMFEventType_ButtonShift)); }) /// Why the CLIP()? IIRC Apple APIs max out at 32 buttons, but Claude says HID usages can go much higher. [Oct 2026]
         #endif
 
         #define _kMFEventType_ButtonShift 32
@@ -87,10 +88,10 @@
         #define kMFEventType_AllButtons ((MFEventType)_kMFEventType_ButtonMask << _kMFEventType_ButtonShift)
         #define kMFEventType_AllEvents  ((MFEventType)-1)
 
-        #if __swift__
-            static inline MFEventType MFEventType_ButtonBlacklist(void) { return (MFEventType_Button(0) | MFEventType_Button(1)); }
-        #else
+        #if !__swift__
             #define kMFEventType_ButtonBlacklist            (kMFEventType_Button(0) | kMFEventType_Button(1)) /** §afterNoGCDTodo: Allow capturing secondaryButton, and update the UI (SwitchMaster also has note/TODO about this I think) [Oct 2026] */
+        #else
+            static inline MFEventType MFEventType_ButtonBlacklist(void) { return (MFEventType_Button(0) | MFEventType_Button(1)); }
         #endif
         NSString *MFEventTypeDescription(MFEventType type);
 
