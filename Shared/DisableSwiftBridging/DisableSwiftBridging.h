@@ -15,7 +15,7 @@
 #define MF_SWIFT_UNBRIDGED(__type) \
     MF_SWIFT_UNBRIDGED_BASE(__type, id)
 
-#if defined(__swift__)
+#if __swift__
 #define MF_SWIFT_UNBRIDGED_BASE(__realType, __nonBridgedBaseType) __nonBridgedBaseType
 #else
 #define MF_SWIFT_UNBRIDGED_BASE(__realType, __nonBridgedBaseType) __realType
