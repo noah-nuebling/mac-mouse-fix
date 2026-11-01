@@ -63,7 +63,7 @@ import Cocoa
         _scrollConfigRaw = newConfigRaw
         cache = nil
         //ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
-        SwitchMaster.shared.scrollConfigChanged(scrollConfig: _defaultInstance)
+        SwitchMaster_ScrollConfigChanged(_defaultInstance);
     }
     @objc static func devToggles_deleteCache() { /// [May 2025] Added this function as a hack for DevToggles.m
         assertRunLoop(configRunLoop());

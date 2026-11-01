@@ -139,47 +139,71 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 
 #pragma mark - Device information
 
-+ (BOOL)someDeviceHasScrollWheel {
-    assertRunLoop(IOThread.runLoop);
-    readsState(&_readWriteTracker);
-    return _attachedDevices.count > 0;
-}
+static BOOL _eventTypesSupportedBySomeDevice_IsCached = false;
 
-+ (BOOL)someDeviceHasPointing {
-    assertRunLoop(IOThread.runLoop);
-    readsState(&_readWriteTracker);
-    return _attachedDevices.count > 0;
-}
-+ (BOOL)someDeviceHasUsableButtons {
-    /// We ignore MB 1 and MB 2. That's also why it's called "deviceHas**Usable**Buttons", and not just "deviceHasButtons"
-    assertRunLoop(IOThread.runLoop);
-    return self.maxButtonNumberAmongDevices > 2; /// [Sep 2026] No `readsState()` etc. since this just forwards to `maxButtonNumberAmongDevices`
-}
++ (MFEventType) eventTypesSupportedBySomeDevice {
+    assertRunLoop(IOThread.runLoop); readsState(&_readWriteTracker);
 
-static BOOL _maxButtonNumberAmongDevices_IsCached = false;
+    static MFEventType _result = 0;
+    if (_eventTypesSupportedBySomeDevice_IsCached) return _result;
 
-+ (int)maxButtonNumberAmongDevices {
-    assertRunLoop(IOThread.runLoop);
-    readsAndWritesState(&_readWriteTracker);
+    _result = 0;
+    if (_attachedDevices.count > 0) {
 
-    static MFMouseButtonNumber _result = 0;
-    
-    if (_maxButtonNumberAmongDevices_IsCached) {
-        return _result;
-    } else {
-        
-        _result = 0;
-        for (Device *device in _attachedDevices) {
-            int b = device.nOfButtons;
-            if (b > _result) {
-                _result = b;
-            }
-        }
-        
-        _maxButtonNumberAmongDevices_IsCached = true;
-        return _result;
+        _result |= kMFEventType_ScrollWheel;
+        _result |= kMFEventType_Sensor;
+
+        int maxButtons = 0;
+        for (Device *device in _attachedDevices)
+            { int n = [device nOfButtons]; if (n > maxButtons) maxButtons = n; }
+        for (int i = 0; i < maxButtons; i++) _result |= kMFEventType_Button(i);
     }
+    _eventTypesSupportedBySomeDevice_IsCached = true;
+    return _result;
 }
+
+#if 0
+    + (BOOL)someDeviceHasScrollWheel {
+        assertRunLoop(IOThread.runLoop); readsState(&_readWriteTracker);
+        return _attachedDevices.count > 0;
+    }
+
+    + (BOOL)someDeviceHasPointing {
+        assertRunLoop(IOThread.runLoop);
+        readsState(&_readWriteTracker);
+        return _attachedDevices.count > 0;
+    }
+    + (BOOL)someDeviceHasUsableButtons {
+        /// We ignore MB 1 and MB 2. That's also why it's called "deviceHas**Usable**Buttons", and not just "deviceHasButtons"
+        assertRunLoop(IOThread.runLoop);
+        return self.maxButtonNumberAmongDevices > 2; /// [Sep 2026] No `readsState()` etc. since this just forwards to `maxButtonNumberAmongDevices`
+    }
+
+    static BOOL _maxButtonNumberAmongDevices_IsCached = false;
+
+    + (MFMouseButtonNumber) maxButtonNumberAmongDevices {
+        assertRunLoop(IOThread.runLoop);
+        readsAndWritesState(&_readWriteTracker);
+
+        static MFMouseButtonNumber _result = 0;
+
+        if (_maxButtonNumberAmongDevices_IsCached) {
+            return _result;
+        } else {
+
+            _result = 0;
+            for (Device *device in _attachedDevices) {
+                int b = device.nOfButtons;
+                if (b > _result) {
+                    _result = b;
+                }
+            }
+
+            _maxButtonNumberAmongDevices_IsCached = true;
+            return _result;
+        }
+    }
+#endif
 
 # pragma mark - Setup callbacks
 
@@ -255,12 +279,12 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         //[_iohidToAttachedCache removeAllObjects];
 
         /// Reset cache
-        _maxButtonNumberAmongDevices_IsCached = false;
+        _eventTypesSupportedBySomeDevice_IsCached = false;
         
         /// Notify
         //[ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
         allowNestedReadOrWrite() /// [Sep 2026] SwitchMaster reads our state back (`someDeviceHasScrollWheel`, `maxButtonNumberAmongDevices`, etc.)
-        [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
+        SwitchMaster_AttachedDevicesChanged(_attachedDevices);
 
         ///  Notify other objects
         //[Scroll decide];
@@ -326,14 +350,14 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         
         /// Reset cache
         
-        _maxButtonNumberAmongDevices_IsCached = false;
+        _eventTypesSupportedBySomeDevice_IsCached = false;
         [_iohidToAttachedCache removeAllObjects];
         
         /// Notify
         //[ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
         allowNestedReadOrWrite() /// [Sep 2026] SwitchMaster reads our state back (`someDeviceHasScrollWheel`, `maxButtonNumberAmongDevices`, etc.)
-        [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
-        
+        SwitchMaster_AttachedDevicesChanged(_attachedDevices);
+
         /// Notifiy other objects
         ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
         //[Scroll decide];

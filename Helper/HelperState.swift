@@ -24,7 +24,7 @@ import CoreGraphics
         super.init()
         initUserIsActive()
         mfrun(IOThread.runLoop()) { /// [Sep 2026] Can't call non-deferred since it causes HelperState.shared -> HelperState.init -> HelperState.shared recursion which deadlocks or whatever. Been this way before [Sep 2026] 'No more dispatch queues' refactor, so should be fine.
-            SwitchMaster.shared.helperStateChanged()
+            SwitchMaster_HelperStateChanged();
         }
     }
     
@@ -32,7 +32,7 @@ import CoreGraphics
     /// See Apple Docs at: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPMultipleUsers/Concepts/FastUserSwitching.html#//apple_ref/doc/uid/20002209-104219-BAJJIFCB
 
     private var _userIsActive: Bool = true
-    private(set) var userIsActive: Bool {
+    @objc private(set) var userIsActive: Bool {
         get {
             assertRunLoop(IOThread.runLoop())
             return _userIsActive
@@ -51,14 +51,14 @@ import CoreGraphics
             mfrun(IOThread.runLoop()) {
                 self.userIsActive = true
                 mfassert(self.userIsActive_Uncached() == self.userIsActive)
-                SwitchMaster.shared.helperStateChanged()
+                SwitchMaster_HelperStateChanged()
             }
         }
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.sessionDidResignActiveNotification, object: nil, queue: nil) { notification in
             mfrun(IOThread.runLoop()) {
                 self.userIsActive = false
                 mfassert(self.userIsActive_Uncached() == self.userIsActive)
-                SwitchMaster.shared.helperStateChanged()
+                SwitchMaster_HelperStateChanged()
             }
         }
         
@@ -78,7 +78,7 @@ import CoreGraphics
         set {
             assertRunLoop(IOThread.runLoop())
             _activeDevice = newValue
-            SwitchMaster.shared.helperStateChanged()
+            SwitchMaster_HelperStateChanged()
         }
         get {
             assertRunLoop(IOThread.runLoop())

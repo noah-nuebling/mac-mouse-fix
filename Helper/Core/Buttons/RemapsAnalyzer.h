@@ -11,6 +11,7 @@
 #import "Device.h"
 #import "Constants.h"
 #import "DisableSwiftBridging.h"
+#import "MFEventTap.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,11 +23,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark For SwitchMaster
 
-+ (BOOL)modificationsModifyButtons:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications maxButton:(MF_SWIFT_UNBRIDGED_BASE(MFMouseButtonNumber, int))maxButton NS_REFINED_FOR_SWIFT;
++ (MFEventType) eventsModifiedByModifications: (NSDictionary *)modifications;
++ (MFEventType) eventsInModifiers: (NSDictionary *)modifiers;
 
-+ (BOOL)modificationsModifyScroll:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
-+ (BOOL)modificationsModifyPointing:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
+#if 0
+    + (BOOL)modificationsModifyButtons:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications maxButton:(MF_SWIFT_UNBRIDGED_BASE(MFMouseButtonNumber, int))maxButton NS_REFINED_FOR_SWIFT;
 
+    + (BOOL)modificationsModifyScroll:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
+    + (BOOL)modificationsModifyPointing:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
+#endif
 
 #pragma mark For Buttons.swift
 

@@ -21,6 +21,16 @@ import Foundation
 /// - **TODO:** Test if the new approach actually prevents bridging (Check performance against the old approach)
 ///
 
+/// SwitchMaster.m
+#if IS_HELPER
+
+    func SwitchMaster_GeneralConfigChanged(_ x: NSDictionary) { return __SwitchMaster_GeneralConfigChanged(x); }
+    func SwitchMaster_AttachedDevicesChanged(_ x: NSArray)    { return __SwitchMaster_AttachedDevicesChanged(x); }
+    func SwitchMaster_RemapsChanged(_ x: NSDictionary)        { return __SwitchMaster_RemapsChanged(x); }
+    func SwitchMaster_ModifiersChanged(_ x: NSDictionary)     { return __SwitchMaster_ModifiersChanged(x); }
+
+#endif
+
 extension NSString {
     
     /// NSString+Additions.h
@@ -147,18 +157,7 @@ extension Actions {
 }
 
 extension RemapsAnalyzer {
-    
-    static func modificationsModifyButtons(_ modifications: NSDictionary, maxButton: Int32) -> Bool {
-        return __modificationsModifyButtons(modifications, maxButton: maxButton)
-    }
-    
-    static func modificationsModifyScroll(_ modifications: NSDictionary) -> Bool {
-        return __modificationsModifyScroll(modifications)
-    }
-    static func modificationsModifyPointing(_ modifications: NSDictionary) -> Bool {
-        return __modificationsModifyPointing(modifications)
-    }
-    
+
     static func maxLevel(forButton button: NSNumber, remaps: NSDictionary, modificationsActingOnThisButton: NSDictionary) -> NSInteger {
         return __maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modificationsActingOnThisButton)
     }

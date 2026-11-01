@@ -12,6 +12,29 @@
 #import "SharedUtility.h"
 #import <os/lock.h>
 
+#pragma mark - MFEventType stuff
+
+#if IS_HELPER | IS_MAIN_APP
+
+NSString *MFEventTypeDescription(MFEventType type) {
+    return bitflagsDescription(type, ^NSString *(uint64_t bitflag) {
+        if (bitflag == kMFEventType_KeyboardModifier)   return @"KeyboardModifier";
+        if (bitflag == kMFEventType_KeyPress)           return @"KeyPress";
+        if (bitflag == kMFEventType_Sensor)             return @"Sensor";
+        if (bitflag == kMFEventType_ScrollWheel)        return @"ScrollWheel";
+        if (bitflag == kMFEventType_Experiment)         return @"Experiment";
+
+        uint64_t buttonFlags = (bitflag >> _kMFEventType_ButtonShift) & _kMFEventType_ButtonMask;
+        MFMouseButtonNumber button = __builtin_ctzll(buttonFlags) + 1;
+        if (buttonFlags) return stringf(@"Button_%d", button);
+
+        return nil;
+    });
+}
+#endif
+
+#if IS_HELPER
+
 #pragma mark - General helpers
 
 #define auto __auto_type
@@ -26,21 +49,6 @@
 #define _DDLogDebug(x...) DDLogDebug("MFEventTap: " x)
 
 #pragma mark - Descriptions
-
-NSString *MFEventTypeDescription(MFEventType type) {
-    return bitflagsDescription(type, ^NSString *(uint64_t bitflag) {
-        if (bitflag == kMFEventType_KeyboardModifier)   return @"KeyboardModifier";
-        if (bitflag == kMFEventType_KeyPress)           return @"KeyPress";
-        if (bitflag == kMFEventType_Sensor)             return @"Sensor";
-        if (bitflag == kMFEventType_ScrollWheel)        return @"ScrollWheel";
-        if (bitflag == kMFEventType_Experiment)         return @"Experiment";
-
-        uint64_t buttonFlags = (bitflag >> _kMFEventType_ButtonShift) & _kMFEventType_ButtonMask;
-        if (buttonFlags) return stringf(@"Button%d", __builtin_ctzll(buttonFlags));
-
-        return nil;
-    });
-}
 
 NSString *CGEventMaskDescription(CGEventMask eventMask) {
     return bitflagsDescription(eventMask, ^NSString * _Nonnull(uint64_t bitflag) {
@@ -189,30 +197,33 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
     #pragma mark Interface for listening
 
     + (void) registerListener: (MFEventListenerID *)listenerID forEvents: (MFEventType)events callback: (MFEventTapCallback)callback {
-        { _lockScope(&_listenerLock);
-            if (!_listenerMap) _listenerMap = [NSMutableDictionary new];
-            if (!_listenerList) _listenerList = [NSMutableArray new];
-
-            _MFEventTapListener *listener = [_listenerMap objectForKey: listenerID];
-            if (!listener) {
-                listener = [_MFEventTapListener new];
-                [_listenerMap  setObject: listener forKey: listenerID];
-                [_listenerList addObject: listener];
-            }
-            configure(listener, it->_id = listenerID, it->_events = events, it->_callback = callback, it->_enabled = false);
-
-            _DDLogDebug("Registered listener: %{public}@", listener);
-        }
-        updateCGTaps(); /// Do need to call `updateCGTaps()`, in case we're disabling the listener through this call. [Oct 2026]
-    }
-    + (bool) isEnabledForListener: (NSString *)listenerID {
         _lockScope(&_listenerLock);
+
+        if (!_listenerMap) _listenerMap = [NSMutableDictionary new];
+        if (!_listenerList) _listenerList = [NSMutableArray new];
+
         _MFEventTapListener *listener = [_listenerMap objectForKey: listenerID];
         if (!listener) {
-            mfassert(false, @"Trying to get isEnabled for unknown listener id %@. Known: %@", listenerID, [_listenerMap allKeys]);
-            return false;
+            listener = [_MFEventTapListener new];
+            [_listenerMap  setObject: listener forKey: listenerID];
+            [_listenerList addObject: listener];
+        } else {
+            /// Having only one function for registering and updates would be simpler [Oct 2026]
+            mfrequire(false, @"registerListener: called repeatedly for listener. Use setEvents:forListener: or enable:forListener: instead [Oct 2026]");
         }
-        return listener->_enabled;
+        configure(listener, it->_id = listenerID, it->_events = events, it->_callback = callback, it->_enabled = false);
+
+        _DDLogDebug("Registered listener: %{public}@", listener);
+        /// No need to call `updateCGTaps()` because listener starts disabled [Oct 2026]
+    }
+    + (void) setEvents: (MFEventType)events forListener: (MFEventListenerID *)listenerID {
+        { _lockScope(&_listenerLock);
+            _MFEventTapListener *listener = _listenerMap[listenerID];
+            if (!listener) mfassert(false, @"Trying to set events (%@) for unknown listener id %@. Known: %@", MFEventTypeDescription(events), listenerID, [_listenerMap allKeys]);
+            else           listener->_events = events;
+            _DDLogDebug("Set events for listener %{public}@", listener);
+        }
+        updateCGTaps();
     }
     + (void) enable: (bool)enable forListener: (NSString *)listenerID {
         { _lockScope(&_listenerLock);
@@ -222,6 +233,15 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
             _DDLogDebug("Enabled/disabled listener: %{public}@", listener);
         }
         updateCGTaps();
+    }
+    + (bool) isEnabledForListener: (NSString *)listenerID {
+        _lockScope(&_listenerLock);
+        _MFEventTapListener *listener = [_listenerMap objectForKey: listenerID];
+        if (!listener) {
+            mfassert(false, @"Trying to get isEnabled for unknown listener id %@. Known: %@", listenerID, [_listenerMap allKeys]);
+            return false;
+        }
+        return listener->_enabled;
     }
 
     #pragma mark Impl for listening
@@ -240,8 +260,13 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
             MFEventType allTypes = 0;
             { _lockScope(&_listenerLock)
                 for (_MFEventTapListener *listener in _listenerList)
-                    if (listener->_enabled)
+                    if (listener->_enabled) {
+                        if (listener->_events & kMFEventType_ButtonBlacklist) {
+                            mfassert(false, @"Listener %@ contained blacklisted button (%@). Ignoring.", listener, MFEventTypeDescription(listener->_events & kMFEventType_ButtonBlacklist));
+                            continue;
+                        }
                         allTypes |= listener->_events;
+                    }
             }
 
             /// Figure out which underlying `CGEventTaps` we need based on combined `MFEventTypes`
@@ -358,4 +383,9 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
         _lockScope(&_listenerLock);
         return [[_listenerMap objectForKey: listenerID] description];
     }
+    + (MFEventType) eventsForListener: (MFEventListenerID *)listenerID {
+        _lockScope(&_listenerLock);
+        return [_listenerMap objectForKey: listenerID]->_events;
+    }
 @end
+#endif

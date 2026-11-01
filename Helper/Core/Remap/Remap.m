@@ -40,12 +40,12 @@ static NSMutableDictionary *_swizzleCache = nil;
 
     /// Cache is reset whenever remaps change
     
-    if (_swizzleCache == nil) {
-        _swizzleCache = [NSMutableDictionary dictionary];
-    }
-    
+    if (_swizzleCache == nil) _swizzleCache = [NSMutableDictionary dictionary];
+
+    //modifiers = modifiers ?: @{};
+
     NSDictionary *cached = _swizzleCache[modifiers];
-    
+
     if (cached) {
         return cached;
     } else {
@@ -88,7 +88,7 @@ static void setRemaps(NSDictionary *remapsDict) {
         
         /// Notify
         //[ReactiveRemaps.shared handleRemapsDidChange];
-        [SwitchMaster.shared remapsChangedWithRemaps:_remaps];
+        SwitchMaster_RemapsChanged(_remaps);
         [RemapsAnalyzer reload];
         //[NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         
@@ -257,31 +257,38 @@ BOOL _addModeIsEnabled = NO;
 }
 
 + (BOOL)enableAddMode {
-    
-    /// \discussion  Add mode configures the helper such that it remaps to "add mode feedback effects" instead of normal effects.
-    /// When "add mode feedback effects" are triggered, the helper will send information about how exactly the effect was triggered to the main app.
-    /// This allows us to capture triggers that the user performs and use them in the main app to add new rows to the remaps table view
-    /// The dataModel for the remaps table view is an array of dicts, where each dict is called a tableEntry.
-    /// Each table entry has 3 keys:
-    ///     - kMFRemapsKeyTrigger
-    ///     - kMFRemapsKeyModificationPrecondition
-    ///     - kMFRemapsKeyEffect
-    /// Our feedback dicts we send to the main app during addMode use 3 - overlapping, but different - keys:
-    ///     - kMFRemapsKeyTrigger
-    ///     - kMFRemapsKeyModificationPrecondition
-    ///     - kMFActionDictKeyType / kMFModifiedDragDictKeyType (Edit: or kMFModifiedScrollDictKeyType)
-    /// kMFActionDictKeyType / kMFModifiedDragDictKeyType is added in this funciton and used so the helper knows how to process the dictionary, but it's removed before we send stuff off to the mainApp
-    /// kMFRemapsKeyTrigger is added in this function, and eventually sent off to the main app
-    /// kMFRemapsKeyModificationPrecondition is addedDynamically in **RemapSwizzler**.
-    /// So the final feedback dict we send to the main app contains values for the keys
-    ///     - kMFRemapsKeyTrigger
-    ///     - kMFRemapsKeyModificationPrecondition
-    /// So it's _almost_ a tableEntry which can be used by the mainApp's remap tableview's dataModel, it's just lacking the kMFRemapsKeyEffect key and values.
-    /// This makes sense, because The effect is then to be chosen by the user in the main app's GUI
-    ///
-    /// We implemented a policy of "modifiers need to be present to capture drags and scrolls" using the `addModePayloadIsValid:` method.
-    ///     Edit: The remapSwizzler is actually responsible for this now.
-    ///     TODO: Remove addModePayloadIsValid.
+
+    /**
+     Discussion:
+         Add mode configures the helper such that it remaps to "add mode feedback effects" instead of normal effects.
+         "add mode feedback effects" are effect dicts containing keys such as `kMFModifiedDragTypeAddModeFeedback` (See below) [Oct 2026]
+         When "add mode feedback effects" are triggered, the helper will send information about how exactly the effect was triggered to the main app.
+         This allows us to capture triggers that the user performs and use them in the main app to add new rows to the remaps table view
+         The dataModel for the remaps table view is an array of dicts, where each dict is called a tableEntry.
+         Each tableEntry has 3 keys:
+             - `kMFRemapsKeyTrigger`
+             - `kMFRemapsKeyModificationPrecondition`
+             - `kMFRemapsKeyEffect`
+         Our feedback dicts we send to the main app during addMode use 3 - overlapping, but different - keys:
+             - `kMFRemapsKeyTrigger`
+                This is added in this function, and eventually sent off to the main app
+             - `kMFRemapsKeyModificationPrecondition`
+                This is added dynamically in `addModeSwizzler` and eventually sent off to the main app [Oct 2026]
+             - `kMFActionDictKeyType` / `kMFModifiedDragDictKeyType` / `kMFModifiedScrollDictKeyType`
+                These are added in this function and used so the helper knows how to process the dictionary, but it's removed before
+                we send stuff off to the mainApp
+         So the final feedback dict we send to the main app contains the keys:
+             - `kMFRemapsKeyTrigger`
+             - `kMFRemapsKeyModificationPrecondition`
+         So it's *almost* a tableEntry which can be used by the mainApp's remap tableview's dataModel, it's just lacking the `kMFRemapsKeyEffect` key and values.
+         This makes sense, because The effect is then to be chosen by the user in the main app's GUI
+
+
+     Other core parts of this mechanism are implemented here: [Oct 2026]
+         - `RemapSwizzler.m > addModeSwizzler()`
+            - Top of file contains core/good explanations of how/why addMode is split up in this way [Oct 2026]
+         - `SwitchMaster.m > [Remap addModeIsEnabled]`
+     */
 
     assertRunLoop(configRunLoop());
     DDLogDebug("TRM set remaps to addMode");
@@ -347,63 +354,36 @@ BOOL _addModeIsEnabled = NO;
     return YES;
 }
 
-//+ (void)disableAddModeWithPayload:(NSDictionary *)payload {
-//    /// Wrapper for disableAddMode. Not sure if this is useful
-//
-//    if (![self addModePayloadIsValid:payload]) return;
-//
-//    [self disableAddMode];
-//}
-
-//+ (void)sendAddModeFeedbackWithPayload:(NSDictionary *)payload {
-//
-//    if (![self addModePayloadIsValid:payload]) return;
-//
-//    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-//    ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
-//    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
-//}
-
 + (void)sendAddModeFeedback:(NSDictionary *)payload {
     assertRunLoop(configRunLoop());
 
     DDLogDebug("Concluding addMode with payload: %@", payload);
-    
-    if (!addModePayloadIsValid(payload)) {
-        /// The way things are set up currently, we constantly get invalid payloads. So we just ignore them
-        //[self disableAddMode];
-        return;
-    }
-    
-    //[self reload];
 
-    //[MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
-
-    
-    
-    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload waitForReply:NO];
-    ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
-    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
-
-}
-
-static BOOL addModePayloadIsValid(NSDictionary *payload) {
-    /// Using this to prevent payloads containing a modifiedDrag / modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
-    /// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that
-    ///     Edit: We simplified things now and this is the only safety net against sending payloads without necessary modificationPreconditions.
-    /// Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
-    ///     Also the remap table is completely structured around buttons now, so it wouldn't fit into the UI to have keyboard-modifier-only modifiedDrags and modifiedScrolls
-
-    if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]
-        || [payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerScroll]) {
-        
-        NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
-        if (buttonPreconds == nil || buttonPreconds.count == 0) {
-            //assert(false);
-            return NO;
+    if (runningDebugMode()) {
+        NSString *trigger = [payload objectForKey: kMFRemapsKeyTrigger];
+        if ([trigger isEqual: kMFTriggerDrag] ||
+            [trigger isEqual: kMFTriggerScroll]
+        ) {
+            NSArray *buttonPreconditions = [[payload objectForKey: kMFRemapsKeyModificationPrecondition] objectForKey: kMFModificationPreconditionKeyButtons];
+            if (!buttonPreconditions) {
+                mfassert(false, @"!addModePayloadIsValid: the payload doesn't contain\n" /// Formerly this check was in a separate `addModePayloadIsValid` function, which might still be referenced elsewhere [Oct 2026]
+                                 "a button at all (it's a drag or scroll trigger without a button modifier)\n"
+                                 "addModeSwizzler() should make this impossible [Oct 2026]"); /// This is just validating that what we're doing in `addModeSwizzler()` is working correctly.
+                return;
+            }
         }
     }
-    return YES;
+
+    if ((0)) {
+        [self reload];
+        [MFMessagePort sendMessage: @"addModeDisabled" withPayload: nil waitForReply: NO];
+    }
+
+    [MFMessagePort sendMessage:@"addModeFeedback" withPayload: payload waitForReply: NO];
+
+    if ((0)) [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+                /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
+
 }
 
 #pragma mark - Dummy Data

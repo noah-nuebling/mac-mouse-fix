@@ -16,6 +16,7 @@
             Counter: But I don't think we ever had bugs with that anyways, and SwitchMaster was already kinda a central manager of all the CGEventTaps [Oct 2026]
         - Uncertain pro:`MFEventType` abstraction might make it easier to support remapping secondaryMouseButton
             - I think that's the only real reason we added `MFEventType` abstraction, I plan to test this soon, and maybe simplify if it doesn't hold up §mfEventTapTodo.
+            - Update: [Oct 2026] Using `MFEventType` all over the new `SwitchMaster.m`, which simplified it a lot. (Though maybe using `CGEventMask` would've worked just as well.)
         - Uncertain pro: Minimizes WindowServer IPC. Explanation: The `TwoFingerSwipe.m` gesture and the thing it calls, `PointerFreeze.m`, might have some issues due to waiting for WindowServer. (See `Slow WindowServer IPC`)
             `CGEventTapEnable()` can be reduced, because `MFEventTap` makes `TwoFingerSwipe.m` and `PointerFreeze.m` share one CGEventTap under the hood. (See `Slow WindowServer IPC`)
                 Caveat: You could've maybe found another/simpler solution to do the same thing.
@@ -52,6 +53,51 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CGEvent.h>
 
+
+#pragma mark - MFEventType stuff
+
+#if IS_HELPER | IS_MAIN_APP
+/// Why is `MFEventTap.m/.h` part of mainApp target? We use `kMFEventType_ButtonBlacklist` in mainApp. (That's also the reason for `#if __swift__`) Maybe should split the `MFEventType` stuff into separate file. [Oct 2026]
+
+    typedef uint64_t MFEventType;
+        //#define kMFEventType_UnregisterListener              ((MFEventType)0) /// We currently don't ever need to unregister listeners [Oct 2026]
+
+        #define kMFEventType_KeyboardModifier           ((MFEventType)1 << 1)
+        #define kMFEventType_KeyPress                   ((MFEventType)1 << 2)
+
+        #define kMFEventType_Sensor                     ((MFEventType)1 << 3) /// [Oct 2026] TODO: Rename this to `_Pointer` (Match SwitchMaster terminology)
+        #define kMFEventType_ScrollWheel                ((MFEventType)1 << 4)
+
+        #define kMFEventType_Experiment                 ((MFEventType)1 << 5) /// [Oct 2026] Experimenting with other CGEventTypes is a little more difficult due to the MFEventType abstraction, but can still be done through something like this.
+
+        #if __swift__
+            #define _kMFEventType_ButtonShift 32
+            static inline MFEventType MFEventType_Button(CGMouseButton buttonIndex) { mfrequire(buttonIndex >= 0 && buttonIndex < 32, @"MFEventType_Button arg out of range");
+                                                                                      return ((MFEventType)1 << ((buttonIndex) + _kMFEventType_ButtonShift)); }
+            #undef _kMFEventType_ButtonShift
+        #else
+            #define kMFEventType_Button(buttonIndex)        ({ mfrequire((buttonIndex) >= 0 && (buttonIndex) < 32, @"kMFEventType_Button arg out of range"); \
+                                                               ((MFEventType)1 << ((buttonIndex) + _kMFEventType_ButtonShift)); })
+        #endif
+
+        #define _kMFEventType_ButtonShift 32
+        #define _kMFEventType_ButtonMask  0xFFFFFFFF
+
+        #define kMFEventType_AllButtons ((MFEventType)_kMFEventType_ButtonMask << _kMFEventType_ButtonShift)
+        #define kMFEventType_AllEvents  ((MFEventType)-1)
+
+        #if __swift__
+            static inline MFEventType MFEventType_ButtonBlacklist(void) { return (MFEventType_Button(0) | MFEventType_Button(1)); }
+        #else
+            #define kMFEventType_ButtonBlacklist            (kMFEventType_Button(0) | kMFEventType_Button(1)) /** §afterNoGCDTodo: Allow capturing secondaryButton, and update the UI (SwitchMaster also has note/TODO about this I think) [Oct 2026] */
+        #endif
+        NSString *MFEventTypeDescription(MFEventType type);
+
+#endif
+
+#pragma mark - MFEventTap
+
+#if IS_HELPER
 @interface MFEventTap : NSObject
 
     /// Threading: All `MFEventTap` methods are thread-safe. Callbacks are invoked on `eventTapRunLoop()` [Oct 2026]
@@ -75,30 +121,19 @@
 
     typedef NSString MFEventListenerID;
 
-    typedef int64_t MFEventType;
-        //#define kMFEventType_UnregisterListener              ((MFEventType)0) /// We currently don't ever need to unregister listeners [Oct 2026]
-
-        #define kMFEventType_KeyboardModifier           ((MFEventType)1 << 1)
-        #define kMFEventType_KeyPress                   ((MFEventType)1 << 2)
-
-        #define kMFEventType_Sensor                     ((MFEventType)1 << 3)
-        #define kMFEventType_ScrollWheel                ((MFEventType)1 << 4)
-
-        #define kMFEventType_Experiment                 ((MFEventType)1 << 5) /// [Oct 2026] Experimenting with other CGEventTypes is a little more difficult due to the MFEventType abstraction, but can still be done through something like this.
-
-        #define kMFEventType_Button(buttonIndex)        ((MFEventType)1 << ((buttonIndex) + _kMFEventType_ButtonShift))
-        #define _kMFEventType_ButtonShift 32
-        #define _kMFEventType_ButtonMask  0xFFFFFFFF
-
-
     typedef void (*MFEventTapCallback)(MFEventType eventType, CGEventRef *eventPtr);
 
     + (void) registerListener: (MFEventListenerID *)listenerID forEvents: (MFEventType)events callback: (MFEventTapCallback)callback;
-    + (bool) isEnabledForListener: (MFEventListenerID *)listenerID;
+
+    + (void) setEvents: (MFEventType)events forListener: (MFEventListenerID *)listenerID;
     + (void) enable: (bool)enable forListener: (MFEventListenerID *)listenerID;
+
+    + (bool) isEnabledForListener: (MFEventListenerID *)listenerID;
 
     + (void) postCGEvent: (CGEventRef)cgEvent;
 
     + (NSString *) descriptionForListener: (MFEventListenerID *)listenerID;
+    + (MFEventType) eventsForListener: (MFEventListenerID *)listenerID;
 
 @end
+#endif

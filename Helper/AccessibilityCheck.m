@@ -194,9 +194,10 @@
             //[ModifiedDrag load_Manual];
             [Modifiers load_Manual];
             [ModifiedDrag load_Manual];
-            [Config load_Manual];
 
-            [SwitchMaster.shared load_Manual];
+            SwitchMaster_Load_Manual(); /// Moved this up since `[Config load_Manual]` calls into it [Oct 2026]
+
+            [Config load_Manual];
 
             [ScreenDrawer.shared load_Manual];
             [PointerFreeze load_Manual];

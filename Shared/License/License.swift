@@ -124,7 +124,7 @@ extension MFTrialState:     @unchecked Sendable {}
                         }
 
                         /// Lock helper
-                        SwitchMaster.shared.lockDown()
+                        SwitchMaster_LockDown();
                         
                     }
                 }

@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "Device.h"
 #import "Constants.h"
+#import "MFEventTap.h"
 #import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -25,11 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)devicesAreAttached;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
 
-+ (BOOL)someDeviceHasScrollWheel;
-+ (BOOL)someDeviceHasPointing;
-+ (BOOL)someDeviceHasUsableButtons;
-+ (int)maxButtonNumberAmongDevices;
-
++ (MFEventType) eventTypesSupportedBySomeDevice;
 
 @end
 

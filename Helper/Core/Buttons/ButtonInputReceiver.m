@@ -17,49 +17,26 @@
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "MFEventTap.h"
 
 @implementation ButtonInputReceiver
 
 #define kListenerID @"ButtonInputReceiver"
 
 + (void)load_Manual {
-    registerInputCallback();
-    _buttonParseBlacklist = @[@(1),@(2)]; /// Ignore inputs from left and right mouse buttons
-}
-
-+ (void)start {
-    assertRunLoop(IOThread.runLoop);
-    [MFEventTap enable: true forListener: kListenerID];
-}
-+ (void)stop {
-    assertRunLoop(IOThread.runLoop);
-    [MFEventTap enable: false forListener: kListenerID];
-}
-+ (BOOL)isRunning {
-    assertRunLoop(IOThread.runLoop);
-    /// Only used for debug inspection at the time of writing. Shouldn't need it for anything else. [Sep 2026]
-    return [MFEventTap isEnabledForListener: kListenerID];
-}
-
-static void registerInputCallback(void) {
-
-    ///
-    /// Register event Tap Callback
-    ///
-    
-    /// Declare events of interest
-    /// I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / `_buttonInputsFromRelevantDevices`. Not sure though. Maybe that was just when we did the event Einschleusung for the old device seizing stuff.
-    ///     Edit: will just see what happens when we turn it off.
-    
-    MFEventType types = 0;
-    for (int i = 2; i < kMFMaxButtonNumber; i++) types |= kMFEventType_Button(i);
-
     /// Create tap
-    [MFEventTap registerListener: kListenerID forEvents: types callback: eventTapCallback];
+    ///     Probably doesn't do anything at this point [Oct 2026]
+    [MFEventTap registerListener: kListenerID forEvents: 0 callback: eventTapCallback];
+    [MFEventTap enable: true forListener: kListenerID]; /// Always keep enabled. SwitchMaster effectively enables/disables this tap by setting different `MFEventTypes` [Oct 2026]
 }
 
-NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
++ (void) listenToButtons: (MFEventType)buttons {
+    assertRunLoop(IOThread.runLoop);
+    [MFEventTap setEvents: buttons forListener: kListenerID];
+}
+
++ (NSString *) listenedToEventsDescription {
+    return MFEventTypeDescription([MFEventTap eventsForListener: kListenerID]);
+}
 
 static void eventTapCallback(MFEventType eventType, CGEventRef *eventPtr) {
 
@@ -92,11 +69,8 @@ static void eventTapCallback(MFEventType eventType, CGEventRef *eventPtr) {
     ///
     
     /// Get info from cgEvent
-    NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+    MFMouseButtonNumber buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
     BOOL mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
-    
-    /// Filter buttons
-    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return;
     
     /// Debug
     DDLogDebug("Input Receiver - Received event: %@", [NSEvent eventWithCGEvent:event].description);

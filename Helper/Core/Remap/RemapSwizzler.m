@@ -61,12 +61,21 @@
 
 static NSDictionary *addModeSwizzler(NSDictionary *remaps, NSDictionary *activeModifierss) {
 
-    /// See `Remap + enableAddMode` and top of this file for context.
-    
+    /// Also see: [Oct 2026]
+    ///     - Top of this file
+    ///     - `+[Remap enableAddMode]`
+    ///     - `+[Remap sendAddModeFeedback]`
+    ///     - `SwitchMaster.m > [Remap addModeIsEnabled]`
+
     NSMutableDictionary *modification = [SharedUtility deepMutableCopyOf:remaps[@{}]]; /// Deep copying so caller can store value without it changing afterwards due to references
     NSMutableDictionary *activeModifiers = [SharedUtility deepMutableCopyOf:(id)activeModifierss]; /// I think we deep mutable copy so the UI doesn't crash
-    
-    if (activeModifiers.count > 0) { /// There need to be modifiers for drag and scroll triggers!
+
+    if ([activeModifiers objectForKey: kMFModificationPreconditionKeyButtons]) {
+        /// There need to button modifiers for drag and scroll triggers! [Oct 2026]
+        ///     Or you could think of it as: every modifier+trigger combination needs to contain at least one button (Because the remaps table UI is based around buttons.)
+        ///     Very old comment from now-deleted `addModePayloadIsValid()`: [Oct 2026]
+        ///         Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
+        ///         Also the remap table is completely structured around buttons now, so it wouldn't fit into the UI to have keyboard-modifier-only modifiedDrags and modifiedScrolls
         modification[kMFTriggerDrag][kMFRemapsKeyModificationPrecondition] = activeModifiers;
         modification[kMFTriggerScroll][kMFRemapsKeyModificationPrecondition] = activeModifiers;
     } else {

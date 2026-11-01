@@ -28,7 +28,7 @@ import Cocoa
         
         /// Notify
         if let new = new {
-            SwitchMaster.shared.generalConfigChanged(generalConfig: new)
+            SwitchMaster_GeneralConfigChanged(new)
         } else {
             assert(false)
         }

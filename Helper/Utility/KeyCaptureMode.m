@@ -26,8 +26,9 @@
     assertRunLoop(IOThread.runLoop);
 
     DDLogInfo("Enabling keyCaptureMode");
-
-    [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: keyCaptureModeCallback];
+    static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
+        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: keyCaptureModeCallback];
+    });
     [MFEventTap enable: true forListener: kListenerID];
 }
 

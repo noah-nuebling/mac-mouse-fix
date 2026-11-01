@@ -26,7 +26,6 @@
 		4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */; };
 		4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */; };
 		4F1708BE2E51D60400945CF3 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
-		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
 		4F1873D8307C234F00209BB2 /* vblphase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1873D7307C234F00209BB2 /* vblphase.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4F1B418F2D49960E00026C94 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
@@ -186,6 +185,9 @@
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
 		4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.m */; };
 		4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.m */; };
+		4FA08EE83092367E000DC578 /* SwitchMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA08ED330923679000DC578 /* SwitchMaster.m */; };
+		4FA08EEC3092A6F7000DC578 /* MFDescriptionWithIndent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA08EEB3092A6F6000DC578 /* MFDescriptionWithIndent.m */; };
+		4FA08EED3092A6F7000DC578 /* MFDescriptionWithIndent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA08EEB3092A6F6000DC578 /* MFDescriptionWithIndent.m */; };
 		4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
 		4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
 		4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
@@ -275,6 +277,7 @@
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
 		4FC8A7D528ABDEFE007DB982 /* MFClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */; };
+		4FC9EC1430976D2C00FF6EAD /* MFEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5011E308B99A50080000B /* MFEventTap.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCABCF72933A7090018E538 /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCABCF62933A7090018E538 /* Toasts.swift */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
@@ -651,7 +654,6 @@
 		4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XCStringsDummyApp-Info.plist"; sourceTree = "<group>"; };
 		4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		4F1713522E6201FE00FFE14A /* storyboard-notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "storyboard-notes.md"; sourceTree = "<group>"; };
-		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
 		4F18466A2C53AD6D00D5E835 /* Automatic Localization Screenshots.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Automatic Localization Screenshots.md"; sourceTree = "<group>"; };
 		4F1873D7307C234F00209BB2 /* vblphase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vblphase.m; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
@@ -887,6 +889,10 @@
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
 		4FA06818291B2C4C00949B5F /* Shorthands.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Shorthands.m; sourceTree = "<group>"; };
+		4FA08ED330923679000DC578 /* SwitchMaster.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwitchMaster.m; sourceTree = "<group>"; };
+		4FA08EE930923682000DC578 /* SwitchMaster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwitchMaster.h; sourceTree = "<group>"; };
+		4FA08EEA3092A6E2000DC578 /* MFDescriptionWithIndent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDescriptionWithIndent.h; sourceTree = "<group>"; };
+		4FA08EEB3092A6F6000DC578 /* MFDescriptionWithIndent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDescriptionWithIndent.m; sourceTree = "<group>"; };
 		4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationController.swift; sourceTree = "<group>"; };
 		4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialNotificationController.xib; sourceTree = "<group>"; };
 		4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationWindow.swift; sourceTree = "<group>"; };
@@ -1859,6 +1865,8 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4FA08EEA3092A6E2000DC578 /* MFDescriptionWithIndent.h */,
+				4FA08EEB3092A6F6000DC578 /* MFDescriptionWithIndent.m */,
 				4FA2ADAA308287A000925D0C /* NSTimer+Additions.h */,
 				4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */,
 				4FDB5F482D4F85A900164F97 /* NSCharacterSet+Additions.h */,
@@ -2250,9 +2258,10 @@
 			children = (
 				4FF5011D308B99740080000B /* MFEventTap.h */,
 				4FF5011E308B99A50080000B /* MFEventTap.m */,
-				4F17D2E0292A635200EB07CA /* SwitchMaster.swift */,
-				4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */,
+				4FA08EE930923682000DC578 /* SwitchMaster.h */,
+				4FA08ED330923679000DC578 /* SwitchMaster.m */,
 				4F02C7202899453200ED0AA8 /* OutputCoordinator.h */,
+				4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */,
 			);
 			path = Coordinate;
 			sourceTree = "<group>";
@@ -3547,6 +3556,7 @@
 				4FE03A602BFF5F0600708454 /* CoolSUComparator.m in Sources */,
 				4FF7973A2C8245D700C18001 /* Links.m in Sources */,
 				4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */,
+				4FA08EED3092A6F7000DC578 /* MFDescriptionWithIndent.m in Sources */,
 				4FCC354D2C6296FF009E1908 /* CoolSFSymbolsFont.m in Sources */,
 				4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */,
 				4FE78C452C502A5F00C54103 /* NSString+Additions.m in Sources */,
@@ -3621,6 +3631,7 @@
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4F428D082CD8C688006322AB /* MFCoding.swift in Sources */,
 				4F1B418F2D49960E00026C94 /* MFGate.m in Sources */,
+				4FC9EC1430976D2C00FF6EAD /* MFEventTap.m in Sources */,
 				4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
@@ -3677,6 +3688,7 @@
 				4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
+				4FA08EE83092367E000DC578 /* SwitchMaster.m in Sources */,
 				4FA625582DA97CCE004F46DA /* MFDataClass.m in Sources */,
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
@@ -3690,6 +3702,7 @@
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
+				4FA08EEC3092A6F7000DC578 /* MFDescriptionWithIndent.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FB8B2952CCDB94F00A5A580 /* MFPlistDecoder.m in Sources */,
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
@@ -3704,7 +3717,6 @@
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
 				4FA2ADAC308287A000925D0C /* NSTimer+Additions.m in Sources */,
-				4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */,
 				4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
 				4F97E002298732E500012BAC /* LocalizationUtility.m in Sources */,
