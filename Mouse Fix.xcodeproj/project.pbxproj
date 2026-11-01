@@ -978,6 +978,7 @@
 		4FC7D5D82B455A60002AED77 /* update-state-of-localization.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-state-of-localization.yml"; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser_old.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
+		4FC9F1663097A05C00FF6EAD /* SwitchMaster_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster_old_.swift; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCABCF62933A7090018E538 /* Toasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
@@ -2260,6 +2261,7 @@
 				4FF5011E308B99A50080000B /* MFEventTap.m */,
 				4FA08EE930923682000DC578 /* SwitchMaster.h */,
 				4FA08ED330923679000DC578 /* SwitchMaster.m */,
+				4FC9F1663097A05C00FF6EAD /* SwitchMaster_old_.swift */,
 				4F02C7202899453200ED0AA8 /* OutputCoordinator.h */,
 				4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */,
 			);

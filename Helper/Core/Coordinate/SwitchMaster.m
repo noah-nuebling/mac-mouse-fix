@@ -27,6 +27,11 @@
          - -> Implementation ideas: only toggle buttonTap if button is used as "solo" modifier (without kbMod requirement) or if the kbMod it could "complete" a modification precondition together with the currently active keyboard modifiers.
          - This might be easier impelement / more performant if we encode this kbMods -> btnMods -> modifications hierarchy into the remaps dataStructure, currently it has a form (kbMods, btnMods) -> modifications. Or if we bring back the original "modifiying actions" architecture. But that probably requires large architectural changes and would create other problems.
          Update: [Oct 2026] Still sounds like a good idea
+         Update 2 [Oct 2026] Opus 5.5 is concerned about edge-cases when buttons are uncaptured while they are held. This can already happen but would become more frequent. (And current per-`kMFEventType_Button(x)` capturing also already makes it more frequent.)
+            Examples of what could go wrong: (By Opus 5.5)
+                - holdTimer times out after button is uncaptured before being physically released
+                - mouseDown passed through, then captured, then swallow mouseUp
+            §afterNoGCDTodo -> Look into this.
      - [x] We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
          - -> Moved the performance-critical stuff to RemapsAnalyzer. Tried caching but it didn't speed things up (at least the way I did it - maybe if we cache bigger chunks of data we could get a speedup)
             Update: [Oct 2026] Everything's objc now!
@@ -129,9 +134,9 @@
 } @end
 @implementation State @end
 
-State *_state = nil;
+static State *_state = nil;
 
-@implementation NSObject (SwitchMasterHoisting)
+@implementation NSObject (SwitchMasterHoisting) /// Standard pattern where objc category hoists C functions (automatically forward declares) [Oct 2026]
 
 #pragma mark - Local helpers
 
@@ -141,7 +146,7 @@ State *_state = nil;
 
 #pragma mark - Descriptions / Debug Logging
 
-NSArray<NSString *> *_stateIvarNames(void) {
+static NSArray<NSString *> *_stateIvarNames(void) {
     static NSMutableArray *result = nil;
     static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
         result = [NSMutableArray new];
@@ -153,7 +158,7 @@ NSArray<NSString *> *_stateIvarNames(void) {
     return result;
 }
 
-NSMutableString *_stateDescription(void) { /// Description of ivars inside `_state` singleton [Oct 2026]
+static NSMutableString *_stateDescription(void) { /// Description of ivars inside `_state` singleton [Oct 2026]
     NSMutableString *result = [NSMutableString new];
     [result appendString: @"{\n"];
     for (id stateName in _stateIvarNames()) {
@@ -178,7 +183,7 @@ NSMutableString *_stateDescription(void) { /// Description of ivars inside `_sta
     return result;
 }
 
-NSMutableString *_latestStateDescription(void) { /// Description of the `_latest` ivars in the `_state` singleton [Oct 2026]
+static NSMutableString *_latestStateDescription(void) { /// Description of the `_latest` ivars in the `_state` singleton [Oct 2026]
     NSMutableString *result = [NSMutableString new];
     [result appendString: @"{\n"];
     for (id stateName in _stateIvarNames())
@@ -213,6 +218,8 @@ static MFReadWriteTracker _readWriteTracker = {};
 
 #pragma mark - Interface
 
+#define returnIfNotInitialized() if (!_state) return /// See the notes above `_state = [State new];` [Oct 2026]
+
 void SwitchMaster_Load_Manual(void) {
 
     /// Notes:
@@ -221,7 +228,7 @@ void SwitchMaster_Load_Manual(void) {
     ///         ... However that might cause SwitchMaster to miss important state-updates during startup. We'd have to manually fill in all the initial state inside `load_Manual`. A proper reactive system would be able to do this automatically, but with our system it'd be difficult to maintain. (Sidenote: IIRC, we initially implemented this in ReactiveSwift but moved to manual function calls because it was too slow.)
     ///     - Solution idea 2: Alternatively we could simply remove `load_Manual` and have the place that previously called it init HelperState instead.
     ///         -> This should ensure correct behavior more easily than if we only start recording any state after `load_Manual`. While SwitchMaster might be called a few times during startup before it starts turning on any taps, it's pretty optimized and made to be called all the time, so actually shouldn't be a problem.
-    ///     - Update [Oct 2026]: We now use `_state->` everywhere which would crash if it's nil -> I guess it's correctly initialized before being used, now (I hope) (We did have to change the init order in `AccessibilityCheck.m` after making this change - hopefully it's correct now)
+    ///     - Update [Oct 2026]: We now use `_state->` everywhere which would crash if it's nil. We did have to change the init order in `AccessibilityCheck.m` after making this change. Opus 5.5 says SwitchMaster can still be called into unititialized when we don't have AX permissions. Hence `returnIfNotInitialized` [Oct 2026]
 
     /// Create `_state` singleton
     _state = [State new];
@@ -243,14 +250,14 @@ void SwitchMaster_Load_Manual(void) {
 }
 
 void SwitchMaster_LockDown(void) {
-    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker);
+    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker); returnIfNotInitialized();
 
     _state->_isLockedDown = 1;
 
     if (processChangedState()) logWithState(@"Toggled due to lockdown.");
 }
 void SwitchMaster_HelperStateChanged(void) { /// For fast user switching [Oct 2026]
-    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker);
+    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker); returnIfNotInitialized();
 
     /// NOTES:
     /// - On listening to `[[HelperState shared] activeDevice]`
@@ -264,7 +271,7 @@ void SwitchMaster_HelperStateChanged(void) { /// For fast user switching [Oct 20
                                              _state->_userIsActive);
 }
 void SwitchMaster_GeneralConfigChanged(NSDictionary *generalConfig) { /// For kill switches [Oct 2026]
-    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker);
+    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker); returnIfNotInitialized();
 
     _state->_eventsKilledBySwitch = 0;
     if ([[generalConfig objectForKey: @"buttonKillSwitch"] boolValue]) _state->_eventsKilledBySwitch |= kMFEventType_AllButtons;
@@ -276,7 +283,7 @@ void SwitchMaster_GeneralConfigChanged(NSDictionary *generalConfig) { /// For ki
 }
 
 void SwitchMaster_AttachedDevicesChanged(NSArray *devices) {
-    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker);
+    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker); returnIfNotInitialized();
 
     _state->_latestDevices = devices;
     _state->_eventsSupportedBySomeDevice = [DeviceManager eventTypesSupportedBySomeDevice];
@@ -286,7 +293,7 @@ void SwitchMaster_AttachedDevicesChanged(NSArray *devices) {
                                              [devices debugDescription] /** Old comment from the Swift version: `debugDescription` prevents escaping linebreaks somehow [Oct 2026] */);
 }
 void SwitchMaster_RemapsChanged(NSDictionary *remaps) {
-    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker);
+    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker); returnIfNotInitialized();
 
     _state->_latestRemaps = remaps;
 
@@ -317,7 +324,7 @@ void SwitchMaster_RemapsChanged(NSDictionary *remaps) {
                                              [Remap addModeIsEnabled] ? @"<AddMode-TooVerbose>" : [remaps mf_descriptionWithIndent: 0]);
 }
 void SwitchMaster_ScrollConfigChanged(ScrollConfig *scrollConfig) {
-    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker);
+    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker); returnIfNotInitialized();
 
     _state->_latestScrollConfig = scrollConfig;
 
@@ -333,8 +340,7 @@ void SwitchMaster_ScrollConfigChanged(ScrollConfig *scrollConfig) {
                                              scrollConfig);
 }
 void SwitchMaster_ModifiersChanged(NSDictionary *modifiers) { /// This is the only one of the `SwitchMaster_` functions that runs frequently (~ every user interaction) [Oct 2026]
-
-    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker);
+    assertRunLoop([IOThread runLoop]); readsAndWritesState(&_readWriteTracker); returnIfNotInitialized();
 
     _state->_latestModifiers = modifiers;
 
@@ -344,7 +350,7 @@ void SwitchMaster_ModifiersChanged(NSDictionary *modifiers) { /// This is the on
 }
 
 
-bool processChangedState(void) {
+static bool processChangedState(void) {
 
     bool toggled = 0;
 
@@ -354,7 +360,7 @@ bool processChangedState(void) {
     NSDictionary *modifications;
     MFEventType eventsModifiedCurrently;
     {
-        modifications = [Remap modificationsWithModifiers: _state->_latestModifiers]; /// Un-greppably depends on `_state->_latestRemaps` [Oct 2026]
+        modifications = [Remap modificationsWithModifiers: _state->_latestModifiers]; /// Un-greppably depends on `_state->_latestRemaps`/`SwitchMaster_RemapsChanged` [Oct 2026]
         eventsModifiedCurrently = [RemapsAnalyzer eventsModifiedByModifications: modifications] |
                                   (_state->_eventsModifiedByDefault & kMFEventType_ScrollWheel);
     }
@@ -378,11 +384,11 @@ bool processChangedState(void) {
 
             /// Handle `addMode`
             ///     We simply listen to all modifiers. `addModeSwizzler` then creates new remaps containing those modifiers on the fly as we press the modifiers. [Oct 2026]
-            ///     `addModeSwizzler` also filters out invalid combinations (`kMFEventType_Scroll` / `kMFEventType_Sensor` without a button modifier) [Oct 2026]
+            ///     `addModeSwizzler` also filters out invalid combinations (`kMFEventType_ScrollWheel` / `kMFEventType_Sensor` without a button modifier) [Oct 2026]
             ///     Also see: [Oct 2026]
             ///          - `addModeSwizzler()`
-            ///          - `+[Remaps enableAddMode]`
-            ///          - `+[Remaps sendAddModeFeedback]`
+            ///          - `+[Remap enableAddMode]`
+            ///          - `+[Remap sendAddModeFeedback]`
             if (_state->_addModeIsEnabled) {
                 eventsActivelyModifyingCurrently = (kMFEventType_AllButtons | kMFEventType_KeyboardModifier);
                 eventsPassivelyModifyingCurrently = 0;
@@ -438,39 +444,41 @@ bool processChangedState(void) {
         } endof_thing:;
 
         /// Split the events
-        MFEventType scrollEvent  = eventsToListenTo & kMFEventType_ScrollWheel;
-        MFEventType buttonEvents = eventsToListenTo & kMFEventType_AllButtons;
-        MFEventType pointerEvent = eventsToListenTo & kMFEventType_Sensor;
+        MFEventType tapScrollEvents    = !!(eventsToListenTo & kMFEventType_ScrollWheel);
+        MFEventType tappedButtonEvents = eventsToListenTo & kMFEventType_AllButtons;
+        MFEventType tapPointerEvents   = !!(eventsToListenTo & kMFEventType_Sensor);
 
         /// Declare `latest` cache
-        static MFEventType lastScrollEvent = 0, lastButtonEvents = 0, lastPointerEvent = 0;
+        static MFEventType lastTapScrollEvents = 0, lastTappedButtonEvents = 0, lastTapPointerEvents = 0;
 
         /// Toggle taps
         ///     (The methods called here pretty much just call `[MFEventTap enable:forListener:]`. Should we call it directly? [Oct 2026])
         {
-            if (lastScrollEvent != scrollEvent) {
-                if (scrollEvent) [Scroll startReceiving];
-                else             [Scroll stopReceiving];
+            if (lastTapScrollEvents != tapScrollEvents) {
+                if (tapScrollEvents) [Scroll startReceiving];
+                else                 [Scroll stopReceiving];
                 toggled = 1;
             }
-            if (lastButtonEvents != buttonEvents) {
-                [ButtonInputReceiver listenToButtons: buttonEvents];
+            if (lastTappedButtonEvents != tappedButtonEvents) {
+                [ButtonInputReceiver listenToButtons: tappedButtonEvents];
                 toggled = 1;
             }
-            if (lastPointerEvent != pointerEvent) {
-                if (!pointerEvent)
+
+            {
+                if (!tapPointerEvents && lastTapPointerEvents != tapPointerEvents)
                     [ModifiedDrag deactivateWithCancel: NO];
-                else {
+                else if (tapPointerEvents) { /// We don't check `lastTapPointerEvents != tapPointerEvents` here, because need to call `initializeDragWithDict:` with the new `dragEffect`, whenever the modifications change, even if we don't toggle the tap on/off. For example if you held Button 4 causing dragModification A, and then you you added Button 5, causing dragModification B, this is necessary to not get stuck in A. Once the drag goes from `kMFModifiedInputActivationStateInitialized` to `kMFModifiedInputActivationStateInUse`, then `initializeDragWithDict:` locks in on a `dragEffect` and ignores any further `dragEffect`s that this code sends it. This is kinda confusing and the separation of concerns might be wrong. Credits to Opus 5.5 for finding this and preventing bug [Oct 2026]
                     NSDictionary *dragEffect = [modifications objectForKey: kMFTriggerDrag];
-                    mfassert(dragEffect, @"Trying to start modifiedDrag but dragEffect is nil. !modifications: %d\n%@", !modifications, debugStateDescription()); /// There was an old comment here saying we see this sometimes, it said perhaps because of some races, because we got `modifications` in a separate function (Which we no longer do) [Oct 2026]
+                    mfassert(dragEffect, @"Trying to start modifiedDrag but dragEffect is nil. !modifications: %d\n%@", !modifications, debugStateDescription()); /// There was an old comment here saying we see this sometimes, it said perhaps because of some races, because we got `modifications` in a separate function (Which we no longer do) [Oct 2026].
                     if (dragEffect) [ModifiedDrag initializeDragWithDict: dragEffect];
                 }
-                toggled = 1;
+                if (lastTapPointerEvents != tapPointerEvents) toggled = 1;
             }
+
         }
 
         /// Update `last` cache
-        lastScrollEvent = scrollEvent; lastButtonEvents = buttonEvents; lastPointerEvent = pointerEvent;
+        lastTapScrollEvents = tapScrollEvents; lastTappedButtonEvents = tappedButtonEvents; lastTapPointerEvents = tapPointerEvents;
     }
 
     return toggled;

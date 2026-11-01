@@ -156,7 +156,8 @@ static BOOL _eventTypesSupportedBySomeDevice_IsCached = false;
         int maxButtons = 0;
         for (Device *device in _attachedDevices)
             { int n = [device nOfButtons]; if (n > maxButtons) maxButtons = n; }
-        for (int i = 0; i < maxButtons; i++) _result |= kMFEventType_Button(i);
+        for (int i = 0; i < MIN(maxButtons, kMFMaxButtonNumber); i++) /// Restrict to kMFMaxButtonNumber because Opus 5.5 is concerned about too many error logs when a mouse has 255 HID buttons.
+            _result |= kMFEventType_Button(i);
     }
     _eventTypesSupportedBySomeDevice_IsCached = true;
     return _result;

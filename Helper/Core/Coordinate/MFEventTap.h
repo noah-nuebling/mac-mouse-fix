@@ -52,11 +52,12 @@
 #pragma once
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CGEvent.h>
-
+#import "Constants.h"
+#import "MathObjc.h"
 
 #pragma mark - MFEventType stuff
 
-#if IS_HELPER | IS_MAIN_APP
+#if IS_HELPER | IS_MAIN_APP | IS_XC_TEST
 /// Why is `MFEventTap.m/.h` part of mainApp target? We use `kMFEventType_ButtonBlacklist` in mainApp. (That's also the reason for `#if __swift__`) Maybe should split the `MFEventType` stuff into separate file. [Oct 2026]
 
     typedef uint64_t MFEventType;
@@ -72,12 +73,12 @@
 
         #if __swift__
             #define _kMFEventType_ButtonShift 32
-            static inline MFEventType MFEventType_Button(CGMouseButton buttonIndex) { mfrequire(buttonIndex >= 0 && buttonIndex < 32, @"MFEventType_Button arg out of range");
-                                                                                      return ((MFEventType)1 << ((buttonIndex) + _kMFEventType_ButtonShift)); }
+            static inline MFEventType MFEventType_Button(CGMouseButton buttonIndex) { mfassert(buttonIndex >= 0 && buttonIndex < 32, @"MFEventType_Button arg out of range");
+                                                                                      return ((MFEventType)1 << (CLIP((buttonIndex), 0, 31) + _kMFEventType_ButtonShift)); }
             #undef _kMFEventType_ButtonShift
         #else
-            #define kMFEventType_Button(buttonIndex)        ({ mfrequire((buttonIndex) >= 0 && (buttonIndex) < 32, @"kMFEventType_Button arg out of range"); \
-                                                               ((MFEventType)1 << ((buttonIndex) + _kMFEventType_ButtonShift)); })
+            #define kMFEventType_Button(buttonIndex)        ({ mfassert((buttonIndex) >= 0 && (buttonIndex) < 32, @"kMFEventType_Button arg out of range"); \
+                                                               ((MFEventType)1 << (CLIP((buttonIndex), 0, 31) + _kMFEventType_ButtonShift)); }) /// Why the CLIP()? IIRC Apple APIs max out at 32 buttons, but Claude says HID usages can go much higher. [Oct 2026]
         #endif
 
         #define _kMFEventType_ButtonShift 32
