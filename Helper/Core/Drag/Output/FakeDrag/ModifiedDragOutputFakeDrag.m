@@ -45,7 +45,7 @@ static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used w
     {
         location = getPointerLocation();
     }
-    CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_fakeDragButtonNumber];
+    CGMouseButton button = CGMouseButton_From_MFMouseButtonNumber(_fakeDragButtonNumber);
     CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
     [MFEventTap postCGEvent: draggedEvent];
     CFRelease(draggedEvent);

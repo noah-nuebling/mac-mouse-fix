@@ -402,15 +402,13 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
 
 NSMutableString *bitflagsDescription(uint64_t flags, NSString *(^descriptionForBit)(uint64_t bitflag)) {
     NSMutableString *result = [NSMutableString new];
-    [result appendString: @"("];
     int first = 1;
     for (int i = 0; flags; flags >>= 1, i++) {
         if (!(flags & 1)) continue;
         if (!first) [result appendString: @" | "];
-        [result appendString: descriptionForBit(1LL << i) ?: stringf(@"(1 << %d)", i)];
+        [result appendString: (!descriptionForBit ? nil : descriptionForBit(1ULL << i)) ?: stringf(@"(1 << %d)", i)];
         first = 0;
     }
-    [result appendString: @")"];
     return result;
 }
 
@@ -548,33 +546,22 @@ NSMutableString *bitflagsDescription(uint64_t flags, NSString *(^descriptionForB
 
 #pragma mark - Button Numbers
 
-+ (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
-    
-    CGEventType mouseEventType;
-    
-    if (isMouseDown) {
-       if (button == kMFMouseButtonNumberLeft) {
-           mouseEventType = kCGEventLeftMouseDown;
-       } else if (button == kMFMouseButtonNumberRight) {
-           mouseEventType = kCGEventRightMouseDown;
-       } else {
-           mouseEventType = kCGEventOtherMouseDown;
-       }
-   } else {
-        if (button == kMFMouseButtonNumberLeft) {
-            mouseEventType = kCGEventLeftMouseUp;
-        } else if (button == kMFMouseButtonNumberRight) {
-            mouseEventType = kCGEventRightMouseUp;
-        } else {
-            mouseEventType = kCGEventOtherMouseUp;
-        }
-    }
-    
-    return mouseEventType;
+MFEventType MFEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber) {
+    return kMFEventType_Button(buttonNumber - 1);
+}
+CGEventType CGEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber, bool mouseDown) {
+
+    CGEventType result;
+    if (buttonNumber == kMFMouseButtonNumberLeft)       result = mouseDown ? kCGEventLeftMouseDown  : kCGEventLeftMouseUp;
+    else if (buttonNumber == kMFMouseButtonNumberRight) result = mouseDown ? kCGEventRightMouseDown : kCGEventRightMouseUp;
+    else                                                result = mouseDown ? kCGEventOtherMouseDown : kCGEventOtherMouseUp;
+
+    return result;
 }
 
-+ (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button {
-    return (CGMouseButton) button - 1;
+CGMouseButton CGMouseButton_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber) {
+    mfrequire(buttonNumber > 0);
+    return buttonNumber - 1;
 }
 
 #pragma mark - Remaps data model assessment

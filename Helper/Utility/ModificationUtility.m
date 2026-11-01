@@ -133,10 +133,10 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     DDLogDebug("Posting %lld mouse button %u clicks", nOfClicks, button);
     
     CGPoint mouseLoc = getPointerLocation();
-    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:YES];
-    CGEventType eventTypeUp = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:NO];
-    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
-    
+    CGEventType eventTypeDown = CGEventType_From_MFMouseButtonNumber(button, /*mouseDown*/true);
+    CGEventType eventTypeUp   = CGEventType_From_MFMouseButtonNumber(button, /*mouseDown*/false);
+    CGMouseButton buttonCG    = CGMouseButton_From_MFMouseButtonNumber(button);
+
     CGEventRef buttonDown = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
     CGEventRef buttonUp = CGEventCreateMouseEvent(NULL, eventTypeUp, mouseLoc, buttonCG);
     
@@ -169,9 +169,9 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     DDLogDebug("POSTING FAKE MOUSE BUTTON EVENT. btn: %d, down: %d", button, down);
     
     CGPoint mouseLoc = getPointerLocation();
-    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:down];
-    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
-    
+    CGEventType eventTypeDown = CGEventType_From_MFMouseButtonNumber(button, down);
+    CGMouseButton buttonCG    = CGMouseButton_From_MFMouseButtonNumber(button);
+
     CGEventRef event = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
     CGEventSetIntegerValueField(event, kCGMouseEventClickState, 1);
     

@@ -85,14 +85,14 @@ static void registerInputCallback() {
     CFRelease(runLoopSource);
 }
 
-//+ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
+//+ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button mouseDown:(BOOL)mouseDown {
 //    
 //    DDLogInfo("Inserting event");
 //    
 //    /// Create event
-//    CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
+//    CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button mouseDown:mouseDown];
 //    CGPoint mouseLoc = getPointerLocation();
-//    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
+//    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButton_From_MFMouseButtonNumber:button]);    
 //    /// Insert event
 //    CGEventRef ret = eventTapCallback(0, CGEventGetType(fakeEvent), fakeEvent, nil);
 //    CFRelease(fakeEvent);

@@ -19,6 +19,7 @@
 #import <CoreVideo/CoreVideo.h>
 #import "objc/runtime.h"
 #import "SharedMacros.h"
+#import "MFEventTap.h"
 
 /// Import other stuff so we don't have to import it in so many places
 #import "MFDefer.h"
@@ -71,8 +72,9 @@ uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
 
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 
-+ (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
-+ (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button;
+MFEventType     MFEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber);
+CGEventType     CGEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber, bool mouseDown);
+CGMouseButton   CGMouseButton_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber);
 
 //+ (NSString *)currentDispatchQueueDescription;
 //+ (void)printInvocationCountWithId:(NSString *)strId;
