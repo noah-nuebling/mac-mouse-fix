@@ -178,15 +178,16 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
         ///     - For 3 frameTimes we get almost no erratic behaviour.
         ///   - I'm on a 60 hz screen and I don't have a 120 hz screen to test. To make sure we also prevent erratic behaviour on an 120 hz screen, we are setting the duration to 3.0/60.0 seconds instead of 3 frames. 3.0/60.0 also doesn't seem to cause erratic behaviour when setting my monitor to 30hz.
         ///     - TODO: Set duration to 3 frames instead of 3.0/60.0 seconds if that doesn't lead to erratic behaviour on 120 hz screens.
-        ///         §afterNoGCDTodo
+        ///         [Oct 2026] §afterNoGCDTodo Used `durationInFrames` for a few days on 144 Hz - Seems to work great.
+        ///
 
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn("twoFinger Not starting baseAnimator since combinedMagnitude is 0.0");
             doStart = false;
         } else {
             curve = ScrollConfig.linearCurve;
-            duration = 3.0/60.0;
-            //durationInFrames = 3;
+            if ((1)) duration = 3.0/60.0;
+            if ((0)) durationInFrames = 3;
         }
 
         /// Debug
