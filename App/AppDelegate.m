@@ -190,6 +190,7 @@ static NSDictionary *sideButtonActions;
                             || isclassd(win, _NSAlertPanel)                         /// NSAlert windows
                             || isclassd(win, NSPopupMenuWindow)                     /// NSMenu windows
                             || isclassd(win, AppKit._NSGlassEffectWindow)           /// No clue. Seen on macOS 27.2 [Oct 2026]
+                            || isclassd(win, NSToolTipPanel)                        /// Seen on macOS 27.2 [Oct 2026]
                             || [win.frameAutosaveName isEqual: @"SUStatusFrame"]    /// Sparkle window
                             || [win.frameAutosaveName isEqual: @"SUUpdateAlert"]    /// Sparkle window
                         );
