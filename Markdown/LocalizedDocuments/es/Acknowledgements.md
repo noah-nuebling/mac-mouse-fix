@@ -92,6 +92,10 @@ Las personas que me apoyaron gastando más del precio estándar en Mac Mouse Fix
 
 Estas personas gastaron mucho más que el precio estándar y me invitaron un **Batido increíble**. (Y algunos incluso dejaron un mensaje) ¡Gracias por el *subidón de azúcar*!
 
+**noviembre 2026**
+
+- 🇦🇺&nbsp;Yingjie&nbsp;Zhao
+
 **octubre 2026**
 
 - 🇳🇱&nbsp;Mikhail - "Noah, thank you so much for making this app! I've been using it for years, and it's become an essential part of my Mac experience. I was using a free version of an older release, but it stopped working with macOS 27. In a way, I'm glad it did, because it reminded me that I never properly thanked you for all your hard work. Thank you for creating something so useful and putting so much effort into it. I really appreciate it!"

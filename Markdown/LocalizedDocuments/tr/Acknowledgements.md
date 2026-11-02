@@ -93,6 +93,10 @@ Desteğiniz için teşekkürler! :)
 
 Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!
 
+**Kasım 2026**
+
+- 🇦🇺&nbsp;Yingjie&nbsp;Zhao
+
 **Ekim 2026**
 
 - 🇳🇱&nbsp;Mikhail - "Noah, thank you so much for making this app! I've been using it for years, and it's become an essential part of my Mac experience. I was using a free version of an older release, but it stopped working with macOS 27. In a way, I'm glad it did, because it reminded me that I never properly thanked you for all your hard work. Thank you for creating something so useful and putting so much effort into it. I really appreciate it!"

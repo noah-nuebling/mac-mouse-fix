@@ -94,6 +94,10 @@ Obrigado pelo apoio! :)
 
 Essas pessoas contribuíram com um valor bem acima do preço padrão e me presentearam com um milk-shake incrível. (E algumas ainda deixaram uma mensagem!) Obrigado pelo pico de açúcar! 😄
 
+**novembro 2026**
+
+- 🇦🇺&nbsp;Yingjie&nbsp;Zhao
+
 **outubro 2026**
 
 - 🇳🇱&nbsp;Mikhail - "Noah, thank you so much for making this app! I've been using it for years, and it's become an essential part of my Mac experience. I was using a free version of an older release, but it stopped working with macOS 27. In a way, I'm glad it did, because it reminded me that I never properly thanked you for all your hard work. Thank you for creating something so useful and putting so much effort into it. I really appreciate it!"
