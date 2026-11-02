@@ -43,7 +43,7 @@ Děkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!
     - [@nghlt](https://github.com/nghlt)
     - [@quocthangit247](https://github.com/quocthangit247)
 - 🇧🇷 brazilsko-portugalské překlady od 
-    - **Eduardo Rodrigues**
+    - [@iedurodrigues](https://github.com/iedurodrigues)
     - [@denini08](https://github.com/denini08)
 - 🇫🇷 francouzské překlady od 
     - [@DimitriDR](https://github.com/DimitriDR)

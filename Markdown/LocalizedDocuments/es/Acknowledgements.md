@@ -43,7 +43,7 @@ Quiero agradecer especialmente a las personas y proyectos nombrados en este docu
     - [@nghlt](https://github.com/nghlt)
     - [@quocthangit247](https://github.com/quocthangit247)
 - 🇧🇷 Traducciones al Portugués Brasileño por 
-    - **Eduardo Rodrigues**
+    - [@iedurodrigues](https://github.com/iedurodrigues)
     - [@denini08](https://github.com/denini08)
 - 🇫🇷 Traducciones al francés por 
     - [@DimitriDR](https://github.com/DimitriDR)

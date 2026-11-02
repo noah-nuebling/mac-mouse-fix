@@ -43,7 +43,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
     - [@nghlt](https://github.com/nghlt)
     - [@quocthangit247](https://github.com/quocthangit247)
 - 🇧🇷 ブラジルポルトガル語翻訳：
-    - **Eduardo Rodrigues**
+    - [@iedurodrigues](https://github.com/iedurodrigues)
     - [@denini08](https://github.com/denini08)
 - 🇫🇷 フランス語翻訳：
     - [@DimitriDR](https://github.com/DimitriDR)

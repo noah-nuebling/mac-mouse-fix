@@ -43,7 +43,7 @@ Cám ơn bạn đã mang Mac Mouse Fix đến với mọi người trên thế g
     - [@nghlt](https://github.com/nghlt)
     - [@quocthangit247](https://github.com/quocthangit247)
 - 🇧🇷 Phiên dịch tiếng Bồ Đào Nha (Brazil) bởi  
-    - **Eduardo Rodrigues**
+    - [@iedurodrigues](https://github.com/iedurodrigues)
     - [@denini08](https://github.com/denini08)
 - 🇫🇷 Phiên dịch tiếng Pháp bởi 
     - [@DimitriDR](https://github.com/DimitriDR)

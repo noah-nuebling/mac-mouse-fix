@@ -43,7 +43,7 @@ Mac Mouse Fix'i dünyadaki herkesin erişimine açtığınız için çok teşekk
     - [@nghlt](https://github.com/nghlt)
     - [@quocthangit247](https://github.com/quocthangit247)
 - 🇧🇷 Brezilya Portekizcesi çeviri 
-    - **Eduardo Rodrigues**
+    - [@iedurodrigues](https://github.com/iedurodrigues)
     - [@denini08](https://github.com/denini08)
 - 🇫🇷 Fransızca çeviri 
     - [@DimitriDR](https://github.com/DimitriDR)

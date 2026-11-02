@@ -43,7 +43,7 @@ Takk for at du har gjort Mac Mouse Fix tilgjengelig for folk over hele verden!
     - [@nghlt](https://github.com/nghlt)
     - [@quocthangit247](https://github.com/quocthangit247)
 - 🇧🇷 Brasiliansk portugisisk oversettelser av
-    - **Eduardo Rodrigues**
+    - [@iedurodrigues](https://github.com/iedurodrigues)
     - [@denini08](https://github.com/denini08)
 - 🇫🇷 Franske oversettelser av
     - [@DimitriDR](https://github.com/DimitriDR)
