@@ -130,7 +130,6 @@
     #define indexForLastEventIn(eventTypes) __builtin_ctzll(eventTypes)          /// Index into `_eventToModifyingEventsMap` [Oct 2026]
     #define eventTypeForIndex(i)            ((MFEventType)1 << i)                /// `MFEventType` for an index into `_eventToModifyingEventsMap` [Oct 2026]
 
-
 } @end
 @implementation State @end
 
@@ -465,16 +464,21 @@ static bool processChangedState(void) {
             }
 
             {
-                if (!tapPointerEvents && lastTapPointerEvents != tapPointerEvents)
+                static NSDictionary *lastDragEffect = nil;
+                if (!tapPointerEvents && lastTapPointerEvents != tapPointerEvents) {
                     [ModifiedDrag deactivateWithCancel: NO];
+                    lastDragEffect = nil;
+                }
                 else if (tapPointerEvents) { /// We don't check `lastTapPointerEvents != tapPointerEvents` here, because need to call `initializeDragWithDict:` with the new `dragEffect`, whenever the modifications change, even if we don't toggle the tap on/off. For example if you held Button 4 causing dragModification A, and then you you added Button 5, causing dragModification B, this is necessary to not get stuck in A. Once the drag goes from `kMFModifiedInputActivationStateInitialized` to `kMFModifiedInputActivationStateInUse`, then `initializeDragWithDict:` locks in on a `dragEffect` and ignores any further `dragEffect`s that this code sends it. This is kinda confusing and the separation of concerns might be wrong. Credits to Opus 5.5 for finding this and preventing bug [Oct 2026]
                     NSDictionary *dragEffect = [modifications objectForKey: kMFTriggerDrag];
                     mfassert(dragEffect, @"Trying to start modifiedDrag but dragEffect is nil. !modifications: %d\n%@", !modifications, debugStateDescription()); /// There was an old comment here saying we see this sometimes, it said perhaps because of some races, because we got `modifications` in a separate function (Which we no longer do) [Oct 2026].
-                    if (dragEffect) [ModifiedDrag initializeDragWithDict: dragEffect];
+                    if (dragEffect && ![dragEffect isEqual: lastDragEffect]) { /// Prevents unnecessary `initializeDragWithDict:` calls I guess. Also prevents `readsAndWritesState()`-tripping recursion started by `Scroll.m's [HelperState.shared updateActiveDeviceWithEvent: event]` call [Oct 2026] Maybe this points to a more fundamental problem/stupid thing [Oct 2026] ... Yes I think we should load the `dragEffect` inside ModifiedScroll.m, before calling `handleBecameInUse` not inside SwitchMaster [Oct 2026], (You could also see this as a symptom of processChangedState() being a singular indiscriminate update function, now, instead of the previous granular dependency-tracking)
+                        [ModifiedDrag initializeDragWithDict: dragEffect];
+                        lastDragEffect = dragEffect;
+                    }
                 }
                 if (lastTapPointerEvents != tapPointerEvents) toggled = 1;
             }
-
         }
 
         /// Update `last` cache

@@ -291,8 +291,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [TrialCounter.shared handleUse];
         
         /// Update active device
+        allowNestedReadOrWrite() /// Can call back through `SwitchMaster_HelperStateChanged` > `processDragState` > `+[ModifiedDrag initializeDragWithDict:]` > `[Scroll resetState]`. This is because we currently call `+[ModifiedDrag initializeDragWithDict:]` for every SwitchMaster change which maybe is bad anyways. Will prevent that now, so can maybe delete this `allowNestedReadOrWrite()`. [Oct 2026]
         [HelperState.shared updateActiveDeviceWithEvent:event];
-        
+
         /// Update mouse did move
         ///     Note: (17.09.2024) We need this in MMF 3, otherwise the displayLink never updates to another display (ScrollUtility.mouseDidMove must be true for the displayLink to update)
         ///             Discussion:
