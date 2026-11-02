@@ -314,7 +314,7 @@ void SwitchMaster_RemapsChanged(NSDictionary *remaps) {
 
         /// Update `_state->_eventsModifiedByDefault`
         MFEventType eventsModifiedByDefault = [RemapsAnalyzer eventsModifiedByModifications: [Remap modificationsWithModifiers: @{}]];
-        mfrequire(!(eventsModifiedByDefault & kMFEventType_Sensor)); /// MMF never wants to intercept Pointer events without a modifier held. This would break the users mouse. [Oct 2026] Update: Maybe we should filter this out instead of crashing to make hand-editing config.plist safer?
+        mfrequire(!(eventsModifiedByDefault & kMFEventType_Sensor)); /// MMF never wants to intercept Pointer events without a modifier held. This would break the users mouse. [Oct 2026] Update: Maybe we should filter this out instead of crashing to make hand-editing config.plist safer? §afterNoGCDTodo consider doing this [Oct 2026]
         _state->_eventsModifiedByDefault = (_state->_eventsModifiedByDefault & kMFEventType_ScrollWheel) | eventsModifiedByDefault; /// Override everything except `kMFEventType_ScrollWheel`, which is controlled by another function [Oct 2026]
     }
 
@@ -410,7 +410,7 @@ static bool processChangedState(void) {
 
         } endof_findModifyingEvents:
 
-        eventsActivelyModifyingCurrently  &= ~kMFEventType_ButtonBlacklist; /// This is how we apply `kMFEventType_ButtonBlacklist` to the *modifying* events. (Not sure if convoluted) [Oct 2026]
+        eventsActivelyModifyingCurrently  &= ~kMFEventType_ButtonBlacklist; /// This is how we apply `kMFEventType_ButtonBlacklist` to the *modifying* events. (Not sure if convoluted) [Oct 2026] ... I think this should use the entire `baseModifiableEvents` as filter? We're not thinking clearly about this §afterNoGCDTodo
         eventsPassivelyModifyingCurrently &= ~kMFEventType_ButtonBlacklist;
 
         if (lastActiveEvents != eventsActivelyModifyingCurrently || lastPassiveEvents != eventsPassivelyModifyingCurrently) {
@@ -472,7 +472,14 @@ static bool processChangedState(void) {
                 else if (tapPointerEvents) { /// We don't check `lastTapPointerEvents != tapPointerEvents` here, because need to call `initializeDragWithDict:` with the new `dragEffect`, whenever the modifications change, even if we don't toggle the tap on/off. For example if you held Button 4 causing dragModification A, and then you you added Button 5, causing dragModification B, this is necessary to not get stuck in A. Once the drag goes from `kMFModifiedInputActivationStateInitialized` to `kMFModifiedInputActivationStateInUse`, then `initializeDragWithDict:` locks in on a `dragEffect` and ignores any further `dragEffect`s that this code sends it. This is kinda confusing and the separation of concerns might be wrong. Credits to Opus 5.5 for finding this and preventing bug [Oct 2026]
                     NSDictionary *dragEffect = [modifications objectForKey: kMFTriggerDrag];
                     mfassert(dragEffect, @"Trying to start modifiedDrag but dragEffect is nil. !modifications: %d\n%@", !modifications, debugStateDescription()); /// There was an old comment here saying we see this sometimes, it said perhaps because of some races, because we got `modifications` in a separate function (Which we no longer do) [Oct 2026].
-                    if (dragEffect && ![dragEffect isEqual: lastDragEffect]) { /// Prevents unnecessary `initializeDragWithDict:` calls I guess. Also prevents `readsAndWritesState()`-tripping recursion started by `Scroll.m's [HelperState.shared updateActiveDeviceWithEvent: event]` call [Oct 2026] Maybe this points to a more fundamental problem/stupid thing [Oct 2026] ... Yes I think we should load the `dragEffect` inside ModifiedScroll.m, before calling `handleBecameInUse` not inside SwitchMaster [Oct 2026], (You could also see this as a symptom of processChangedState() being a singular indiscriminate update function, now, instead of the previous granular dependency-tracking)
+                    if (dragEffect && ![dragEffect isEqual: lastDragEffect]) { /// Prevents unnecessary `initializeDragWithDict:` calls I guess. Also prevents `readsAndWritesState()`-tripping recursion
+                                                                               /// started by `Scroll.m's [HelperState.shared updateActiveDeviceWithEvent: event]` call [Oct 2026]
+                                                                               /// Maybe this points to a more fundamental problem/stupid thing [Oct 2026]
+                                                                               /// ... Yes I think we should load the `dragEffect` inside ModifiedScroll.m, before calling `handleBecameInUse` not inside SwitchMaster [Oct 2026],
+                                                                               /// (You could also see this as a symptom of processChangedState() being a singular indiscriminate update function, now, instead of the previous granular dependency-tracking)
+                                                                               /// (Could also see it as a symptom of `SwitchMaster_HelperStateChanged()` `processChangedState()` even when nothing that SwitchMaster is interested in is changed at all)
+                                                                               /// (In the current form, the `lastDragEffect` checks contradict the `Optimization: ... just a few raw C int manipulations` comments at the top of this section [Oct 2026])
+                                                                               /// (§afterNoGCDTodo: Clean this up.)
                         [ModifiedDrag initializeDragWithDict: dragEffect];
                         lastDragEffect = dragEffect;
                     }

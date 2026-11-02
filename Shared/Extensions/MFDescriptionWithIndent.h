@@ -9,6 +9,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (Additions)
+@interface NSObject (MFDescriptionWithIndent)
     - (NSString *)mf_descriptionWithIndent: (int)indent;
 @end

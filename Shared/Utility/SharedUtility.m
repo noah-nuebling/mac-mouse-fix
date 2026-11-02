@@ -560,8 +560,8 @@ CGEventType CGEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumbe
 }
 
 CGMouseButton CGMouseButton_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber) {
-    mfrequire(buttonNumber > 0);
-    return buttonNumber - 1;
+    mfassert(buttonNumber >= 1);
+    return CLIP(buttonNumber, 1, kMFMaxButtonNumber) - 1; /// Do mfassert() + CLIP() mirroring `kMFEventType_Button`. I guess it's a little safer here, too [Oct 2026]
 }
 
 #pragma mark - Remaps data model assessment

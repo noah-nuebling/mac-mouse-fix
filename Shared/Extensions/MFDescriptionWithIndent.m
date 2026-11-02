@@ -80,7 +80,7 @@
         /// Print non-empty collection
         [result appendString: @"(\n"];
         for (id obj in self) {
-            if (!kIndentFirstLine) { [result appendString: prefix]; [result appendString: @"    "]; } /// If the element descriptions doen't indent the first line, we have to do it here [Oct 2026]
+            if (!kIndentFirstLine) { [result appendString: prefix]; [result appendString: @"    "]; } /// If the element descriptions doesn't indent the first line, we have to do it here [Oct 2026]
             [result appendString: [obj mf_descriptionWithIndent: indent + 4]];
             [result appendString: @",\n"]; /// We're avoiding `appendFormat:` in case it's slower. Didn't test if worth it. [Oct 2026]
         }
