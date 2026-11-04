@@ -94,6 +94,7 @@ Queste persone hanno speso molto più del prezzo standard e mi hanno offerto un 
 
 **novembre 2026**
 
+- 🇺🇸&nbsp;Brian&nbsp;Owings
 - 🇨🇿&nbsp;Marcel&nbsp;Řičánek
 - 🇺🇸&nbsp;Jordan&nbsp;Gibbens - "Basic functionality, yet required for extreme efficiency."
 - 🇦🇺&nbsp;Yingjie&nbsp;Zhao

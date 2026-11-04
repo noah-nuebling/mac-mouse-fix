@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Νοέμβριος 2026**
 
+- 🇺🇸&nbsp;Brian&nbsp;Owings
 - 🇨🇿&nbsp;Marcel&nbsp;Řičánek
 - 🇺🇸&nbsp;Jordan&nbsp;Gibbens - "Basic functionality, yet required for extreme efficiency."
 - 🇦🇺&nbsp;Yingjie&nbsp;Zhao

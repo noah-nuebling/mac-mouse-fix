@@ -94,6 +94,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **11月 2026**
 
+- 🇺🇸&nbsp;Brian&nbsp;Owings
 - 🇨🇿&nbsp;Marcel&nbsp;Řičánek
 - 🇺🇸&nbsp;Jordan&nbsp;Gibbens - "Basic functionality, yet required for extreme efficiency."
 - 🇦🇺&nbsp;Yingjie&nbsp;Zhao

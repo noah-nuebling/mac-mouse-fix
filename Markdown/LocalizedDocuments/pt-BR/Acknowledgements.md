@@ -96,6 +96,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **novembro 2026**
 
+- 🇺🇸&nbsp;Brian&nbsp;Owings
 - 🇨🇿&nbsp;Marcel&nbsp;Řičánek
 - 🇺🇸&nbsp;Jordan&nbsp;Gibbens - "Basic functionality, yet required for extreme efficiency."
 - 🇦🇺&nbsp;Yingjie&nbsp;Zhao
