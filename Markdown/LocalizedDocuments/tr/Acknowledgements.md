@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Kasım 2026**
 
+- 🇺🇦&nbsp;Mike
 - 🇺🇸&nbsp;Brian&nbsp;Owings
 - 🇨🇿&nbsp;Marcel&nbsp;Řičánek
 - 🇺🇸&nbsp;Jordan&nbsp;Gibbens - "Basic functionality, yet required for extreme efficiency."
