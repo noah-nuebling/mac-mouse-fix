@@ -143,7 +143,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
 //    MFMouseButtonNumber buttonNumber = ((NSNumber *)rowDict[kMFRemapsKeyTrigger][kMFButtonTriggerKeyButtonNumber]).unsignedIntValue;
     
     NSDictionary *selectedEffect = rowDict[kMFRemapsKeyEffect];
-    
+
     NSMutableArray *oneShotEffectsTable = @[
         @{
             @"ui": MFLocalizedString(
@@ -169,6 +169,14 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"tool": MFLocalizedString(@"effect.smart-zoom.hint", @""),
             @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"effect.none", @""),
+            @"tool": MFLocalizedString(@"effect.none.hint", @""),
+            @"hideable": @YES,
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeNone,
             }
         },
         @{
