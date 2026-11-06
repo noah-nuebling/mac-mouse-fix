@@ -63,5 +63,13 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
             AuthorizeAccessibilityView.add()
         }
     }
+    
+    // MARK: Window Closing Lifecycle
+    
+    func windowWillClose(_ notification: Notification) {
+        // When frontmost preferences UI is closed, cleanly terminate the main app,
+        // leaving only the background helper running to provide mouse features and menubar item.
+        NSApp.terminate(nil)
+    }
 
 }

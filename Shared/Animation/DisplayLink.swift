@@ -21,6 +21,7 @@ public class DisplayLink: NSObject {
     
     private var _displayLink: CVDisplayLink?
     private var _previousDisplayUnderMousePointer: CGDirectDisplayID = 0
+    fileprivate var _currentDisplayID: CGDirectDisplayID = 0
     fileprivate var _displayLinkIsOutdated: Bool = false
     private let _displayLinkQueue: DispatchQueue
     fileprivate var _requestedState: RequestedState = .stopped
@@ -65,6 +66,7 @@ public class DisplayLink: NSObject {
     
     private func setUpNewDisplayLinkWithActiveDisplays() {
         DDLogDebug("DisplayLink.swift: (\(self.identifier)) Running -[setUpNewDisplayLinkWithActiveDisplays] on thread \(Thread.current)")
+        _currentDisplayID = 0
         
         if let oldDL = _displayLink {
             let ret = CVDisplayLinkStop(oldDL)
@@ -271,6 +273,9 @@ public class DisplayLink: NSObject {
     }
     
     private func setDisplay(_ displayID: CGDirectDisplayID) -> CVReturn {
+        if !_displayLinkIsOutdated && _currentDisplayID == displayID {
+            return kCVReturnSuccess
+        }
         if _displayLinkIsOutdated {
             setUpNewDisplayLinkWithActiveDisplays()
             _displayLinkIsOutdated = false
@@ -286,6 +291,7 @@ public class DisplayLink: NSObject {
             DDLogError("DisplayLink.swift: (\(self.identifier)) Failed to set display \(displayID), error: \(ret)")
             return ret
         }
+        _currentDisplayID = displayID
         return kCVReturnSuccess
     }
 }
@@ -298,16 +304,15 @@ private let displayLinkCallback: CVDisplayLinkOutputCallback = { displayLink, in
     }
     let selfInstance = Unmanaged<DisplayLink>.fromOpaque(context).takeUnretainedValue()
     
-    selfInstance.dispatchQueue.sync {
-        DDLogDebug("DisplayLink.swift: (\(selfInstance.identifier)) Callback")
-        
-        let timeInfo = parseTimeStamps(inNow: inNow, inOutputTime: inOutputTime)
-        
+    // Parse timestamps immediately on CoreVideo thread (pure value computation, thread-safe & zero-lock)
+    let timeInfo = parseTimeStamps(inNow: inNow, inOutputTime: inOutputTime)
+    
+    // Asynchronously dispatch animation execution to decouple from CoreVideo's internal display link lock.
+    // This completely eliminates lock-order inversion deadlocks between CoreVideo mutex and GCD queues.
+    selfInstance.dispatchQueue.async {
         if selfInstance._requestedState == .stopped {
-            DDLogDebug("DisplayLink.swift: (\(selfInstance.identifier)) callback called after requested stop. Returning")
             return
         }
-        
         if let callback = selfInstance.callback {
             callback(timeInfo)
         }
@@ -323,6 +328,7 @@ private let displayReconfigurationCallback: CGDisplayReconfigurationCallBack = {
     if flags.contains(.addFlag) || flags.contains(.removeFlag) || flags.contains(.enabledFlag) || flags.contains(.disabledFlag) {
         DDLogInfo("DisplayLink.swift: (\(selfInstance.identifier)) added / removed. Flagging the displayLink as outdated. display: \(display), flags: \(flags)")
         selfInstance._displayLinkIsOutdated = true
+        selfInstance._currentDisplayID = 0
     } else {
         DDLogDebug("DisplayLink.swift: (\(selfInstance.identifier)) Ignored display reconfiguration. display: \(display), flags: \(flags)")
     }

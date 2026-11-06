@@ -377,7 +377,7 @@ static NSDictionary *sideButtonActions;
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
-    return NO;
+    return YES;
 }
 
 @end
