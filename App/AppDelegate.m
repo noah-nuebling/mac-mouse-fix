@@ -355,6 +355,9 @@ static NSDictionary *sideButtonActions;
         [up checkForUpdatesInBackground];
     }
     
+    /// Present main preferences window immediately upon launch
+    [self showMainWindow:self];
+    
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     DDLogInfo(@"Mac Mouse Fix should terminate");
@@ -368,7 +371,10 @@ static NSDictionary *sideButtonActions;
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
-//    [UpdateWindow.instance close]; Can't find a way to close Sparkle Window
+    if (notification.object == self.window || notification.object == MainAppState.shared.window || [notification.object isKindOfClass:ResizingTabWindow.class]) {
+        DDLogInfo(@"Main preferences window closing, terminating app...");
+        [NSApp terminate:nil];
+    }
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
