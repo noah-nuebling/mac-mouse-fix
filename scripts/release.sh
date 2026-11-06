@@ -164,12 +164,71 @@ fi
 
 echo "提取到的 Build 号 (sparkle:version): $SPARKLE_VERSION"
 
-# 3. 生成签名与获取大小
+REMOTE_VERIFY_DIR="$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-release-verify.XXXXXX")"
+cleanup() {
+    rm -rf "$REMOTE_VERIFY_DIR"
+}
+trap cleanup EXIT
+
+# 3. 校验 GitHub 资产并生成签名
+URL_ARM64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_arm64.zip"
+URL_X86_64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_x86_64.zip"
+
+REMOTE_ARM64="$REMOTE_VERIFY_DIR/Mac_Mouse_Fix_${VERSION}_arm64.zip"
+REMOTE_X86_64="$REMOTE_VERIFY_DIR/Mac_Mouse_Fix_${VERSION}_x86_64.zip"
+
+TARGET_ARM64="$ZIP_ARM64"
+TARGET_X86_64="$ZIP_X86_64"
+
+echo "正在校验 GitHub Release 上实际可下载的资产..."
+if curl -L --fail --retry 3 --retry-delay 1 --retry-all-errors -o "$REMOTE_ARM64" "$URL_ARM64" 2>/dev/null; then
+    echo "提示: 使用从 GitHub Release 下载的真实 arm64 ZIP 资产进行签名与校验。"
+    TARGET_ARM64="$REMOTE_ARM64"
+else
+    echo "警告: 无法从 GitHub 预下载 arm64 ZIP 资产，退回使用本地 ZIP 资产。"
+fi
+
+if [ "$HAS_X86" -eq 1 ]; then
+    if curl -L --fail --retry 3 --retry-delay 1 --retry-all-errors -o "$REMOTE_X86_64" "$URL_X86_64" 2>/dev/null; then
+        echo "提示: 使用从 GitHub Release 下载的真实 x86_64 ZIP 资产进行签名与校验。"
+        TARGET_X86_64="$REMOTE_X86_64"
+    else
+        echo "警告: 无法从 GitHub 预下载 x86_64 ZIP 资产，退回使用本地 ZIP 资产。"
+    fi
+fi
+
+sign_update_file() {
+    local source_file="$1"
+    local raw_output
+
+    if [ -n "${SPARKLE_PRIVATE_KEY:-}" ]; then
+        if ! raw_output=$(printf '%s' "$SPARKLE_PRIVATE_KEY" | "$SIGN_TOOL" --ed-key-file - -p "$source_file" 2>&1); then
+            echo "错误: 签名生成失败: $raw_output" >&2
+            return 1
+        fi
+    else
+        if ! raw_output=$("$SIGN_TOOL" -p "$source_file" 2>&1); then
+            echo "错误: 签名生成失败: $raw_output" >&2
+            return 1
+        fi
+    fi
+
+    local signature
+    signature=$(printf '%s\n' "$raw_output" | grep -Eo '[A-Za-z0-9+/]{80,}={0,2}' | tail -n 1 || true)
+
+    if [ -z "$signature" ] || printf '%s\n' "$raw_output" | grep -qiE 'ERROR|Signing key not found'; then
+        echo "错误: sign_update 未返回有效 EdDSA 签名: $raw_output" >&2
+        return 1
+    fi
+
+    printf '%s' "$signature"
+}
+
 echo "正在为可用架构生成 EdDSA 签名..."
-SIG_ARM64=$($SIGN_TOOL "$ZIP_ARM64")
+SIG_ARM64=$(sign_update_file "$TARGET_ARM64")
 SIG_X86_64=""
 if [ "$HAS_X86" -eq 1 ]; then
-    SIG_X86_64=$($SIGN_TOOL "$ZIP_X86_64")
+    SIG_X86_64=$(sign_update_file "$TARGET_X86_64")
 fi
 
 if [ -z "$SIG_ARM64" ] || { [ "$HAS_X86" -eq 1 ] && [ -z "$SIG_X86_64" ]; }; then
