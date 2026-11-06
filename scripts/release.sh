@@ -13,6 +13,75 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
+
+# 签名校验函数：确保生成的 EdDSA 签名与 App 内置公钥一致
+verify_signature() {
+    local zip_path="$1"
+    local signature="$2"
+    local pubkey="$3"
+    local arch="$4"
+
+    echo "正在校验 $arch 的签名是否与内置公钥匹配..."
+    
+    local verify_result
+    verify_result=$(swift - "$zip_path" "$signature" "$pubkey" <<'EOF'
+import Foundation
+import CryptoKit
+
+let arguments = CommandLine.arguments
+guard arguments.count >= 4 else {
+    print("Invalid arguments")
+    exit(1)
+}
+
+let zipPath = arguments[1]
+let signatureBase64 = arguments[2]
+let publicKeyBase64 = arguments[3]
+
+guard let pubKeyData = Data(base64Encoded: publicKeyBase64) else {
+    print("Error: Failed to base64 decode public key.")
+    exit(1)
+}
+guard let sigData = Data(base64Encoded: signatureBase64) else {
+    print("Error: Failed to base64 decode signature.")
+    exit(1)
+}
+guard let fileData = try? Data(contentsOf: URL(fileURLWithPath: zipPath)) else {
+    print("Error: Failed to read zip file data.")
+    exit(1)
+}
+
+do {
+    let publicKey = try Curve25519.Signing.PublicKey(rawRepresentation: pubKeyData)
+    if publicKey.isValidSignature(sigData, for: fileData) {
+        print("OK")
+        exit(0)
+    } else {
+        print("FAIL")
+        exit(1)
+    }
+} catch {
+    print("Error: \(error)")
+    exit(1)
+}
+EOF
+)
+
+    if [ "$verify_result" != "OK" ]; then
+        echo "===================================================="
+        echo "错误: $arch 的签名校验失败！"
+        echo "生成的签名与 App 内置的 SUPublicEDKey 不匹配。"
+        echo "内置公钥: $pubkey"
+        echo "这通常是因为您的 Keychain 中存储了其他项目 (如其他使用 Sparkle 的 App) 的私钥，"
+        echo "导致默认的 'ed25519' 账号读取到了错误的私钥。"
+        echo "请在 Keychain 中为 Mac Mouse Fix 使用专有的私钥并清理冲突的记录。"
+        echo "===================================================="
+        exit 1
+    else
+        echo "$arch 签名校验通过！"
+    fi
+}
+
 # 1. 配置路径
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RELEASE_DIR="$PROJECT_DIR/releases"
@@ -79,9 +148,12 @@ echo "--- 开始为版本 $VERSION 准备发布 ---"
 
 # 2. 从项目设置中获取当前的 Build 号 (sparkle:version)
 echo "正在从项目设置中提取流水号 Build 号..."
-SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app/Contents/Info.plist" 2>/dev/null || true)
+SPARKLE_VERSION=""
+if [ -f "/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app/Contents/Info.plist" ]; then
+    SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app/Contents/Info.plist" 2>/dev/null || true)
+fi
 
-if [ -z "$SPARKLE_VERSION" ]; then
+if [ -z "$SPARKLE_VERSION" ] || [[ "$SPARKLE_VERSION" == *"Doesn't Exist"* ]]; then
     SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PROJECT_DIR/App/SupportFiles/Info.plist" 2>/dev/null || true)
 fi
 
@@ -92,17 +164,93 @@ fi
 
 echo "提取到的 Build 号 (sparkle:version): $SPARKLE_VERSION"
 
-# 3. 生成签名与获取大小
+REMOTE_VERIFY_DIR="$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-release-verify.XXXXXX")"
+cleanup() {
+    rm -rf "$REMOTE_VERIFY_DIR"
+}
+trap cleanup EXIT
+
+# 3. 校验 GitHub 资产并生成签名
+URL_ARM64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_arm64.zip"
+URL_X86_64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_x86_64.zip"
+
+REMOTE_ARM64="$REMOTE_VERIFY_DIR/Mac_Mouse_Fix_${VERSION}_arm64.zip"
+REMOTE_X86_64="$REMOTE_VERIFY_DIR/Mac_Mouse_Fix_${VERSION}_x86_64.zip"
+
+TARGET_ARM64="$ZIP_ARM64"
+TARGET_X86_64="$ZIP_X86_64"
+
+echo "正在校验 GitHub Release 上实际可下载的资产..."
+if curl -L --fail --retry 3 --retry-delay 1 --retry-all-errors -o "$REMOTE_ARM64" "$URL_ARM64" 2>/dev/null; then
+    echo "提示: 使用从 GitHub Release 下载的真实 arm64 ZIP 资产进行签名与校验。"
+    TARGET_ARM64="$REMOTE_ARM64"
+else
+    echo "警告: 无法从 GitHub 预下载 arm64 ZIP 资产，退回使用本地 ZIP 资产。"
+fi
+
+if [ "$HAS_X86" -eq 1 ]; then
+    if curl -L --fail --retry 3 --retry-delay 1 --retry-all-errors -o "$REMOTE_X86_64" "$URL_X86_64" 2>/dev/null; then
+        echo "提示: 使用从 GitHub Release 下载的真实 x86_64 ZIP 资产进行签名与校验。"
+        TARGET_X86_64="$REMOTE_X86_64"
+    else
+        echo "警告: 无法从 GitHub 预下载 x86_64 ZIP 资产，退回使用本地 ZIP 资产。"
+    fi
+fi
+
+sign_update_file() {
+    local source_file="$1"
+    local raw_output
+
+    if [ -n "${SPARKLE_PRIVATE_KEY:-}" ]; then
+        if ! raw_output=$(printf '%s' "$SPARKLE_PRIVATE_KEY" | "$SIGN_TOOL" --ed-key-file - -p "$source_file" 2>&1); then
+            echo "错误: 签名生成失败: $raw_output" >&2
+            return 1
+        fi
+    else
+        if ! raw_output=$("$SIGN_TOOL" -p "$source_file" 2>&1); then
+            echo "错误: 签名生成失败: $raw_output" >&2
+            return 1
+        fi
+    fi
+
+    local signature
+    signature=$(printf '%s\n' "$raw_output" | grep -Eo '[A-Za-z0-9+/]{80,}={0,2}' | tail -n 1 || true)
+
+    if [ -z "$signature" ] || printf '%s\n' "$raw_output" | grep -qiE 'ERROR|Signing key not found'; then
+        echo "错误: sign_update 未返回有效 EdDSA 签名: $raw_output" >&2
+        return 1
+    fi
+
+    printf '%s' "$signature"
+}
+
 echo "正在为可用架构生成 EdDSA 签名..."
-SIG_ARM64=$($SIGN_TOOL "$ZIP_ARM64")
+SIG_ARM64=$(sign_update_file "$TARGET_ARM64")
 SIG_X86_64=""
 if [ "$HAS_X86" -eq 1 ]; then
-    SIG_X86_64=$($SIGN_TOOL "$ZIP_X86_64")
+    SIG_X86_64=$(sign_update_file "$TARGET_X86_64")
 fi
 
 if [ -z "$SIG_ARM64" ] || { [ "$HAS_X86" -eq 1 ] && [ -z "$SIG_X86_64" ]; }; then
     echo "错误: 签名生成失败，请确保 Sparkle 私钥已配置。"
     exit 1
+fi
+
+# 4. 严格签名强校验
+echo "正在从项目设置中提取 SUPublicEDKey 公钥..."
+PUBLIC_KEY=$(/usr/libexec/PlistBuddy -c "Print :SUPublicEDKey" "$PROJECT_DIR/App/SupportFiles/Info.plist" 2>/dev/null || true)
+if [ -z "$PUBLIC_KEY" ]; then
+    echo "错误: 无法从 $PROJECT_DIR/App/SupportFiles/Info.plist 中提取 SUPublicEDKey。"
+    exit 1
+fi
+echo "项目内置公钥: $PUBLIC_KEY"
+
+ED_SIG_ARM64=$(echo "$SIG_ARM64" | sed -E 's/.*sparkle:edSignature="([^"]+)".*/\1/')
+verify_signature "$ZIP_ARM64" "$ED_SIG_ARM64" "$PUBLIC_KEY" "arm64"
+
+if [ "$HAS_X86" -eq 1 ]; then
+    ED_SIG_X86_64=$(echo "$SIG_X86_64" | sed -E 's/.*sparkle:edSignature="([^"]+)".*/\1/')
+    verify_signature "$ZIP_X86_64" "$ED_SIG_X86_64" "$PUBLIC_KEY" "x86_64"
 fi
 
 SIZE_ARM64=$(stat -f%z "$ZIP_ARM64")
@@ -154,8 +302,9 @@ EOF
 echo "--- 准备完成！ ---"
 echo "appcast.xml 已更新。"
 echo "请执行:"
+REPO_TARGET=$(git remote get-url origin 2>/dev/null | sed -E 's/.*github.com[:\/]([^\/]+\/[^\.]+).*/\1/' || echo "ShawnRn/mac-mouse-fix")
 if [ "$HAS_X86" -eq 1 ]; then
-    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" \"$DMG_X86_64\" \"$ZIP_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" \"$DMG_X86_64\" \"$ZIP_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\" -R \"$REPO_TARGET\""
 else
-    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\" -R \"$REPO_TARGET\""
 fi

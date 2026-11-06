@@ -223,7 +223,7 @@ class DeviceState {
 }
 
 @objc(LogitechCIDActivator)
-public class LogitechActivator: NSObject {
+public class LogitechActivator: NSObject, @unchecked Sendable {
     @objc public static let shared = LogitechActivator()
     private let logger = OSLog(subsystem: "com.nuebling.mac-mouse-fix.helper", category: "LogitechActivator")
     
@@ -335,10 +335,7 @@ public class LogitechActivator: NSObject {
         matchingDict[kIOHIDProductIDKey] = productId
         
         var iterator: io_iterator_t = 0
-        var port: mach_port_t = kIOMasterPortDefault
-        if #available(macOS 12.0, *) {
-            port = kIOMainPortDefault
-        }
+        let port: mach_port_t = 0
         let kr = IOServiceGetMatchingServices(port, matchingDict as CFDictionary, &iterator)
         if kr != KERN_SUCCESS {
             return mouseDev
@@ -501,7 +498,12 @@ public class LogitechActivator: NSObject {
         // 2. Slow-path: if fast-path failed or we have no last known index, run full probing
         if activeIndex == 0 {
             let indices: [UInt8] = [0xFF, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06]
-            let filteredIndices = indices.filter { $0 != lastKnownIndex }
+            let filteredIndices: [UInt8]
+            if lastKnownIndex != 0xFF && lastKnownIndex != 0 {
+                filteredIndices = indices.filter { $0 != lastKnownIndex }
+            } else {
+                filteredIndices = indices
+            }
             
             for testIndex in filteredIndices {
                 s.deviceIndex = testIndex
@@ -651,6 +653,12 @@ public class LogitechActivator: NSObject {
                     let btn = button(for: cid, state: s)
                     
                     if btn >= 6 && !isButtonRemapped(btn) {
+                        if Remap.addModeIsEnabled {
+                            if !todivert.contains(cid) { todivert.append(cid) }
+                            os_log("LogitechCIDActivator: CID 0x%{public}04X maps to Button %{public}d. Under AddMode, forcing divert.",
+                                   log: self.logger, type: .info, cid, btn)
+                            continue
+                        }
                         os_log("LogitechCIDActivator: CID 0x%{public}04X maps to Button %{public}d which is not remapped. Skipping divert to keep native wheel mode switching.",
                                log: self.logger, type: .info, cid, btn)
                         continue
@@ -749,10 +757,8 @@ public class LogitechActivator: NSObject {
                 os_log("LogitechCIDActivator: activateDevice applying saved HiRes Scroll setting: %{public}d", log: self.logger, type: .info, hiResEnabled)
                 _ = await setHiResWheelModeAsync(hiResEnabled, forDevice: s.device)
             } else {
-                await MainActor.run {
-                    setConfig("Pointer.logitechHiResWheel", NSNumber(value: false))
-                    commitConfig()
-                }
+                os_log("LogitechCIDActivator: activateDevice no saved HiRes Scroll setting. Defaulting to false", log: self.logger, type: .info)
+                _ = await setHiResWheelModeAsync(false, forDevice: s.device)
                 if let shouldInvert = config("Scroll.reverseDirection") as? NSNumber {
                     _ = await setFirmwareScrollDirectionAsync(shouldInvert.boolValue, forDevice: s.device)
                 }
@@ -1178,7 +1184,6 @@ public class LogitechActivator: NSObject {
     }
     
     @objc public func handleDeviceAttached(_ device: IOHIDDevice) {
-        let name = IOHIDDeviceGetProperty(device, kIOHIDProductKey as CFString) as? String ?? "Mouse"
         let vid = IOHIDDeviceGetProperty(device, kIOHIDVendorIDKey as CFString) as? NSNumber
         
         if vid == nil || vid?.intValue != 0x046D {
@@ -1221,7 +1226,7 @@ public class LogitechActivator: NSObject {
         }
         
         IOHIDDeviceUnscheduleFromRunLoop(s.writeDevice, CFRunLoopGetMain(), CFRunLoopMode.defaultMode.rawValue)
-        IOHIDDeviceRegisterInputReportCallback(s.writeDevice, UnsafeMutablePointer<UInt8>(bitPattern: 0)!, 0, nil, nil)
+        IOHIDDeviceRegisterInputReportCallback(s.writeDevice, s.reportBuffer, 0, nil, nil)
         
         if s.writeDevice !== s.device {
             IOHIDDeviceClose(s.writeDevice, IOOptionBits(kIOHIDOptionsTypeNone))
@@ -1721,7 +1726,7 @@ public class LogitechActivator: NSObject {
         }
     }
     
-    private func reactivateAll() {
+    @objc public func reactivateAll() {
         stateLock.withLock { isActivatingOrReactivating = true }
         let activeStates = stateLock.withLock { Array(states.values) }
         

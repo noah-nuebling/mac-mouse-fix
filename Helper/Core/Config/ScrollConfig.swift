@@ -116,6 +116,9 @@ import Cocoa
                 animationCurveOverride = kMFScrollAnimationCurveNameTouchDriver
                 
                 /// Adjust speed params
+                if u_speed == kMFScrollSpeedSystem {
+                    u_speed = kMFScrollSpeedMedium
+                }
                 scaleToDisplay = false
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationRotate {
@@ -124,6 +127,9 @@ import Cocoa
                 animationCurveOverride = kMFScrollAnimationCurveNameTouchDriver
                 
                 /// Adjust speed params
+                if u_speed == kMFScrollSpeedSystem {
+                    u_speed = kMFScrollSpeedMedium
+                }
                 scaleToDisplay = false
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationCommandTab {

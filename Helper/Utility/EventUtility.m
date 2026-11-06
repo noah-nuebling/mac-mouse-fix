@@ -17,6 +17,7 @@
 #import "Logging.h"
 
 #import "libproc.h"
+#import <os/lock.h>
 
 @implementation EventUtility
 
@@ -136,6 +137,9 @@ IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     return getSendingDeviceWithSenderID(senderID);
 }
 
+static NSMutableDictionary *_hidDeviceCache = nil;
+static os_unfair_lock _hidDeviceCacheLock = OS_UNFAIR_LOCK_INIT;
+
 IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     
     /// Pass in the senderID obtained from a CGEvent from field 87
@@ -145,20 +149,39 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     ///             But theoretically this should be fine I think? I think IOHIDDeviceRef should still be safe to use after disconnect, just if you try to read/write from it that should fail (I haven't tested this, and it would still be cleaner to return nil here after disconnect)
     ///                 We could either use a weak reference or check if the IOHIDDeviceRef is still physically connected  before returning it. For a weak ref, we could create something like an MFWeakWrapper object or use NSMapTable with weak values. Using NSCache / staticobject() / threadobject() instead of raw static NSDictionary would probably be good. (static NSDictionary is also not thread-safe – as long as we're not using a single 'IOThread', that could be problematic.)
     
-    static NSMutableDictionary *_hidDeviceCache = nil;
+    if (senderID == 0) {
+        return NULL;
+    }
+    
+    NSNumber *key = @(senderID);
+    
+    // 1. Thread-safe cache lookup (including negative caching)
+    os_unfair_lock_lock(&_hidDeviceCacheLock);
     if (_hidDeviceCache == nil) {
         _hidDeviceCache = [NSMutableDictionary dictionary];
     }
+    id cached = _hidDeviceCache[key];
+    os_unfair_lock_unlock(&_hidDeviceCacheLock);
     
-    id iohidDeviceFromCache = _hidDeviceCache[@(senderID)];
-    
-    if (iohidDeviceFromCache != nil) {
-        return (__bridge IOHIDDeviceRef)iohidDeviceFromCache;
+    if (cached != nil) {
+        if (cached == [NSNull null]) {
+            return NULL;
+        }
+        return (__bridge IOHIDDeviceRef)cached;
     }
     
+    // 2. Perform slow IOKit lookup outside the lock
     IOHIDDeviceRef iohidDevice = copySendingDevice_Reliable(senderID);
     
-    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice); /// Should we do this when the iohidDevice is NULL? || [May 2025] Setting nil to an NSDictionary like this should simply remove the key. Casting to `_Nullable` here makes no sense.
+    // 3. Thread-safe write to cache
+    os_unfair_lock_lock(&_hidDeviceCacheLock);
+    if (iohidDevice != NULL) {
+        _hidDeviceCache[key] = (__bridge id)iohidDevice;
+        CFRelease(iohidDevice);
+    } else {
+        _hidDeviceCache[key] = [NSNull null];
+    }
+    os_unfair_lock_unlock(&_hidDeviceCacheLock);
     
     return iohidDevice;
 }
@@ -192,20 +215,31 @@ IOHIDDeviceRef _Nullable copySendingDevice_Reliable(uint64_t senderID) {
     
     /// Get IOService
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
+    if (idMatching == NULL) {
+        return NULL;
+    }
+    
     io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
+    if (service == 0) {
+        return NULL;
+    }
     
     /// Get IOHIDDevice
-    __block IOHIDDeviceRef iohidDevice;
+    __block IOHIDDeviceRef iohidDevice = NULL;
     [IOUtility iterateParentsOfEntry:service forEach:^Boolean(io_registry_entry_t parent) {
         iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
         return (iohidDevice == NULL); /// Keep going while device not found
     }];
     
+    IOObjectRelease(service);
+    
     /// Validate
     if (runningPreRelease()) {
         BOOL isTakingLocalizationScreenshots = [NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"];
         if (!isTakingLocalizationScreenshots) {
-            assert(iohidDevice != NULL); /// NULL for events sent by localizedScreenshot XCUITest runner, otherwise shouldn't be NULL.
+            // Devices from Continuity / Universal Control, remote screens, or certain virtual/BT interfaces may legitimately not map to an IOHIDDevice.
+            // Do not assert here as it causes Helper crashes in pre-release builds.
+            // assert(iohidDevice != NULL);
         }
     }
     

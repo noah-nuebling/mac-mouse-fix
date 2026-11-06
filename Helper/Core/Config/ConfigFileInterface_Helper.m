@@ -20,6 +20,7 @@
 #import "TransformationManager.h"
 #import "Constants.h"
 #import "Utility_Transformation.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ConfigFileInterface_Helper
 
@@ -72,6 +73,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
     [ConfigFileInterface_Helper applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
 //    _configFileChanged = NO;
     [TransformationManager loadRemapsFromConfig];
+    [LogitechCIDActivator.shared reactivateAll];
 }
 
 /// Load contents of config.plist file into this class' config property

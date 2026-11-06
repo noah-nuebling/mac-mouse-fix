@@ -430,17 +430,13 @@ fileprivate func isSiblingDevice(_ selfDevice: Device, _ otherDevice: Device) ->
     
     let selfPid = IOHIDDeviceGetProperty(selfDL, kIOHIDProductIDKey as CFString) as? NSNumber
     let otherPid = IOHIDDeviceGetProperty(otherDL, kIOHIDProductIDKey as CFString) as? NSNumber
-    if selfPid != nil && otherPid != nil && selfPid! == otherPid! {
-        return true
+    if selfPid == nil || otherPid == nil || selfPid! != otherPid! {
+        return false
     }
     
     let selfName = IOHIDDeviceGetProperty(selfDL, kIOHIDProductKey as CFString) as? String
     let otherName = IOHIDDeviceGetProperty(otherDL, kIOHIDProductKey as CFString) as? String
     if selfName != nil && otherName != nil && selfName! == otherName! {
-        let lowerName = selfName!.lowercased()
-        if lowerName.contains("receiver") {
-            return false
-        }
         return true
     }
     

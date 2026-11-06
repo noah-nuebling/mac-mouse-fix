@@ -325,6 +325,8 @@ BOOL _addModeIsEnabled = NO;
         @{}: triggerToEffectDict
     }];
     
+    [LogitechCIDActivator.shared reactivateAll];
+    
     /// Return success
     return YES;
 }
