@@ -94,6 +94,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **noviembre 2026**
 
+- 🇿🇦&nbsp;Rt&nbsp;Lawez - "This is an incredible tool! Thanks, Noah"
 - 🇺🇦&nbsp;Mike
 - 🇺🇸&nbsp;Brian&nbsp;Owings
 - 🇨🇿&nbsp;Marcel&nbsp;Řičánek

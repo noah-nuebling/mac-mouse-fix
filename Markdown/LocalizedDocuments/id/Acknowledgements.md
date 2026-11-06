@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2026**
 
+- 🇿🇦&nbsp;Rt&nbsp;Lawez - "This is an incredible tool! Thanks, Noah"
 - 🇺🇦&nbsp;Mike
 - 🇺🇸&nbsp;Brian&nbsp;Owings
 - 🇨🇿&nbsp;Marcel&nbsp;Řičánek
