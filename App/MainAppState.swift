@@ -65,6 +65,17 @@ import ReactiveSwift
     @objc var remapTable: RemapTableView? { remapTableController?.view as? RemapTableView }
     @objc var buttonTabController: ButtonTabController? = nil
     @objc var aboutTabController: AboutTabController? = nil
+
+    // MARK: Main window visibility
+    /// Used for 'Start hidden' (see `applicationDidFinishLaunching:` in AppDelegate.m) and when the app is reopened while its window is hidden.
+    ///     Don't use `window` here. It asserts when the window doesn't exist yet.
+
+    @objc func hideMainWindow() {
+        ResizingTabWindowController.window?.orderOut(nil)
+    }
+    @objc func showMainWindow() {
+        ResizingTabWindowController.window?.makeKeyAndOrderFront(nil)
+    }
 }
 
 // MARK: Helper enabled state
