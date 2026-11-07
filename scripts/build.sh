@@ -210,6 +210,8 @@ for TARGET_ARCH in "${TARGET_ARCHS[@]}"; do
         codesign --verify --strict --verbose=2 "${HELPER_TO_SIGN}"
     else
         echo "==> Preserving Xcode signing for ${TARGET_ARCH} (${SIGNING_IDENTITY})..."
+        codesign --verify --deep --strict --verbose=2 "${TEMP_SIGN_DIR}/${APP_NAME}"
+        codesign --verify --strict --verbose=2 "${TEMP_SIGN_DIR}/${APP_NAME}/Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
     fi
 
     rm -rf "${ARCH_APP_BUNDLE}"

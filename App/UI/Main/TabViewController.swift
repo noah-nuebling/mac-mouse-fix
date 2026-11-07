@@ -1528,7 +1528,14 @@ class AppSelectorBar: NSView {
         
         if let bid = bundleID {
             let menu = NSMenu()
-            let deleteItem = NSMenuItem(title: "删除该配置 🗑️", action: #selector(deleteAppOverride(_:)), keyEquivalent: "")
+            let deleteItem = NSMenuItem(title: "删除", action: #selector(deleteAppOverride(_:)), keyEquivalent: "")
+            deleteItem.attributedTitle = NSAttributedString(
+                string: "删除",
+                attributes: [
+                    .foregroundColor: NSColor.systemRed,
+                    .font: NSFont.menuFont(ofSize: 0)
+                ]
+            )
             deleteItem.target = self
             deleteItem.representedObject = bid
             menu.addItem(deleteItem)

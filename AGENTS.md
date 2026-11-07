@@ -204,22 +204,39 @@ Users want different mouse button and scroll behaviors depending on the active f
   xcodebuild -project "Mouse Fix.xcodeproj" -scheme "App" -configuration Debug -destination 'platform=macOS' build
   ```
 - Keep source edits in the iCloud repo as the canonical working tree. Use `/tmp/MacMouseFix-build` only for build verification, then return to the original repo for `git status`, staging, commit, and push.
-- When the user asks to run the new build for manual testing, do not launch the app directly from DerivedData. Copy the freshly built app into `/Applications`, stop any running app/helper processes, then launch `/Applications/Mac Mouse Fix.app`:
+- When the user asks to run the new build for manual testing, do not launch the app directly from DerivedData. Overwrite `/Applications/Mac Mouse Fix.app` in-place using `rsync -a --delete` (do **NOT** run `rm -rf "/Applications/Mac Mouse Fix.app"` while `launchd` is watching the Helper service, and never chain `|| true && rm -rf ...` after `xcodebuild`, as deleting the app bundle while `launchd` respawns the Helper causes `last exit code = 78: EX_CONFIG` and locks the `launchd` service in `state = spawn scheduled`), stop any running app/helper processes, then launch both Helper and App:
   ```bash
-  BUILT_DIR=$(xcodebuild -project "Mouse Fix.xcodeproj" -scheme "App" -configuration Debug -showBuildSettings 2>/dev/null \
-    | grep '^\s*BUILT_PRODUCTS_DIR' | head -1 | sed 's/.*= //')
-  rm -rf "/Applications/Mac Mouse Fix.app"
-  ditto "$BUILT_DIR/Mac Mouse Fix.app" "/Applications/Mac Mouse Fix.app"
+  set -e
+  BUILT_DIR="/Users/shawnrain/Library/Developer/Xcode/DerivedData.noindex/Build/Products/Debug"
+  rsync -a --delete "$BUILT_DIR/Mac Mouse Fix.app/" "/Applications/Mac Mouse Fix.app/"
+  xattr -cr "/Applications/Mac Mouse Fix.app" || true
+  codesign --verify --deep --strict --verbose=4 "/Applications/Mac Mouse Fix.app"
+  codesign --verify --strict --verbose=4 "/Applications/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
   osascript -e 'tell application "Mac Mouse Fix" to quit' >/dev/null 2>&1 || true
   pkill -x "Mac Mouse Fix Helper" >/dev/null 2>&1 || true
-  open -n "/Applications/Mac Mouse Fix.app"
+  open -a "/Applications/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
+  open -a "/Applications/Mac Mouse Fix.app"
   ```
 
 ### Helper Signing & Runtime Verification
-- Do not use `CODE_SIGNING_ALLOWED=NO` for a build that will be installed and tested as a working app. It can make the main app appear to launch, but the helper registration will fail with:
+- Do not use `CODE_SIGNING_ALLOWED=NO` or ad-hoc signing (`CODE_SIGN_IDENTITY="-"`) for a build that will be installed and tested as a working app. It can make the main app appear to launch, but the helper registration will fail with:
   ```text
   SMAppServiceErrorDomain Code=3 "Codesigning failure loading plist: sm_launchd.plist code: -67056"
   ```
+  Additionally, if the Helper is launched from DerivedData or with an invalid/changed signature, `AXIsProcessTrustedWithOptions` will return `false` and `AccessibilityCheck.m` will automatically invoke `tccutil reset Accessibility com.nuebling.mac-mouse-fix.helper`, wiping out granted Accessibility permissions.
+- **Diagnosing "启用 Mac Mouse Fix" Toggle Not Turning On (`EX_CONFIG = 78`)**:
+  - If clicking the "启用 Mac Mouse Fix" toggle switch does nothing and Helper fails to start, run:
+    ```bash
+    launchctl print gui/$(id -u)/com.nuebling.mac-mouse-fix.helper
+    ```
+  - If you see `state = spawn scheduled` and `last exit code = 78: EX_CONFIG` (often pointing to a legacy `path = ~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`), it means `launchd` tried to spawn the Helper at a moment when `/Applications/Mac Mouse Fix.app` was missing or mid-delete (`rm -rf`), putting the service into `launchd`'s penalty box.
+  - Because `SMAppService` uses the same label (`com.nuebling.mac-mouse-fix.helper`), a stuck legacy `LaunchAgent` job blocks `SMAppService` from starting the Helper.
+  - **Fix**: `HelperServices.m` now calls `removeServiceWithIdentifier(kMFBundleIDHelper)` during cleanup before registering `SMAppService`. For manual recovery during debugging, run:
+    ```bash
+    launchctl bootout gui/$(id -u)/com.nuebling.mac-mouse-fix.helper 2>/dev/null || true
+    launchctl remove com.nuebling.mac-mouse-fix.helper 2>/dev/null || true
+    open -a "/Applications/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
+    ```
 - That failure shows up in the UI as the recurring toast/popover:
   ```text
   系统偏好设置中已禁用 Mac Mouse Fix

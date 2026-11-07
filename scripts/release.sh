@@ -91,8 +91,14 @@ DMG_X86_64="$RELEASE_DIR/Mac_Mouse_Fix_${VERSION}_x86_64.dmg"
 ZIP_ARM64="$RELEASE_DIR/Mac_Mouse_Fix_${VERSION}_arm64.zip"
 ZIP_X86_64="$RELEASE_DIR/Mac_Mouse_Fix_${VERSION}_x86_64.zip"
 
-APP_ARM64="$PROJECT_DIR/Mac Mouse Fix_arm64.app"
-APP_X86_64="$PROJECT_DIR/Mac Mouse Fix_x86_64.app"
+APP_ARM64="/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app"
+if [ ! -d "$APP_ARM64" ]; then
+    APP_ARM64="$PROJECT_DIR/Mac Mouse Fix_arm64.app"
+fi
+APP_X86_64="/tmp/MacMouseFix_build/Mac Mouse Fix_x86_64.app"
+if [ ! -d "$APP_X86_64" ]; then
+    APP_X86_64="$PROJECT_DIR/Mac Mouse Fix_x86_64.app"
+fi
 
 # Automatically create ZIP if the APP bundle exists
 if [ -d "$APP_ARM64" ]; then
@@ -102,10 +108,11 @@ if [ -d "$APP_ARM64" ]; then
     # Use a temporary directory to rename the app to 'Mac Mouse Fix.app'
     # so Sparkle extracts it with the correct name and succeeds.
     STAGE_DIR_ARM64=$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-zip-arm64.XXXXXX")
-    cp -R "$APP_ARM64" "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
+    rsync -a "$APP_ARM64/" "${STAGE_DIR_ARM64}/Mac Mouse Fix.app/"
     chmod -R u+w "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
     xattr -cr "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
-    ditto -c -k --sequesterRsrc --keepParent "${STAGE_DIR_ARM64}/Mac Mouse Fix.app" "$ZIP_ARM64"
+    codesign --verify --deep --strict --verbose=2 "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
+    ditto -c -k --noextattr --norsrc --keepParent "${STAGE_DIR_ARM64}/Mac Mouse Fix.app" "$ZIP_ARM64"
     rm -rf "$STAGE_DIR_ARM64"
 fi
 
@@ -116,17 +123,18 @@ if [ -d "$APP_X86_64" ]; then
     # Use a temporary directory to rename the app to 'Mac Mouse Fix.app'
     # so Sparkle extracts it with the correct name and succeeds.
     STAGE_DIR_X86_64=$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-zip-x86_64.XXXXXX")
-    cp -R "$APP_X86_64" "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
+    rsync -a "$APP_X86_64/" "${STAGE_DIR_X86_64}/Mac Mouse Fix.app/"
     chmod -R u+w "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
     xattr -cr "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
-    ditto -c -k --sequesterRsrc --keepParent "${STAGE_DIR_X86_64}/Mac Mouse Fix.app" "$ZIP_X86_64"
+    codesign --verify --deep --strict --verbose=2 "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
+    ditto -c -k --noextattr --norsrc --keepParent "${STAGE_DIR_X86_64}/Mac Mouse Fix.app" "$ZIP_X86_64"
     rm -rf "$STAGE_DIR_X86_64"
 fi
 
 # 定位签名工具。允许通过环境变量覆盖，默认从当前 DerivedData 中查找。
 SIGN_TOOL="${SIGN_TOOL:-}"
 if [ -z "$SIGN_TOOL" ]; then
-    SIGN_TOOL=$(find "$HOME/Library/Developer/Xcode/DerivedData" -path "*/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update" -type f 2>/dev/null | head -n 1 || true)
+    SIGN_TOOL=$(find "$HOME/Library/Developer/Xcode/DerivedData.noindex" "$HOME/Library/Developer/Xcode/DerivedData" -path "*/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update" -type f 2>/dev/null | head -n 1 || true)
 fi
 if [ -z "$SIGN_TOOL" ] || [ ! -x "$SIGN_TOOL" ]; then
     echo "错误: 找不到 Sparkle sign_update。请先构建项目或设置 SIGN_TOOL=/path/to/sign_update"
@@ -246,23 +254,23 @@ fi
 echo "项目内置公钥: $PUBLIC_KEY"
 
 ED_SIG_ARM64=$(echo "$SIG_ARM64" | sed -E 's/.*sparkle:edSignature="([^"]+)".*/\1/')
-verify_signature "$ZIP_ARM64" "$ED_SIG_ARM64" "$PUBLIC_KEY" "arm64"
+verify_signature "$TARGET_ARM64" "$ED_SIG_ARM64" "$PUBLIC_KEY" "arm64"
 
 if [ "$HAS_X86" -eq 1 ]; then
     ED_SIG_X86_64=$(echo "$SIG_X86_64" | sed -E 's/.*sparkle:edSignature="([^"]+)".*/\1/')
-    verify_signature "$ZIP_X86_64" "$ED_SIG_X86_64" "$PUBLIC_KEY" "x86_64"
+    verify_signature "$TARGET_X86_64" "$ED_SIG_X86_64" "$PUBLIC_KEY" "x86_64"
 fi
 
-SIZE_ARM64=$(stat -f%z "$ZIP_ARM64")
+SIZE_ARM64=$(stat -f%z "$TARGET_ARM64")
 SIZE_X86_64=0
 if [ "$HAS_X86" -eq 1 ]; then
-    SIZE_X86_64=$(stat -f%z "$ZIP_X86_64")
+    SIZE_X86_64=$(stat -f%z "$TARGET_X86_64")
 fi
 PUB_DATE=$(date -R)
 
-echo "arm64 签名: $SIG_ARM64, 大小: $SIZE_ARM64"
+echo "arm64 签名: $ED_SIG_ARM64, 大小: $SIZE_ARM64"
 if [ "$HAS_X86" -eq 1 ]; then
-    echo "x86_64 签名: $SIG_X86_64, 大小: $SIZE_X86_64"
+    echo "x86_64 签名: $ED_SIG_X86_64, 大小: $SIZE_X86_64"
 fi
 echo "发布日期: $PUB_DATE"
 
@@ -283,12 +291,12 @@ cat <<EOF > "$APPCAST_FILE"
             <sparkle:version>${SPARKLE_VERSION//./}</sparkle:version>
             <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="$URL_ARM64" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="arm64" $SIG_ARM64/>
+            <enclosure url="$URL_ARM64" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="arm64" sparkle:edSignature="$ED_SIG_ARM64" length="$SIZE_ARM64"/>
 EOF
 
 if [ "$HAS_X86" -eq 1 ]; then
     cat <<EOF >> "$APPCAST_FILE"
-            <enclosure url="$URL_X86_64" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="x86_64" $SIG_X86_64/>
+            <enclosure url="$URL_X86_64" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="x86_64" sparkle:edSignature="$ED_SIG_X86_64" length="$SIZE_X86_64"/>
 EOF
 fi
 
