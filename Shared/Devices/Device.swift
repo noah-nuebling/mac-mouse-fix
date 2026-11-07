@@ -507,7 +507,10 @@ private let handleInputCallback: IOHIDValueCallback = { context, result, sender,
     }
     
     if usagePage == 9 && usage == 1 && integerValue != 0 {
-        GestureScrollSimulator.stopMomentumScroll()
+        /// This callback runs on the main thread, but `TouchAnimator` must only be touched from `IOThread.runLoop`.
+        mfrun(IOThread.runLoop()) {
+            GestureScrollSimulator.stopMomentumScroll()
+        }
     }
     
     if usagePage == 9 && (usage == 4 || usage == 5) && integerValue != 0 {
