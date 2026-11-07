@@ -50,7 +50,13 @@ import Cocoa
         
         /// Create animator
         if (self.windowFrameAnimator == nil) {
-            windowFrameAnimator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering);
+            windowFrameAnimator = DynamicSystemAnimator(
+                fromAnimation: animation,
+                stopTolerance: 0.003,
+                phaseShift: kVBLPhase_DefaultForAppKitUpdates,
+                runLoop: CFRunLoopGetMain(),
+                name: "WindowFrame"
+            )
         }
         
         /// Debug

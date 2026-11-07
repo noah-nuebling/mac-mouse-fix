@@ -14,12 +14,6 @@
 
 #pragma mark - General
 
-typedef struct {
-    double value;
-    double duration;
-//    id curve; /// Putting an Objc type into the struct makes the struct invisible to swift
-} MFAnimatorStartParams;
-
 typedef enum {
     kMFAnimationPhaseStart = 0,
     kMFAnimationPhaseRunningStart = 1, /// Animation has been started again while it was already running
@@ -31,9 +25,10 @@ typedef enum {
 typedef enum {
     kMFAnimationCallbackPhaseStart = 0,
     kMFAnimationCallbackPhaseContinue = 1,
-    kMFAnimationCallbackPhaseEnd = 2, /// Deltas will always be zero for this phase
-    kMFAnimationCallbackPhaseCanceled = 3, /// Passed after stop() is called on the animator. Deltas will be zero.
-    kMFAnimationCallbackPhaseNone = 4,
+    kMFAnimationCallbackPhaseEnd = 2,                /// Deltas will always be zero for this phase
+    kMFAnimationCallbackPhaseCanceled = 3,           /// Passed after stop() is called on the animator. Deltas will be zero.
+    kMFAnimationCallbackPhaseStoppedBeforeStart = 4, /// Canceled or ended before the first `kMFAnimationCallbackPhaseStart` event was delivered. Added to guarantee every start of the animator delivers at least one callback. (Added [Sep 2026])
+    kMFAnimationCallbackPhaseNone = 5,
 } MFAnimationCallbackPhase;
 
 #pragma mark - Hybrid curves

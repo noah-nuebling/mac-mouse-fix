@@ -69,7 +69,7 @@ public class Scroll: NSObject {
         MFEventTap.registerListener(kScrollListenerID, forEvents: MFEventType(kMFEventType_ScrollWheel), callback: eventTapCallback)
         MFEventTap.enable(false, forListener: kScrollListenerID)
         
-        _animator = TouchAnimator()
+        _animator = TouchAnimator(phaseShift: kVBLPhase_DefaultForEventSending, runLoop: IOThread.runLoop(), name: "ScrollAnimator")
         _scrollConfig = nil
     }
     
@@ -363,7 +363,7 @@ public class Scroll: NSObject {
                 pxToScrollForThisTick = pxToScrollForThisTick * fastScrollFactor
             }
             
-            let currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed)
+            let currentAnimationSpeed = magnitudeOfVector(_animator.lastAnimationSpeed)
             if _lastScrollAnalysisResult.scrollDirectionDidChange && currentAnimationSpeed > 0 {
                 DDLogDebug("Scroll.swift: Direction change – cancel scroll.")
                 _animator.cancel()
@@ -380,130 +380,127 @@ public class Scroll: NSObject {
             sendScroll(px: Int64(pxToScrollForThisTick), scrollDirection: finalScrollDirection, animated: false, animationPhase: kMFAnimationCallbackPhaseNone, momentumHint: kMFMomentumHintNone, config: _scrollConfig!)
         } else {
             let configCopyForBlock = _scrollConfig!
-            _animator.start(params: { (valueLeftVec, isRunning, animationCurve, currentSpeed) -> NSDictionary in
-                assert(valueLeftVec.x == 0 || valueLeftVec.y == 0)
+            let valueLeftVec = _animator.animationValueLeft
+            let isRunning = _animator.isRunning
+            let animationCurve = _animator.animationCurve
+            let currentSpeed = _animator.lastAnimationSpeed
+            
+            assert(valueLeftVec.x == 0 || valueLeftVec.y == 0)
+            
+            if ScrollUtility.mouseDidMove && !isRunning {
+                _animator.linkToMainScreen()
+            }
+            
+            var pxLeftToScroll = 0.0
+            
+            if isRunning {
+                let distanceLeft = magnitudeOfVector(valueLeftVec)
+                let isSwipeSequenceStart = (scrollAnalysisResult.consecutiveScrollTickCounter == 0 && scrollAnalysisResult.consecutiveScrollSwipeCounter == 0)
                 
-                if ScrollUtility.mouseDidMove && !isRunning {
-                    _animator.linkToMainScreen_Unsafe()
-                }
-                
-                var p: [AnyHashable: Any] = [:]
-                var pxLeftToScroll = 0.0
-                
-                if isRunning {
-                    let distanceLeft = magnitudeOfVector(valueLeftVec)
-                    let isSwipeSequenceStart = (scrollAnalysisResult.consecutiveScrollTickCounter == 0 && scrollAnalysisResult.consecutiveScrollSwipeCounter == 0)
-                    
-                    if isSwipeSequenceStart {
-                        pxLeftToScroll = 0.0
-                        _animator.resetSubPixelator_Unsafe()
-                    } else if animationCurve is SimpleBezierHybridCurve {
-                        assertionFailure()
-                    } else {
-                        pxLeftToScroll = distanceLeft
-                    }
-                } else {
+                if isSwipeSequenceStart {
                     pxLeftToScroll = 0.0
-                    _animator.resetSubPixelator_Unsafe()
+                    _animator.resetSubPixelator()
+                } else if animationCurve is SimpleBezierHybridCurve {
+                    assertionFailure()
+                } else {
+                    pxLeftToScroll = distanceLeft
+                }
+            } else {
+                pxLeftToScroll = 0.0
+                _animator.resetSubPixelator()
+            }
+            
+            DDLogDebug("Scroll.swift: animation init - current speed: (\(currentSpeed.x), \(currentSpeed.y))")
+            
+            let delta = pxToScrollForThisTick + pxLeftToScroll
+            let pCurve = configCopyForBlock.animationCurveParams!
+            var baseDuration: Double = 0.0
+            
+            if pCurve.baseMsPerStep != -1 {
+                baseDuration = Double(pCurve.baseMsPerStep) / 1000.0
+            } else {
+                guard let baseTimeCurve = pCurve.baseMsPerStepCurve else {
+                    DDLogError("Scroll.swift: baseTimeCurve is nil")
+                    return
+                }
+                let baseTimeStart = baseTimeCurve.evaluate(at: 0.0)
+                let baseTimeEnd = baseTimeCurve.evaluate(at: 1.0)
+                var tickStart = configCopyForBlock.consecutiveScrollTickIntervalMax
+                let tickEnd = configCopyForBlock.consecutiveScrollTickIntervalMin
+                var tick = scrollAnalysisResult.timeBetweenTicks
+                
+                if tickStart > baseTimeStart {
+                    tickStart = baseTimeStart
+                    DDLogDebug("Scroll.swift: animation init - baseMsPerStepCurve - adjusting tickStart below consecutiveScrollTickIntervalMax to baseTimeStart: \(baseTimeStart)")
                 }
                 
-                DDLogDebug("Scroll.swift: animation init - current speed: (\(currentSpeed.x), \(currentSpeed.y))")
-                
-                let delta = pxToScrollForThisTick + pxLeftToScroll
-                let pCurve = configCopyForBlock.animationCurveParams!
-                var baseDuration: Double = 0.0
-                
-                if pCurve.baseMsPerStep != -1 {
-                    baseDuration = Double(pCurve.baseMsPerStep) / 1000.0
-                } else {
-                    guard let baseTimeCurve = pCurve.baseMsPerStepCurve else {
-                        DDLogError("Scroll.swift: baseTimeCurve is nil")
-                        return [:]
-                    }
-                    let baseTimeStart = baseTimeCurve.evaluate(at: 0.0)
-                    let baseTimeEnd = baseTimeCurve.evaluate(at: 1.0)
-                    var tickStart = configCopyForBlock.consecutiveScrollTickIntervalMax
-                    let tickEnd = configCopyForBlock.consecutiveScrollTickIntervalMin
-                    var tick = scrollAnalysisResult.timeBetweenTicks
-                    
-                    if tickStart > baseTimeStart {
-                        tickStart = baseTimeStart
-                        DDLogDebug("Scroll.swift: animation init - baseMsPerStepCurve - adjusting tickStart below consecutiveScrollTickIntervalMax to baseTimeStart: \(baseTimeStart)")
-                        // assertionFailure()
-                    }
-                    
-                    if tick == Double.greatestFiniteMagnitude {
-                        tick = configCopyForBlock.consecutiveScrollTickIntervalMax
-                    }
-                    
-                    if tick > configCopyForBlock.consecutiveScrollTickIntervalMax && tick != Double.greatestFiniteMagnitude {
-                        DDLogError("Scroll.swift: animation init - tickTime is over max. This is a bug but we can recover. tickTime: \(tick)")
-                        tick = configCopyForBlock.consecutiveScrollTickIntervalMax
-                        // assertionFailure()
-                    }
-                    
-                    let fromInterval = Interval(start: tickStart, end: tickEnd)
-                    let unitTick = Math.scale(value: tick, from: fromInterval, to: Interval.unitInterval, allowOutOfBounds: true)
-                    let clippedUnitTick = max(0.0, min(1.0, unitTick))
-                    
-                    let b = baseTimeCurve.evaluate(at: clippedUnitTick)
-                    baseDuration = b / 1000.0
-                    
-                    DDLogDebug("Scroll.swift: animation init - baseMsPerStepCurve - calculating animation baseDuration - baseTimeEnd: \(baseTimeEnd), baseBaseTimeStart: \(baseTimeStart), tick: \(tick*1000), tickEnd: \(tickEnd*1000), tickStart: \(tickStart*1000), consecutiveScrollTickIntervalMax: \(configCopyForBlock.consecutiveScrollTickIntervalMax*1000), result: \(baseDuration*1000)")
+                if tick == Double.greatestFiniteMagnitude {
+                    tick = configCopyForBlock.consecutiveScrollTickIntervalMax
                 }
                 
-                var duration: Double = 0.0
-                var c: Curve?
+                if tick > configCopyForBlock.consecutiveScrollTickIntervalMax && tick != Double.greatestFiniteMagnitude {
+                    DDLogError("Scroll.swift: animation init - tickTime is over max. This is a bug but we can recover. tickTime: \(tick)")
+                    tick = configCopyForBlock.consecutiveScrollTickIntervalMax
+                }
                 
-                if !pCurve.useDragCurve {
-                    DDLogDebug("Scroll.swift: animation init – animation curve base")
-                    c = pCurve.baseCurve
-                    duration = baseDuration
-                } else {
-                    DDLogDebug("Scroll.swift: animation init – animation curve hybrid")
-                    var baseCurve = pCurve.baseCurve
-                    if baseCurve == nil {
-                        let speedSmoothing = pCurve.speedSmoothing
-                        assert(0.0 <= speedSmoothing && speedSmoothing <= 1.0)
-                        
-                        let baseCurveStartDirection = Vector(
-                            x: 1.0 / (baseDuration / 1000.0),
-                            y: magnitudeOfVector(currentSpeed) / delta
-                        )
-                        let baseCurveP1 = vectorFromDeltaAndDirectionVector(speedSmoothing, baseCurveStartDirection)
-                        baseCurve = Bezier(controlPoints: [
-                            CGPoint(x: 0, y: 0),
-                            CGPoint(x: baseCurveP1.x, y: baseCurveP1.y),
-                            CGPoint(x: 1, y: 1)
-                        ], defaultEpsilon: 0.01)
-                        
-                        DDLogDebug("Scroll.swift: animation init - start speed smoothing p1 - currentSpeed: \(currentSpeed), bezier: \(baseCurve?.stringTrace(startX: 0, endX: 1, nOfSamples: 10, bias: 1) ?? "nil")")
-                    }
+                let fromInterval = Interval(start: tickStart, end: tickEnd)
+                let unitTick = Math.scale(value: tick, from: fromInterval, to: Interval.unitInterval, allowOutOfBounds: true)
+                let clippedUnitTick = max(0.0, min(1.0, unitTick))
+                
+                let b = baseTimeCurve.evaluate(at: clippedUnitTick)
+                baseDuration = b / 1000.0
+                
+                DDLogDebug("Scroll.swift: animation init - baseMsPerStepCurve - calculating animation baseDuration - baseTimeEnd: \(baseTimeEnd), baseBaseTimeStart: \(baseTimeStart), tick: \(tick*1000), tickEnd: \(tickEnd*1000), tickStart: \(tickStart*1000), consecutiveScrollTickIntervalMax: \(configCopyForBlock.consecutiveScrollTickIntervalMax*1000), result: \(baseDuration*1000)")
+            }
+            
+            var duration: Double = 0.0
+            var c: Curve?
+            
+            if !pCurve.useDragCurve {
+                DDLogDebug("Scroll.swift: animation init – animation curve base")
+                c = pCurve.baseCurve
+                duration = baseDuration
+            } else {
+                DDLogDebug("Scroll.swift: animation init – animation curve hybrid")
+                var baseCurve = pCurve.baseCurve
+                if baseCurve == nil {
+                    let speedSmoothing = pCurve.speedSmoothing
+                    assert(0.0 <= speedSmoothing && speedSmoothing <= 1.0)
                     
-                    let hc = BezierHybridCurve(
-                        baseCurve: baseCurve!,
-                        minDuration: baseDuration,
-                        distance: delta,
-                        dragCoefficient: pCurve.dragCoefficient,
-                        dragExponent: pCurve.dragExponent,
-                        stopSpeed: Double(pCurve.stopSpeed),
-                        distanceEpsilon: 0.2
+                    let baseCurveStartDirection = Vector(
+                        x: 1.0 / (baseDuration / 1000.0),
+                        y: magnitudeOfVector(currentSpeed) / delta
                     )
+                    let baseCurveP1 = vectorFromDeltaAndDirectionVector(speedSmoothing, baseCurveStartDirection)
+                    baseCurve = Bezier(controlPoints: [
+                        CGPoint(x: 0, y: 0),
+                        CGPoint(x: baseCurveP1.x, y: baseCurveP1.y),
+                        CGPoint(x: 1, y: 1)
+                    ], defaultEpsilon: 0.01)
                     
-                    duration = hc.duration
-                    assert(abs(hc.distance - delta) < 3)
-                    DDLogDebug("Scroll.swift: animation init - Created hybrid curve with distance \(hc.distance), duration: \(hc.duration)")
-                    c = hc
+                    DDLogDebug("Scroll.swift: animation init - start speed smoothing p1 - currentSpeed: \(currentSpeed), bezier: \(baseCurve?.stringTrace(startX: 0, endX: 1, nOfSamples: 10, bias: 1) ?? "nil")")
                 }
                 
-                p["duration"] = duration
-                p["vector"] = NSValue(point: vectorFromDeltaAndDirection(delta, finalScrollDirection))
-                p["curve"] = c
+                let hc = BezierHybridCurve(
+                    baseCurve: baseCurve!,
+                    minDuration: baseDuration,
+                    distance: delta,
+                    dragCoefficient: pCurve.dragCoefficient,
+                    dragExponent: pCurve.dragExponent,
+                    stopSpeed: Double(pCurve.stopSpeed),
+                    distanceEpsilon: 0.2
+                )
                 
-                DDLogDebug("Scroll.swift: animation init - Returning value: \(p)")
-                return p as NSDictionary
-                
-            }, integerCallback: { (distanceDeltaVec, animationPhase, momentumHint) in
+                duration = hc.duration
+                assert(abs(hc.distance - delta) < 3)
+                DDLogDebug("Scroll.swift: animation init - Created hybrid curve with distance \(hc.distance), duration: \(hc.duration)")
+                c = hc
+            }
+            
+            guard let validCurve = c else { return }
+            let vector = vectorFromDeltaAndDirection(delta, finalScrollDirection)
+            
+            _animator.start(duration: duration, durationInFrames: -1, vector: vector, curve: validCurve) { (distanceDeltaVec, animationPhase, momentumHint) in
                 DDLogDebug("Scroll.swift: in-animator with vec: \(distanceDeltaVec), phase: \(animationPhase), momentum: \(momentumHint)")
                 let distanceDelta = magnitudeOfVector(distanceDeltaVec)
                 let config = configCopyForBlock
@@ -514,7 +511,7 @@ public class Scroll: NSObject {
                 }
                 
                 sendScroll(px: Int64(distanceDelta), scrollDirection: finalScrollDirection, animated: true, animationPhase: animationPhase, momentumHint: momentumHint, config: config)
-            })
+            }
         }
     }
     

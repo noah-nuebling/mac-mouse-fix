@@ -22,7 +22,7 @@
 #import "VectorSubPixelator.h"
 #import "SubPixelator.h"
 #import "AnimatorDeclarations.h"
-#import "DisplayLinkTypes.h"
+#import "DisplayLink.h"
 #import "IOHIDEventTypes.h"
 #import "HelperServices.h"
 #import "NSAttributedString+Additions.h"

@@ -1,0 +1,105 @@
+//
+// --------------------------------------------------------------------------
+// ModifyingActions.h
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2020
+// Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
+// --------------------------------------------------------------------------
+//
+
+#import "Device.h"
+#import <CoreGraphics/CoreGraphics.h>
+//#import <Foundation/Foundation.h>
+#import "Constants.h"
+#import "VectorUtility.h"
+#import "IOHIDEventTypes.h"
+#import "DisableSwiftBridging.h"
+//#import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "DisplayLink.h"
+#import "WarpDeltaCompensator.h"
+
+
+NS_ASSUME_NONNULL_BEGIN
+
+/// Forward declaration
+///     So that typedef works
+@protocol ModifiedDragOutputPlugin;
+
+/// Coalescable event declaration
+@interface CoalescableEvent : NSObject @end
+    @interface CoalescableEvent_Delta : CoalescableEvent
+        @property (nonatomic) double deltaX;
+        @property (nonatomic) double deltaY;
+        @property (nonatomic) CGPoint pointerLocation;
+    @end
+
+    @interface CoalescableEvent_Deactivation : CoalescableEvent
+        @property (nonatomic) bool cancelled;
+    @end
+
+/// Typedefs
+
+typedef enum {
+    kMFModifiedInputActivationStateNone,
+    kMFModifiedInputActivationStateInitialized,
+    kMFModifiedInputActivationStateInUse,
+} MFModifiedInputActivationState;
+
+typedef struct {
+    
+    int64_t usageThreshold;
+    
+    NSDictionary *effectDict;
+    //NSDictionary *initialModifiers;
+
+    bool naturalDirection; /// Content follows mouse movement
+    
+    MFStringConstant type;
+    id<ModifiedDragOutputPlugin> outputPlugin;
+    
+    MFModifiedInputActivationState activationState;
+    //Device *modifiedDevice;
+
+    CFTimeInterval initTime;
+    bool isSuspended;
+    
+    CGPoint origin;
+    Vector originOffset;
+    CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
+    MFAxis usageAxis;
+    bool firstCallback;
+
+    CGDirectDisplayID displayID;
+
+    bool coalesceEvents;
+    NSMutableArray<CoalescableEvent *> *pendingCoalescableEvents;
+    uint64_t lastVBLTimeThatProcessedCoalescableEvents;
+
+    WarpDeltaCompensator warpDeltaCompensator;
+
+} ModifiedDragState;
+
+/// Plugin Declaration
+
+@protocol ModifiedDragOutputPlugin <NSObject>
+    + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
+    + (void)handleBecameInUse;
+    + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY;
+    + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
+    //+ (void)suspend; /// See OutputCoordinator
+    //+ (void)unsuspend;
+@end
+
+/// Modified Drag Declaration
+
+@interface ModifiedDrag : NSObject
+
++ (void)load_Manual;
++ (void)initializeDragWithDict:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
++ (void)deactivateWithCancel:(BOOL)cancel;
+
++ (MFModifiedInputActivationState) debug_activationState;
+
+@end
+
+NS_ASSUME_NONNULL_END

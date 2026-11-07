@@ -118,6 +118,12 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
         _cancelHandler = nil
         
         MainAppState.shared.window?.makeFirstResponder(nil)
+        
+        // If Escape without modifiers is pressed, cancel recording
+        if !isSystem && keyCode == 53 && flags.intersection([.maskCommand, .maskAlternate, .maskShift, .maskControl]).isEmpty {
+            return
+        }
+        
         handler?(keyCode, type, flags)
     }
     
@@ -155,30 +161,61 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
                         self.drawEmptyAppearance()
                     }
                 } else if event.type == .keyDown {
-                    let hasModifiers = !e.flags.intersection([.maskCommand, .maskControl, .maskAlternate, .maskShift]).isEmpty
-                    // If Escape without modifiers is pressed, cancel recording
-                    if event.keyCode == 53 && !hasModifiers {
-                        MainAppState.shared.window?.makeFirstResponder(nil)
-                        return nil
-                    }
-                    
-                    guard self._isCapturing else { return nil }
-                    let keyCode = CGKeyCode(event.keyCode)
-                    let flags = e.flags
-                    self.handleKeyCaptureModeFeedback(withPayload: [
-                        "keyCode": NSNumber(value: keyCode),
-                        "flags": NSNumber(value: flags.rawValue)
-                    ], isSystemDefinedEvent: false)
+                    self.captureKeyDownEvent(event)
                     return nil
                 } else if event.type == .leftMouseDown {
                     MainAppState.shared.window?.makeFirstResponder(nil)
+                    return event
                 }
                 
-                return nil
+                return event
             }
         }
         
         return true
+    }
+    
+    private func captureKeyDownEvent(_ event: NSEvent) {
+        guard _isCapturing else { return }
+        
+        let hasModifiers = !event.modifierFlags.intersection([.command, .control, .option, .shift]).isEmpty
+        // If Escape without modifiers is pressed, cancel recording
+        if event.keyCode == 53 && !hasModifiers {
+            MainAppState.shared.window?.makeFirstResponder(nil)
+            return
+        }
+        
+        let keyCode = CGKeyCode(event.keyCode)
+        var rawFlags = event.cgEvent?.flags.rawValue ?? 0
+        if rawFlags == 0 && hasModifiers {
+            if event.modifierFlags.contains(.command) { rawFlags |= CGEventFlags.maskCommand.rawValue }
+            if event.modifierFlags.contains(.control) { rawFlags |= CGEventFlags.maskControl.rawValue }
+            if event.modifierFlags.contains(.option) { rawFlags |= CGEventFlags.maskAlternate.rawValue }
+            if event.modifierFlags.contains(.shift) { rawFlags |= CGEventFlags.maskShift.rawValue }
+        }
+        
+        self.handleKeyCaptureModeFeedback(withPayload: [
+            "keyCode": NSNumber(value: keyCode),
+            "flags": NSNumber(value: rawFlags)
+        ], isSystemDefinedEvent: false)
+    }
+    
+    public override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        if _isCapturing {
+            if event.type == .keyDown {
+                captureKeyDownEvent(event)
+            }
+            return true
+        }
+        return super.performKeyEquivalent(with: event)
+    }
+    
+    public override func keyDown(with event: NSEvent) {
+        if _isCapturing {
+            captureKeyDownEvent(event)
+            return
+        }
+        super.keyDown(with: event)
     }
     
     public override func resignFirstResponder() -> Bool {

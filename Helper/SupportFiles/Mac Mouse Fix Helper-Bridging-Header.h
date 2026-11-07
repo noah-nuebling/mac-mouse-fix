@@ -6,7 +6,7 @@
 #import "Constants.h"
 #import "VectorUtility.h"
 #import "MathObjc.h"
-#import "DisplayLinkTypes.h"
+#import "DisplayLink.h"
 #import "AnimatorDeclarations.h"
 #import "Config.h"
 #import "ScrollConfigObjC.h"
@@ -52,6 +52,8 @@
 #import "KeyCaptureMode.h"
 #import "CGSSpace.h"
 #import "PointerFreeze.h"
+#import "ModifiedDrag.h"
+#import "GestureScrollSimulator.h"
 
 
 #import "DevToggles.h" /// [May 2025] We don't need this in release builds

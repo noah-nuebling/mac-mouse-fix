@@ -117,5 +117,15 @@ extension Modifiers {
     }
 }
 
+extension ModifiedDrag {
+    
+    @objc static func deactivate() {
+        self.deactivate(withCancel: false)
+    }
+    
+    static func initializeDrag(withDict dict: NSDictionary) {
+        __initializeDrag(withDict: dict)
+    }
+}
 
 #endif

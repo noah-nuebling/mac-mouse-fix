@@ -14,8 +14,10 @@
     #import "Threads.h"
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// RunLoop
-static inline CFRunLoopRef configRunLoop(void) CF_RETURNS_NOT_RETAINED {
+static inline CFRunLoopRef _Nonnull configRunLoop(void) CF_RETURNS_NOT_RETAINED {
     #if IS_HELPER
         return IOThread.runLoop;
     #elif IS_MAIN_APP
@@ -24,8 +26,6 @@ static inline CFRunLoopRef configRunLoop(void) CF_RETURNS_NOT_RETAINED {
         return CFRunLoopGetMain();
     #endif
 }
-
-NS_ASSUME_NONNULL_BEGIN
 
 @class Config;
 
