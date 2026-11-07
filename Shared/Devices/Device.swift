@@ -524,4 +524,15 @@ private let handleInputCallback: IOHIDValueCallback = { context, result, sender,
     }
 }
 
+#if IS_HELPER
+extension Device {
+    @objc public static func resetLogitechButtons() {
+        for button in logiButtonsDown {
+            postVirtualButtonEvent(button, false)
+        }
+        logiButtonsDown.removeAll()
+    }
+}
+#endif
+
 #endif

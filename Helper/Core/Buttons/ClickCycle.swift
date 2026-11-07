@@ -82,6 +82,19 @@ class ClickCycle: NSObject {
         state?.upTimer.invalidate()
         state = nil
     }
+    func reset() {
+        DDLogDebug("ClickCycle - reset invoked")
+        state?.downTimer.invalidate()
+        state?.upTimer.invalidate()
+        state = nil
+        let callbacksToRun = releaseCallbacks
+        releaseCallbacks.removeAll()
+        for (_, callbacks) in callbacksToRun {
+            for callback in callbacks {
+                callback()
+            }
+        }
+    }
     func forceKill() {
         /// Kill and then send release message immediately
         ///     TODO: Implement

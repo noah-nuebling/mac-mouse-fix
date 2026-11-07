@@ -237,9 +237,55 @@ public class ModifiedDrag: NSObject {
     }
     
     // Internal callback state handlers
+    private static func hasActiveModifierInput() -> Bool {
+        // 1. Check keyboard modifiers (e.g. Option, Command, Control, Shift held for gesture)
+        let flags = NSEvent.modifierFlags.intersection([.shift, .control, .option, .command])
+        if !flags.isEmpty {
+            return true
+        }
+        
+        // 2. Check system-level physical mouse button mask (bit 0=Left, bit 1=Right, bit 2=Middle, bit 3=Button4, bit 4=Button5...)
+        let pressedButtons = NSEvent.pressedMouseButtons
+        if pressedButtons != 0 {
+            return true
+        }
+        
+        // 3. Check CGEventSource button states across HID and combined session states
+        for btn in 0...31 {
+            if let mouseBtn = CGMouseButton(rawValue: UInt32(btn)) {
+                if CGEventSource.buttonState(.hidSystemState, button: mouseBtn) ||
+                   CGEventSource.buttonState(.combinedSessionState, button: mouseBtn) {
+                    return true
+                }
+            }
+        }
+        
+        // 4. Check Logitech HID++ 2.0 active diverted button states
+        if LogitechActivator.shared.isAnyButtonPressed() {
+            return true
+        }
+        
+        return false
+    }
+
     public static func handleMouseInputWhileInitialized(deltaX: Int64, deltaY: Int64, event: CGEvent) {
         let ofs = _drag.originOffset
         if max(abs(ofs.x), abs(ofs.y)) > Double(_drag.usageThreshold) {
+            
+            // Check if there is genuinely any physical button or key held.
+            // If the user's mouse woke from Bluetooth sleep / reconnect and lost mouseUp,
+            // or if a ghost modifier is lingering without any actual button held down,
+            // we must NOT enter 'in use' (which triggers gestures). Instead, auto-heal and deactivate!
+            if !hasActiveModifierInput() {
+                DDLogWarn("ModifiedDrag: Detected ghost modifier during pointer move (no physical mouse buttons or keys held). Auto-healing state!")
+                DispatchQueue.main.async {
+                    Buttons.resetAll()
+                    Device.resetLogitechButtons()
+                    ModifiedDrag.deactivate()
+                }
+                return
+            }
+            
             DDLogDebug("Modified Drag entered 'in use' state")
             
             _drag.usageOrigin = getRoundedPointerLocation(with: event)

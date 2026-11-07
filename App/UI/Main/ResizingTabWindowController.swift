@@ -19,6 +19,7 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         super.windowDidLoad()
         let thewindow = window as! ResizingTabWindow
         thewindow.isReleasedWhenClosed = false
+        thewindow.delegate = self
                
         /// Make views compact on Tahoe
         if #available(macOS 26.0, *) {
@@ -65,6 +66,11 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
     }
     
     // MARK: Window Closing Lifecycle
+    
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        NSApp.terminate(nil)
+        return true
+    }
     
     func windowWillClose(_ notification: Notification) {
         // When frontmost preferences UI is closed, cleanly terminate the main app,

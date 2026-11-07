@@ -255,6 +255,30 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
         }
     }
     
+    @objc public func isAnyButtonPressed() -> Bool {
+        return stateLock.withLock {
+            for s in states.values {
+                if s.pressedCount > 0 { return true }
+            }
+            return false
+        }
+    }
+    
+    @objc public func releaseAllButtons() {
+        assert(Thread.isMainThread)
+        stateLock.withLock {
+            for s in states.values {
+                if s.pressedCount > 0 {
+                    for i in 0..<s.pressedCount {
+                        let cid = s.pressedCIDs[i]
+                        injectButton(s, cid: cid, down: false)
+                    }
+                    s.pressedCount = 0
+                }
+            }
+        }
+    }
+    
     private func state(for device: IOHIDDevice) -> DeviceState? {
         stateLock.withLock {
             if let s = states[device] { return s }
@@ -1106,8 +1130,18 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
         }
         
         if reconnectDetected {
-            os_log("LogitechCIDActivator: Device reconnected wirelessly. Scheduling activation in 0.35 seconds...",
+            os_log("LogitechCIDActivator: Device reconnected wirelessly. Releasing held buttons and scheduling activation...",
                    log: this.logger, type: .info)
+            for i in 0..<s.pressedCount {
+                let cid = s.pressedCIDs[i]
+                this.injectButton(s, cid: cid, down: false)
+            }
+            s.pressedCount = 0
+            DispatchQueue.main.async {
+                Buttons.resetAll()
+                Device.resetLogitechButtons()
+                ModifiedDrag.deactivate()
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                 this.performActivation(for: s, maxRetries: 4, retryDelay: 0.8)
             }
@@ -1719,7 +1753,13 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
     }
     
     @objc private func handleSystemWake() {
-        os_log("LogitechCIDActivator: System woke up. Scheduling reactivation in 0.8 seconds...", log: self.logger, type: .info)
+        os_log("LogitechCIDActivator: System woke up. Releasing held buttons and scheduling reactivation in 0.8 seconds...", log: self.logger, type: .info)
+        DispatchQueue.main.async { [weak self] in
+            self?.releaseAllButtons()
+            Buttons.resetAll()
+            Device.resetLogitechButtons()
+            ModifiedDrag.deactivate()
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
             guard let self = self else { return }
             self.reactivateAll()

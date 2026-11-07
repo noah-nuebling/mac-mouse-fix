@@ -165,6 +165,9 @@ private let handleDeviceRemovalCallback: IOHIDDeviceCallback = { context, result
         
         #if IS_HELPER
         LogitechActivator.shared.handleDeviceRemoved(device)
+        Buttons.resetAll()
+        Device.resetLogitechButtons()
+        ModifiedDrag.deactivate()
         #endif
         
         DDLogInfo("Attached device was removed:\n\(attachedDevice)")

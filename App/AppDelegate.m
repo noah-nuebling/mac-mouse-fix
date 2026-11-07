@@ -358,6 +358,17 @@ static NSDictionary *sideButtonActions;
     /// Present main preferences window immediately upon launch
     [self showMainWindow:self];
     
+    /// Clean termination when main preferences window closes
+    [NSNotificationCenter.defaultCenter addObserverForName:NSWindowWillCloseNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification * _Nonnull note) {
+        if ([note.object isKindOfClass:NSWindow.class]) {
+            NSWindow *closedWindow = (NSWindow *)note.object;
+            if (closedWindow == self.window || closedWindow == MainAppState.shared.window || [closedWindow isKindOfClass:ResizingTabWindow.class]) {
+                DDLogInfo(@"Main preferences window closing, terminating app...");
+                [NSApp terminate:nil];
+            }
+        }
+    }];
+    
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     DDLogInfo(@"Mac Mouse Fix should terminate");

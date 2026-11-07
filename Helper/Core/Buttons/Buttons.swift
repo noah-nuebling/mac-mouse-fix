@@ -215,6 +215,15 @@ import Cocoa
         }
     }
     
+    @objc static func resetAll() {
+        assert(Thread.isMainThread)
+        DDLogInfo("Buttons: resetAll invoked - clearing clickCycle and buttonModifiers")
+        clickCycle.reset()
+        if useButtonModifiers {
+            buttonModifiers.resetAll()
+        }
+    }
+    
     /// Interface for accessing submodules
     
 //    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {

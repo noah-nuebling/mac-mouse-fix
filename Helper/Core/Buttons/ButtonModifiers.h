@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateWithButton:(MFMouseButtonNumber)button clickLevel:(NSInteger)clickLevel downNotUp:(BOOL)mouseDown;
 - (void)killButton:(MFMouseButtonNumber)button;
+- (void)resetAll;
 
 @end
 

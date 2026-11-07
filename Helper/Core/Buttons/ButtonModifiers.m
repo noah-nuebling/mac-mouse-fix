@@ -90,6 +90,16 @@
     }
 }
 
+- (void)resetAll {
+    if (_state.count > 0) {
+        [_state removeAllObjects];
+        if (runningPreRelease()) {
+            DDLogDebug(@"buttonModifiers - resetAll - cleared all active button modifiers");
+        }
+        [Modifiers buttonModsChangedTo:_state];
+    }
+}
+
 /// Helper
 
 static BOOL removeStateForButton(ButtonModifierState state, MFMouseButtonNumber button) {
