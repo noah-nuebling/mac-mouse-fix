@@ -63,6 +63,12 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
     }
     
     @objc public static func handleKeyCaptureModeFeedback(withPayload payload: [AnyHashable: Any], isSystemDefinedEvent isSystem: Bool) {
+        if !Thread.isMainThread {
+            DispatchQueue.main.async {
+                handleKeyCaptureModeFeedback(withPayload: payload, isSystemDefinedEvent: isSystem)
+            }
+            return
+        }
         if let active = activeCaptureView {
             active.handleKeyCaptureModeFeedback(withPayload: payload, isSystemDefinedEvent: isSystem)
             return
@@ -113,16 +119,17 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
             }
         }
         
+        // If Escape without modifiers is pressed, cancel recording
+        if !isSystem && keyCode == 53 && flags.intersection([.maskCommand, .maskAlternate, .maskShift, .maskControl]).isEmpty {
+            MainAppState.shared.window?.makeFirstResponder(nil)
+            return
+        }
+        
         let handler = _captureHandler
         _captureHandler = nil
         _cancelHandler = nil
         
         MainAppState.shared.window?.makeFirstResponder(nil)
-        
-        // If Escape without modifiers is pressed, cancel recording
-        if !isSystem && keyCode == 53 && flags.intersection([.maskCommand, .maskAlternate, .maskShift, .maskControl]).isEmpty {
-            return
-        }
         
         handler?(keyCode, type, flags)
     }

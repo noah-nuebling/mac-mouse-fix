@@ -51,17 +51,20 @@
     return -1;
 }
 
-+ (NSPopUpButton *)getPopUpButtonAtRow:(NSUInteger)popUpRow fromTableView:(NSTableView *)tv {
++ (NSPopUpButton * _Nullable)getPopUpButtonAtRow:(NSUInteger)popUpRow fromTableView:(NSTableView *)tv {
+    
+    /// Returns nil if the row doesn't currently contain a popup button (e.g. it's showing a key capture field, or isn't loaded).
     
     NSInteger tableColumn = [tv columnWithIdentifier:@"effect"];
-    NSView *cell = [tv viewAtColumn:tableColumn row:popUpRow makeIfNecessary:NO];
-    NSPopUpButton *popUpButton = cell.subviews[0];
+    if (tableColumn < 0) return nil;
+    NSView *cell = [tv viewAtColumn:tableColumn row:(NSInteger)popUpRow makeIfNecessary:NO];
+    NSView *first = cell.subviews.firstObject;
     
-    if (![popUpButton isKindOfClass:NSPopUpButton.class]) {
-        @throw [NSException exceptionWithName:@"RowDoesntContainPopupButtonException" reason:nil userInfo:nil];
+    if (![first isKindOfClass:NSPopUpButton.class]) {
+        return nil;
     }
     
-    return popUpButton;
+    return (NSPopUpButton *)first;
 }
 
 #pragma mark - Group rows

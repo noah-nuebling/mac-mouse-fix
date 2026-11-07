@@ -570,9 +570,12 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
         }
         
         let openPopupRow = toHighlightIndexSet.first!
-        let popUpButton = RemapTableUtility.getPopUpButton(atRow: UInt(openPopupRow), from: self.tableView)
         let delay = existingIndexes.count == 1 ? 0.0 : 0.2
-        popUpButton.perform(#selector(NSButton.performClick(_:)), with: nil as Any?, afterDelay: delay)
+        if let popUpButton = RemapTableUtility.getPopUpButton(atRow: UInt(openPopupRow), from: self.tableView) {
+            popUpButton.perform(#selector(NSButton.performClick(_:)), with: nil as Any?, afterDelay: delay)
+        } else {
+            DDLogWarn("RemapTableController.addRow: row \(openPopupRow) has no popup button (probably showing key capture field) – skipping popup open")
+        }
         
         let capturedButtonsAfter = RemapTableUtility.getCapturedButtonsAndExcludeButtonsThatAreOnlyCaptured(byModifier: false)
         CaptureToasts.showButtonCaptureToastWith(before: capturedButtonsBefore, after: capturedButtonsAfter)

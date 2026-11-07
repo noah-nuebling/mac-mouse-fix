@@ -31,7 +31,7 @@
         return;
     }
 
-    DDLogInfo("Enabling keyCaptureMode");
+    DDLogInfo(@"Enabling keyCaptureMode");
     static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
         [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: keyCaptureModeCallback];
     });
@@ -60,7 +60,7 @@ void keyCaptureModeCallback(MFEventType eventType, CGEventRef *eventPtr) {
     
     if (type == kCGEventKeyDown) {
         
-        CGKeyCode keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+        CGKeyCode keyCode = (CGKeyCode)CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
         
         if (keyCaptureModePayloadIsValidWithKeyCode(keyCode, flags)) {
             
@@ -69,7 +69,7 @@ void keyCaptureModeCallback(MFEventType eventType, CGEventRef *eventPtr) {
                 @"flags": @(flags),
             };
             
-            [MFMessagePort sendMessage: @"keyCaptureModeFeedback" withPayload: payload waitForReply: NO];
+            (void)[MFMessagePort sendMessage: @"keyCaptureModeFeedback" withPayload: payload waitForReply: NO];
             [KeyCaptureMode disable];
         }
         
@@ -77,18 +77,18 @@ void keyCaptureModeCallback(MFEventType eventType, CGEventRef *eventPtr) {
         
         NSEvent *e = [NSEvent eventWithCGEvent:event];
         
-        MFSystemDefinedEventType type = (MFSystemDefinedEventType)(e.data1 >> 16);
+        MFSystemDefinedEventType sysType = (MFSystemDefinedEventType)(e.data1 >> 16);
         
-        if (keyCaptureModePayloadIsValidWithEvent(e, flags, type)) {
+        if (keyCaptureModePayloadIsValidWithEvent(e, flags, sysType)) {
             
-            DDLogDebug("Capturing system event with data1: %ld, data2: %ld", e.data1, e.data2);
+            DDLogDebug(@"Capturing system event with data1: %ld, data2: %ld", e.data1, e.data2);
             
             payload = @{
-                @"systemEventType": @(type),
+                @"systemEventType": @(sysType),
                 @"flags": @(flags),
             };
             
-            [MFMessagePort sendMessage: @"keyCaptureModeFeedbackWithSystemEvent" withPayload: payload waitForReply: NO];
+            (void)[MFMessagePort sendMessage: @"keyCaptureModeFeedbackWithSystemEvent" withPayload: payload waitForReply: NO];
             [KeyCaptureMode disable];
         }
         
@@ -96,10 +96,10 @@ void keyCaptureModeCallback(MFEventType eventType, CGEventRef *eventPtr) {
     
     *eventPtr = NULL;
 }
+
 static bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
     return true; /// keyCode 0 is 'A'
 }
-
 static bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSystemDefinedEventType type) {
 
     BOOL isSub8 = (e.subtype == 8); /// 8 -> Maybe `NX_SUBTYPE_AUX_CONTROL_BUTTONS` says Opus 5.5

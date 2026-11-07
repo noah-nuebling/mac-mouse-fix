@@ -669,7 +669,13 @@ static NSMenuItem * _Nullable findMenuItemWithEffect(NSMenu *menu, NSDictionary 
             
             NSInteger rowBaseDataModel = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:row withGroupedDataModel:self.groupedDataModel];
             
-            self.dataModel[rowBaseDataModel][kMFRemapsKeyEffect] = newEffectDict;
+            NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
+            if (rowBaseDataModel >= 0 && rowBaseDataModel < (NSInteger)mutableDataModel.count) {
+                NSMutableDictionary *mutableRowDict = [mutableDataModel[rowBaseDataModel] mutableCopy];
+                mutableRowDict[kMFRemapsKeyEffect] = newEffectDict;
+                mutableDataModel[rowBaseDataModel] = mutableRowDict;
+                self.controller.dataModel = mutableDataModel;
+            }
             [self.tableView reloadData];
             [self.controller updateTableAndWriteToConfig:nil];
             
@@ -779,7 +785,9 @@ static NSMenuItem * _Nullable findMenuItemWithEffect(NSMenu *menu, NSDictionary 
             
             /// Remove last button from precondition
             [buttonPressSequence removeLastObject];
-            rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons] = buttonPressSequence;
+            NSMutableDictionary *mutablePrecond = [rowDict[kMFRemapsKeyModificationPrecondition] mutableCopy];
+            mutablePrecond[kMFModificationPreconditionKeyButtons] = buttonPressSequence;
+            ((NSMutableDictionary *)rowDict)[kMFRemapsKeyModificationPrecondition] = mutablePrecond;
             
         } else if (rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard] != nil) {
             
