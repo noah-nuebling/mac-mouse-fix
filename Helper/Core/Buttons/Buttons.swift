@@ -20,6 +20,7 @@ import Cocoa
     @objc static var useButtonModifiers = false
     
     /// Vars that we only update once per clickCycle
+    static var remaps = NSDictionary()
     static var modifiers = NSDictionary()
     static var modifications = NSDictionary()
     static var maxClickLevel: Int = -1
@@ -48,31 +49,33 @@ import Cocoa
             /// Init
         if !isInitialized { coolInitialize() }
         
-        /// Get remaps
-        /// Accessing the dict like this is super slow. Casting to NSDictionary and using NSDictionary API to access it's values might fix that. See https://stackoverflow.com/questions/57555444/accessing-object-c-nsdictionary-values-in-swift-is-slow
-        let remaps = Remap.remaps
-        
         /// Update stuff when clickCycle starts
         
         let clickCycleIsActive = clickCycle.isActiveFor(device: device.uniqueID(), button: button)
         if mouseDown && !clickCycleIsActive {
             
-            /// Update active device
+            /// Update active device and app overrides under pointer
             HelperState.shared.updateActiveDevice(event: event)
+            if !Remap.addModeIsEnabled {
+                _ = Config.shared.loadOverridesForAppUnderMousePointerWithEvent(event)
+            }
             
             /// Update modifications
-            let remaps = Remap.remaps /// Why aren't we reusing the remaps from above?
+            self.remaps = Remap.remaps
             self.modifiers = Modifiers.modifiers(with: event)
             self.modifications = Remap.modifications(withModifiers: modifiers) ?? NSDictionary()
             
             /// Get max clickLevel
             self.maxClickLevel = 0
             if mouseDown {
-                self.maxClickLevel = RemapsAnalyzer.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
+                self.maxClickLevel = RemapsAnalyzer.maxLevel(forButton: button, remaps: self.remaps, modificationsActingOnThisButton: modifications)
                 DDLogInfo("[SMARTSHIFT] Buttons.swift handleInput - calculated maxClickLevel: \(self.maxClickLevel), modifications: \(self.modifications)")
             }
             
+        } else if self.remaps.count == 0 {
+            self.remaps = Remap.remaps
         }
+        let remaps = self.remaps
         
         /// Decide passthrough
         if self.maxClickLevel == 0 {

@@ -185,7 +185,12 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     }
     
     @objc public func loadDataModelFromConfig() {
-        self.dataModel = Config.shared.config[kMFConfigKeyRemaps] as? [Any] ?? []
+        if let rawRemaps = Config.configForKeyPath(kMFConfigKeyRemaps),
+           let copied = SharedUtility.deepCopy(of: rawRemaps) as? [Any] {
+            self.dataModel = copied
+        } else {
+            self.dataModel = []
+        }
     }
     
     @objc public func writeDataModelToConfig() {

@@ -447,17 +447,18 @@ class TabViewController: NSTabViewController {
         // into AppOverrideViewController.containerView (a private container we own).
         
         if identifier == "apps" {
-            // Entering Apps Tab: embed sub-view into AppOverrideViewController.containerView
+            // Entering Apps Tab: reload app selector first so selectedBundleID is resolved
             self.appOverrideViewController?.appSelectorBar?.reloadData()
-            self.appOverrideViewController?.embedViewForCurrentSegment()
             
-            // Activate per-app config
+            // Activate per-app config before embedding so RemapTableController loads the app's remaps and sizes properly
             if let selectedBid = self.appOverrideViewController?.appSelectorBar?.selectedBundleID {
                 Config.setUIAppOverrideBundleID(selectedBid)
             } else {
                 Config.setUIAppOverrideBundleID(nil)
             }
             ReactiveConfig.shared.react(newConfig: Config.shared.config)
+            
+            self.appOverrideViewController?.embedViewForCurrentSegment()
         } else {
             // Leaving Apps Tab (or switching between other tabs):
             // Return buttonsVC/scrollingVC views to AppOverrideViewController.containerView cleanup

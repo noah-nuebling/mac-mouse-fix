@@ -28,7 +28,19 @@ public class Config: NSObject {
     private static var _uiAppOverrideBundleID: String?
     
     @objc public static func setUIAppOverrideBundleID(_ bundleID: String?) {
+        let changed = _uiAppOverrideBundleID != bundleID
         _uiAppOverrideBundleID = bundleID
+        #if IS_MAIN_APP
+        if changed {
+            if Thread.isMainThread {
+                MainAppState.shared.remapTableController?.reloadAll()
+            } else {
+                DispatchQueue.main.async {
+                    MainAppState.shared.remapTableController?.reloadAll()
+                }
+            }
+        }
+        #endif
     }
     
     @objc public static func uiAppOverrideBundleID() -> String? {
@@ -63,6 +75,23 @@ public class Config: NSObject {
     
     @objc public static func load_Manual() {
         _ = shared
+        #if IS_HELPER
+        if shared.bundleIDOfAppWhichCausesAppOverride == nil {
+            shared.bundleIDOfAppWhichCausesAppOverride = Config.appOverrideIdentifierForRunningApplication(NSWorkspace.shared.frontmostApplication) ?? ""
+        }
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { notification in
+            guard !Remap.addModeIsEnabled else { return }
+            let app = (notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication) ?? NSWorkspace.shared.frontmostApplication
+            let appIdentifier = Config.appOverrideIdentifierForRunningApplication(app) ?? ""
+            if shared.bundleIDOfAppWhichCausesAppOverride != appIdentifier {
+                DDLogInfo("[Config.swift] Frontmost app activated: '\(appIdentifier)' (prev: '\(shared.bundleIDOfAppWhichCausesAppOverride ?? "")')")
+                if shared.loadOverridesForApp(appIdentifier) {
+                    Remap.reload()
+                    ScrollConfig.reload()
+                }
+            }
+        }
+        #endif
         loadFileAndUpdateStates()
         #if IS_HELPER
         shared.setupFSEventStreamCallback()
@@ -152,7 +181,9 @@ public class Config: NSObject {
         #endif
         
         #if IS_HELPER
-        let currentAppIdentifier = shared.bundleIDOfAppWhichCausesAppOverride ?? ""
+        let currentAppIdentifier = shared.bundleIDOfAppWhichCausesAppOverride
+            ?? Config.appOverrideIdentifierForRunningApplication(NSWorkspace.shared.frontmostApplication)
+            ?? ""
         _ = shared.loadOverridesForApp(currentAppIdentifier, force: true)
         
         Remap.reload()
@@ -166,6 +197,9 @@ public class Config: NSObject {
     #if IS_HELPER
     @objc public func loadOverridesForAppUnderMousePointerWithEvent(_ event: CGEvent) -> Bool {
         assert(runningHelper())
+        if Remap.addModeIsEnabled {
+            return false
+        }
         
         guard let app = HelperUtility.appUnderMousePointer(with: event) else { return false }
         let appIdentifier = Config.appOverrideIdentifierForRunningApplication(app) ?? ""
@@ -178,7 +212,12 @@ public class Config: NSObject {
         
         if self.bundleIDOfAppWhichCausesAppOverride != appIdentifier {
             DDLogInfo("[Config.swift] Overrides changing from '\(self.bundleIDOfAppWhichCausesAppOverride ?? "")' to '\(appIdentifier)'")
-            return self.loadOverridesForApp(appIdentifier)
+            let didChange = self.loadOverridesForApp(appIdentifier)
+            if didChange {
+                Remap.reload()
+                ScrollConfig.reload()
+            }
+            return didChange
         }
         
         return false

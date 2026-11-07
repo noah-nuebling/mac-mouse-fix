@@ -428,8 +428,7 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
         return kNativeSideButtonTIDs.contains(tid) || kNativeSideButtonCIDs.contains(cid)
     }
     
-    private func isButtonRemapped(_ buttonNumber: Int) -> Bool {
-        guard let remapsTable = config(kMFConfigKeyRemaps) as? NSArray else { return false }
+    private func isButtonInRemapsTable(_ buttonNumber: Int, remapsTable: NSArray) -> Bool {
         for entry in remapsTable {
             guard let dict = entry as? NSDictionary else { continue }
             let triggerGeneric = dict[kMFRemapsKeyTrigger]
@@ -445,6 +444,28 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                    let lastButtonPress = buttonSequence.lastObject as? NSDictionary,
                    let buttonNum = lastButtonPress[kMFButtonModificationPreconditionKeyButtonNumber] as? NSNumber,
                    buttonNum.intValue == buttonNumber {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    private func isButtonRemapped(_ buttonNumber: Int) -> Bool {
+        if let remapsTable = config(kMFConfigKeyRemaps) as? NSArray,
+           isButtonInRemapsTable(buttonNumber, remapsTable: remapsTable) {
+            return true
+        }
+        if let globalTable = Config.shared.config[kMFConfigKeyRemaps] as? NSArray,
+           isButtonInRemapsTable(buttonNumber, remapsTable: globalTable) {
+            return true
+        }
+        if let appOverrides = Config.shared.config[kMFConfigKeyAppOverrides] as? NSDictionary {
+            for (_, appVal) in appOverrides {
+                if let appDict = appVal as? NSDictionary,
+                   let rootDict = appDict["Root"] as? NSDictionary,
+                   let appRemaps = rootDict[kMFConfigKeyRemaps] as? NSArray,
+                   isButtonInRemapsTable(buttonNumber, remapsTable: appRemaps) {
                     return true
                 }
             }

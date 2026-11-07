@@ -38,25 +38,26 @@ static NSMutableDictionary *_swizzleCache = nil;
 + (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers {
     
     /// Cache is reset whenever remaps change
-    
-    if (_swizzleCache == nil) {
-        _swizzleCache = [NSMutableDictionary dictionary];
-    }
-    
-    NSDictionary *cached = _swizzleCache[modifiers];
-    
-    if (cached) {
-        return cached;
-    } else {
-        
-        DDLogDebug(@"Recalculating modifications for modifiers: %@", modifiers);
-        
-        NSDictionary *remaps = _remaps ?: @{};
-        NSDictionary *new = [RemapSwizzler swizzleRemaps:remaps activeModifiers:modifiers];
-        if (new != nil) {
-            _swizzleCache[modifiers] = new;
+    @synchronized (self) {
+        if (_swizzleCache == nil) {
+            _swizzleCache = [NSMutableDictionary dictionary];
         }
-        return new ?: @{};
+        
+        NSDictionary *cached = _swizzleCache[modifiers];
+        
+        if (cached) {
+            return cached;
+        } else {
+            
+            DDLogDebug(@"Recalculating modifications for modifiers: %@", modifiers);
+            
+            NSDictionary *remaps = _remaps ?: @{};
+            NSDictionary *new = [RemapSwizzler swizzleRemaps:remaps activeModifiers:modifiers];
+            if (new != nil) {
+                _swizzleCache[modifiers] = new;
+            }
+            return new ?: @{};
+        }
     }
 }
 
@@ -66,7 +67,9 @@ static NSMutableDictionary *_swizzleCache = nil;
 static NSDictionary *_remaps;
 
 + (NSDictionary *)remaps {
-    return _remaps ?: @{};
+    @synchronized (self) {
+        return _remaps ?: @{};
+    }
 }
 
 + (void)setRemaps:(NSDictionary *)remapsDict {
@@ -74,7 +77,14 @@ static NSDictionary *_remaps;
     /// This method is private. It's used by `reload` and `enableAddMode`.
     
     /// Compare
-    BOOL isEqual = [_remaps isEqualToDictionary:remapsDict];
+    BOOL isEqual = NO;
+    @synchronized (self) {
+        isEqual = [_remaps isEqualToDictionary:remapsDict];
+        if (!isEqual) {
+            _remaps = remapsDict;
+            [_swizzleCache removeAllObjects];
+        }
+    }
     
     if (isEqual) {
         
@@ -83,20 +93,14 @@ static NSDictionary *_remaps;
         
     } else {
         
-        /// Set
-        _remaps = remapsDict;
-        
-        /// Reset cache
-        [_swizzleCache removeAllObjects];
-        
         /// Notify
 //        [ReactiveRemaps.shared handleRemapsDidChange];
-        SwitchMaster_RemapsChanged(_remaps);
+        SwitchMaster_RemapsChanged(remapsDict);
         [RemapsAnalyzer reload];
 //        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         
         /// Log
-        DDLogDebug(@"Set remaps to: %@", _remaps);
+        DDLogDebug(@"Set remaps to: %@", remapsDict);
     }
 }
 
