@@ -24,7 +24,12 @@
 ///  When the user records keyboard shortcuts in the mainApp we wanted to use eventTaps for that. I think otherwise certain keys weren't captured. Not sure though. The helper already has permissions to use eventTaps so the mainApp delegates the capturing to the helper.
 
 + (void)enable {
-    assertRunLoop(IOThread.runLoop);
+    if (CFRunLoopGetCurrent() != IOThread.runLoop) {
+        mfrun(IOThread.runLoop, ^{
+            [self enable];
+        });
+        return;
+    }
 
     DDLogInfo("Enabling keyCaptureMode");
     static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
@@ -34,7 +39,12 @@
 }
 
 + (void)disable {
-    assertRunLoop(IOThread.runLoop);
+    if (CFRunLoopGetCurrent() != IOThread.runLoop) {
+        mfrun(IOThread.runLoop, ^{
+            [self disable];
+        });
+        return;
+    }
     [MFEventTap enable: false forListener: kListenerID];
 }
 

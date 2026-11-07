@@ -15,6 +15,8 @@ public typealias CancelHandler = () -> Void
 @objc(KeyCaptureView)
 public class KeyCaptureView: NSTextView, NSTextViewDelegate {
     
+    private static weak var activeCaptureView: KeyCaptureView?
+    
     private var _isCapturing: Bool = false
     private var _captureHandler: CaptureHandler?
     private var _cancelHandler: CancelHandler?
@@ -61,6 +63,11 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
     }
     
     @objc public static func handleKeyCaptureModeFeedback(withPayload payload: [AnyHashable: Any], isSystemDefinedEvent isSystem: Bool) {
+        if let active = activeCaptureView {
+            active.handleKeyCaptureModeFeedback(withPayload: payload, isSystemDefinedEvent: isSystem)
+            return
+        }
+        
         guard let remapsTable = MainAppState.shared.remapTable else { return }
         let effectColumn = remapsTable.column(withIdentifier: NSUserInterfaceItemIdentifier("effect"))
         if effectColumn == -1 { return }
@@ -83,6 +90,7 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
     }
     
     @objc public func handleKeyCaptureModeFeedback(withPayload payload: [AnyHashable: Any], isSystemDefinedEvent isSystem: Bool) {
+        guard _isCapturing else { return }
         _isCapturing = false
         
         var keyCode: CGKeyCode = CGKeyCode(UInt16.max)
@@ -105,8 +113,12 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
             }
         }
         
+        let handler = _captureHandler
+        _captureHandler = nil
+        _cancelHandler = nil
+        
         MainAppState.shared.window?.makeFirstResponder(nil)
-        _captureHandler?(keyCode, type, flags)
+        handler?(keyCode, type, flags)
     }
     
     public override func becomeFirstResponder() -> Bool {
@@ -114,6 +126,7 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
         let superAccepts = super.becomeFirstResponder()
         DDLogDebug("superAccepts: \(superAccepts)")
         
+        KeyCaptureView.activeCaptureView = self
         _isCapturing = true
         
         if _windowResignObserver == nil {
@@ -142,7 +155,21 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
                         self.drawEmptyAppearance()
                     }
                 } else if event.type == .keyDown {
-                    // Ignore
+                    let hasModifiers = !e.flags.intersection([.maskCommand, .maskControl, .maskAlternate, .maskShift]).isEmpty
+                    // If Escape without modifiers is pressed, cancel recording
+                    if event.keyCode == 53 && !hasModifiers {
+                        MainAppState.shared.window?.makeFirstResponder(nil)
+                        return nil
+                    }
+                    
+                    guard self._isCapturing else { return nil }
+                    let keyCode = CGKeyCode(event.keyCode)
+                    let flags = e.flags
+                    self.handleKeyCaptureModeFeedback(withPayload: [
+                        "keyCode": NSNumber(value: keyCode),
+                        "flags": NSNumber(value: flags.rawValue)
+                    ], isSystemDefinedEvent: false)
+                    return nil
                 } else if event.type == .leftMouseDown {
                     MainAppState.shared.window?.makeFirstResponder(nil)
                 }
@@ -159,6 +186,10 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
         let superResigns = super.resignFirstResponder()
         DDLogDebug("superResigns: \(superResigns)")
         
+        if KeyCaptureView.activeCaptureView === self {
+            KeyCaptureView.activeCaptureView = nil
+        }
+        
         _ = MFMessagePort.sendMessage("disableKeyCaptureMode", withPayload: nil, waitForReply: false)
         if let monitor = _localEventMonitor {
             NSEvent.removeMonitor(monitor)
@@ -168,7 +199,10 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
             NotificationCenter.default.removeObserver(obs)
             _windowResignObserver = nil
         }
-        _cancelHandler?()
+        let cancel = _cancelHandler
+        _captureHandler = nil
+        _cancelHandler = nil
+        cancel?()
         return true
     }
     
