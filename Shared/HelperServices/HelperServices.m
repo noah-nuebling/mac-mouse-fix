@@ -177,6 +177,9 @@
 
                     /// Unregister pre-SM helper from launchd
                     removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+                    if (!enable || ![self helperIsActive_SM]) {
+                        removeServiceWithIdentifier(kMFBundleIDHelper);
+                    }
                 });
 
                 if (enable) {
