@@ -19,6 +19,8 @@
 #import <CoreVideo/CoreVideo.h>
 #import "objc/runtime.h"
 #import "SharedMacros.h"
+#import "MFEventTap.h"
+#import "Logging.h"
 
 /// Import other stuff so we don't have to import it in so many places
 #import "MFDefer.h"
@@ -40,39 +42,56 @@ NS_INLINE NSString *_Nullable MFNSErrorBasicGetReason(NSError *_Nonnull error) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void));
-bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void));
+NSString *MFLocale(void);
+NSString *MFLanguageCode(void);
+
 CFTimeInterval machTimeToSeconds(uint64_t tsMach);
 uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
-NSException * _Nullable tryCatch(void (^tryBlock)(void));
-void *offsetPointer(void *ptr, int byteOffset);
-bool runningPreRelease(void);
+
 bool runningMainApp(void);
 bool runningHelper(void);
-//bool runningAccomplice(void);
+
+//NSException * _Nullable tryCatch(void (^tryBlock)(void));
+//void *offsetPointer(void *ptr, int byteOffset);
 
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name;
 + (NSString *)dumpClassInfo:(id)obj;
+
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments;
-+ (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;
-+ (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream;
+
+//+ (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;
+//+ (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream;
+
 + (NSPoint)quartzToCocoaScreenSpace_Point:(CGPoint)quartzPoint;
 + (CGPoint)cocoaToQuartzScreenSpace_Point:(NSPoint)cocoaPoint;
 + (NSRect)quartzToCocoaScreenSpace:(CGRect)quartzFrame;
 + (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame;
+
 + (id)deepMutableCopyOf:(id)object;
-+ (id _Nullable)deepCopyOf:(id _Nullable)object;
-+ (id<NSCoding> _Nullable)deepCopyOf:(id<NSCoding> _Nonnull)original error:(NSError *_Nullable *_Nullable)error;
-+ (NSString *)callerInfo;
-+ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
+
 + (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 + (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button;
-+ (NSString *)currentDispatchQueueDescription;
-+ (void)printInvocationCountWithId:(NSString *)strId;
++ (id _Nullable)deepCopyOf:(id _Nullable)object;
++ (id<NSCoding> _Nullable)deepCopyOf:(id<NSCoding> _Nonnull)original error:(NSError *_Nullable *_Nullable)error;
+
++ (NSString *)callerInfo;
+
++ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
+
+MFEventType     MFEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber);
+CGEventType     CGEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber, bool mouseDown);
+CGMouseButton   CGMouseButton_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber);
+
+//+ (NSString *)currentDispatchQueueDescription;
+//+ (void)printInvocationCountWithId:(NSString *)strId;
+
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
-+ (void)resetDispatchGroupCount:(dispatch_group_t)group;
-NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount);
+
+//+ (void)resetDispatchGroupCount:(dispatch_group_t)group;
+
+//NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount);
+NSMutableString *bitflagsDescription(uint64_t flags, NSString *(^descriptionForBit)(uint64_t bitflag));
 
 NS_ASSUME_NONNULL_END
 

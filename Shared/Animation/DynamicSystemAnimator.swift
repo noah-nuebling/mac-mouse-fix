@@ -135,7 +135,7 @@ import Foundation
     
     @objc func start(distance: Double, callback: @escaping UIAnimatorCallback, onComplete: (() -> ())? = nil) {
         
-        queue.async {
+        queue.async { [self] in
             
             /// Store stopCallback
             self.stopCallback = onComplete

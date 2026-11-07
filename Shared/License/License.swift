@@ -89,7 +89,7 @@ import Cocoa
                         }
                         
                         /// Lock helper
-                        SwitchMaster.shared.lockDown()
+                        SwitchMaster.lockDown()
                         #endif
                         
                     }

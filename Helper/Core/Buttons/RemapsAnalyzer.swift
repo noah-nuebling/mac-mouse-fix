@@ -146,4 +146,39 @@ import Foundation
         }
         return false
     }
+    
+    // MARK: - For SwitchMaster
+    
+    @objc static func eventsModifiedByModifications(_ modifications: NSDictionary?) -> MFEventType {
+        guard let modifications = modifications else { return 0 }
+        var result: MFEventType = 0
+        for (key, _) in modifications {
+            if let num = key as? NSNumber {
+                result |= MFEventType_From_MFMouseButtonNumber(MFMouseButtonNumber(num.uint32Value))
+            }
+        }
+        if modifications.object(forKey: kMFTriggerScroll) != nil {
+            result |= MFEventType(kMFEventType_ScrollWheel)
+        }
+        if modifications.object(forKey: kMFTriggerDrag) != nil {
+            result |= MFEventType(kMFEventType_Sensor)
+        }
+        return result
+    }
+    
+    @objc static func eventsInModifiers(_ modifiers: NSDictionary?) -> MFEventType {
+        guard let modifiers = modifiers else { return 0 }
+        var result: MFEventType = 0
+        if modifiers.object(forKey: kMFModificationPreconditionKeyKeyboard) != nil {
+            result |= MFEventType(kMFEventType_KeyboardModifier)
+        }
+        if let buttonModifiers = modifiers.object(forKey: kMFModificationPreconditionKeyButtons) as? [NSDictionary] {
+            for btnDict in buttonModifiers {
+                if let num = btnDict.object(forKey: kMFButtonModificationPreconditionKeyButtonNumber) as? NSNumber {
+                    result |= MFEventType_From_MFMouseButtonNumber(MFMouseButtonNumber(num.uint32Value))
+                }
+            }
+        }
+        return result
+    }
 }

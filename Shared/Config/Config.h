@@ -10,6 +10,21 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#if IS_HELPER
+    #import "Threads.h"
+#endif
+
+/// RunLoop
+static inline CFRunLoopRef configRunLoop(void) CF_RETURNS_NOT_RETAINED {
+    #if IS_HELPER
+        return IOThread.runLoop;
+    #elif IS_MAIN_APP
+        return CFRunLoopGetMain();
+    #else
+        return CFRunLoopGetMain();
+    #endif
+}
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class Config;

@@ -14,7 +14,6 @@ import Cocoa
     private static var _generalConfigRaw: NSDictionary? = nil
     
     @objc static func reload() {
-        
         /// Guard equal
         let new = config("General") as! NSDictionary?
         
@@ -27,7 +26,7 @@ import Cocoa
         
         /// Notify
         if let new = new {
-            SwitchMaster.shared.generalConfigChanged(generalConfig: new)
+            SwitchMaster.generalConfigChanged(new)
         } else {
             assert(false)
         }

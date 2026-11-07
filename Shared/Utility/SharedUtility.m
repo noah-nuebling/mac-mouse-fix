@@ -9,94 +9,83 @@
 
 #import "SharedUtility.h"
 #import "Locator.h"
-#import "Config.h"
+//#import "Config.h"
 #import "SharedUtility.h"
-
-#if IS_HELPER
-#import "Mac_Mouse_Fix_Helper-Swift.h"
-#else
-#import "Mac_Mouse_Fix-Swift.h"
-#endif
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
 #import "Logging.h"
-#import "MFSemaphore.h"
+#import "MFGate.h"
 #import "SharedMacros.h"
 
 @implementation SharedUtility
 
-#pragma mark - runLoops
+#pragma mark - MFLocales
 
-void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void)) {
+/// TODO: Why is this in SharedUtility.m, and not in Localization.m / LocalizationUtility.m? [Feb 2026]
+
+NSString *MFLocale(void) {
+
+    /// Return the app's current locale code
+    /// E.g. `en`, `de`, `pt-BR`, `fr`, `zh-Hans`, ...
+    ///
+    /// These codes are also found:
+    ///     - In the .pbxproj (under `knownRegions`)
+    ///     - In the .xcstrings files (under `localizations`)
+    ///     - In our Python scripts that localize the website and markdown-files [Feb 2026]
+    ///
+    /// Alternative APIs:
+    ///     These return the *System Settings'* locale (not the *app's* locale):
+    ///         - `[NSLocale currentLocale]`     (aka `Locale.currentLocale` in Swift),
+    ///         - `[NSLocale preferredLocale]` (private)
+    ///         (We're using these deliberately in the `LicenseUtility.currentRegionCode`)
+    ///     - These return the *app's* locale:
+    ///         - `[[NSBundle mainBundle] preferredLocalizations]` (Currently using this [Feb 2026])
+    ///         - `[NSLocale preferredLanguages]`                                       (Not sure what the difference is [Feb 2026])
+    ///         - `[[[NSUserDefaults standardUserDefaults] objectForKey: @"AppleLanguages"] firstObject]` (Not sure what the difference is [Feb 2026])
+    ///     - See: https://stackoverflow.com/questions/1522210/nslocale-currentlocale-always-returns-en-us-not-users-current-language
+    ///         - See this (about `@"AppleLanguages"`): https://developer.apple.com/library/archive/qa/qa1391/_index.html
+    ///
+    /// Usage tip:
+    ///     The resulting strings can be passed as 'locale identifiers' to `[NSLocale localeWithLocaleIdentifier:]`, `[NSLocale componentsFromLocaleIdentifier:]` and related APIs.
+    ///
+    /// Current usage pattern: [Feb 2026]
+    ///     - When we need to get the **app's locale/language**, we always use `MFLocale()` or (`MFLanguageCode()`)
+    ///     - When we need to get the **system locale** (for freeCountry mechanism), we use `NSLocale.currentLocale` (aka `Locale.current` in Swift)
+    ///     - We use `NSLocale.preferredLocale` (private) in one instance, IIRC because we were recreating Apple framework disassembly, and they used that – not totally sure how this behaves.
     
-    /// Usage:
-    ///     `modes` arg:
-    ///     - Pass nil to fall back to the default value.
-    ///     - You can also pass a single NSRunLoopMode (instead of an array of NSRunLoopModes)
-    
-    /// Meta-Discussion: Which API to use to perform stuff on a different runLoop?
-    ///     - `dispatch_async()`? Maybe, but only works on the mainRunLoop (?). Also I'd like to use the lower-level APIs directly. It also doesn't let us control the runLoopMode.
-    ///     - `-[NSRunLoop performInModes:block:]`? Maybe, but the docs say NSRunLoop APIs aren't thread-safe.
-    ///         Sidenote: Uses CFRunLoopPerformBlock() under-the-hood.
-    ///         Sidenote: The simpler variant -[NSRunLoop performBlock:] only runs in the default mode based on my assembly-investigations.
-    ///     - `-[NSObject performSelector:onThread:...]`? Should work, is flexible (can be delayed, and canceled just like NSTimer, can also be awaited like `dispatch_sync`) but the API is cumbersome for simple stuff. - maybe we could wrap it?
-    ///     - `CFRunLoopPerformBlock()`? >> Yes sounds good. <<
-    ///
-    /// Sidenote: NSRunLoop vs CFRunLoop:
-    ///     They are not the same. NSRunLoop is a higher-level wrapper around CFRunLoop. Every NSThread has an NSRunLoop. NSRunLoop APIs are generally not thread safe (according to the docs), while CFRunLoop APIs seem to be.
-    ///
-    /// Discussion: Which runLoop mode(s) to use?
-    ///     In MMF, we're usually processing user input. When we run that stuff on the mainThread, we want it to have the highest priority on the thread to maximize responsiveness.
-    ///     Using `NSRunLoopCommonModes`, our workload runs if the runLoop is in default, modal, or eventTracking mode (by default) (Source: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16)
-    ///     To run our workload with higher priority, we can run our workload in *all modes*.
-    ///     To run our workload with *even higher* priority, we could run the runLoop in a custom mode. But I'm not sure how to do that [Jan 2025]
-    ///
-    /// Thread-safety:
-    ///     Should be pretty thread-safe as far as I can tell.
-    ///
-    /// Future plans:
-    ///     TODO: (Over time) Replace uses of `dispatch_async()` with MFCFRunLoopPerform().
-    ///     (Also (over time): remove DispatchQueues in favour of NSThread and NSRunLoop – so we can reduce thread count and gain more control over threading behavior.)
-    
-    if (modes && modes.count == 0) {
-        assert(false && "modes should not be an empty array. Pass nil for the default value.");
-        modes = nil;
+    NSString *result = [[[NSBundle mainBundle] preferredLocalizations] firstObject]; /// I've only ever seen this contain one entry [Feb 2026]
+    if (!result) {
+        assert(false); /// Don't think this can happen [Feb 2026]
+        result = @"en";
     }
-    if (!modes) {
-        if ((1))    modes = (id)NSRunLoopCommonModes;                       /// Using CommonModes should grant our workload pretty high priorty || Note that we're passing the mode directly (instead of passing an array of modes) – that also works.
-        else        modes = CFBridgingRelease(CFRunLoopCopyAllModes(rl));   /// Passing all modes should grant our workload very high priority. Could this lead to unforseen problems? ... Not using this for now out of fear and terror. Ahhhhh.
-    }
-    CFRunLoopPerformBlock(rl, (__bridge void *)modes, workload);
-    CFRunLoopWakeUp(rl);
+    return result;
 }
 
-bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void)) {
-    
-    /// Variant of MFCFRunLoopPerform which waits for the workload to complete (or does the workload immediately if `rl` is the current runLoop.)
-    ///     Sort of an analog to `dispatch_sync()` (if `MFCFRunLoopPerform()` was `dispatch_async()`)
-    ///     Returns `true` if waiting timed out. `false` otherwise.
-    ///     Pass `timeout <= 0` to disable the timeout.
-    ///
-    /// Caution: If you don't pass a timeout, this can lead to deadlocks!
-    ///     (Deadlocks can happen if you're waiting for a thread which (indirectly) waits for you. As long as `workload` doesn't wait for anything/acquire any locks, there can't be deadlocks.)
-    
-    bool didTimeOut = false;
-    
-    if (CFEqual(rl, CFRunLoopGetCurrent())) {
-        workload();
-        return didTimeOut;
+bool runningMainApp(void) {
+    #if IS_HELPER
+        return false;
+    #else
+        return true;
+    #endif
+}
+
+bool runningHelper(void) {
+    #if IS_HELPER
+        return true;
+    #else
+        return false;
+    #endif
+}
+
+NSString *MFLanguageCode(void) {
+    /// Returns just the first part of the `MFLocale()` e.g. zh for zh-Hans, or pt for pt-Br
+    ///     ... This is pretty unnecessary – we should probably stop using this and just use MFLocale() directly. [Feb 2026]
+    auto result = [[NSLocale componentsFromLocaleIdentifier: MFLocale()] objectForKey: NSLocaleLanguageCode];
+    if (!result) {
+        assert(false); /// Don't think this can happen [Feb 2026]
+        result = @"en";
     }
-    
-    NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow: timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
-    
-    MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits: 0];
-    MFCFRunLoopPerform(rl, modes, ^{
-        workload();
-        [semaphore releaseUnit];
-    });
-    didTimeOut = [semaphore acquireUnit: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?
-    
-    return didTimeOut;
+    return (id)result;
 }
 
 #pragma mark - Time
@@ -159,243 +148,169 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
 #pragma mark - Use private classes
 
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name {
-    
+
     /// Look through all ivars and properties of `obj` and return the first value with name `name`
     /// -> Actually this only looks at ivars, and ignores values that aren't objects. Because that's all we need it for right now.
     /// -> We use this for changing tabs programmatically in `coolSelectTab(identifier: String)`, so don't break it!
-    
-    id result;
-    id __strong * resultPtr = &result;
-    
-    iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
-        
-        NSString *ivarName = @(ivar_getName(ivar) ?: "");
-        
-        if ([name isEqual:ivarName]) {
-            
-            const char *typeEncoding = ivar_getTypeEncoding(ivar);
-            BOOL isObject = typeEncoding[0] == '@';
-            if (!isObject) return; /// Ignore everything except objects, because we don't need more rn
-            
-            id value = (id)object_getIvar(obj, ivar);
-            if (value == nil) return;
-            
-            *resultPtr = value;
-            
-            *stop = YES;
-        }
-    });
-    
-    return result;
-}
 
-#pragma mark - Investigate private classes
+    #if 1 /// [Oct 2026] Simplification. Neither me nor Opus 5.5 couldn't find any reason we did it manually.
+        @try { return [obj valueForKey: name]; }
+        @catch (id exception) { return nil; } /// Match historical `getPrivateValueOf:forName:` behavior if ivar doesn't exist. Not sure it matters. [Oct 2026]
+    #else
+        id result;
+        id __strong * resultPtr = &result;
 
-+ (NSString *)dumpClassInfo:(id)obj {
-    /// See this article to understand type encodings: https://nshipster.com/type-encodings/
-    
-    Class class = [obj class];
-    
-    /// Name
-    const char *className = class_getName(class);
-    
-    /// Properties
-    NSMutableArray *properties = [NSMutableArray array];
-    
-    iteratePropertiesOn(obj, ^(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop) {
-        [properties addObject:name];
-    });
+        iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
 
-    /// Ivars
-    NSMutableArray *ivars = [NSMutableArray array];
-    
-    iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
-        
-        NSString *name = [@(ivar_getName(ivar) ?: "") copy];
-        [ivars addObject:name];
-    });
+            NSString *ivarName = @(ivar_getName(ivar) ?: "");
 
-    /// Methods
-    NSMutableArray *methods = [NSMutableArray array];
-    iterateMethodsOn(obj, ^(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *stop) {
-        
-        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
-    });
+            if ([name isEqual:ivarName]) {
 
-    /// Class Methods
-    NSMutableArray *classMethods = [NSMutableArray array];
-    iterateMethodsOn([obj class], ^(Method method, struct objc_method_description *description, BOOL *stop) {
-        
-        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
-    });
-    
+                const char *typeEncoding = ivar_getTypeEncoding(ivar);
+                BOOL isObject = typeEncoding[0] == '@';
+                if (!isObject) return; /// Ignore everything except objects, because we don't need more rn
 
-    
-    /// Return string
-    return [NSString stringWithFormat:@"Info on class %@ - properties: %@, ivars: %@, methods: %@, classMethods: %@", @(className), properties, ivars, methods, classMethods];
-}
+                id value = (id)object_getIvar(obj, ivar);
+                if (value == nil) return;
 
-#pragma mark - Core class accessor funcs
+                *resultPtr = value;
 
-static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
- 
-    Class class = [obj class];
-    
-    unsigned int nIvars;
-    Ivar *ivarList = class_copyIvarList(class, &nIvars);
-    
-    for (int i = 0; i < nIvars; i++) {
-        
-        Ivar m = ivarList[i];
-        BOOL shouldStop = NO;
-        callback(m, &shouldStop);
-        if (shouldStop) break;
-    }
-}
-
-//static void iteratePropertyLikeMethods(id obj, void(^callback)(Method method, struct objc_method_description *description, id value, BOOL *stop)) {
-//    
-//    /// This can cause leaks. See https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
-//    ///     -> I think the iterateIvars function can also cause leaks in the same way.
-//    
-//    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
-//        
-//        /// Check if last char is `:` to see if method has arguments
-//        SEL sel = description->name;
-//        const char *name = sel_getName(sel);
-//        unsigned long len = strlen(name);
-//        char lastChar = name[len-1];
-//        if (lastChar == ':') return;
-//        id value = [obj performSelector:sel];
-//        if (value == nil) return;
-//        callback(method, description, value, stop);
-//    });
-//}
-
-static void iterateMethodsOn(id _Nullable obj, void(^_Nonnull callback)(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *_Nonnull stop)) {
-    
-    /// To iterate class methods, pass in [obj class]
-    
-    Class _Nullable class = [obj class];
-    
-    unsigned int nMethods;
-    Method _Nonnull *_Nullable methodList = class_copyMethodList(class, &nMethods);
-    
-    for (int i = 0; i < nMethods; i++) {
-        
-        Method _Nonnull m = methodList[i];
-        struct objc_method_description *_Nonnull d = method_getDescription(m);
-        
-        BOOL shouldStop = NO;
-        callback(m, d, &shouldStop);
-        if (shouldStop) break;
-    }
-    
-    free(methodList);
-}
-
-static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_property_t _Nonnull property, NSString *_Nullable name, NSString *_Nullable attributes, BOOL *_Nonnull stop)) {
-    
-    Class _Nullable class = [obj class];
-    
-    /// Properties
-    unsigned int nProperties;
-    objc_property_t _Nonnull *_Nullable propertyList = class_copyPropertyList(class, &nProperties);
-    
-    for (int i = 0; i < nProperties; i++) {
-        objc_property_t _Nonnull m = propertyList[i];
-        const char *_Nonnull name = property_getName(m);
-        const char *_Nullable attrs = property_getAttributes(m);
-        BOOL shouldStop = NO;
-        callback(m, @(name), @(attrs ?: ""), &shouldStop);
-        if (shouldStop) break;
-    }
-    
-    free(propertyList);
-}
-
-#pragma mark - Check if pointer is object
-
-
-#pragma mark - Check if this is a prerelease version
-
-bool runningPreRelease(void) {
-    
-    /// TODO: [Apr 16 2025] Move this into Logging.h
-
-#if IS_XC_TEST
-    assert(false);
-    return true;
-#else
-    
-    /// Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
-    
-    static BOOL _isCached = NO;
-    static BOOL _runningPrerelease = NO;
-    
-    if (_isCached) {
-        
-        return _runningPrerelease;
-        
-    } else{
-        
-        
-        /// Check debug configuration
-        
-#if DEBUG
-        _runningPrerelease = YES;
-#endif
-        
-        /// Check app name for 'beta' or 'alpha'
-        ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
-        ///     Notes:
-        ///     - Why are we using the 'localized' search? What does that do?
-        ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
-        
-        if (!_runningPrerelease) {
-            
-            NSString *versionName = Locator.bundleVersionShort;
-            if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
-                _runningPrerelease = YES;
+                *stop = YES;
             }
+        });
+
+        return result;
+    #endif
+}
+
+
+#if 0 /// Unused [Oct 2026]
+
+    #pragma mark - Investigate private classes
+
+    + (NSString *)dumpClassInfo:(id)obj {
+        /// See this article to understand type encodings: https://nshipster.com/type-encodings/
+
+        Class class = [obj class];
+
+        /// Name
+        const char *className = class_getName(class);
+
+        /// Properties
+        NSMutableArray *properties = [NSMutableArray array];
+
+        iteratePropertiesOn(obj, ^(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop) {
+            [properties addObject:name];
+        });
+
+        /// Ivars
+        NSMutableArray *ivars = [NSMutableArray array];
+
+        iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
+
+            NSString *name = [@(ivar_getName(ivar) ?: "") copy];
+            [ivars addObject:name];
+        });
+
+        /// Methods
+        NSMutableArray *methods = [NSMutableArray array];
+        iterateMethodsOn(obj, ^(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *stop) {
+
+            [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
+        });
+
+        /// Class Methods
+        NSMutableArray *classMethods = [NSMutableArray array];
+        iterateMethodsOn([obj class], ^(Method method, struct objc_method_description *description, BOOL *stop) {
+
+            [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
+        });
+
+
+
+        /// Return string
+        return [NSString stringWithFormat:@"Info on class %@ - properties: %@, ivars: %@, methods: %@, classMethods: %@", @(className), properties, ivars, methods, classMethods];
+    }
+
+    #pragma mark - Core class accessor funcs
+
+    static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
+
+        Class class = [obj class];
+
+        unsigned int nIvars;
+        Ivar *ivarList = class_copyIvarList(class, &nIvars);
+
+        for (int i = 0; i < nIvars; i++) {
+
+            Ivar m = ivarList[i];
+            BOOL shouldStop = NO;
+            callback(m, &shouldStop);
+            if (shouldStop) break;
         }
-        
-        /// Update flag
-        _isCached = YES;
-        
-        /// Return
-        return _runningPrerelease;
+    }
+
+    //static void iteratePropertyLikeMethods(id obj, void(^callback)(Method method, struct objc_method_description *description, id value, BOOL *stop)) {
+    //
+    //    /// This can cause leaks. See https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+    //    ///     -> I think the iterateIvars function can also cause leaks in the same way.
+    //
+    //    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
+    //
+    //        /// Check if last char is `:` to see if method has arguments
+    //        SEL sel = description->name;
+    //        const char *name = sel_getName(sel);
+    //        unsigned long len = strlen(name);
+    //        char lastChar = name[len-1];
+    //        if (lastChar == ':') return;
+    //        id value = [obj performSelector:sel];
+    //        if (value == nil) return;
+    //        callback(method, description, value, stop);
+    //    });
+    //}
+
+    static void iterateMethodsOn(id _Nullable obj, void(^_Nonnull callback)(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *_Nonnull stop)) {
+
+        /// To iterate class methods, pass in [obj class]
+
+        Class _Nullable class = [obj class];
+
+        unsigned int nMethods;
+        Method _Nonnull *_Nullable methodList = class_copyMethodList(class, &nMethods);
+
+        for (int i = 0; i < nMethods; i++) {
+
+            Method _Nonnull m = methodList[i];
+            struct objc_method_description *_Nonnull d = method_getDescription(m);
+
+            BOOL shouldStop = NO;
+            callback(m, d, &shouldStop);
+            if (shouldStop) break;
+        }
+
+        free(methodList);
+    }
+
+    static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_property_t _Nonnull property, NSString *_Nullable name, NSString *_Nullable attributes, BOOL *_Nonnull stop)) {
+
+        Class _Nullable class = [obj class];
+
+        /// Properties
+        unsigned int nProperties;
+        objc_property_t _Nonnull *_Nullable propertyList = class_copyPropertyList(class, &nProperties);
+
+        for (int i = 0; i < nProperties; i++) {
+            objc_property_t _Nonnull m = propertyList[i];
+            const char *_Nonnull name = property_getName(m);
+            const char *_Nullable attrs = property_getAttributes(m);
+            BOOL shouldStop = NO;
+            callback(m, @(name), @(attrs ?: ""), &shouldStop);
+            if (shouldStop) break;
+        }
+
+        free(propertyList);
     }
 #endif
-}
-
-#pragma mark - Check which executable is running
-/// TODO: Maybe move this to `Locator.m`
-/// TODO: Make these NS_INLINE
-
-inline bool runningMainApp(void) {
-    
-#if IS_MAIN_APP
-    return true;
-#endif
-    return false;
-
-//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
-}
-inline bool runningHelper(void) {
-    
-#if IS_HELPER
-    return true;
-#endif
-    return false;
-    
-//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
-}
-//bool runningAccomplice(void) {
-//    
-//    /// Return YES if called by accomplice
-//    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
-//}
 
 #pragma mark - Use command-line tools
 
@@ -460,12 +375,12 @@ inline bool runningHelper(void) {
     }
     
     /// Debug
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         NSString *errorDesc = @"";
         if (errorPtr != NULL && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;
         }
-        DDLogDebug(@"Called command line tool at %@ with args: %@ - result: %@, error: %@", executableURL, arguments, result, errorDesc);
+        DDLogDebug("Called command line tool at %@ with args: %@ - result: %@, error: %@", executableURL, arguments, result, errorDesc);
     }
     
     /// Return
@@ -477,187 +392,192 @@ inline bool runningHelper(void) {
         
     /// TODO: Think about when / why we're using this instead of the other launchCTL method. Should we really just ignore errors?
     
-    DDLogDebug(@"Calling command line tool at %@ with args: %@ using async API", commandLineTool, args);
+    DDLogDebug("Calling command line tool at %@ with args: %@ using async API", commandLineTool, args);
     
     [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:NULL terminationHandler:nil];
 }
 
-#pragma mark - Monitor file system
+#if 0 /// Unused [Oct 2026]
+    #pragma mark - Monitor file system
 
-+ (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)paths withCallback:(FSEventStreamCallback)callback {
-    FSEventStreamRef stream = FSEventStreamCreate(kCFAllocatorDefault, callback, NULL, (__bridge CFArrayRef)paths, kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
-    FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-    FSEventStreamStart(stream);
-    return stream;
-}
-+ (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream {
-    if (stream != NULL) {
-        FSEventStreamInvalidate((void *_Nonnull)stream);
-        FSEventStreamRelease((void *_Nonnull)stream);
+    + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)paths withCallback:(FSEventStreamCallback)callback {
+        FSEventStreamRef stream = FSEventStreamCreate(kCFAllocatorDefault, callback, NULL, (__bridge CFArrayRef)paths, kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
+        FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+        FSEventStreamStart(stream);
+        return stream;
     }
-}
+    + (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream {
+        if (stream != NULL) {
+            FSEventStreamInvalidate((void *_Nonnull)stream);
+            FSEventStreamRelease((void *_Nonnull)stream);
+        }
+    }
+#endif
 
 #pragma mark - Debug
 
-NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitposToNameMap[_Nullable], int bitposToNameMapCount) {
-    
-    /**
-    Debug-printing for enums. [Apr 2025]
-        
-    Also see: `CodeStyle.md`
-    Usage example:
-        ```
-        NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
-        
-            static NSString *map[] = {
-                [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
-                [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
-                [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
-                [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
-                [bitpos(kCGDisplayAddFlag)]                     = @"Add",
-                [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
-                [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
-                [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
-                [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
-                [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
-                [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
-            };
-            
-            NSString *result = bitflagstring(flags, map, arrcount(map));
-            return result;
-        };
-        ```
-    */
-    
-    /// Build result
-    NSMutableString *result = [NSMutableString string];
-    
-    int i = 0;
-    while (1) {
-        
-        /// Break
-        if (flags == 0) break;
-        
-        if ((flags & 1) != 0) { /// If `flags` contains bit `i`
-            
-            /// Insert separator
-            if (result.length > 0)
-                [result appendString:@" | "];
-            
-            /// Get string describing bit `i`
-            NSString *bitName = safeindex(bitposToNameMap, bitposToNameMapCount, i, nil);
-            NSString *str = (bitName && bitName.length > 0) ? bitName : stringf(@"(1 << %d)", i);
-            
-            /// Append
-            [result appendString:str];
-        }
-        
-        /// Increment
-        flags >>= 1;
-        i++;
+NSMutableString *bitflagsDescription(uint64_t flags, NSString *(^descriptionForBit)(uint64_t bitflag)) {
+    NSMutableString *result = [NSMutableString new];
+    int first = 1;
+    for (int i = 0; flags; flags >>= 1, i++) {
+        if (!(flags & 1)) continue;
+        if (!first) [result appendString: @" | "];
+        [result appendString: (!descriptionForBit ? nil : descriptionForBit(1ULL << i)) ?: stringf(@"(1 << %d)", i)];
+        first = 0;
     }
-    
-    /// Wrap result in ()
-    result = [NSMutableString stringWithFormat:@"(%@)", result];
-    
-    /// Return
     return result;
 }
 
-/*
-+ (NSString *)binaryRepresentation:(int64_t)value {
-        
-    /// Note: [Apr 2025]: (While cleaning up merge of branch master into feature-strings-catalog)
-    /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
-    ///     Update: Oh but all usages of this are commented out.
-    ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
-    ///             Update: The macro was binarystring() I think
-        
-    uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
-    
-    int64_t nibbleCount = sizeof(value) * 2;
-    NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
-    
-    for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
-    {
-        [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
-        if (index % 4 == 0)
-        {
-            [bitString appendString:@" "];
+
+#if 0 /// Unused [Oct 2026]
+    NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitposToNameMap[_Nullable], int bitposToNameMapCount) {
+
+        /**
+        Debug-printing for enums. [Apr 2025]
+
+        Also see: `CodeStyle.md`
+        Usage example:
+            ```
+            NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
+
+                static NSString *map[] = {
+                    [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
+                    [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
+                    [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
+                    [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
+                    [bitpos(kCGDisplayAddFlag)]                     = @"Add",
+                    [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
+                    [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
+                    [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
+                    [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
+                    [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
+                    [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
+                };
+
+                NSString *result = bitflagstring(flags, map, arrcount(map));
+                return result;
+            };
+            ```
+        */
+
+        /// Build result
+        NSMutableString *result = [NSMutableString string];
+
+        int i = 0;
+        while (1) {
+
+            /// Break
+            if (flags == 0) break;
+
+            if ((flags & 1) != 0) { /// If `flags` contains bit `i`
+
+                /// Insert separator
+                if (result.length > 0)
+                    [result appendString:@" | "];
+
+                /// Get string describing bit `i`
+                NSString *bitName = safeindex(bitposToNameMap, bitposToNameMapCount, i, nil);
+                NSString *str = (bitName && bitName.length > 0) ? bitName : stringf(@"(1 << %d)", i);
+
+                /// Append
+                [result appendString:str];
+            }
+
+            /// Increment
+            flags >>= 1;
+            i++;
         }
+
+        /// Wrap result in ()
+        result = [NSMutableString stringWithFormat:@"(%@)", result];
+
+        /// Return
+        return result;
     }
-    return bitString;
-}
-*/
+    + (NSString *)binaryRepresentation:(int64_t)value {
+
+        /// Note: [Apr 2025]: (While cleaning up merge of branch master into feature-strings-catalog)
+        /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
+        ///     Update: Oh but all usages of this are commented out.
+        ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
+        ///             Update: The macro was binarystring() I think
+
+        uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
+
+        int64_t nibbleCount = sizeof(value) * 2;
+        NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
+
+        for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
+        {
+            [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
+            if (index % 4 == 0)
+            {
+                [bitString appendString:@" "];
+            }
+        }
+        return bitString;
+    }
+#endif
 
 + (NSString *)callerInfo {
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];
 }
-+ (void)printStackTrace {
-    DDLogInfo(@"PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
-}
 
-+ (NSString *)currentDispatchQueueDescription {
-    return dispatch_get_current_queue().description;
-}
+#if 0 /// Unused [Oct 2026]
+    + (void)printStackTrace {
+        DDLogInfo("PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
+    }
 
-/// For debugging.
-+ (void)printInvocationCountWithId:(NSString *)strId {
-    
-    static NSMutableDictionary<NSString *, NSNumber *> *ids;
-    static BOOL hasBeenInited = NO;
-    
-    if (hasBeenInited == NO) {
-        ids = [NSMutableDictionary dictionary];
-        hasBeenInited = YES;
+    + (NSString *)currentDispatchQueueDescription {
+        return dispatch_get_current_queue().description;
     }
-    
-    int counterForId;
-    
-    NSNumber *counterForIdFromDict = ids[strId];
-    if (counterForIdFromDict == nil) {
-        counterForId = 0;
-    } else {
-        counterForId = counterForIdFromDict.intValue;
+
+    + (void)printInvocationCountWithId:(NSString *)strId {
+
+        static NSMutableDictionary<NSString *, NSNumber *> *ids;
+        static BOOL hasBeenInited = NO;
+
+        if (hasBeenInited == NO) {
+            ids = [NSMutableDictionary dictionary];
+            hasBeenInited = YES;
+        }
+
+        int counterForId;
+
+        NSNumber *counterForIdFromDict = ids[strId];
+        if (counterForIdFromDict == nil) {
+            counterForId = 0;
+        } else {
+            counterForId = counterForIdFromDict.intValue;
+        }
+
+        counterForId++;
+
+        DDLogInfo("%@: %d", strId, counterForId);
+
+        ids[strId] = @(counterForId);
+
     }
-    
-    counterForId++;
-    
-    DDLogInfo(@"%@: %d", strId, counterForId);
-    
-    ids[strId] = @(counterForId);
-    
-}
+#endif
 
 #pragma mark - Button Numbers
 
-+ (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
-    
-    CGEventType mouseEventType;
-    
-    if (isMouseDown) {
-       if (button == kMFMouseButtonNumberLeft) {
-           mouseEventType = kCGEventLeftMouseDown;
-       } else if (button == kMFMouseButtonNumberRight) {
-           mouseEventType = kCGEventRightMouseDown;
-       } else {
-           mouseEventType = kCGEventOtherMouseDown;
-       }
-   } else {
-        if (button == kMFMouseButtonNumberLeft) {
-            mouseEventType = kCGEventLeftMouseUp;
-        } else if (button == kMFMouseButtonNumberRight) {
-            mouseEventType = kCGEventRightMouseUp;
-        } else {
-            mouseEventType = kCGEventOtherMouseUp;
-        }
-    }
-    
-    return mouseEventType;
+MFEventType MFEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber) {
+    return kMFEventType_Button(buttonNumber - 1);
+}
+CGEventType CGEventType_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber, bool mouseDown) {
+
+    CGEventType result;
+    if (buttonNumber == kMFMouseButtonNumberLeft)       result = mouseDown ? kCGEventLeftMouseDown  : kCGEventLeftMouseUp;
+    else if (buttonNumber == kMFMouseButtonNumberRight) result = mouseDown ? kCGEventRightMouseDown : kCGEventRightMouseUp;
+    else                                                result = mouseDown ? kCGEventOtherMouseDown : kCGEventOtherMouseUp;
+
+    return result;
 }
 
-+ (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button {
-    return (CGMouseButton) button - 1;
+CGMouseButton CGMouseButton_From_MFMouseButtonNumber(MFMouseButtonNumber buttonNumber) {
+    mfassert(buttonNumber >= 1);
+    return CLIP(buttonNumber, 1, kMFMaxButtonNumber) - 1; /// Do mfassert() + CLIP() mirroring `kMFEventType_Button`. I guess it's a little safer here, too [Oct 2026]
 }
 
 #pragma mark - Remaps data model assessment
@@ -835,28 +755,44 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     return dstMutable;
 }
 
-+ (void)resetDispatchGroupCount:(dispatch_group_t)group {
-    /// Reset smoothing group counter to 0
-    /// This doesn't work, don't use this.
-    
-    assert(false);
-    
-    /// Method 2
-    
-//    dispatch_group_wait(group, DISPATCH_TIME_NOW); /// Time out immediately to reset state. Doesn't work....
-    
-    /// Method 1 (kinda hacky and unstable method)
-    
-    NSString *groupDebugDescription = group.debugDescription;
-    NSRange groupCountRange = [groupDebugDescription rangeOfString:@"(?<= count = ).*?(?=,)" options:NSRegularExpressionSearch];
-    /// ^ Actual Regex for count (?<= count = ).*?(?=,)
-    NSString *groupCountString = [groupDebugDescription substringWithRange:groupCountRange];
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    int groupCount = [numberFormatter numberFromString:groupCountString].intValue;
-    for (int i = 0; i < groupCount; i++) {
-        dispatch_group_leave(group);
+#if 0
+    + (void)resetDispatchGroupCount:(dispatch_group_t)group {
+        /// Reset smoothing group counter to 0
+        /// This doesn't work, don't use this.
+
+        assert(false);
+
+        /// Method 2
+
+        //dispatch_group_wait(group, DISPATCH_TIME_NOW); /// Time out immediately to reset state. Doesn't work....
+
+        /// Method 1 (kinda hacky and unstable method)
+
+        NSString *groupDebugDescription = group.debugDescription;
+        NSRange groupCountRange = [groupDebugDescription rangeOfString:@"(?<= count = ).*?(?=,)" options:NSRegularExpressionSearch];
+        /// ^ Actual Regex for count (?<= count = ).*?(?=,)
+        NSString *groupCountString = [groupDebugDescription substringWithRange:groupCountRange];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+        int groupCount = [numberFormatter numberFromString:groupCountString].intValue;
+        for (int i = 0; i < groupCount; i++) {
+            dispatch_group_leave(group);
+        }
     }
+#endif
+
++ (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
+    if (button == 1) {
+        return isMouseDown ? kCGEventLeftMouseDown : kCGEventLeftMouseUp;
+    } else if (button == 2) {
+        return isMouseDown ? kCGEventRightMouseDown : kCGEventRightMouseUp;
+    } else {
+        return isMouseDown ? kCGEventOtherMouseDown : kCGEventOtherMouseUp;
+    }
+}
+
++ (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button {
+    return (CGMouseButton) button - 1;
 }
 
 @end

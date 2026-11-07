@@ -13,34 +13,22 @@ import Cocoa
 import ApplicationServices
 import IOKit
 
-private let eventTapCallback: CGEventTapCallBack = { proxy, type, event, refcon in
-    if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
-        DDLogDebug("Scroll.swift: eventTap was disabled by \(type == .tapDisabledByTimeout ? "timeout. Re-enabling." : "user input.")")
-        if type == .tapDisabledByTimeout {
-            if let tap = Scroll.eventTap {
-                CGEvent.tapEnable(tap: tap, enable: true)
-            }
-        }
-        return Unmanaged.passUnretained(event)
-    }
-    
-    if let resultEvent = Scroll.handleEventTap(proxy: proxy, type: type, event: event) {
-        return Unmanaged.passUnretained(resultEvent)
-    } else {
-        return nil
+private let kScrollListenerID = "Scroll"
+
+private let eventTapCallback: MFEventTapCallback = { eventType, eventPtr in
+    assertRunLoop(IOThread.runLoop())
+    guard let eventPtr = eventPtr, let eventRef = eventPtr.pointee else { return }
+    let event = eventRef.takeUnretainedValue()
+    let shouldBlock = Scroll.handleEvent(event: event)
+    if shouldBlock {
+        eventPtr.pointee = nil
     }
 }
 
 @objc(Scroll)
 public class Scroll: NSObject {
     
-    fileprivate static var _eventTap: CFMachPort?
-    public static var eventTap: CFMachPort? {
-        return _eventTap
-    }
-    
     private static var _eventSource: CGEventSource?
-    private static var _scrollQueue: DispatchQueue!
     private static var _animator: TouchAnimator!
     
     private static var _systemWideAXUIElement: AXUIElement?
@@ -72,30 +60,14 @@ public class Scroll: NSObject {
     private static var _appSwitcherIsOpen = false
     
     @objc public static func load_Manual() {
-        _scrollQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.helper.scroll", qos: .userInteractive)
         _systemWideAXUIElement = AXUIElementCreateSystemWide()
         
         if _eventSource == nil {
             _eventSource = CGEventSource(stateID: .combinedSessionState)
         }
         
-        if _eventTap == nil {
-            let mask = 1 << CGEventType.scrollWheel.rawValue
-            _eventTap = CGEvent.tapCreate(
-                tap: .cgSessionEventTap,
-                place: .headInsertEventTap,
-                options: .defaultTap,
-                eventsOfInterest: CGEventMask(mask),
-                callback: eventTapCallback,
-                userInfo: nil
-            )
-            DDLogDebug("Scroll.swift: _eventTap: \(_eventTap == nil ? "nil" : "non-nil")")
-            if let tap = _eventTap {
-                let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
-                CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
-                CGEvent.tapEnable(tap: tap, enable: false)
-            }
-        }
+        MFEventTap.registerListener(kScrollListenerID, forEvents: MFEventType(kMFEventType_ScrollWheel), callback: eventTapCallback)
+        MFEventTap.enable(false, forListener: kScrollListenerID)
         
         _animator = TouchAnimator()
         _scrollConfig = nil
@@ -106,15 +78,13 @@ public class Scroll: NSObject {
     }
     
     @objc public static func resetState() {
-        _scrollQueue.async {
-            resetState_Unsafe()
-        }
+        assertRunLoop(IOThread.runLoop())
+        resetState_Unsafe()
     }
     
     @objc public static func resetState_Sync() {
-        _scrollQueue.sync {
-            resetState_Unsafe()
-        }
+        assertRunLoop(IOThread.runLoop())
+        resetState_Unsafe()
     }
     
     private static func resetState_Unsafe() {
@@ -125,24 +95,19 @@ public class Scroll: NSObject {
     }
     
     @objc public static func startReceiving() {
+        assertRunLoop(IOThread.runLoop())
         DDLogDebug("Scroll.swift: startReceiving. isReceiving: \(isReceiving())")
-        if let tap = _eventTap, !CGEvent.tapIsEnabled(tap: tap) {
-            CGEvent.tapEnable(tap: tap, enable: true)
-        }
+        MFEventTap.enable(true, forListener: kScrollListenerID)
     }
     
     @objc public static func stopReceiving() {
+        assertRunLoop(IOThread.runLoop())
         DDLogDebug("Scroll.swift: stopReceiving. isReceiving: \(isReceiving())")
-        if let tap = _eventTap, CGEvent.tapIsEnabled(tap: tap) {
-            CGEvent.tapEnable(tap: tap, enable: false)
-        }
+        MFEventTap.enable(false, forListener: kScrollListenerID)
     }
     
     @objc public static func isReceiving() -> Bool {
-        if let tap = _eventTap {
-            return CGEvent.tapIsEnabled(tap: tap)
-        }
-        return false
+        return MFEventTap.isEnabled(forListener: kScrollListenerID)
     }
     
     private static func CGScrollWheelEventDescription(_ event: CGEvent) -> String {
@@ -157,7 +122,7 @@ public class Scroll: NSObject {
         return "d: \(d) dPoint: \(dPoint) dFixed: \(dFixed) isContinuous: \(dContinuous) count: \(dCount) instant: \(dInstant) phase: \(dPhase) momPhase: \(dMomPhase)"
     }
     
-    fileprivate static func handleEventTap(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent) -> CGEvent? {
+    fileprivate static func handleEvent(event: CGEvent) -> Bool {
         let isPixelBased = event.getIntegerValueField(.scrollWheelEventIsContinuous)
         let scrollPhase = event.getIntegerValueField(.scrollWheelEventScrollPhase)
         let scrollDeltaAxis1 = event.getIntegerValueField(.scrollWheelEventPointDeltaAxis1)
@@ -191,7 +156,7 @@ public class Scroll: NSObject {
             let isNatural = event.getIntegerValueField(CGEventField(rawValue: 137)!)
             let dbgVendorID = sendingDev != nil ? IOHIDDeviceGetProperty(sendingDev!, kIOHIDVendorIDKey as CFString) as? NSNumber : nil
             let dbgProductName = sendingDev != nil ? IOHIDDeviceGetProperty(sendingDev!, kIOHIDProductKey as CFString) as? String : nil
-            DDLogDebug("[DEBUG eventTapCallback] type: \(type.rawValue), isPixelBased: \(isPixelBased), isHiResLogitech: \(isHiResLogitech), scrollPhase: \(scrollPhase), sendingDev: \(String(describing: sendingDev)), Vid: \(String(describing: dbgVendorID)), Product: \(String(describing: dbgProductName)), invertDir: \(ScrollConfig.shared.u_invertDirection.rawValue), delta1: \(scrollDeltaAxis1), delta2: \(scrollDeltaAxis2), isNatural: \(isNatural)")
+            DDLogDebug("[DEBUG eventTapCallback] isPixelBased: \(isPixelBased), isHiResLogitech: \(isHiResLogitech), scrollPhase: \(scrollPhase), sendingDev: \(String(describing: sendingDev)), Vid: \(String(describing: dbgVendorID)), Product: \(String(describing: dbgProductName)), invertDir: \(ScrollConfig.shared.u_invertDirection.rawValue), delta1: \(scrollDeltaAxis1), delta2: \(scrollDeltaAxis2), isNatural: \(isNatural)")
         }
         
         if !ScrollConfig.shared.smoothEnabled && ScrollConfig.shared.useAppleAcceleration {
@@ -222,7 +187,7 @@ public class Scroll: NSObject {
                     }
                 }
             }
-            return event
+            return false
         }
         
         if isPixelBased != 0
@@ -262,22 +227,17 @@ public class Scroll: NSObject {
             if runningPreRelease() {
                 DDLogDebug("[Scroll.swift eventTapCallback] Bypassing scroll event")
             }
-            return event
+            return false
         }
         
         if CGEvent_IsWacomEvent(event) {
-            return event
+            return false
         }
         
         let tickTime = CGEventGetTimestampInSeconds(event)
+        heavyProcessing(event: event, scrollDeltaAxis1: scrollDeltaAxis1, scrollDeltaAxis2: scrollDeltaAxis2, tickTS: tickTime)
         
-        if let eventCopy = event.copy() {
-            _scrollQueue.async {
-                heavyProcessing(event: eventCopy, scrollDeltaAxis1: scrollDeltaAxis1, scrollDeltaAxis2: scrollDeltaAxis2, tickTS: tickTime)
-            }
-        }
-        
-        return nil
+        return true
     }
     
     private static func heavyProcessing(event: CGEvent, scrollDeltaAxis1: Int64, scrollDeltaAxis2: Int64, tickTS: CFTimeInterval) {

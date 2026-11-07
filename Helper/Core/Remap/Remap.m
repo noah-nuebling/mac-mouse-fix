@@ -20,6 +20,7 @@
 #import "MFMessagePort.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "RemapSwizzler.h"
+#import "SwitchMaster.h"
 
 @implementation Remap
 
@@ -50,9 +51,12 @@ static NSMutableDictionary *_swizzleCache = nil;
         
         DDLogDebug(@"Recalculating modifications for modifiers: %@", modifiers);
         
-        NSDictionary *new = [RemapSwizzler swizzleRemaps:_remaps activeModifiers:modifiers];
-        _swizzleCache[modifiers] = new;
-        return new;
+        NSDictionary *remaps = _remaps ?: @{};
+        NSDictionary *new = [RemapSwizzler swizzleRemaps:remaps activeModifiers:modifiers];
+        if (new != nil) {
+            _swizzleCache[modifiers] = new;
+        }
+        return new ?: @{};
     }
 }
 
@@ -62,7 +66,7 @@ static NSMutableDictionary *_swizzleCache = nil;
 static NSDictionary *_remaps;
 
 + (NSDictionary *)remaps {
-    return _remaps;
+    return _remaps ?: @{};
 }
 
 + (void)setRemaps:(NSDictionary *)remapsDict {
@@ -87,7 +91,7 @@ static NSDictionary *_remaps;
         
         /// Notify
 //        [ReactiveRemaps.shared handleRemapsDidChange];
-        [SwitchMaster.shared remapsChangedWithRemaps:_remaps];
+        SwitchMaster_RemapsChanged(_remaps);
         [RemapsAnalyzer reload];
 //        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         

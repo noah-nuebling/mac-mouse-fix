@@ -81,7 +81,7 @@ public class ModifiedDrag: NSObject {
             mask |= 1 << CGEventType.leftMouseDragged.rawValue
             mask |= 1 << CGEventType.rightMouseDragged.rawValue
             
-            let runLoop = GlobalEventTapThread.runLoop().takeUnretainedValue()
+            let runLoop = IOThread.runLoop()!
             let eventTap = ModificationUtility.createEventTap(
                 with: location,
                 mask: mask,
@@ -207,7 +207,7 @@ public class ModifiedDrag: NSObject {
             CGEvent.tapEnable(tap: tap, enable: false)
         }
         
-        DDLogDebug("\nmodifiedDrag disabled drag eventTap. Caller info: \(SharedUtility.callerInfo() ?? "")")
+        DDLogDebug("\nmodifiedDrag disabled drag eventTap. Caller info: \(SharedUtility.callerInfo())")
     }
     
     @objc public static func getRoundedPointerLocation() -> CGPoint {

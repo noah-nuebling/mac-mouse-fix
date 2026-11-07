@@ -38,7 +38,14 @@ import Cocoa
     
     // MARK: Static functions
     
-    @objc private(set) static var shared = ScrollConfig() /// Singleton instance
+    private static var _defaultInstance = ScrollConfig()
+    @objc static var defaultInstance: ScrollConfig {
+        return _defaultInstance
+    }
+    @objc static var shared: ScrollConfig {
+        get { return _defaultInstance }
+        set { _defaultInstance = newValue }
+    }
     
     @objc static func reload() {
         
@@ -57,17 +64,16 @@ import Cocoa
         /// - All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
         /// - TODO: Make a copy before storing in `_scrollConfigRaw` just to be sure the equality checks always work
         _scrollConfigRaw = newConfigRaw
-        shared = ScrollConfig()
+        _defaultInstance = ScrollConfig()
         cache = nil
         
-        DDLogInfo("[ScrollConfig.reload] New shared created. u_precise=\(shared.u_precise), u_speed=\(shared.u_speed)")
+        DDLogInfo("[ScrollConfig.reload] New defaultInstance created. u_precise=\(_defaultInstance.u_precise), u_speed=\(_defaultInstance.u_speed)")
         
         Scroll.configChanged()
-//        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
-        SwitchMaster.shared.scrollConfigChanged(scrollConfig: shared)
+        SwitchMaster_ScrollConfigChanged(_defaultInstance)
     }
     @objc static func devToggles_deleteCache() { /// [May 2025] Added this function as a hack for DevToggles.m
-        shared = ScrollConfig()
+        _defaultInstance = ScrollConfig()
         cache = nil
         Scroll.configChanged()
     }

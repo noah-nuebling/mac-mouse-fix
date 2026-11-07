@@ -17,6 +17,33 @@ public class DeviceManager: NSObject {
     fileprivate static var _manager: IOHIDManager?
     fileprivate static var _maxButtonNumberAmongDevices_IsCached = false
     fileprivate static var _maxButtonNumberAmongDevices: Int32 = 0
+    fileprivate static var _eventTypesSupportedBySomeDevice_IsCached = false
+    fileprivate static var _eventTypesSupportedBySomeDevice: MFEventType = 0
+    
+    @objc public static func eventTypesSupportedBySomeDevice() -> MFEventType {
+        if _eventTypesSupportedBySomeDevice_IsCached {
+            return _eventTypesSupportedBySomeDevice
+        }
+        var result: MFEventType = 0
+        if _attachedDevices.count > 0 {
+            result |= MFEventType(kMFEventType_ScrollWheel)
+            result |= MFEventType(kMFEventType_Sensor)
+            var maxButtons = 0
+            for device in _attachedDevices {
+                let n = Int(device.nOfButtons())
+                if n > maxButtons { maxButtons = n }
+            }
+            let buttonLimit = min(maxButtons, Int(kMFMaxButtonNumber))
+            for i in 0..<buttonLimit {
+                if let cgBtn = CGMouseButton(rawValue: UInt32(i)) {
+                    result |= MFEventType_Button(cgBtn)
+                }
+            }
+        }
+        _eventTypesSupportedBySomeDevice = result
+        _eventTypesSupportedBySomeDevice_IsCached = true
+        return result
+    }
     
     @objc public static func devicesAreAttached() -> Bool {
         return _attachedDevices.count > 0
@@ -112,7 +139,11 @@ public class DeviceManager: NSObject {
         let matchArray = [matchDict1, matchDict2, matchDict3] as CFArray
         
         IOHIDManagerSetDeviceMatchingMultiple(manager, matchArray)
+        #if IS_HELPER
+        IOHIDManagerScheduleWithRunLoop(manager, IOThread.runLoop(), CFRunLoopMode.commonModes.rawValue)
+        #else
         IOHIDManagerScheduleWithRunLoop(manager, CFRunLoopGetMain(), CFRunLoopMode.defaultMode.rawValue)
+        #endif
         
         IOHIDManagerRegisterDeviceMatchingCallback(manager, handleDeviceMatchingCallback, nil)
         IOHIDManagerRegisterDeviceRemovalCallback(manager, handleDeviceRemovalCallback, nil)
@@ -129,9 +160,10 @@ private let handleDeviceMatchingCallback: IOHIDDeviceCallback = { context, resul
         
         DeviceManager._attachedDevices.append(newDevice)
         DeviceManager._maxButtonNumberAmongDevices_IsCached = false
+        DeviceManager._eventTypesSupportedBySomeDevice_IsCached = false
         
         #if IS_HELPER
-        SwitchMaster.shared.attachedDevicesChanged(devices: DeviceManager._attachedDevices as NSArray)
+        SwitchMaster.attachedDevicesChanged(DeviceManager._attachedDevices as NSArray)
         #endif
         
         DDLogDebug("Setting PointerSpeed for device: \(newDevice.description)")
@@ -158,9 +190,10 @@ private let handleDeviceRemovalCallback: IOHIDDeviceCallback = { context, result
         }
         
         DeviceManager._maxButtonNumberAmongDevices_IsCached = false
+        DeviceManager._eventTypesSupportedBySomeDevice_IsCached = false
         
         #if IS_HELPER
-        SwitchMaster.shared.attachedDevicesChanged(devices: DeviceManager._attachedDevices as NSArray)
+        SwitchMaster.attachedDevicesChanged(DeviceManager._attachedDevices as NSArray)
         #endif
         
         #if IS_HELPER

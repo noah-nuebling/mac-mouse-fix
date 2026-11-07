@@ -475,7 +475,9 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
         let event = CGEvent(source: nil)
         
         if let ev = event {
-            _ = Buttons.handleInput(device: device, button: NSNumber(value: btn), downNotUp: down, event: ev)
+            mfrun(IOThread.runLoop()) {
+                _ = Buttons.handleInput(device: device, button: NSNumber(value: btn), downNotUp: down, event: ev)
+            }
         }
     }
     
@@ -1137,7 +1139,7 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                 this.injectButton(s, cid: cid, down: false)
             }
             s.pressedCount = 0
-            DispatchQueue.main.async {
+            mfrun(IOThread.runLoop()) {
                 Buttons.resetAll()
                 Device.resetLogitechButtons()
                 ModifiedDrag.deactivate()
@@ -1754,7 +1756,7 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
     
     @objc private func handleSystemWake() {
         os_log("LogitechCIDActivator: System woke up. Releasing held buttons and scheduling reactivation in 0.8 seconds...", log: self.logger, type: .info)
-        DispatchQueue.main.async { [weak self] in
+        mfrun(IOThread.runLoop()) { [weak self] in
             self?.releaseAllButtons()
             Buttons.resetAll()
             Device.resetLogitechButtons()

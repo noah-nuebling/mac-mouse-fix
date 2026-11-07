@@ -57,7 +57,7 @@ class TrialNotificationController: NSWindowController {
             nib?.instantiate(withOwner: self, topLevelObjects: &topLevelObjects)
             self.window = topLevelObjects![0] as? NSWindow
             if self.window == nil {
-                self.window = topLevelObjects![1] as! NSWindow
+                self.window = topLevelObjects![1] as? NSWindow
             }
             
             self.window?.collectionBehavior = .canJoinAllSpaces

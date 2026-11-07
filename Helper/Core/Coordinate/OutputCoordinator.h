@@ -7,8 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#ifndef OutputCoordinator_h
-#define OutputCoordinator_h
+#if 0 /** Long unused - finally removing it from codebase [Oct 2026] */
 
 typedef enum {
     kTouchDriverScroll,
@@ -18,4 +17,4 @@ typedef enum {
 
 typedef void(^DriverUnsuspender)(void);
 
-#endif /* OutputCoordinator_h */
+#endif

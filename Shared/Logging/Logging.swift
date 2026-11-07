@@ -18,7 +18,11 @@
 
 @objc private class LoggingSwift: Logging {
     @objc private class func setUpDDLogSwift() {
-        dynamicLogLevel = ddLogLevel;
+        #if DEBUG
+        dynamicLogLevel = .debug
+        #else
+        dynamicLogLevel = .info
+        #endif
     }
 }
 
@@ -44,3 +48,12 @@ func DDLogVerbose(_ format: String, _ args: any CVarArg...) {
 }
 
 #endif
+
+/// Wrap mfassert() and mfrequire() for Swift
+@inline(__always) func mfassert(_ condition: @autoclosure () -> Bool, _ reason: @autoclosure () -> String? = nil, file: String = #fileID, line: Int = #line, function: String = #function) {
+    if _slowPath(!condition()) { _mfassertrequire_failure(false, "<swift>", reason() ?? "", file, Int32(line), function) }
+}
+
+@inline(__always) func mfrequire(_ condition: @autoclosure () -> Bool, _ reason: @autoclosure () -> String? = nil, file: String = #fileID, line: Int = #line, function: String = #function) {
+    if _slowPath(!condition()) { _mfassertrequire_failure(true, "<swift>", reason() ?? "", file, Int32(line), function) }
+}

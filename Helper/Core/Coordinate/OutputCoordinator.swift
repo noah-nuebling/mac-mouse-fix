@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 // 
 
+#if false /// Long unused, finally removing it from the codebase [Oct 2026]
+
 /// NOTE: This is unused. See below for more info
 
 /// Temporarily disable other modules that drive touch events other than the caller.
@@ -55,3 +57,5 @@ import Foundation
         return unsuspender
     }
 }
+
+#endif

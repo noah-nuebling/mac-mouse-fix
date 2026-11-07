@@ -15,8 +15,7 @@ import Cocoa
 @objc class Buttons: NSObject {
     
     /// Ivars
-    static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
-    static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
+    static private var clickCycle = ClickCycle()
     static private var buttonModifiers = ButtonModifiers()
     @objc static var useButtonModifiers = false
     
@@ -29,12 +28,18 @@ import Cocoa
     private static var isInitialized = false
     private static func coolInitialize() {
         isInitialized = true
-        clickCycle = ClickCycle(buttonQueue: queue)
     }
     
     /// Handling input
     
     @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
+        if !CFEqual(CFRunLoopGetCurrent(), IOThread.runLoop()) {
+            mfrun(IOThread.runLoop()) {
+                _ = self.handleInput(device: device, button: button, downNotUp: mouseDown, event: event)
+            }
+            return .refusal
+        }
+        assertRunLoop(IOThread.runLoop())
         
         let passThroughEvaluation = MFEventPassThroughEvaluation.refusal
         
@@ -202,7 +207,13 @@ import Cocoa
     }
     
     @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
-        handleButtonHasHadEffectAsModifier_Unsafe(button: button)
+        if CFEqual(CFRunLoopGetCurrent(), IOThread.runLoop()) {
+            handleButtonHasHadEffectAsModifier_Unsafe(button: button)
+        } else {
+            mfrun(IOThread.runLoop()) {
+                handleButtonHasHadEffectAsModifier_Unsafe(button: button)
+            }
+        }
     }
     
     @objc static func handleButtonHasHadEffectAsModifier_Unsafe(button: NSNumber) {
@@ -216,11 +227,17 @@ import Cocoa
     }
     
     @objc static func resetAll() {
-        assert(Thread.isMainThread)
-        DDLogInfo("Buttons: resetAll invoked - clearing clickCycle and buttonModifiers")
-        clickCycle.reset()
-        if useButtonModifiers {
-            buttonModifiers.resetAll()
+        let block = {
+            DDLogInfo("Buttons: resetAll invoked - clearing clickCycle and buttonModifiers")
+            clickCycle.reset()
+            if useButtonModifiers {
+                buttonModifiers.resetAll()
+            }
+        }
+        if CFEqual(CFRunLoopGetCurrent(), IOThread.runLoop()) {
+            block()
+        } else {
+            mfrun(IOThread.runLoop(), block)
         }
     }
     

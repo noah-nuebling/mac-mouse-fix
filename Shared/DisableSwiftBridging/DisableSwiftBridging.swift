@@ -95,10 +95,10 @@ extension NSString {
 extension Remap {
     
     static var remaps: NSDictionary {
-        return __remaps() as! NSDictionary
+        return (__remaps() as? NSDictionary) ?? NSDictionary()
     }
     static func modifications(withModifiers modifiers: NSDictionary) -> NSDictionary? {
-        return __modifications(withModifiers: modifiers) as! NSDictionary?
+        return __modifications(withModifiers: modifiers) as? NSDictionary
     }
     static func sendAddModeFeedback(_ payload: NSDictionary) {
         __sendAddModeFeedback(payload)
@@ -108,8 +108,8 @@ extension Remap {
 
 extension Modifiers {
     
-    static func modifiers(with event: CGEvent?) -> NSMutableDictionary {
-        return __modifiers(with: event) as! NSMutableDictionary
+    static func modifiers(with event: CGEvent?) -> NSDictionary {
+        return (__modifiers(with: event) as? NSDictionary) ?? NSDictionary()
     }
     
     static func buttonModsChanged(to newMods: NSMutableArray) {

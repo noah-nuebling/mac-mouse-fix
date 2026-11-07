@@ -143,6 +143,7 @@
 #import "SharedUtility.h"
 #import "MFPlistDecoder.h"
 #import "MFPlistEncoder.h"
+#import "Threads.h"
 
 @implementation MFCoding
 
@@ -412,7 +413,7 @@ MFDataClass4(MFDataClassBase, TestOuter,
 
 + (void)load {
     
-    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{ /// Delay, so that CocoaLumberjack gets initialized (?)
+    mfrun(CFRunLoopGetMain(), ^{ /// Delay, so that CocoaLumberjack gets initialized (?)
     
         #define Log(x...) NSLog(@"MFCoding Loadtests: " x)
     
