@@ -110,6 +110,7 @@ import Cocoa
         return _anyAppEnablesSmooth
     }
     private static func computeAnyAppEnablesSmooth() -> Bool {
+        if (config("General.appSpecificKillSwitch") as? Bool) == true { return false } /// Turned off from the menu bar
         guard let overrides = config(kMFConfigKeyAppOverrides) as? NSDictionary else { return false }
         for case let entry as NSDictionary in overrides.allValues {
             let scroll = (entry["Root"] as? NSDictionary)?[kMFConfigKeyScroll] as? NSDictionary

@@ -334,6 +334,13 @@ class AppSpecificTabController: NSViewController, NSTableViewDataSource, NSTable
         newRows.sort { ($0.orderKey, $0.name.lowercased()) < ($1.orderKey, $1.name.lowercased()) }
         rows = newRows
 
+        /// Hint – mention when app-specific settings are turned off from the menu bar
+        let killed = (config("General.appSpecificKillSwitch") as? Bool) ?? false
+        hintLabel.stringValue = killed
+            ? MFLocalizedString("app-specific.killed-hint", comment: "Replaces the hint at the top of the 'App-specific' tab while 'App-specific' is unchecked in the Mac Mouse Fix menu bar menu.")
+            : MFLocalizedString("app-specific.hint", comment: "Hint at the top of the 'App-specific' tab. Explains that the checkboxes choose which scrolling features are used while the mouse pointer is over that app.")
+        hintLabel.textColor = killed ? .systemOrange : .secondaryLabelColor
+        
         /// Update column headers (they depend on the global modifier settings)
         for feature in AppSpecificFeature.allCases {
             guard let col = tableView.tableColumn(withIdentifier: NSUserInterfaceItemIdentifier(feature.rawValue)) else { continue }

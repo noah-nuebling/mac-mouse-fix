@@ -220,6 +220,7 @@ static void updateDerivedStates(void) {
 
 - (BOOL)hasAnyAppOverrides {
     /// Cheap check so Scroll.m can skip the (slow) 'which app is under the pointer' lookup when the user hasn't set up any app-specific settings.
+    if ([(id)[self->_config objectForCoolKeyPath: @"General.appSpecificKillSwitch"] boolValue]) return NO; /// Turned off from the menu bar
     NSDictionary *overrides = [self->_config objectForKey:kMFConfigKeyAppOverrides];
     return [overrides isKindOfClass: NSDictionary.class] && overrides.count > 0;
 }
@@ -235,7 +236,8 @@ static void loadOverridesForApp(NSString *bundleID) {
     /// Get overrides for app
     NSDictionary *overrides = [Config.shared->_config objectForKey:kMFConfigKeyAppOverrides];
     NSDictionary *overridesForThisApp = nil;
-    if (bundleID.length > 0 && [overrides isKindOfClass: NSDictionary.class]) {
+    BOOL appSpecificKilled = [(id)[Config.shared->_config objectForCoolKeyPath: @"General.appSpecificKillSwitch"] boolValue]; /// [Nov 2026] 'App-specific' toggle in the menu bar. nil -> NO
+    if (!appSpecificKilled && bundleID.length > 0 && [overrides isKindOfClass: NSDictionary.class]) {
         NSDictionary *appEntry = overrides[bundleID];
         if ([appEntry isKindOfClass: NSDictionary.class]) {
             overridesForThisApp = appEntry[@"Root"];
