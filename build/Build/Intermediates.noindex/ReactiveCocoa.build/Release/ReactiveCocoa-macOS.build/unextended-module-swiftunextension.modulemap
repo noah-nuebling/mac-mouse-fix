@@ -1,4 +1,0 @@
-
-module ReactiveCocoa.__Swift {
-  exclude header "ReactiveCocoa-Swift.h"
-}

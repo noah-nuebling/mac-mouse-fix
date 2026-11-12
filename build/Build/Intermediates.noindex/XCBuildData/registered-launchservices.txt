@@ -1,2 +1,0 @@
-/Users/win/mac-mouse-fix/build/Build/Products/Release/Mac Mouse Fix Helper.app
-/Users/win/mac-mouse-fix/build/Build/Products/Release/Mac Mouse Fix.app
