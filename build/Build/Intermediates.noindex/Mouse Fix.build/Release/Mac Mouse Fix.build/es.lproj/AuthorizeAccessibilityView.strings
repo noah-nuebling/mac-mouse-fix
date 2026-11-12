@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>04N-yp-Qg1.title</key>
+	<string>Ayuda</string>
+	<key>0lz-be-kpl.title</key>
+	<string>Tener Acceso a Accesibilidad permite a Mac Mouse Fix 
+interceptar señales de tu ratón y teclado</string>
+	<key>46z-Nd-nh4.title</key>
+	<string>Activar 'Mac Mouse Fix Helper'</string>
+	<key>72q-sS-xMS.title</key>
+	<string>1.</string>
+	<key>9qp-gN-SZZ.title</key>
+	<string>Abrir ajustes de 'Privacidad y seguridad'</string>
+	<key>OSk-Cl-izW.title</key>
+	<string>Otorgar Acceso de Accesibilidad a Mac Mouse Fix</string>
+	<key>RIR-VN-l6s.title</key>
+	<string>2.</string>
+	<key>fK8-8z-KQn.ibShadowedToolTip</key>
+	<string>Mantén presionado Shift (⇧) y haz clic en este icono para mostrar 'Mac Mouse Fix Helper.app' en el Finder.</string>
+	<key>u9c-up-oQG.title</key>
+	<string>Cancelar</string>
+</dict>
+</plist>

@@ -1,0 +1,23 @@
+moduledependenciestarget: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/SDKSettings.json \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/Sparkle.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUAppcast.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-21ZCSIEUDQPVBMMWMI6EBURGO.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUExport.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUAppcastItem.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUStandardVersionComparator.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUVersionComparisonProtocol.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUUpdater.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Cocoa-7U636ZP7KLKZ7QBO4FPWY4D3G.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/System/Library/Frameworks/Cocoa.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUVersionDisplayProtocol.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUUpdaterDelegate.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUErrors.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SPUDownloader.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SPUDownloaderProtocol.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SPUDownloaderDelegate.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SPUDownloadData.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SPUDownloaderSession.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SPUURLRequest.h \
+  /Users/win/mac-mouse-fix/Frameworks/Sparkle.framework/Headers/SUCodeSigningVerifier.h

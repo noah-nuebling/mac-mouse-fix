@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>17P-PJ-tV1.title</key>
+	<string>Звичайна</string>
+	<key>1TU-wL-skT.title</key>
+	<string>Відмінити</string>
+	<key>2Uv-W7-hzJ.title</key>
+	<string>Переглянути посібники або запитати спільноту...</string>
+	<key>3pt-ka-lxV.title</key>
+	<string>Перевірити оновлення</string>
+	<key>4gx-d0-WNb.title</key>
+	<string>Вимк.</string>
+	<key>4hf-tQ-y76.title</key>
+	<string>Точність</string>
+	<key>5yb-g8-Kcg.title</key>
+	<string>Долучитись до перекладу</string>
+	<key>6Nj-Ed-W5T.title</key>
+	<string>Горизонтальна прокрутка</string>
+	<key>6Yt-gG-Nf9.title</key>
+	<string>Редагування</string>
+	<key>6es-it-kDs.title</key>
+	<string>Видалити</string>
+	<key>8pi-FV-zYE.title</key>
+	<string>Подяки</string>
+	<key>97W-3h-SSc.title</key>
+	<string>Висока</string>
+	<key>A6t-UZ-2DE.title</key>
+	<string>Точна прокрутка</string>
+	<key>AHn-zX-g4d.title</key>
+	<string>Переходьте між сторінками в Safari, прокручуючи горизонтально, і не тільки</string>
+	<key>AYu-sK-qS6.title</key>
+	<string>Головне меню</string>
+	<key>AqN-zN-yDS.title</key>
+	<string>Дозволяє швидко перемикати такі функції, як плавна прокрутка</string>
+	<key>Bnm-ze-Mca.title</key>
+	<string>Сховати Mac Mouse Fix</string>
+	<key>DVS-lH-VBH.title</key>
+	<string>Довідка</string>
+	<key>E0q-4e-axc.title</key>
+	<string>Середня</string>
+	<key>ENz-Ny-4ax.title</key>
+	<string>Швидка прокрутка</string>
+	<key>FT8-zP-xsg.title</key>
+	<string>Низька</string>
+	<key>Fp4-bf-cbR.title</key>
+	<string>Довідка</string>
+	<key>Gr8-qh-oGd.title</key>
+	<string>Сервіси</string>
+	<key>H4T-Rp-t33.title</key>
+	<string>Масштаб</string>
+	<key>Hur-83-2a2.title</key>
+	<string>Параметри...</string>
+	<key>IJF-sN-Wfw.title</key>
+	<string>Повторити</string>
+	<key>ILO-GQ-vNk.title</key>
+	<string>Показувати в рядку меню</string>
+	<key>IQv-IB-iLA.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>InY-TB-ky6.title</key>
+	<string>Вікно</string>
+	<key>LTC-zW-sTp.title</key>
+	<string>Редагування</string>
+	<key>Mck-5W-5lv.title</key>
+	<string>Отримувати бета-версії</string>
+	<key>Mjk-wy-Z7C.label</key>
+	<string>Кнопки</string>
+	<key>N65-aN-Hxp.title</key>
+	<string>Симуляція трекпеда</string>
+	<key>N7H-9j-DIr.title</key>
+	<string>Перемістіть вказівник в поле '+', а потім *клацніть* кнопку, щоб призначити їй дію. Ви також можете використати *Подвійне клацання*, *Клацання та Перетягування* тощо.</string>
+	<key>NdF-Gb-mOK.title</key>
+	<string>Згорнути</string>
+	<key>Ozk-o9-C4a.title</key>
+	<string>Відвідати вебсайт</string>
+	<key>QaW-cc-uzc.title</key>
+	<string>Надіслати мені е-лист</string>
+	<key>RV9-5T-rvb.title</key>
+	<string>Увімкнути Mac Mouse Fix</string>
+	<key>Rlr-89-4fc.title</key>
+	<string>Сховати інші</string>
+	<key>S3S-2l-eNQ.title</key>
+	<string>Закрити</string>
+	<key>S6k-al-LbR.title</key>
+	<string>Вставити</string>
+	<key>SaY-fF-d1s.title</key>
+	<string>Ви отримаєте сповіщення про оновлення, коли відкриєте це вікно</string>
+	<key>SjO-Dq-CEX.title</key>
+	<string>Плавність:</string>
+	<key>TrI-uu-DEN.title</key>
+	<string>Пригости мене Мілкшейком :)</string>
+	<key>UeD-ND-tYj.title</key>
+	<string>Завершити Mac Mouse Fix</string>
+	<key>X8q-Nk-Fwr.title</key>
+	<string>Сервіси</string>
+	<key>YBT-Ar-F4S.title</key>
+	<string>Активувати ліцензію...</string>
+	<key>Yyg-LD-A1v.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>ZMA-p0-2lf.title</key>
+	<string>Переглянути на GitHub</string>
+	<key>ZfY-xQ-tQl.title</key>
+	<string>Масштабування</string>
+	<key>aZA-uL-uvx.title</key>
+	<string>Усі наперед</string>
+	<key>bGk-tB-fcH.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>bIE-g7-3St.title</key>
+	<string>Висока</string>
+	<key>bQf-qv-mvB.title</key>
+	<string>Надіслати відгук</string>
+	<key>bew-ni-FnZ.title</key>
+	<string>Mac Mouse Fix залишається ввімкненим після того, як ви закриєте програму</string>
+	<key>bgk-wr-o8T.title</key>
+	<string>Не нагадуй мені знову</string>
+	<key>buH-zX-xXu.title</key>
+	<string>Про програму</string>
+	<key>d0g-07-PaJ.title</key>
+	<string>Купити Mac Mouse Fix...</string>
+	<key>d9S-X9-qM1.title</key>
+	<string>Кнопки</string>
+	<key>eLS-O0-A1x.title</key>
+	<string>Загальні</string>
+	<key>eVc-l9-Z0h.title</key>
+	<string>Отримати допомогу</string>
+	<key>fGs-UI-L0d.title</key>
+	<string>Показати всі</string>
+	<key>fNA-5s-U4d.title</key>
+	<string>Вікно</string>
+	<key>fW3-4Q-yB8.title</key>
+	<string>macOS</string>
+	<key>gK0-1z-Pjv.title</key>
+	<string>Зворотний напрямок</string>
+	<key>hSC-BE-EZJ.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>iFe-4y-9Xa.title</key>
+	<string>Скопіювати</string>
+	<key>jOM-dH-pdc.label</key>
+	<string>Прокрутка</string>
+	<key>l7d-al-Y14.title</key>
+	<string>Швидкість:</string>
+	<key>lrw-Lp-nQ4.title</key>
+	<string>Відновити стандартні параметри...</string>
+	<key>mWQ-i7-vza.ibShadowedToolTip</key>
+	<string>Утримуйте Command (⌘) та Shift (⇧), потім клацніть на цю піктограму, щоб відкрити файл конфігурації Mac Mouse Fix у Finder</string>
+	<key>oEX-Tp-9Cv.title</key>
+	<string>Вибрати все</string>
+	<key>pMz-a0-1UQ.title</key>
+	<string>Створено Ноа Нюблінгом</string>
+	<key>qcW-e9-BqR.title</key>
+	<string>Прокрутка</string>
+	<key>rFn-h3-0EN.title</key>
+	<string>Вирізати</string>
+	<key>rIq-3r-6ck.label</key>
+	<string>Загальні</string>
+	<key>tdD-8Q-JB2.title</key>
+	<string>Перевірити оновлення</string>
+	<key>u9F-yq-WC3.title</key>
+	<string>Про Mac Mouse Fix</string>
+	<key>vbN-zN-z2V.title</key>
+	<string>Модифікатори клавіатури:</string>
+	<key>wal-3r-ZZs.label</key>
+	<string>Про програму</string>
+</dict>
+</plist>

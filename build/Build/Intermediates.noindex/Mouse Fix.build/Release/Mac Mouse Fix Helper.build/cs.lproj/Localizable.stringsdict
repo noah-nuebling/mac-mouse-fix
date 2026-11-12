@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>capture-toast.buttons.captured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%2$@ jsou nyní zachyceny pomocí Mac Mouse Fix</string>
+			<key>many</key>
+			<string>%2$@ jsou nyní zachyceny pomocí Mac Mouse Fix</string>
+			<key>one</key>
+			<string>%2$@ je nyní zachyceno pomocí Mac Mouse Fix</string>
+			<key>other</key>
+			<string>%2$@ jsou nyní zachyceny pomocí Mac Mouse Fix</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.captured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Ostatní aplikace tato tlačítka již nevidí.</string>
+			<key>many</key>
+			<string>Ostatní aplikace tato tlačítka již nevidí.</string>
+			<key>one</key>
+			<string>Ostatní aplikace toto tlačítko již nevidí.</string>
+			<key>other</key>
+			<string>Ostatní aplikace tato tlačítka již nevidí.</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%2$@ již nejsou zachyceny Mac Mouse Fix</string>
+			<key>many</key>
+			<string>%2$@ již nejsou zachyceny Mac Mouse Fix</string>
+			<key>one</key>
+			<string>%2$@ již není zachyceno Mac Mouse Fix</string>
+			<key>other</key>
+			<string>%2$@ již nejsou zachyceny Mac Mouse Fix</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string></string>
+			<key>many</key>
+			<string></string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+</dict>
+</plist>

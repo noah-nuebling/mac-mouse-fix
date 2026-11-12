@@ -89,6 +89,17 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
             hardcodedWindowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]
         }
         
+        /// Never be narrower than the toolbar
+        ///     [Nov 2026] After adding the 'App-specific' tab, the toolbar has 5 buttons. In some languages (e.g. Italian) the hardcoded widths
+        ///         were narrower than the toolbar, so macOS moved the last button ('About') into a '>>' overflow menu.
+        if hardcodedWindowWidth! >= 0 {
+            let minWidth = toolbarMinimumWidth(tabController)
+            if hardcodedWindowWidth! < minWidth {
+                print("TBS widening tab '\(tabName)' from \(hardcodedWindowWidth!) to \(minWidth) to fit the toolbar")
+                hardcodedWindowWidth = minWidth
+            }
+        }
+        
         if (hardcodedWindowWidth! >= 0) {
             
             /// Set window width
@@ -123,4 +134,39 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
         print("TBS set windowWidth \(hardcodedWindowWidth!) for tab '\(tabName)' (\(tabController.view))")
         
     }
+}
+
+/// Estimates the window width needed to show all toolbar buttons without an overflow ('>>') menu.  [Nov 2026]
+///     Calibrated from measurements on macOS 26 (Italian UI):
+///         - Toolbar labels use the small system font (11pt).
+///         - Each button is about as wide as its label (or the ~32pt icon slot, if the label is shorter).
+///         - There's ~15pt between neighboring buttons, and the window needs ~20pt of margin on each side.
+///         - E.g. Italian: labels 274pt + 4 gaps + margins -> ~378pt. (340pt overflowed, 370pt barely fit.)
+func toolbarMinimumWidth(_ tabController: NSViewController) -> Double {
+    
+    guard let tabViewController = tabController.parent as? NSTabViewController else {
+        print("TBS toolbarMinimumWidth: \(tabController) has no NSTabViewController parent yet – not enforcing a minimum width")
+        return 0 /// Don't assert – this is just a safety net
+    }
+    
+    let hiddenTabs: Set<String> = ["initial", "pointer"] /// See `TabViewController.configureTabs()`
+    let labels = tabViewController.tabViewItems
+        .filter { !hiddenTabs.contains(($0.identifier as? String) ?? "") }
+        .map { $0.label }
+    guard !labels.isEmpty else { return 0 }
+    
+    let font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+    let iconSlotWidth = 32.0
+    let gap           = 16.0
+    let sideMargin    = 20.0
+    
+    var total = 0.0
+    for label in labels {
+        let labelWidth = ceil((label as NSString).size(withAttributes: [.font: font]).width)
+        total += max(labelWidth, iconSlotWidth)
+    }
+    total += gap * Double(labels.count - 1)
+    total += sideMargin * 2
+    
+    return ceil(total)
 }

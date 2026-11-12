@@ -2574,6 +2574,18 @@
         }
       }
     },
+    "bJl-uN-Inx.title" : {
+      "comment" : "Class = \"NSViewController\"; title = \"App-specific\"; ObjectID = \"bJl-uN-Inx\"; Note = \"Toolbar > App-specific Tab Title\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "App-specific"
+          }
+        }
+      }
+    },
     "bJS-hB-0l3.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Medium\"; ObjectID = \"bJS-hB-0l3\"; Note = \"Pointer > Acceleration > Medium Option\";",
       "extractionState" : "extracted_with_value",
@@ -2739,6 +2751,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "隱藏Mac Mouse Fix"
+          }
+        }
+      }
+    },
+    "BNp-Hb-Ayj.label" : {
+      "comment" : "Class = \"NSTabViewItem\"; label = \"App-specific\"; ObjectID = \"BNp-Hb-Ayj\"; Note = \"Toolbar > App-specific Tab Button. (Lets users turn off scrolling features for individual apps.)\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "App-specific"
           }
         }
       }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>capture-toast.buttons.captured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%2$@ тепер захоплені Mac Mouse Fix</string>
+			<key>many</key>
+			<string>%2$@ тепер захоплені Mac Mouse Fix</string>
+			<key>one</key>
+			<string>%2$@ тепер захоплено Mac Mouse Fix</string>
+			<key>other</key>
+			<string>%2$@ тепер захоплені Mac Mouse Fix</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.captured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Інші програми більше не можуть бачити ці кнопки</string>
+			<key>many</key>
+			<string>Інші програми більше не можуть бачити ці кнопки</string>
+			<key>one</key>
+			<string>Інша програма більше не може бачити ці кнопки</string>
+			<key>other</key>
+			<string>Інші програми більше не можуть бачити ці кнопки</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%2$@ більше не захоплені Mac Mouse Fix</string>
+			<key>many</key>
+			<string>%2$@ більше не захоплені Mac Mouse Fix</string>
+			<key>one</key>
+			<string>%2$@ більше не захоплено Mac Mouse Fix</string>
+			<key>other</key>
+			<string>%2$@ більше не захоплені Mac Mouse Fix</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Інші програми тепер знову можуть бачити ці кнопки</string>
+			<key>many</key>
+			<string>Інші програми тепер знову можуть бачити ці кнопки</string>
+			<key>one</key>
+			<string>Інші програми тепер знову можуть бачити кнопку</string>
+			<key>other</key>
+			<string>Інші програми тепер знову можуть бачити ці кнопки</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

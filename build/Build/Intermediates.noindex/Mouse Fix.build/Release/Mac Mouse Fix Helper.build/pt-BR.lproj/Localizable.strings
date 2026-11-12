@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>Abrir 'Privacidade e Segurança' em Ajustes do Sistema</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>Você **já está usando** a configuração padrão para mouses com **3 botões**</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>Você **já está usando** a configuração padrão para mouses com **5 ou mais botões**</string>
+	<key>app-version</key>
+	<string>Versão %@</string>
+	<key>apple-key-fallback.backward</key>
+	<string>&lt;Tecla de retroceder&gt;</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>&lt;Avanço rápido&gt;</string>
+	<key>apple-key-fallback.globe</key>
+	<string>&lt;Tecla do Seletor de Emoji&gt;</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>&lt;Aumentar brilho do teclado&gt;</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>&lt;Diminuir brilho do teclado&gt;</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>&lt;Tecla do Spotlight&gt;</string>
+	<key>apple-key-fallback.mic</key>
+	<string>&lt;Tecla de Ditado&gt;</string>
+	<key>apple-key-fallback.moon</key>
+	<string>&lt;Não Perturbe&gt;</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>&lt;Reproduzir ou Pausar&gt;</string>
+	<key>apple-key-fallback.power</key>
+	<string>&lt;Botão de energia&gt;</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>&lt;Mission Control&gt;</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>&lt;Silenciar&gt;</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>&lt;Diminuir volume&gt;</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>&lt;Aumentar volume&gt;</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>&lt;Launchpad&gt;</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>&lt;Aumentar brilho&gt;</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>&lt;Diminuir brilho&gt;</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>&lt;Tecla sem descrição&gt;</string>
+	<key>beta-alert.back</key>
+	<string>Cancelar</string>
+	<key>beta-alert.body</key>
+	<string>Versões beta podem apresentar vários problemas.
+Se encontrar algum, envie seu feedback.
+Obrigado!</string>
+	<key>beta-alert.confirm</key>
+	<string>Receber versões beta</string>
+	<key>beta-alert.title</key>
+	<string>Quer receber as versões beta?</string>
+	<key>button-name.tool.numbered</key>
+	<string>Botão do Mouse %@</string>
+	<key>buy-mouse-alert.body</key>
+	<string>Use um mouse com 5 ou mais botões para liberar todo o potencial do Mac Mouse Fix!</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>OK</string>
+	<key>buy-mouse-alert.title</key>
+	<string>Seu mouse tem apenas 3 botões</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>Botão do Meio</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>Botão %@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>Botão Primário</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>Botão Secundário</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[Saiba mais](%@)</string>
+	<key>capture-toast.scroll.captured.body</key>
+	<string>A **rolagem** agora está sendo controlada pelo Mac Mouse Fix</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[Saiba mais](%@)</string>
+	<key>capture-toast.scroll.uncaptured.body</key>
+	<string>A **rolagem** não está sendo controlada pelo Mac Mouse Fix</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Spaces e Mission Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>Mova o Mouse:
+ - Para cima para mostrar o Mission Control
+ - Para baixo para mostrar as Janelas do Aplicativo Aberto
+ - Esquerda ou Direita para mover entre os Espaços da Mesa
+ 
+Funciona como deslizar com três dedos em um Trackpad da Apple</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>Role e Navegue</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>Role livremente movendo o Mouse para qualquer direção
+ 
+Navegue também entre páginas do Safari, exclua mensagens no Mail e muito mais, movendo o Mouse para a esquerda e para a direita
+ 
+Funciona como deslizar com dois dedos em um Trackpad da Apple</string>
+	<key>effect.app-expose</key>
+	<string>Janelas do Aplicativo</string>
+	<key>effect.app-expose.hint</key>
+	<string>Exibir todas as Janelas do Aplicativo ativo</string>
+	<key>effect.apple-keys-submenu</key>
+	<string> Teclas Exclusivas</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Escolha teclas que estão disponíveis apenas em teclados Apple</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Funciona como pressionar '%@' em um teclado Apple</string>
+	<key>effect.back</key>
+	<string>Voltar</string>
+	<key>effect.back.hint</key>
+	<string>Volte uma página no Safari e em outros aplicativos</string>
+	<key>effect.click.middle</key>
+	<string>Botão do Meio</string>
+	<key>effect.click.middle.hint</key>
+	<string>Abra links em uma nova aba, cole texto no Terminal e muito mais.
+ 
+Funciona como clicar Botão do Meio do Mouse (também chamado de Botão da de Rolagem ou 3º Botão do Mouse) em um Mouse padrão.</string>
+	<key>effect.click.primary</key>
+	<string>Clique Primário</string>
+	<key>effect.click.primary.hint</key>
+	<string>Funciona como clicar em Botão Primário do Mouse (também chamado de Botão Esquerdo ou 1º Botão do Mouse) em um Mouse padrão.</string>
+	<key>effect.click.secondary</key>
+	<string>Clique Secundário</string>
+	<key>effect.click.secondary.hint</key>
+	<string>Funciona como clicar em Botão Secundário do Mouse (também chamado de Botão Direito ou 2º Botão do Mouse) em um Mouse padrão.</string>
+	<key>effect.desktop</key>
+	<string>Exibir Mesa</string>
+	<key>effect.desktop.hint</key>
+	<string>Exibe a Mesa</string>
+	<key>effect.forward</key>
+	<string>Avançar</string>
+	<key>effect.forward.hint</key>
+	<string>Avance uma página no Safari e em outros aplicativos</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Abrir Launchpad</string>
+	<key>effect.left-space</key>
+	<string>Mova para a Mesa à esquerda</string>
+	<key>effect.left-space.hint</key>
+	<string>Mova para a Mesa à esquerda criada no Mission Control</string>
+	<key>effect.look-up</key>
+	<string>Pesquisa e Visualização Rápida</string>
+	<key>effect.look-up.hint</key>
+	<string>Procure palavras no Dicionário, visualize arquivos sem abrir no Finder e muito mais.
+ 
+Funciona como um Force Touch em um Trackpad da Apple.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Exibir o Mission Control</string>
+	<key>effect.record-shortcut</key>
+	<string>Atalhos de Teclado...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>Digite um atalho de teclado e use-o com o Mouse</string>
+	<key>effect.right-space</key>
+	<string>Mova para a Mesa à direita</string>
+	<key>effect.right-space.hint</key>
+	<string>Mova para a Mesa à esquerda</string>
+	<key>effect.shortcut.hint</key>
+	<string>Funciona como pressionar '%@' no teclado</string>
+	<key>effect.smart-zoom</key>
+	<string>Zoom Inteligente</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Amplie ou reduza o zoom no Safari e em outros apps.
+ 
+Funciona como um toque duplo com dois dedos em um Trackpad da Apple.</string>
+	<key>enable-timeout-toast</key>
+	<string>Se você tiver **problemas para ativar** o app, clique [aqui](%@)</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>**O Botão Primário do Mouse** não pode ser utilizado
+Tente outro botão</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>**O Botão Secundário do Mouse** não pode ser utilizado
+Tente outro botão</string>
+	<key>free-country</key>
+	<string>Atualmente, o Mac Mouse Fix está gratuito em seu país (%@)</string>
+	<key>is-disabled-toast</key>
+	<string>O Mac Mouse Fix foi **desativado** nos Ajustes do Sistema
+
+Para ativá-lo:
+
+1. Vá para [Itens de Início](%@)
+2. Ative 'Mac Mouse Fix.app'</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>O Mac Mouse Fix não pode ser Ativado porque há **outra versão** do Mac Mouse Fix presente em seu computador
+
+Para ativar o Mac Mouse Fix:
+
+1. Exclua a [outra versão](%@)
+2. Esvazie a Lixeira
+3. Reinicie o seu Mac
+4. Tente novamente!</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>Falha na Ativação</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ e %2$@</string>
+	<key>license-button.activate</key>
+	<string>Ativar Licença</string>
+	<key>license-button.deactivate</key>
+	<string>Desativar Licença</string>
+	<key>license-toast.activate</key>
+	<string>Sua Licença foi **Ativada**! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>Esta licença foi ativada **%2$d** vezes, sendo que o máximo permitido é **%3$d** vezes.
+
+Para evitarmos pirataria, tivemos que invalidar esta licença. Se você tiver outros motivos para ativar a licença várias vezes, pedimos nossas sinceras desculpas e recomendamos que você [entre em contato](%1$@) para receber uma nova licença! Obrigado pela compreensão.</string>
+	<key>license-toast.already-active</key>
+	<string>Esta licença **já está ativada**!</string>
+	<key>license-toast.deactivate</key>
+	<string>Sua licença foi **desativada**</string>
+	<key>license-toast.free-country</key>
+	<string>Esta licença **não pôde ser ativada**, mas o Mac Mouse Fix está **gratuito em seu país**!</string>
+	<key>license-toast.gumroad-error</key>
+	<string>**Ocorreu um erro com o Servidor de Ativação**
+
+Descrição:
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>**Há um problema com a conexão à internet**
+
+Certifique-se de que seu computador esteja conectado à internet e que nenhum firewall esteja bloqueando o Mac Mouse Fix de se conectar.
+
+Se isso não resolver o problema, entre em contato comigo [aqui](%@).</string>
+	<key>license-toast.server-response-invalid</key>
+	<string>**Há um problema com o servidor de licenciamento**
+
+Tente novamente mais tarde.
+
+Se o problema persistir, entre em contato comigo [aqui](%@).</string>
+	<key>license-toast.unknown-error</key>
+	<string>**Ocorreu um erro desconhecido:**
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>'**%@**' não é uma chave de licença válida
+
+Tente uma chave diferente</string>
+	<key>license-toast.unknown-reason</key>
+	<string>A ativação da sua Licença falhou por **motivos desconhecidos**
+
+Por favor, envie um **Relatório de Bug** [aqui](%@)</string>
+	<key>macos-scrolling-hint</key>
+	<string>Defina a velocidade em
+[%1$@ &gt; Mouse &gt; Velocidade da Rolagem](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>Voltar</string>
+	<key>mail-alert.body</key>
+	<string>Obrigado pelo seu feedback! Leio e aprecio todos os e-mails, faço o possível para responder todos.</string>
+	<key>mail-alert.send</key>
+	<string>Escreva um Email</string>
+	<key>mail-alert.title</key>
+	<string>Deseja escrever um Email?</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>O conteúdo rastreia o movimento dos dedos</string>
+	<key>precise-scrolling-hint</key>
+	<string>Role com precisão, mesmo sem um modificador de teclado,
+movendo a roda de rolagem *lentamente*</string>
+	<key>restore-buttons-alert.back</key>
+	<string>Cancelar</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>Restaurar</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>Seu Mouse **%1$@** diz que tem **%2$d** botões</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>Mouse com 3 botões</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>Mouse com mais de 5 botões</string>
+	<key>restore-buttons-alert.title</key>
+	<string>Restaurar Padrão para ...</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string>**Clique aqui** para carregar as configurações recomendadas
+para seu Mouse **%@**</string>
+	<key>revive-toast</key>
+	<string>**Habilitado** Mac Mouse Fix para %1$@
+Ele foi desabilitado na barra de menu %2$@</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**Botões**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**Rolagem**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>Mesa e Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>Role para cima para acessar o Launchpad e para baixo para exibir a Mesa
+ 
+Funciona como pinçar com quatro dedos em um Trackpad da Apple</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>Alternador de Aplicativos</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>Alterne rapidamente entre aplicativos abertosem Funciona como segurar Command (⌘) e pressionar Tab (⇥) no teclado</string>
+	<key>scroll-effect.horizontal</key>
+	<string>Rolagem horizontal</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>Role para a esquerda e para a direita, navegue entre páginas no Safari, exclua mensagens no Mail e muito mais
+ 
+Funciona como deslizar horizontalmente com dois dedos em um Trackpad da Apple</string>
+	<key>scroll-effect.precise</key>
+	<string>Rolagem precisa</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>Role pequenas distâncias e use elementos sensíveis da interface do usuário com precisão</string>
+	<key>scroll-effect.rotate</key>
+	<string>Girar</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>Girar conteúdo no Apple Maps e em outros apps
+ 
+Funciona como girar com dois dedos em um Trackpad da Apple</string>
+	<key>scroll-effect.spaces</key>
+	<string>Mover entre Espaços</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>Role para cima para mover um espaço para a esquerda e para baixo para mover um espaço para a direitain Funciona como deslizar horizontalmente com 3 dedos em um Trackpad da Apple</string>
+	<key>scroll-effect.swift</key>
+	<string>Rolagem rápida</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>Percorra longas distâncias com o mínimo esforço</string>
+	<key>scroll-effect.zoom</key>
+	<string>Aumentar ou diminuir zoom</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Aumentar ou diminuir o zoom no Safari, no Maps e em outros apps
+ 
+Funciona como pinçar para ampliar em um Trackpad da Apple</string>
+	<key>system-settings-name</key>
+	<string>Ajustes Sistema</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>Preferências do Sistema</string>
+	<key>thanks.01</key>
+	<string>⭐️ Obrigado por adquirir o Mac Mouse Fix!</string>
+	<key>thanks.02</key>
+	<string>🌟 Obrigado por adquirir o Mac Mouse Fix!</string>
+	<key>thanks.03</key>
+	<string>🚀 Obrigado por apoiar o Mac Mouse Fix!</string>
+	<key>thanks.04</key>
+	<string>🙌 Obrigado por adquirir o Mac Mouse Fix!</string>
+	<key>thanks.05</key>
+	<string>🧠 Ótima decisão de compra! ;)</string>
+	<key>thanks.06</key>
+	<string>🔥 Gosto incrível em software de Mouse! ;)</string>
+	<key>thanks.09</key>
+	<string>👽 Compartilhe com seus amigos do Spacebook!</string>
+	<key>thanks.10</key>
+	<string>🏂 Aproveite a vida!!</string>
+	<key>thanks.13</key>
+	<string>📚 Não julgue um livro pela capa.</string>
+	<key>thanks.21</key>
+	<string>🐠 Que dia, hein!?</string>
+	<key>thanks.22</key>
+	<string>🐁 O bichinho de estimação do lojista!</string>
+	<key>thanks.25</key>
+	<string>🌏 Cuide do nosso Planeta!! &gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>Dias restantes **%1$d/%2$d**</string>
+	<key>trial-counter.expired</key>
+	<string>A versão de testes terminou</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>Ativar Licença</string>
+	<key>trial-notif.body</key>
+	<string>Olá! Você está usando o Mac Mouse Fix há **%1$d dias**. Espero que você esteja gostando!
+
+Se quiser continuar usando o Mac Mouse Fix, você pode [comprá-lo agora](%2$@).</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>Clique %@ +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>Duplo Clique %@ +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>Triplo Clique %@ +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>Botão do Meio</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>Botão %@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>Botão Primário</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>Botão Secundário</string>
+	<key>trigger.substring.click.1</key>
+	<string>Clique %@</string>
+	<key>trigger.substring.click.2</key>
+	<string>duplo clique %@</string>
+	<key>trigger.substring.click.3</key>
+	<string>triplo clique %@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>clique e arraste %@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>clique duas vezes e arraste %@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>clique três vezes e arraste %@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>e arraste</string>
+	<key>trigger.substring.hold.1</key>
+	<string>segure %@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>clique duas vezes e segure %@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>clique três vezes e segure %@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>clique e role %@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>clique duas vezes e role %@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>clique três vezes e role %@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>e role</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>Botão do Meio</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>Botão %@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>Botão Primário</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>Botão Secundário</string>
+	<key>type-shortcut-prompt</key>
+	<string>Digite um atalho de teclado</string>
+</dict>
+</plist>

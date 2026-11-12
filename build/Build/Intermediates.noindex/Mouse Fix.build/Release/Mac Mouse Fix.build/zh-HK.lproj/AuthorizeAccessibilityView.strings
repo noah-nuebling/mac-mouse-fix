@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>04N-yp-Qg1.title</key>
+	<string>輔助說明</string>
+	<key>0lz-be-kpl.title</key>
+	<string>取用「輔助使用」允許Mac Mouse Fix
+截取你的滑鼠和鍵盤訊號</string>
+	<key>46z-Nd-nh4.title</key>
+	<string>啟用「Mac Mouse Fix Helper」</string>
+	<key>72q-sS-xMS.title</key>
+	<string>⒈</string>
+	<key>9qp-gN-SZZ.title</key>
+	<string>開啟「私隱與保安」設定頁面</string>
+	<key>OSk-Cl-izW.title</key>
+	<string>允許Mac Mouse Fix取用「輔助使用」</string>
+	<key>RIR-VN-l6s.title</key>
+	<string>⒉</string>
+	<key>fK8-8z-KQn.ibShadowedToolTip</key>
+	<string>按住Shift（⇧）並按一下此圖像即可在Finder顯示「Mac Mouse Fix Helper.app」</string>
+	<key>u9c-up-oQG.title</key>
+	<string>取消</string>
+</dict>
+</plist>

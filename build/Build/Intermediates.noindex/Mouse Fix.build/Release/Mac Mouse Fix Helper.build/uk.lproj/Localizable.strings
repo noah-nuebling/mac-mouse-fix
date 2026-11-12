@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>Відкрийте параметр 'Приватність і безпека'</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>Ви **вже використовуєте** типові налаштування для миші з **3 кнопками**</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>Ви **вже використовуєте** типові налаштування для миші з **5+ кнопками**</string>
+	<key>app-version</key>
+	<string>Версія %@</string>
+	<key>apple-key-fallback.backward</key>
+	<string>&lt;􀊉 (Перемотування назад)&gt;</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>&lt;􀊋 (Перемотування вперед)&gt;</string>
+	<key>apple-key-fallback.globe</key>
+	<string>&lt;􀆪 (Емодзі)&gt;</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>&lt;􀇮 (Збільшення яскравості клавіатури)&gt;</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>&lt;􀇭 (Зменшення яскравості клавіатури)&gt;</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>&lt;􀊫 (Spotlight)&gt;</string>
+	<key>apple-key-fallback.mic</key>
+	<string>&lt;􀊰 (Диктування)&gt;</string>
+	<key>apple-key-fallback.moon</key>
+	<string>&lt;􀆹 (Не турбувати)&gt;</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>&lt;􀊇 (Відтворення або пауза)&gt;</string>
+	<key>apple-key-fallback.power</key>
+	<string>&lt;􀆨 (Живлення)&gt;</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>&lt;􀇴 (Mission Control)&gt;</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>&lt;􀊠 (Вимкнення звуку)&gt;</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>&lt;􀊤 (Зменшення гучності)&gt;</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>&lt;􀊨 (Збільшення гучності)&gt;</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>&lt;􀇵 (Launchpad)&gt;</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>&lt;􀆭 (Збільшення яскравості)&gt;</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>&lt;􀆫 (Зменшення яскравості)&gt;</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>&lt;(Без опису)&gt;</string>
+	<key>beta-alert.body</key>
+	<string>Бета-версії можуть мати багато проблем.
+Не забудьте залишити відгук, якщо ви зіткнетеся з однією з них.
+Дякуємо!</string>
+	<key>beta-alert.confirm</key>
+	<string>Отримувати бета версії</string>
+	<key>beta-alert.title</key>
+	<string>Отримувати бета-версії?</string>
+	<key>button-name.tool.numbered</key>
+	<string>Кнопка %@</string>
+	<key>buy-mouse-alert.body</key>
+	<string>Використовуйте мишу з 5+ кнопками, щоб розкрити весь потенціал Mac Mouse Fix!</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>Гаразд</string>
+	<key>buy-mouse-alert.title</key>
+	<string>Ваша миша має лише 3 кнопки</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>Середня кнопка</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>Кнопка %@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>Основна кнопка</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>Допоміжна кнопка</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[Дізнатися більше](%@)</string>
+	<key>capture-toast.scroll.captured.body</key>
+	<string>**Прокручання** захоплено Mac Mouse Fix</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[Дізнатися більше](%@)</string>
+	<key>capture-toast.scroll.uncaptured.body</key>
+	<string>**Прокрутка** більше не захоплена Mac Mouse Fix</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Простори та Mission Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>Перемістіть вашу мишу:
+ - Вверх щоб показати Mission Control
+ - Вниз щоб показати App Exposé
+ - Ліворуч або Праворуч щоб переміститись між Просторами
+ 
+Працює як проведення 3 пальцями по трекпеду Apple</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>Прокрутка та Навігація</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>Прокручуйте вільно, рухаючи мишею в будь-якому напрямку
+ 
+Також переміщуйтеся між сторінками в Safari, видаляйте повідомлення в Mail та багато іншого, переміщуючи мишу вліво і вправо
+ 
+Працює як проведення двома пальцями на трекпеді Apple</string>
+	<key>effect.app-expose</key>
+	<string>App Exposé</string>
+	<key>effect.app-expose.hint</key>
+	<string>Показати всі вікна активної програми</string>
+	<key>effect.apple-keys-submenu</key>
+	<string> Ексклюзивні клавіші</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Виберіть клавіші, які доступні лише на клавіатурах Apple</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Працює як натискання '%@' на клавіатурі Apple</string>
+	<key>effect.back</key>
+	<string>Назад</string>
+	<key>effect.back.hint</key>
+	<string>Перейти назад на одну сторінку в Safari та інших програмах</string>
+	<key>effect.click.middle</key>
+	<string>Середнє клацання</string>
+	<key>effect.click.middle.hint</key>
+	<string>Відкривайте посилання в нових вкладках, уставляйте текст у Термінал тощо.
+ 
+Працює як клацання середньою кнопкою миші (також називається коліщатком або кнопкою 3) на звичайній миші.</string>
+	<key>effect.click.primary</key>
+	<string>Основне клацання</string>
+	<key>effect.click.primary.hint</key>
+	<string>Працює як клацання основної кнопки миші (також називається лівою кнопкою або кнопкою 1) звичайній миші.</string>
+	<key>effect.click.secondary</key>
+	<string>Допоміжне клацання</string>
+	<key>effect.click.secondary.hint</key>
+	<string>Працює як клацання допоміжної кнопки миші (також називається правою кнопкою або кнопкою 2) на звичайній миші.</string>
+	<key>effect.desktop</key>
+	<string>Показати Робочий Стіл</string>
+	<key>effect.desktop.hint</key>
+	<string>Показати робочий стіл</string>
+	<key>effect.forward</key>
+	<string>Уперед</string>
+	<key>effect.forward.hint</key>
+	<string>Перейти вперед на одну сторінку в Safari та інших програмах</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Відкрити Launchpad</string>
+	<key>effect.left-space</key>
+	<string>Пересунути на простір ліворуч</string>
+	<key>effect.left-space.hint</key>
+	<string>Перейти на один простір лівіше рухаючи мишею</string>
+	<key>effect.look-up</key>
+	<string>Пошук і Швидкий перегляд</string>
+	<key>effect.look-up.hint</key>
+	<string>Шукайте слова у словнику, файли швидкого пошуку у Finder тощо. 
+
+Працює як Сильне клацання на трекпеді Apple.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Показати Mission Control</string>
+	<key>effect.record-shortcut</key>
+	<string>Клавіатурні скорочення...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>Введіть комбінацію клавіш, а потім використовуйте її з миші</string>
+	<key>effect.right-space</key>
+	<string>Пересунути на простір праворуч </string>
+	<key>effect.right-space.hint</key>
+	<string>Перейти на один простір праіше рухаючи мишею</string>
+	<key>effect.shortcut.hint</key>
+	<string>Працює як клацання '%@' на клавіатурі</string>
+	<key>effect.smart-zoom</key>
+	<string>Динамічне масштабування</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Збільшуйте або зменшуйте масштаб у Safari та інших програмах. Працює як подвійне клацання двома пальцями на трекпеді Apple.</string>
+	<key>enable-timeout-toast</key>
+	<string>Якщо у вас виникли **проблеми з увімкненням** програми, клацніть [тут](%@)</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>**Основну кнопку миші** неможливо використовувати
+Будь ласка, спробуйте іншу кнопку</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>**Допоміжна кнопка миші** не може бути використана
+Будь ласка, спробуйте іншу кнопку</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix наразі безкоштовний у вашій країні (%@)</string>
+	<key>is-disabled-toast</key>
+	<string>Mac Mouse Fix було **вимкнено** у Системних параметрах
+
+Щоб увімкнути Mac Mouse Fix:
+
+1. Перейдіть до [Параметрів об’єктів входу](%@)
+2. Увімкніть 'Mac Mouse Fix.app'</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>Mac Mouse Fix не можна ввімкнути, оскільки на вашому комп'ютері є **інша версія** Mac Mouse Fix.
+
+Щоб увімкнути Mac Mouse Fix: 
+
+1. Видаліть [іншу версію](%@) 
+2. Очистіть смітник 
+3. Перезавантажте свій Mac 
+4. Спробуйте ще раз!</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>Ввімкнення Не Вдалося</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ і %2$@</string>
+	<key>license-button.activate</key>
+	<string>Активувати ліцензію</string>
+	<key>license-button.deactivate</key>
+	<string>Деактивувати ліцензію</string>
+	<key>license-toast.activate</key>
+	<string>Ваша ліцензія була **активована**! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>Цю ліцензію активовано понад ліміт: **%2$d** Максимум – **%3$d**.
+
+Через це ліцензія була визнана недійсною. Це для запобігання піратству. Якщо у вас є інші причини активувати ліцензію так багато разів, будь ласка, вибачте за незручності.
+
+Просто [напишіть мені](%1$@), і я надам вам нову ліцензію! Дякую за розуміння.</string>
+	<key>license-toast.already-active</key>
+	<string>Ваша програма **вже ліцензована** з цим ключем</string>
+	<key>license-toast.deactivate</key>
+	<string>Ваша ліцензія була **деактивована**</string>
+	<key>license-toast.free-country</key>
+	<string>Цю ліцензію **не можна активувати**, але Mac Mouse Fix наразі **безкоштовно у вашій країні**.</string>
+	<key>license-toast.gumroad-error</key>
+	<string>Сталася **помилка з сервером ліцензування** 
+
+Він каже: 
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>Виникла **проблема з підключенням до інтернету**
+
+Переконайтеся, що ваш комп’ютер підключений до мережі та що брандмауери не блокують доступ Mac Mouse Fix до інтернету.
+
+Якщо це не вирішить проблему, зв’яжіться зі мною [тут](%@).</string>
+	<key>license-toast.server-response-invalid</key>
+	<string>Виникла **проблема з сервером ліцензування**
+
+Будь ласка, спробуйте пізніше.
+
+Якщо проблема не зникне, зв’яжіться зі мною [тут](%@).</string>
+	<key>license-toast.unknown-error</key>
+	<string>Сталася **невідома помилка**:
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>'**%@**' не є дійсним ключем
+
+Переконайтеся, що ви ввели ключ для Mac Mouse Fix саме так, як ви його отримали.</string>
+	<key>license-toast.unknown-reason</key>
+	<string>Активація вашої ліцензії не вдалася з **невідомих причин**
+
+Будь ласка, надішліть **Звіт про помилку** [тут](%@)</string>
+	<key>macos-scrolling-hint</key>
+	<string>Встановіть швидкість у
+[%1$@ &gt; Миша &gt; Швидкість прокрутки](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>Назад</string>
+	<key>mail-alert.body</key>
+	<string>Я відповідаю рідко, але читаю всі повідомлення, і ваші відгуки допомагають мені вдосконалювати Mac Mouse Fix. Дякую за ваш відгук!</string>
+	<key>mail-alert.send</key>
+	<string>Написати е-лист</string>
+	<key>mail-alert.title</key>
+	<string>Написати е-лист?</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>Вміст слідує за рухом пальців</string>
+	<key>precise-scrolling-hint</key>
+	<string>Прокручуйте точно навіть без модифікатора, повільно повертаючи *коліщатко*</string>
+	<key>restore-buttons-alert.back</key>
+	<string>Скасувати</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>Відновити</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>Ваша миша (**%1$@**) має **%2$d** кнопок</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>Миша з 3 кнопками</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>Миша з 5+ кнопками</string>
+	<key>restore-buttons-alert.title</key>
+	<string>Відновити за замовчуванням для ...</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string>**Клацніть тут**, щоб завантажити рекомендовані налаштування для вашої миші (**%@**)</string>
+	<key>revive-toast</key>
+	<string>**Увімкнено** Mac Mouse Fix для %1$@
+Це було відключено з меню&amp;nbsp;Bar&amp;nbsp;%2$@</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**Кнопки**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**Прокрутка**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>Робочий стіл та Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>Прокрутіть вгору для Launchpad і вниз, щоб показати робочий стіл
+ 
+Працює як розведення/зведення 4 пальців на трекпеді Apple</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>Перемикач програм</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>Швидко перемикайтеся між відкритими програмами
+ 
+Працює як утримування Command (⌘) та клацання Tab (⇥) на клавіатурі</string>
+	<key>scroll-effect.horizontal</key>
+	<string>Горизонтальна прокрутка</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>Прокручуйте вліво та вправо, переходьте між сторінками в Safari, видаляйте повідомлення в Пошті та багато іншого
+ 
+Працює як проведення двома пальцями по трекпеду Apple</string>
+	<key>scroll-effect.precise</key>
+	<string>Точна прокрутка</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>Прокручуйте на невеликі відстані та з точністю використовуйте чутливі елементи інтерфейсу</string>
+	<key>scroll-effect.rotate</key>
+	<string>Поворот</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>Повертайте вміст в Apple Maps та інших програмах
+ 
+Працює як поворот двома пальцями на трекпеді Apple</string>
+	<key>scroll-effect.spaces</key>
+	<string>Перехід між просторами</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>Прокрутіть вгору, щоб перейти ліворуч на Простір, і вниз, щоб перейти праворуч
+ 
+Працює як проведення трьома пальцями по трекпеду Apple</string>
+	<key>scroll-effect.swift</key>
+	<string>Швидка прокрутка</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>Прокручуйте великі відстані з мінімальними зусиллями</string>
+	<key>scroll-effect.zoom</key>
+	<string>Масштаб</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Змінюйте масштаб у Safari, Картах та інших програмах
+ 
+Працює як масштабування пальцями на трекпеді Apple</string>
+	<key>system-settings-name</key>
+	<string>Системні параметри</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>Системні параметри</string>
+	<key>thanks.01</key>
+	<string>⭐️ Дякую Тобі за покупку Mac Mouse Fix!</string>
+	<key>thanks.02</key>
+	<string>🙌 Дякую за покупку Mac Mouse Fix!</string>
+	<key>thanks.03</key>
+	<string>🚀 Дякую за підтримку Mac Mouse Fix!</string>
+	<key>thanks.04</key>
+	<string>🌟 Дякую за придбання Mac Mouse Fix!</string>
+	<key>thanks.05</key>
+	<string>🧠 Чудове рішення про покупку! ;)</string>
+	<key>thanks.06</key>
+	<string>🔥 Чудовий смак у виборі ПЗ для миші! ;)</string>
+	<key>thanks.09</key>
+	<string>👽 Поділіться цим зі своїми друзями у Spacebook!</string>
+	<key>thanks.10</key>
+	<string>🦆 Entengang für immer</string>
+	<key>thanks.13</key>
+	<string>🐹 Ми повинні дістати йому краватку-метелика.</string>
+	<key>thanks.21</key>
+	<string>🐠 Що... Ти... Таке?</string>
+	<key>thanks.22</key>
+	<string>🐁 Особистий улюбленець торговця!</string>
+	<key>thanks.25</key>
+	<string>🌍 Спочатку мишки, потім — увесь світ!! &gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>Безкоштовний день **%1$d/%2$d**</string>
+	<key>trial-counter.expired</key>
+	<string>Безкоштовні дні закінчилися</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>Активувати ліцензію</string>
+	<key>trial-notif.body</key>
+	<string>Вітаємо! Ви користуєтеся Mac Mouse Fix уже **%1$d дн.** Сподіваємося, вам подобається!
+
+Якщо ви хочете продовжувати користуватися Mac Mouse Fix, ви можете [купити його зараз](%2$@).</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>Клацання %@ +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>Подвійне клацання %@ +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>Потрійне клацання %@ +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>Середня кнопка</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>Кнопка %@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>Основна кнопка</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>Другорядна кнопка</string>
+	<key>trigger.substring.click.1</key>
+	<string>Клацання %@</string>
+	<key>trigger.substring.click.2</key>
+	<string>Подвійне клацання %@</string>
+	<key>trigger.substring.click.3</key>
+	<string>Потрійне клацання %@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>Клацання та *Перетягування* %@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>Подвійне клацання та *Перетягування* %@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>Потрійне клацання та *Перетягування* %@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>і *Перетягування*</string>
+	<key>trigger.substring.hold.1</key>
+	<string>Утримування %@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>Подвійне клацання та утримування %@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>Потрійне клацання та утримування %@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>Клацання та *Прокрутка* %@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>Подвійне клацання та *Прокрутка* %@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>Потрійне клацання та *Прокрутка* %@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>і *Прокрутка*</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>Середня кнопка</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>Кнопка %@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>Основна кнопка</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>Другорядна кнопка</string>
+	<key>type-shortcut-prompt</key>
+	<string>Введіть комбінацію клавіш</string>
+</dict>
+</plist>

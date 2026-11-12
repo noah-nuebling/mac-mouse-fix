@@ -1,0 +1,12 @@
+{
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSTableView.swift" : {
+    "abi-baseline-json" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa.abi.json",
+    "const-values" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary.swiftconstvalues",
+    "dependencies" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary.d",
+    "diagnostics" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary.dia",
+    "objc-header" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-Swift.h",
+    "swiftdoc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa.swiftdoc",
+    "swiftmodule" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa.swiftmodule",
+    "swiftsourceinfo" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa.swiftsourceinfo"
+  }
+}

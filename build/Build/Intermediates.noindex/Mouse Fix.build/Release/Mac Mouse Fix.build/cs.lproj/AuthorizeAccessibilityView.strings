@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>04N-yp-Qg1.title</key>
+	<string>Help</string>
+	<key>0lz-be-kpl.title</key>
+	<string>Povolení ve Zpřístupnění umožní Mac Mouse Fix 
+sledování vstupů myši a klávesnice</string>
+	<key>46z-Nd-nh4.title</key>
+	<string>Povolte přístup 'Mac Mouse Fix Helper'</string>
+	<key>72q-sS-xMS.title</key>
+	<string>1.</string>
+	<key>9qp-gN-SZZ.title</key>
+	<string>Otevřete nastavení 'Soukromí a zabezpečení'</string>
+	<key>OSk-Cl-izW.title</key>
+	<string>Udělení přístupu Mac Mouse Fix</string>
+	<key>RIR-VN-l6s.title</key>
+	<string>2.</string>
+	<key>fK8-8z-KQn.ibShadowedToolTip</key>
+	<string>Podržte klávesu Shift (⇧) a klikněte na tuto ikonu, čímž se ve Finderu zobrazí soubor 'Mac Mouse Fix Helper.app'.</string>
+	<key>u9c-up-oQG.title</key>
+	<string>Zrušit</string>
+</dict>
+</plist>

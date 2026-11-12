@@ -1,0 +1,266 @@
+{
+  "" : {
+    "const-values" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ReactiveSwift-macOS-primary.swiftconstvalues",
+    "dependencies" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ReactiveSwift-macOS-primary.d",
+    "diagnostics" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ReactiveSwift-macOS-primary.dia",
+    "emit-module-dependencies" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ReactiveSwift-macOS-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ReactiveSwift-macOS-primary-emit-module.dia",
+    "pch" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ReactiveSwift-macOS-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ReactiveSwift-macOS-primary.swiftdeps"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Action.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Action.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Action.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Action.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Atomic.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Atomic.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Atomic.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Atomic.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Bag.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Bag.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Bag.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Bag.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Deprecations+Removals.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Deprecations+Removals.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Deprecations+Removals.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Deprecations+Removals.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Disposable.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Disposable.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Disposable.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Disposable.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Event.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Event.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Event.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Event.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/EventLogger.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/EventLogger.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/EventLogger.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/EventLogger.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Flatten.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Flatten.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Flatten.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Flatten.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/FoundationExtensions.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/FoundationExtensions.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/FoundationExtensions.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/FoundationExtensions.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Lifetime.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Lifetime.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Lifetime.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Lifetime.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/AttemptMap.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/AttemptMap.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/AttemptMap.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/AttemptMap.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Collect.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Collect.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Collect.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Collect.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/CollectEvery.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CollectEvery.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CollectEvery.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CollectEvery.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/CombinePrevious.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CombinePrevious.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CombinePrevious.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CombinePrevious.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/CompactMap.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CompactMap.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CompactMap.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/CompactMap.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Debounce.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Debounce.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Debounce.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Debounce.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Delay.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Delay.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Delay.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Delay.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Dematerialize.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Dematerialize.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Dematerialize.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Dematerialize.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/DematerializeResults.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/DematerializeResults.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/DematerializeResults.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/DematerializeResults.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Filter.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Filter.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Filter.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Filter.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/LazyMap.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/LazyMap.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/LazyMap.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/LazyMap.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Map.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Map.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Map.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Map.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/MapError.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/MapError.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/MapError.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/MapError.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Materialize.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Materialize.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Materialize.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Materialize.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/MaterializeAsResult.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/MaterializeAsResult.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/MaterializeAsResult.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/MaterializeAsResult.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/ObserveOn.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ObserveOn.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ObserveOn.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ObserveOn.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Observer.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Observer.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Observer.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Observer.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Operators.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Operators.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Operators.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Operators.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Reduce.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Reduce.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Reduce.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Reduce.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/ScanMap.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ScanMap.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ScanMap.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ScanMap.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/SkipFirst.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipFirst.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipFirst.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipFirst.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/SkipRepeats.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipRepeats.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipRepeats.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipRepeats.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/SkipWhile.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipWhile.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipWhile.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SkipWhile.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/TakeFirst.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeFirst.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeFirst.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeFirst.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/TakeLast.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeLast.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeLast.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeLast.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/TakeUntil.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeUntil.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeUntil.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeUntil.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/TakeWhile.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeWhile.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeWhile.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/TakeWhile.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/Throttle.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Throttle.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Throttle.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Throttle.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/UnaryAsyncOperator.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UnaryAsyncOperator.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UnaryAsyncOperator.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UnaryAsyncOperator.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Observers/UniqueValues.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UniqueValues.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UniqueValues.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UniqueValues.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Optional.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Optional.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Optional.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Optional.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Property.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Property.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Property.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Property.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Reactive.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Reactive.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Reactive.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Reactive.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/ResultExtensions.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ResultExtensions.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ResultExtensions.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ResultExtensions.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Scheduler.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Scheduler.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Scheduler.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Scheduler.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Signal.Observer.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Signal.Observer.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Signal.Observer.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Signal.Observer.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/Signal.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Signal.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Signal.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/Signal.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/SignalProducer.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SignalProducer.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SignalProducer.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/SignalProducer.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/UnidirectionalBinding.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UnidirectionalBinding.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UnidirectionalBinding.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UnidirectionalBinding.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/UninhabitedTypeGuards.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UninhabitedTypeGuards.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UninhabitedTypeGuards.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/UninhabitedTypeGuards.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveSwift-7.1.1/Sources/ValidatingProperty.swift" : {
+    "index-unit-output-path" : "/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ValidatingProperty.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ValidatingProperty.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/Objects-normal/x86_64/ValidatingProperty.o"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": 0,
+  "use-external-names": false,
+  "case-sensitive": false,
+  "roots": [{
+    "type": "directory",
+    "name": "/Users/win/mac-mouse-fix/build/Build/Products/Release/ReactiveSwift.framework/Modules",
+    "contents": [{
+      "type": "file",
+      "name": "module.modulemap",
+      "external-contents": "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    "type": "directory",
+    "name": "/Users/win/mac-mouse-fix/build/Build/Products/Release/ReactiveSwift.framework/Headers",
+    "contents": [{
+      "type": "file",
+      "name": "ReactiveSwift-Swift.h",
+      "external-contents": "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveSwift.build/Release/ReactiveSwift-macOS.build/unextended-interface-header.h",
+    }]
+  }]
+}

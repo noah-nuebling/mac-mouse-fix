@@ -1,0 +1,21 @@
+dependencies: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/SDKSettings.json \
+  /Users/win/mac-mouse-fix/Shared/UI/NSView+Additions.m \
+  /Users/win/mac-mouse-fix/Shared/UI/NSView+Additions.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Cocoa-5F5NQF8KP5ABO461TJVQWMBPI.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ObjectiveC.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/IOKit.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Cocoa.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/Shared/Extensions/NSArray+Additions.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/SharedUtility.h \
+  /Users/win/mac-mouse-fix/Shared/Constants.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Shorthands.h \
+  /Users/win/mac-mouse-fix/Shared/Math/VectorUtility.h \
+  /Users/win/mac-mouse-fix/Helper/Utility/ModificationUtility.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Macros/SharedMacros.h \
+  /Users/win/mac-mouse-fix/Helper/Core/Coordinate/MFEventTap.h \
+  /Users/win/mac-mouse-fix/Shared/Math/MathObjc.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Macros/MFDefer.h

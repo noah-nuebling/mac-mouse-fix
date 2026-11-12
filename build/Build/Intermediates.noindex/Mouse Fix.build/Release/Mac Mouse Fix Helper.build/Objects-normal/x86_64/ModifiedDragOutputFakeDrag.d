@@ -1,0 +1,31 @@
+dependencies: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/SDKSettings.json \
+  /Users/win/mac-mouse-fix/Helper/Core/Drag/Output/FakeDrag/ModifiedDragOutputFakeDrag.m \
+  /Users/win/mac-mouse-fix/Helper/Core/Drag/Output/FakeDrag/ModifiedDragOutputFakeDrag.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-9KGYWPIP84AHGVYYFFKI2I2PP.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/DarwinFoundation1.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ObjectiveC.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/IOKit.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/Helper/Core/Drag/ModifiedDrag.h \
+  /Users/win/mac-mouse-fix/Shared/Devices/Device.h \
+  /Users/win/mac-mouse-fix/Shared/Constants.h \
+  /Users/win/mac-mouse-fix/Shared/Math/VectorUtility.h \
+  /Users/win/mac-mouse-fix/Helper/Utility/ModificationUtility.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Shorthands.h \
+  /Users/win/mac-mouse-fix/Shared/IOKit/External/IOHIDEventTypes.h \
+  /Users/win/mac-mouse-fix/Shared/IOKit/External/IOHIDEventFieldDefs.h \
+  /Users/win/mac-mouse-fix/Shared/DisableSwiftBridging/DisableSwiftBridging.h \
+  /Users/win/mac-mouse-fix/Shared/Animation/DisplayLink.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Cocoa-8C01A86HXHBL4XRMOLSQLN5WZ.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Cocoa.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/Helper/Core/Drag/WarpDelta/WarpDeltaCompensator.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/SharedUtility.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Macros/SharedMacros.h \
+  /Users/win/mac-mouse-fix/Helper/Core/Coordinate/MFEventTap.h \
+  /Users/win/mac-mouse-fix/Shared/Math/MathObjc.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Macros/MFDefer.h \
+  /Users/win/mac-mouse-fix/Helper/Utility/HelperUtility.h

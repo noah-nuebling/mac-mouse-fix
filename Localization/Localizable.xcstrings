@@ -316,6 +316,149 @@
         }
       }
     },
+    "app-specific.add-panel.prompt" : {
+      "comment" : "Confirm button of the file picker that opens when clicking + in the 'App-specific' tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "app-specific.add-tooltip" : {
+      "comment" : "Tooltip for the + button in the 'App-specific' tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add an app"
+          }
+        }
+      }
+    },
+    "app-specific.column.app" : {
+      "comment" : "Column header in the 'App-specific' tab. The column lists the apps.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        }
+      }
+    },
+    "app-specific.column.horizontal" : {
+      "comment" : "Column header in the 'App-specific' tab. Checkbox: whether holding the keyboard modifier for horizontal scrolling (Scrolling > Keyboard Modifiers) works in this app. A modifier symbol like ⇧ is shown in front of this. Keep it short.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horizontal"
+          }
+        }
+      }
+    },
+    "app-specific.column.reverse" : {
+      "comment" : "Column header in the 'App-specific' tab. Checkbox: whether 'Reverse direction' (from the Scrolling tab) is used in this app. Keep it short.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reverse direction"
+          }
+        }
+      }
+    },
+    "app-specific.column.smooth" : {
+      "comment" : "Column header in the 'App-specific' tab. Checkbox: whether smooth scrolling is used in this app. Keep it short.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smooth scrolling"
+          }
+        }
+      }
+    },
+    "app-specific.column.zoom" : {
+      "comment" : "Column header in the 'App-specific' tab. Checkbox: whether holding the keyboard modifier for zooming (Scrolling > Keyboard Modifiers) works in this app. A modifier symbol like ⌘ is shown in front of this. Keep it short.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom"
+          }
+        }
+      }
+    },
+    "app-specific.empty" : {
+      "comment" : "Shown in the empty table of the 'App-specific' tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click + or drag apps here to add them"
+          }
+        }
+      }
+    },
+    "app-specific.globally-off-tooltip" : {
+      "comment" : "Tooltip on a disabled checkbox / column header in the 'App-specific' tab. Shown when the feature is turned off for all apps in the Scrolling tab, so there's nothing to turn off per app.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is turned off for all apps in the Scrolling tab"
+          }
+        }
+      }
+    },
+    "app-specific.hint" : {
+      "comment" : "Hint at the top of the 'App-specific' tab. Explains that unchecking a box turns off that feature only while the mouse pointer is over that app.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose which scrolling features to use while the pointer is over each app.\nEverywhere else, your settings from the Scrolling tab apply."
+          }
+        }
+      }
+    },
+    "app-specific.not-installed-tooltip" : {
+      "comment" : "Tooltip on an app in the 'App-specific' tab which isn't installed on this Mac anymore. %@ is the app's bundle identifier.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ isn't installed on this Mac"
+          }
+        }
+      }
+    },
+    "app-specific.remove-tooltip" : {
+      "comment" : "Tooltip for the – button in the 'App-specific' tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove the selected apps"
+          }
+        }
+      }
+    },
+    "app-specific.smooth-states-tooltip" : {
+      "comment" : "Tooltip on the three-state 'Smooth scrolling' checkbox / column header in the 'App-specific' tab. Empty box = off, dash = regular smoothness, checkmark = high smoothness. The smoothness names should match the 'Smoothness' options in the Scrolling tab.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty: Off\n–: Regular smoothness\n✓: High smoothness"
+          }
+        }
+      }
+    },
     "app-version" : {
       "comment" : "Note: %@ will be the app version, e.g. '3.0.0 (22027)'",
       "localizations" : {

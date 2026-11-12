@@ -1,0 +1,261 @@
+{
+  "" : {
+    "const-values" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary.swiftconstvalues",
+    "dependencies" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary.d",
+    "diagnostics" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary.dia",
+    "emit-module-dependencies" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary-emit-module.dia",
+    "pch" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveCocoa-macOS-primary.swiftdeps"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AnyObject+Lifetime.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/AnyObject+Lifetime.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/AnyObject+Lifetime.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/AnyObject+Lifetime.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/ActionProxy.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ActionProxy.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ActionProxy.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ActionProxy.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/AppKitReusableComponents.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/AppKitReusableComponents.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/AppKitReusableComponents.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/AppKitReusableComponents.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSButton.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSButton.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSButton.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSButton.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSCollectionView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSCollectionView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSCollectionView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSCollectionView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSControl.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSControl.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSControl.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSControl.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSImageView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSImageView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSImageView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSImageView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSPopUpButton.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSPopUpButton.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSPopUpButton.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSPopUpButton.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSSegmentedControl.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSSegmentedControl.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSSegmentedControl.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSSegmentedControl.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSSlider.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSSlider.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSSlider.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSSlider.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSTableView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTableView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTableView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTableView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSTextField.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTextField.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTextField.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTextField.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSTextView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTextView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTextView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSTextView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/AppKit/NSView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/CocoaAction.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/CocoaAction.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/CocoaAction.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/CocoaAction.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/CocoaTarget.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/CocoaTarget.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/CocoaTarget.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/CocoaTarget.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/DelegateProxy.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/DelegateProxy.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/DelegateProxy.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/DelegateProxy.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/Deprecations+Removals.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/Deprecations+Removals.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/Deprecations+Removals.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/Deprecations+Removals.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/DynamicProperty.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/DynamicProperty.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/DynamicProperty.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/DynamicProperty.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/NSObject+Association.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+Association.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+Association.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+Association.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/NSObject+BindingTarget.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+BindingTarget.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+BindingTarget.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+BindingTarget.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/NSObject+Intercepting.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+Intercepting.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+Intercepting.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+Intercepting.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/NSObject+KeyValueObserving.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+KeyValueObserving.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+KeyValueObserving.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+KeyValueObserving.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/NSObject+ObjCRuntime.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+ObjCRuntime.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+ObjCRuntime.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+ObjCRuntime.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/NSObject+ReactiveExtensionsProvider.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+ReactiveExtensionsProvider.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+ReactiveExtensionsProvider.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSObject+ReactiveExtensionsProvider.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/ObjC+Constants.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Constants.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Constants.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Constants.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/ObjC+Messages.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Messages.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Messages.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Messages.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/ObjC+Runtime.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Runtime.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Runtime.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Runtime.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/ObjC+RuntimeSubclassing.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+RuntimeSubclassing.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+RuntimeSubclassing.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+RuntimeSubclassing.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/ObjC+Selector.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Selector.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Selector.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ObjC+Selector.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/ReactiveSwift+Lifetime.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveSwift+Lifetime.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveSwift+Lifetime.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/ReactiveSwift+Lifetime.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/Shared/NSLayoutConstraint.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSLayoutConstraint.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSLayoutConstraint.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/NSLayoutConstraint.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/Synchronizing.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/Synchronizing.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/Synchronizing.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/Synchronizing.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIActivityIndicatorView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIActivityIndicatorView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIActivityIndicatorView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIActivityIndicatorView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIBarButtonItem.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIBarButtonItem.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIBarButtonItem.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIBarButtonItem.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIBarItem.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIBarItem.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIBarItem.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIBarItem.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIButton.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIButton.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIButton.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIButton.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UICollectionView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UICollectionView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UICollectionView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UICollectionView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIControl.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIControl.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIControl.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIControl.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIGestureRecognizer.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIGestureRecognizer.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIGestureRecognizer.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIGestureRecognizer.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIImageView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIImageView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIImageView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIImageView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIKitReusableComponents.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIKitReusableComponents.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIKitReusableComponents.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIKitReusableComponents.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UILabel.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UILabel.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UILabel.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UILabel.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UINavigationItem.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UINavigationItem.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UINavigationItem.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UINavigationItem.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIScrollView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIScrollView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIScrollView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIScrollView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UISegmentedControl.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UISegmentedControl.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UISegmentedControl.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UISegmentedControl.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UITableView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UITableView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UITableView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UITableView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIView.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIView.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIView.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIView.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/UIViewController.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIViewController.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIViewController.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UIViewController.o"
+  },
+  "/Users/win/mac-mouse-fix/Shared/External/ReactiveCocoa-12.0.0/ReactiveCocoa/UIKit/iOS/UISwitch.swift" : {
+    "index-unit-output-path" : "/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UISwitch.o",
+    "llvm-bc" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UISwitch.bc",
+    "object" : "/Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ReactiveCocoa.build/Release/ReactiveCocoa-macOS.build/Objects-normal/arm64/UISwitch.o"
+  }
+}

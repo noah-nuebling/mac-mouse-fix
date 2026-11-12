@@ -1,0 +1,4 @@
+
+module ReactiveCocoa.Swift {
+  header "ReactiveCocoa-Swift.h"
+}

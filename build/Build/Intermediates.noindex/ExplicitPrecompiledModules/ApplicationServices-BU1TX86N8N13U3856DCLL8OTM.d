@@ -1,0 +1,20 @@
+moduledependenciestarget: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/SDKSettings.json \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/_DarwinFoundation1-1VDC67GBDLCWAGJGSRZIBK7DT.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/usr/include/DarwinFoundation1.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/module.modulemap \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreServices-DKNZTXMUY76SYLKKTDJ51585S.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/usr/include/DarwinFoundation2.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/System/Library/Frameworks/CoreServices.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreText-7RS549T7PAKNWRRK2M27YHW77.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreText.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/ColorSync-ATQR43GLT0SIH4Y5BMQUA1KBT.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ColorSync.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/ImageIO-6LGS1R81O3QVYEWNY1IRUPCIF.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ImageIO.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-71ZS2YT1PCN8KUJR6W26I5FJK.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CUPS-B190OKVLQCOX1AQRDE7RRE71P.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/usr/include/cups.modulemap

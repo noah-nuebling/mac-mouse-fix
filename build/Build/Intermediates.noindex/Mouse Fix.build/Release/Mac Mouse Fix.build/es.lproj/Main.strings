@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>17P-PJ-tV1.title</key>
+	<string>Regular</string>
+	<key>1TU-wL-skT.title</key>
+	<string>Deshacer</string>
+	<key>2Uv-W7-hzJ.title</key>
+	<string>Ver Guías o Preguntar a la comunidad...</string>
+	<key>3pt-ka-lxV.title</key>
+	<string>Buscar actualizaciones...</string>
+	<key>4gx-d0-WNb.title</key>
+	<string>Desactivado</string>
+	<key>4hf-tQ-y76.title</key>
+	<string>Precisión</string>
+	<key>5yb-g8-Kcg.title</key>
+	<string>Ayudar a Traducir</string>
+	<key>6Nj-Ed-W5T.title</key>
+	<string>Desplazarse Horizontalmente</string>
+	<key>6Yt-gG-Nf9.title</key>
+	<string>Editar</string>
+	<key>6es-it-kDs.title</key>
+	<string>Eliminar</string>
+	<key>8pi-FV-zYE.title</key>
+	<string>Agradecimientos</string>
+	<key>97W-3h-SSc.title</key>
+	<string>Alto</string>
+	<key>A6t-UZ-2DE.title</key>
+	<string>Desplazarse con Precisión</string>
+	<key>AHn-zX-g4d.title</key>
+	<string>Moverse entre páginas en Safari desplazándose horizontalmente y más</string>
+	<key>AYu-sK-qS6.title</key>
+	<string>Menú principal</string>
+	<key>AqN-zN-yDS.title</key>
+	<string>Permite activar o desactivar rápidamente funciones como el desplazamiento suave.</string>
+	<key>Bnm-ze-Mca.title</key>
+	<string>Ocultar Mac Mouse Fix</string>
+	<key>DVS-lH-VBH.title</key>
+	<string>Ayuda</string>
+	<key>E0q-4e-axc.title</key>
+	<string>Medio</string>
+	<key>ENz-Ny-4ax.title</key>
+	<string>Desplazarse Rápidamente</string>
+	<key>FT8-zP-xsg.title</key>
+	<string>Bajo</string>
+	<key>Fp4-bf-cbR.title</key>
+	<string>Ayuda</string>
+	<key>Gr8-qh-oGd.title</key>
+	<string>Servicios</string>
+	<key>H4T-Rp-t33.title</key>
+	<string>Acercar o Alejar</string>
+	<key>Hur-83-2a2.title</key>
+	<string>Opciones...</string>
+	<key>IJF-sN-Wfw.title</key>
+	<string>Rehacer</string>
+	<key>ILO-GQ-vNk.title</key>
+	<string>Mostrar en la Barra de Menús</string>
+	<key>IQv-IB-iLA.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>InY-TB-ky6.title</key>
+	<string>Ventana</string>
+	<key>LTC-zW-sTp.title</key>
+	<string>Editar</string>
+	<key>Mck-5W-5lv.title</key>
+	<string>Obtener Versiones Beta</string>
+	<key>Mjk-wy-Z7C.label</key>
+	<string>Botones</string>
+	<key>N65-aN-Hxp.title</key>
+	<string>Simulación de Panel Táctil</string>
+	<key>N7H-9j-DIr.title</key>
+	<string>Mueva el puntero del ratón dentro del campo '+', luego haga *Clic* en un botón del ratón para asignarle una acción.
+También puede hacer *Doble Clic*, *Clic y arrastrar* y más.</string>
+	<key>NdF-Gb-mOK.title</key>
+	<string>Minimizar</string>
+	<key>Ozk-o9-C4a.title</key>
+	<string>Visitar el Sitio Web</string>
+	<key>QaW-cc-uzc.title</key>
+	<string>Enviarme un Correo Electrónico</string>
+	<key>RV9-5T-rvb.title</key>
+	<string>Activar Mac Mouse Fix</string>
+	<key>Rlr-89-4fc.title</key>
+	<string>Ocultar Otros</string>
+	<key>S3S-2l-eNQ.title</key>
+	<string>Cerrar</string>
+	<key>S6k-al-LbR.title</key>
+	<string>Pegar</string>
+	<key>SaY-fF-d1s.title</key>
+	<string>Se te notificará de las actualizaciones al abrir esta ventana.</string>
+	<key>SjO-Dq-CEX.title</key>
+	<string>Fluidez:</string>
+	<key>TrI-uu-DEN.title</key>
+	<string>Cómprame un Batido :)</string>
+	<key>UeD-ND-tYj.title</key>
+	<string>Salir de Mac Mouse Fix</string>
+	<key>X8q-Nk-Fwr.title</key>
+	<string>Servicios</string>
+	<key>YBT-Ar-F4S.title</key>
+	<string>Activar licencia...</string>
+	<key>Yyg-LD-A1v.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>ZMA-p0-2lf.title</key>
+	<string>Échale un Vistazo en GitHub</string>
+	<key>ZfY-xQ-tQl.title</key>
+	<string>Zoom</string>
+	<key>aZA-uL-uvx.title</key>
+	<string>Traer todo al frente</string>
+	<key>bGk-tB-fcH.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>bIE-g7-3St.title</key>
+	<string>Alto</string>
+	<key>bQf-qv-mvB.title</key>
+	<string>Enviar Comentarios</string>
+	<key>bew-ni-FnZ.title</key>
+	<string>Mac Mouse Fix permanece activado después de salir de la aplicación.</string>
+	<key>bgk-wr-o8T.title</key>
+	<string>No volver a recordarme</string>
+	<key>buH-zX-xXu.title</key>
+	<string>Acerca de</string>
+	<key>d0g-07-PaJ.title</key>
+	<string>Comprar Mac Mouse Fix...</string>
+	<key>d9S-X9-qM1.title</key>
+	<string>Botones</string>
+	<key>eLS-O0-A1x.title</key>
+	<string>General</string>
+	<key>eVc-l9-Z0h.title</key>
+	<string>Obtener Ayuda</string>
+	<key>fGs-UI-L0d.title</key>
+	<string>Mostrar Todo</string>
+	<key>fNA-5s-U4d.title</key>
+	<string>Ventana</string>
+	<key>fW3-4Q-yB8.title</key>
+	<string>macOS</string>
+	<key>gK0-1z-Pjv.title</key>
+	<string>Invertir dirección</string>
+	<key>hSC-BE-EZJ.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>iFe-4y-9Xa.title</key>
+	<string>Copiar</string>
+	<key>jOM-dH-pdc.label</key>
+	<string>Desplazamiento</string>
+	<key>l7d-al-Y14.title</key>
+	<string>Velocidad:</string>
+	<key>lrw-Lp-nQ4.title</key>
+	<string>Restaurar Valores Predeterminados...</string>
+	<key>mWQ-i7-vza.ibShadowedToolTip</key>
+	<string>Mantén pulsadas Comando (⌘) y Mayús (⇧), luego haz clic en este icono para mostrar el archivo de configuración de Mac Mouse Fix en el Finder.</string>
+	<key>oEX-Tp-9Cv.title</key>
+	<string>Seleccionar todo</string>
+	<key>pMz-a0-1UQ.title</key>
+	<string>Creado por Noah Nuebling</string>
+	<key>qcW-e9-BqR.title</key>
+	<string>Desplazamiento</string>
+	<key>rFn-h3-0EN.title</key>
+	<string>Cortar</string>
+	<key>rIq-3r-6ck.label</key>
+	<string>General</string>
+	<key>tdD-8Q-JB2.title</key>
+	<string>Buscar Actualizaciones</string>
+	<key>u9F-yq-WC3.title</key>
+	<string>Acerca de Mac Mouse Fix</string>
+	<key>vbN-zN-z2V.title</key>
+	<string>Modificadores de teclado:</string>
+	<key>wal-3r-ZZs.label</key>
+	<string>Acerca de</string>
+</dict>
+</plist>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>Otevřete nastavení 'Soukromí a zabezpečení'</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>**Již používáte** výchozí nastavení pro myš se **3 tlačítky**.</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>**Již používáte** výchozí nastavení pro myš s **5+ tlačítky**.</string>
+	<key>app-version</key>
+	<string>Verze %@</string>
+	<key>button-name.tool.numbered</key>
+	<string>Tlačítko myši %@</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>Prostřední tlačítko</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>Tlačítko %@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>Primární tlačítko</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>Sekundární tlačítko</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[Zjistěte více](%@)</string>
+	<key>capture-toast.scroll.captured.body</key>
+	<string>**Scrolování** je nyní ovládáno Mac Mouse Fix</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[Zjistěte více](%@)</string>
+	<key>capture-toast.scroll.uncaptured.body</key>
+	<string>Mac Mouse Fix již nezachycuje **scrolování**</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Plochy &amp; Mission Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>Pohybujte myší:
+- Nahoru pro zobrazení Mission Control
+- Dolů pro zobrazení oken aplikací
+- Doleva nebo doprava pro pohyb mezi Plochami
+
+Funguje jako přejetí třemi prsty na Apple Trackpadu</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>Posouvání a navigace</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>Volné posouvání pohybem myši v libovolném směru
+
+Také můžete procházet stránky v Safari, mazat zprávy v Mailu a provádět další operace pohybem myši doleva a doprava
+
+Funguje jako přejetí dvěma prsty na Apple Trackpadu</string>
+	<key>effect.app-expose</key>
+	<string>Okno aplikace</string>
+	<key>effect.app-expose.hint</key>
+	<string>Zobrazit všechna okna aktivní aplikace</string>
+	<key>effect.apple-keys-submenu</key>
+	<string> Klávesy</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Vyberte klávesy, které jsou dostupné pouze na klávesnicích Apple</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Funguje jako stisk '%@' na Apple klávesnici</string>
+	<key>effect.back</key>
+	<string>Zpět</string>
+	<key>effect.back.hint</key>
+	<string>Návrat o jednu stránku zpět v Safari a dalších aplikacích</string>
+	<key>effect.click.middle</key>
+	<string>Prostřední kliknutí</string>
+	<key>effect.click.middle.hint</key>
+	<string>Otevírání odkazů na nové kartě, vkládání textu v Terminálu a další.
+
+Funguje to jako kliknutí prostředním tlačítkem myši (také nazývaným kolečko nebo tlačítko myši 3) na standardní myši.</string>
+	<key>effect.click.primary</key>
+	<string>Primární kliknutí</string>
+	<key>effect.click.primary.hint</key>
+	<string>Funguje to jako kliknutí primárním tlačítkem myši (nazývané také levé tlačítko nebo tlačítko myši 1) na standardní myši.</string>
+	<key>effect.click.secondary</key>
+	<string>Sekundární kliknutí</string>
+	<key>effect.click.secondary.hint</key>
+	<string>Funguje to jako kliknutí  sekundárním tlačítkem myši (nazývané také pravé tlačítko myši nebo tlačítko myši 2) na standardní myši.</string>
+	<key>effect.desktop</key>
+	<string>Zobrazit Plochu</string>
+	<key>effect.desktop.hint</key>
+	<string>Zobrazit Plochu</string>
+	<key>effect.forward</key>
+	<string>Vpřed</string>
+	<key>effect.forward.hint</key>
+	<string>Přejít o jednu stránku vpřed v Safari a dalších aplikacích</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Otevřít Launchpad</string>
+	<key>effect.left-space</key>
+	<string>Posunout se v Ploše vlevo</string>
+	<key>effect.left-space.hint</key>
+	<string>Posunout se v Ploše vravo</string>
+	<key>effect.look-up</key>
+	<string>Vyhledat a Rychlý náhled</string>
+	<key>effect.look-up.hint</key>
+	<string>Vyhledávání slov ve slovníku, rychlé vyhledávání souborů ve Finderu a další.
+
+Funguje jako silné kliknutí (Force Click) na Apple Trackpadu.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Zobrazit Mission Control</string>
+	<key>effect.record-shortcut</key>
+	<string>Klávesová zkratka...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>Zadejte klávesovou zkratku a poté ji používejte pomocí myši</string>
+	<key>effect.right-space</key>
+	<string>Posunout se v Ploše vpravo</string>
+	<key>effect.right-space.hint</key>
+	<string>Posunout se v Ploše vpravo</string>
+	<key>effect.shortcut.hint</key>
+	<string>Funguje to jako stisknutí klávesy '%@' na klávesnici</string>
+	<key>effect.smart-zoom</key>
+	<string>Smart Zoom</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Přiblížení nebo oddálení v Safari a dalších aplikacích.
+
+Funguje jako dvojité klepnutí dvěma prsty na Apple Trackpad.</string>
+	<key>enable-timeout-toast</key>
+	<string>Pokud máte **problémy s aktivací** aplikace, klikněte [sem](%@)</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>**Primární tlačítko myši** nemůže být použito
+Prosím zvolte jiné tlačítko.</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>**Sekundární tlačítko myši** nemůže být použito
+Prosím zvolte jiné tlačítko.</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix je vaší zemi momentálně zdarma (%@)</string>
+	<key>is-disabled-toast</key>
+	<string>Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému
+
+Chcete-li Mac Mouse Fix povolit:
+
+1. Přejděte do [Nastavení položek přihlášení](%@)
+2. Zapněte aplikaci 'Mac Mouse Fix.app'</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>Nástroj Mac Mouse Fix nelze povolit, protože v počítači je **jiná verze** nástroje Mac Mouse Fix.
+
+Povolení nástroje Mac Mouse Fix:
+
+1. Odstraňte [jinou verzi](%@)
+2. Vysypte koš
+3. Restartujte Mac
+4. Zkuste to znovu!</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>Povolení se nezdařilo</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ and %2$@</string>
+	<key>license-button.activate</key>
+	<string>Aktivovat licenci</string>
+	<key>license-button.deactivate</key>
+	<string>Deaktivovat licenci</string>
+	<key>license-toast.activate</key>
+	<string>Vaše licence byla **aktivována**! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>Tato licence byla aktivována **%2$d** krát. Maximální počet aktivací je **%3$d**.
+
+Z tohoto důvodu byla licence zneplatněna. Důvodem je zabránění pirátství. Pokud máte důvody pro tolik aktivací licence, omluvte prosím nepříjemnosti.
+
+Stačí mne [kontaktovat](%1$@) a já vám poskytnu novou licenci! Děkuji za pochopení.</string>
+	<key>license-toast.already-active</key>
+	<string>Vaše aplikace je **již licencována** tímto klíčem</string>
+	<key>license-toast.deactivate</key>
+	<string>Vaše licence byla **deaktivována**</string>
+	<key>license-toast.free-country</key>
+	<string>Tato licence **nemůže být aktivována**, ale Mac Mouse Fix je **ve vaší zemi momentálně zdarma**</string>
+	<key>license-toast.gumroad-error</key>
+	<string>Chyba **licenčního serveru**
+
+Odpověď:
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>Nastala **chyba internetového připojení**
+
+Ujistěte se, že váš počítač je online a žádný firewall neblokuje připojení Mac Mouse Fix k serveru.
+
+Pokud ani to nepomůže, kontaktujte mě [zde](%@).</string>
+	<key>license-toast.server-response-invalid</key>
+	<string>Nastal **problém s licenčním serverem**.
+Prosím, zkuste to znovu.
+
+Pokud problém přetrvává, kontaktujte mě [zde](%@)</string>
+	<key>license-toast.unknown-error</key>
+	<string>Nastala **neznámá chyba**
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>'**%@**' je neplatný licenční klíč.
+
+Ujistěte se, že zadáváte klíč k Mac Mouse Fix přesně takový, jaký jste obdrželi.</string>
+	<key>license-toast.unknown-reason</key>
+	<string>Aktivování vaší licence selhalo z **neznámého důvodu**.
+
+Prosím **ohlaste chybu** [zde](%@)</string>
+	<key>macos-scrolling-hint</key>
+	<string>Nastavte rychlost zde
+[%1$@ &gt; Myš &gt; Rychlost posouvání](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>Zpět</string>
+	<key>mail-alert.body</key>
+	<string>Jen zřídka můžu odpovídat, ale čtu si všechny zprávy a zpětná vazba mi pomáhá vylepšit Mac Mouse Fix. Děkuji za vaši zpětnou vazbu!</string>
+	<key>mail-alert.send</key>
+	<string>Napiště Email</string>
+	<key>mail-alert.title</key>
+	<string>Napsat Email?</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>Obsah sleduje pohyb prstů</string>
+	<key>precise-scrolling-hint</key>
+	<string>Přesné posouvání i bez použití modifikační klávesy, *pomalým* pohybem rolovacího kolečka</string>
+	<key>restore-buttons-alert.back</key>
+	<string>Zrušit</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>Obnovit</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>Vaše myš (**%1$@**) má **%2$d** tlačítka</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>Myš se 3 tlačítky</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>Myš s 5+ tlačítky</string>
+	<key>restore-buttons-alert.title</key>
+	<string>Obnovit výchozí pro...</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string>**Klikněte sem** pro načtení doporučeného nastavení
+pro vaši myš (**%@**)</string>
+	<key>revive-toast</key>
+	<string>Aplikace Mac Mouse Fix **Povolena** pro %1$@
+Byla zakázána v Menu&amp;nbsp;Bar&amp;nbsp;%2$@</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**Tlačítka**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**Scrolování**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>Desktop a Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>Scrolujte nahoru pro Launchpad a dolů pro zobrazení Desktopu.
+
+Funguje jako sevření 4 prsty na Apple trackpadu.</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>Přepínač aplikací</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>Rychle přepíná mezi otevřenými aplikacemi
+
+Funguje jako přidržení klávesy Command (⌘) a současném stisku klávesy Tab (⇥) na vaší klávesnici.</string>
+	<key>scroll-effect.horizontal</key>
+	<string>Horizontální scrolování</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>Posouvání doleva a doprava, procházení stránek v Safari, mazání zpráv v Mailu a další
+
+Funguje jako horizontální přejetí dvěma prsty na Apple Trackpadu</string>
+	<key>scroll-effect.precise</key>
+	<string>Přesné scrolování</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>Posouvejte na malé vzdálenosti a používejte citlivé prvky uživatelského rozhraní s přesností</string>
+	<key>scroll-effect.rotate</key>
+	<string>Otočit</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>Otáčejte zobrazení v Apple mapách a dalších aplikacích.
+
+Funguje jako otáčení 2 prsty an Apple trackpadu.</string>
+	<key>scroll-effect.spaces</key>
+	<string>Pohyb mezi Plochami</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>Posunutím nahoru se posunete o jednu mezeru doleva a dolů se posunete o jednu mezeru doprava.
+
+Funguje jako vodorovné přejetí třemi prsty na Apple Trackpadu</string>
+	<key>scroll-effect.swift</key>
+	<string>Rychlé scrolování</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>Posouvání na velké vzdálenosti s minimálním úsilím.</string>
+	<key>scroll-effect.zoom</key>
+	<string>Přiblížit nebo Oddálit</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Přiblížení nebo oddálení v Safari, Mapách a dalších aplikacích
+
+Funguje jako přiblížení na trackpadu Apple sevřením prstů.</string>
+	<key>system-settings-name</key>
+	<string>Nastavení Systému</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>Nastavení Systému</string>
+	<key>thanks.01</key>
+	<string>⭐️ Děkujeme za zakoupení Mac Mouse Fix!</string>
+	<key>thanks.02</key>
+	<string>🙌  Děkujeme za zakoupení Mac Mouse Fix!</string>
+	<key>thanks.03</key>
+	<string>🚀  Děkujeme za podporu Mac Mouse Fix!</string>
+	<key>thanks.04</key>
+	<string>🌟 Děkujeme za zakoupení Mac Mouse Fix!</string>
+	<key>thanks.05</key>
+	<string>🧠 Skvělé rozhodnutí!</string>
+	<key>thanks.06</key>
+	<string>🔥 Skvělý vkus pro software pro opravu myši! ;)</string>
+	<key>thanks.09</key>
+	<string>👽 Sdílejte to se svými přáteli ze Spacebooku!</string>
+	<key>thanks.10</key>
+	<string>🦆 Entengang für immer</string>
+	<key>thanks.13</key>
+	<string>🐹 Měli bychom mu koupit motýlka.</string>
+	<key>thanks.21</key>
+	<string>🐠 Co... Jsi... Ty?</string>
+	<key>thanks.22</key>
+	<string>🐁 Obchodníkův osobní mazlíček!</string>
+	<key>thanks.25</key>
+	<string>🌏 Nejdřív myši, pak svět!! &gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>Zbývá **%1$d/%2$d** dnů zdarma.</string>
+	<key>trial-counter.expired</key>
+	<string>Testovací období skončilo.</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>Aktivujte licenci</string>
+	<key>trial-notif.body</key>
+	<string>Ahoj! Mac Mouse Fix používáš už **%1$d dní**. Doufám, že se ti líbí!
+
+Pokud chceš Mac Mouse Fix používat i nadále, můžeš si ho [koupit hned](%2$@).</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>Kliknutí %@ +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>Dvojklik %@ +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>Trojklik %@ +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>Prostřední tlačítko</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>Tlačítko %@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>Primární tlačítko</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>Sekundární tlačítko</string>
+	<key>trigger.substring.click.1</key>
+	<string>Kliknutí %@</string>
+	<key>trigger.substring.click.2</key>
+	<string>Dvojklik %@</string>
+	<key>trigger.substring.click.3</key>
+	<string>Trojklik %@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>Kliknutí a *tažení* %@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>Dvojklik a *tažení* %@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>Trojklik a *tažení* %@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>a *tažení*</string>
+	<key>trigger.substring.hold.1</key>
+	<string>Přidržte %@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>Dvojklik a přidržení %@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>Trojklik a přidržení %@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>Kliknutí a *scrolování* %@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>Dvojklik a *scrolování* %@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>Trojklik a *scrolování* %@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>a *scrolování*</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>Prostřední tlačítko</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>Tlačítko %@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>Primární tlačítko</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>Sekundaární tlačítko</string>
+	<key>type-shortcut-prompt</key>
+	<string>Zadejte klávesovou zkratku</string>
+</dict>
+</plist>

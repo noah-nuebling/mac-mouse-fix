@@ -1,0 +1,11 @@
+framework module ReactiveCocoa {
+	umbrella header "ReactiveCocoa.h"
+	private header "ObjCRuntimeAliases.h"
+
+	export *
+	module * { export * }
+}
+
+module ReactiveCocoa.__Swift {
+  exclude header "ReactiveCocoa-Swift.h"
+}

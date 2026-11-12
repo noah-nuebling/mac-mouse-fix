@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>開啟「私隱與保安」偏好設定</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>你**已經在使用**預設的**三鍵**滑鼠設定</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>你**已經在使用**預設的**五鍵**滑鼠設定</string>
+	<key>apple-key-fallback.backward</key>
+	<string>􀊉〔回帶鍵〕</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>􀊋〔快轉鍵〕</string>
+	<key>apple-key-fallback.globe</key>
+	<string>􀆪〔表情符號選擇器鍵〕</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>􀇮〔調高鍵盤亮度鍵〕</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>􀇭〔調低鍵盤亮度鍵〕</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>􀊫〔Spotlight鍵〕</string>
+	<key>apple-key-fallback.mic</key>
+	<string>􀊰〔聽寫鍵〕</string>
+	<key>apple-key-fallback.moon</key>
+	<string>􀆹〔請勿打擾鍵〕</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>􀊇〔播放／暫停鍵〕</string>
+	<key>apple-key-fallback.power</key>
+	<string>􀆨〔電源鍵〕</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>􀇴〔指揮中心鍵〕</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>􀊠〔靜音鍵〕</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>􀊤〔調低音量鍵〕</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>􀊨〔調高音量鍵〕</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>􀇵〔啟動台鍵〕</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>􀆭〔調高顯示器亮度鍵〕</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>􀆫〔調低顯示器亮度鍵〕</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>〔沒有描述的按鍵〕</string>
+	<key>beta-alert.back</key>
+	<string>取消</string>
+	<key>beta-alert.body</key>
+	<string>Beta版可能有許多問題。不要忘記回報你遇到的問題。多謝！</string>
+	<key>beta-alert.confirm</key>
+	<string>取得Beta版</string>
+	<key>beta-alert.title</key>
+	<string>取得Beta版？</string>
+	<key>button-name.tool.numbered</key>
+	<string>滑鼠按鈕%@</string>
+	<key>buy-mouse-alert.body</key>
+	<string>換一個五鍵或多鍵滑鼠來釋放Mac Mouse Fix的所有潛能</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>好</string>
+	<key>buy-mouse-alert.title</key>
+	<string>你的滑鼠只有三個按鈕</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>中間鍵</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>按鈕%@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>主要按鈕</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>輔助按鈕</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[了解更多](%@)</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[了解更多](%@)</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>空間與指揮中心</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>移動你的滑鼠：
+・向上來顯示指揮中心
+・向下來顯示應用程式視窗
+・向左或向右來切換「空間」
+ 
+作用相當於在Apple觸控板上用三指滑動</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>捲動與導覽</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>向任意方向移動你的滑鼠來自由捲動n 
+也可以左右移動來導覽Safari頁面、刪除「郵件」中的郵件等。
+ 
+作用相當於在Apple觸控板上用兩指滑動</string>
+	<key>effect.app-expose</key>
+	<string>應用程式視窗</string>
+	<key>effect.app-expose.hint</key>
+	<string>檢視所有已開啟的視窗</string>
+	<key>effect.apple-keys-submenu</key>
+	<string>獨有按鍵</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>選擇Apple鍵盤獨有的按鍵</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>作用相當於按下Apple鍵盤上的「%@」</string>
+	<key>effect.back</key>
+	<string>返回</string>
+	<key>effect.back.hint</key>
+	<string>在Safari和其他應用程式中返回上一頁</string>
+	<key>effect.click.middle</key>
+	<string>按中鍵</string>
+	<key>effect.click.middle.hint</key>
+	<string>以新分頁開啟連結、在終端機裏貼上文字等。
+ 
+作用相當於在標準滑鼠上按一下滑鼠中間鍵（又稱滑鼠滾輪按鈕或滑鼠按鈕３）。</string>
+	<key>effect.click.primary.hint</key>
+	<string>... 主要滑鼠按鈕（又稱滑鼠左側按鈕或滑鼠按鈕１） ...</string>
+	<key>effect.click.secondary.hint</key>
+	<string>… 輔助滑鼠按鈕（又稱滑鼠右側按鈕或滑鼠按鈕２） ...</string>
+	<key>effect.desktop</key>
+	<string>桌面</string>
+	<key>effect.desktop.hint</key>
+	<string>顯示桌面</string>
+	<key>effect.forward</key>
+	<string>往前</string>
+	<key>effect.forward.hint</key>
+	<string>在Safari和其他應用程式中往前一頁</string>
+	<key>effect.launchpad</key>
+	<string>啟動台</string>
+	<key>effect.launchpad.hint</key>
+	<string>開啟「啟動台」</string>
+	<key>effect.left-space</key>
+	<string>向左移動一個空間</string>
+	<key>effect.left-space.hint</key>
+	<string>向左移動一個空間</string>
+	<key>effect.look-up</key>
+	<string>查詢與快速查看</string>
+	<key>effect.look-up.hint</key>
+	<string>查詢辭典、在Finder「快速查看」等。
+ 
+作用相當於在Apple觸控板上用一指用力長按。</string>
+	<key>effect.mission-control</key>
+	<string>指揮中心</string>
+	<key>effect.mission-control.hint</key>
+	<string>顯示「指揮中心」</string>
+	<key>effect.record-shortcut</key>
+	<string>鍵盤快捷鍵</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>輸入鍵盤快捷鍵，然後在你的滑鼠上使用此快捷鍵</string>
+	<key>effect.right-space</key>
+	<string>向右移動一個空間</string>
+	<key>effect.right-space.hint</key>
+	<string>向右移動一個空間</string>
+	<key>effect.shortcut.hint</key>
+	<string>作用相當於在你的鍵盤上按下「%@」</string>
+	<key>effect.smart-zoom</key>
+	<string>智慧型縮放</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>在Safari和其他應用程式中放大或縮小。
+ 
+作用相當於在Apple觸控板上用兩指點兩下</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>不能使用**主要滑鼠按鈕**
+請換一個按鈕再試</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>不能使用**輔助滑鼠按鈕**
+請換一個按鈕再試</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix目前在你的國家或地區（%@）免費</string>
+	<key>is-disabled-toast</key>
+	<string>系統偏好設定中已**禁用**Mac Mouse Fix
+
+若要啟用Mac Mouse Fix：
+
+⒈前往[登入項目](%@)
+⒉開啟「Mac Mouse Fix.app」</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>無法啟用Mac Mouse Fix，因為你的電腦上已有**另一版本**的Mac Mouse Fix
+
+若要啟用Mac Mouse Fix：
+
+⒈刪除[其他版本](%@)
+⒉清空垃圾桶
+⒊重新啟動你的Mac
+⒋再試一次！</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>啟用失敗</string>
+	<key>join-list</key>
+	<string>、</string>
+	<key>join-list.last</key>
+	<string>%1$@、%2$@</string>
+	<key>license-button.activate</key>
+	<string>啟用許可證</string>
+	<key>license-button.deactivate</key>
+	<string>停用許可證</string>
+	<key>license-toast.activate</key>
+	<string>你的許可證已**啟用**！🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>此許可證已被啟用**%2$d**次。上限是**%3$d**次。
+
+因而此許可證已失效。這是為了防止盜版。如果你有其他原因需要如此多次啟用這個許可證，還望見諒。
+
+與我[聯絡](%1$@)，我會提供一個新的許可證給你！多謝理解。</string>
+	<key>license-toast.already-active</key>
+	<string>此許可證**已啟用**!</string>
+	<key>license-toast.deactivate</key>
+	<string>你的許可證**已停用**</string>
+	<key>license-toast.free-country</key>
+	<string>**無法啟用**此許可證，但Mac Mouse Fix目前**在你的國家或地區免費**！</string>
+	<key>license-toast.gumroad-error</key>
+	<string>**許可證伺服器發生錯誤**
+
+伺服器回應：
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>**沒有互聯網連線**
+
+當你的電腦連線時再次嘗試啟用許可證。</string>
+	<key>license-toast.unknown-error</key>
+	<string>**發生了未知錯誤：**
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>「**%@**」並不是已知的許可證。
+請換一個許可證再試。</string>
+	<key>license-toast.unknown-reason</key>
+	<string>由於**未知的原因**，許可證啟用失敗。
+
+請到[這裏](%@)報告**錯誤**</string>
+	<key>macos-scrolling-hint</key>
+	<string>設定速度：
+[%1$@ &gt; 滑鼠 &gt; 捲動速度](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>返回</string>
+	<key>mail-alert.body</key>
+	<string>我無法回覆所有的郵件，但我會閱讀並感謝所有的用戶意見</string>
+	<key>mail-alert.send</key>
+	<string>編寫郵件</string>
+	<key>mail-alert.title</key>
+	<string>編寫郵件？</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command（⌘）</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control（^）</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option（⌥）</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift（⇧）</string>
+	<key>natural-scrolling-hint</key>
+	<string>內容會隨着手指的方向移動</string>
+	<key>precise-scrolling-hint</key>
+	<string>*慢慢*滾動滾輪來精確捲動，甚至無需鍵盤變更鍵</string>
+	<key>restore-buttons-alert.back</key>
+	<string>取消</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>還原</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>你的**%1$@**滑鼠回報了**%2$d**個按鈕</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>三鍵滑鼠</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>五鍵或多鍵滑鼠</string>
+	<key>restore-buttons-alert.title</key>
+	<string>還原預設⋯</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string>**按一下這裏**來載入你的**%@**滑鼠的建議設定</string>
+	<key>revive-toast</key>
+	<string>**已啟用**Mac Mouse Fix調校：%1$@
+此前由選單列%2$@停用</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**按鈕**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**捲動**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>桌面與啟動台</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>向上捲動來顯示啟動台，向下捲動來顯示桌面
+ 
+作用相當於在Apple觸控板上四指分開或收合</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>App切換器</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>在已開啟的應用程式之間快速切換
+ 
+作用相當於在你的鍵盤上按住Command（⌘）然後按下Tab（⇥）</string>
+	<key>scroll-effect.horizontal</key>
+	<string>水平捲動</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>向左和向右捲動來導覽Safari頁面、刪除「郵件」中的郵件等
+ 
+作用相當於在Apple觸控板上用兩指左右滑動</string>
+	<key>scroll-effect.precise</key>
+	<string>精確捲動</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>精確地捲動小段距离、使用靈敏的介面元件</string>
+	<key>scroll-effect.rotate</key>
+	<string>旋轉</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>旋轉Apple地圖和其他應用程式中的內容
+ 
+作用相當於在Apple觸控板上用兩指旋轉</string>
+	<key>scroll-effect.spaces</key>
+	<string>切換「空間」</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>向上捲動來向左移動一個空間，向下捲動來向右移動一個空間
+ 
+作用相當於在Apple觸控板上用三指左右滑動</string>
+	<key>scroll-effect.swift</key>
+	<string>快速捲動</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>輕鬆地捲動大範圍</string>
+	<key>scroll-effect.zoom</key>
+	<string>放大或縮小</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>在Safari、地圖和其他應用程式中放大或縮小
+ 
+效果相當於在Apple觸控板上兩指分開或收合</string>
+	<key>system-settings-name</key>
+	<string>系統設定</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>系統偏好設定</string>
+	<key>thanks.01</key>
+	<string>⭐️感謝你購買Mac Mouse Fix！</string>
+	<key>thanks.02</key>
+	<string>🌟感謝購買Mac Mouse Fix！</string>
+	<key>thanks.03</key>
+	<string>🚀感謝支持Mac Mouse Fix！</string>
+	<key>thanks.04</key>
+	<string>🙌感謝你購買Mac Mouse Fix！</string>
+	<key>thanks.05</key>
+	<string>🧠很讚的購買決定！ ;)</string>
+	<key>thanks.06</key>
+	<string>🔥在滑鼠調校軟件上的品味不俗！ ;)</string>
+	<key>thanks.09</key>
+	<string>👽分享給你Spacebook上的朋友們！</string>
+	<key>thanks.10</key>
+	<string>🏂一世不悔低頭族！！</string>
+	<key>thanks.13</key>
+	<string>🐹我們應該給他買個領結。</string>
+	<key>thanks.21</key>
+	<string>🐠比死神利維坦仲得意。</string>
+	<key>thanks.25</key>
+	<string>🌏先是滑鼠，然後是世界！！&gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>免費期第**%1$d／%2$d**天</string>
+	<key>trial-counter.expired</key>
+	<string>免費期已完結</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>啟用許可證</string>
+	<key>trial-notif.body</key>
+	<string>你好！你使用Mac Mouse Fix已經有**%1$d天**了。希望你喜歡這個軟件！
+
+如果你想要繼續使用Mac Mouse Fix，不妨[即刻購買](%2$@)。</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>按一下%@＋</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>按兩下%@＋</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>按三下%@＋</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>中間鍵</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>按鈕%@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>主要按鈕</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>輔助按鈕</string>
+	<key>trigger.substring.click.1</key>
+	<string>按一下%@</string>
+	<key>trigger.substring.click.2</key>
+	<string>按兩下%@</string>
+	<key>trigger.substring.click.3</key>
+	<string>按三下%@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>按一下並拖移%@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>按兩下並拖移%@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>按三下並拖移%@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>並拖移</string>
+	<key>trigger.substring.hold.1</key>
+	<string>按住%@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>按兩下並按住%@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>按三下並按住%@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>按下並捲動%@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>按兩下並捲動%@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>按三下並捲動%@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>並捲動</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>中間鍵</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>按鈕%@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>主要按鈕</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>輔助按鈕</string>
+	<key>type-shortcut-prompt</key>
+	<string>輸入鍵盤快捷鍵</string>
+</dict>
+</plist>

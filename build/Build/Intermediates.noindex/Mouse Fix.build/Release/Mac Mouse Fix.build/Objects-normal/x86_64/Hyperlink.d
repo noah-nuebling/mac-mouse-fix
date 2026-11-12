@@ -1,0 +1,33 @@
+dependencies: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/SDKSettings.json \
+  /Users/win/mac-mouse-fix/Shared/UI/Hyperlink.m \
+  /Users/win/mac-mouse-fix/Shared/UI/Hyperlink.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Cocoa-7U636ZP7KLKZ7QBO4FPWY4D3G.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ObjectiveC.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/os.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/IOKit.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreGraphics.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AppKit.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Cocoa.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/Shared/Utility/Links.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/SharedUtility.h \
+  /Users/win/mac-mouse-fix/Shared/Constants.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Shorthands.h \
+  /Users/win/mac-mouse-fix/Shared/Math/VectorUtility.h \
+  /Users/win/mac-mouse-fix/Helper/Utility/ModificationUtility.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Macros/SharedMacros.h \
+  /Users/win/mac-mouse-fix/Helper/Core/Coordinate/MFEventTap.h \
+  /Users/win/mac-mouse-fix/Shared/Math/MathObjc.h \
+  /Users/win/mac-mouse-fix/Shared/Utility/Macros/MFDefer.h \
+  /Users/win/mac-mouse-fix/App/Utility/Utility_App.h \
+  /Users/win/mac-mouse-fix/App/AppDelegate.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/PreferencePanes-9I40IEKAYDXZ41XVHTX0QPPYT.pcm \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/PreferencePanes.framework/Modules/module.modulemap \
+  /Users/win/mac-mouse-fix/App/UI/Unused/Overrides/OverridePanel.h \
+  /Users/win/mac-mouse-fix/App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableController.h \
+  /Users/win/mac-mouse-fix/App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableView.h \
+  /Users/win/mac-mouse-fix/App/AppState.h \
+  /Users/win/mac-mouse-fix/Shared/Logging/Logging.h \
+  /Users/win/mac-mouse-fix/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/os-660380CC1A2DLMDE7TGCLKU4R.pcm

@@ -1,0 +1,11 @@
+Target dependency graph (4 targets)
+Target 'Mac Mouse Fix' in project 'Mouse Fix'
+➜ Explicit dependency on target 'Mac Mouse Fix Helper' in project 'Mouse Fix'
+➜ Implicit dependency on target 'ReactiveSwift-macOS' in project 'ReactiveSwift' via file 'ReactiveSwift.framework' in build phase 'Link Binary'
+➜ Implicit dependency on target 'ReactiveCocoa-macOS' in project 'ReactiveCocoa' via file 'ReactiveCocoa.framework' in build phase 'Link Binary'
+Target 'Mac Mouse Fix Helper' in project 'Mouse Fix'
+➜ Implicit dependency on target 'ReactiveSwift-macOS' in project 'ReactiveSwift' via file 'ReactiveSwift.framework' in build phase 'Link Binary'
+➜ Implicit dependency on target 'ReactiveCocoa-macOS' in project 'ReactiveCocoa' via file 'ReactiveCocoa.framework' in build phase 'Link Binary'
+Target 'ReactiveCocoa-macOS' in project 'ReactiveCocoa'
+➜ Implicit dependency on target 'ReactiveSwift-macOS' in project 'ReactiveSwift' via file 'ReactiveSwift.framework' in build phase 'Link Binary'
+Target 'ReactiveSwift-macOS' in project 'ReactiveSwift' (no dependencies)

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>capture-toast.buttons.captured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%2$@ теперь захватываются Mac Mouse Fix</string>
+			<key>many</key>
+			<string>%2$@ теперь захвачены Mac Mouse Fix</string>
+			<key>one</key>
+			<string>%2$@ теперь захватывается Mac Mouse Fix</string>
+			<key>other</key>
+			<string>%2$@ теперь захвачены Mac Mouse Fix</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.captured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Другие программы больше не смогут использовать эти кнопки</string>
+			<key>many</key>
+			<string>Другие программы больше не смогут использовать эти кнопки</string>
+			<key>one</key>
+			<string>Другие программы больше не смогут использовать эту кнопки</string>
+			<key>other</key>
+			<string>Другие программы больше не смогут использовать эти кнопки</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%2$@ больше не перехватываются Mac Mouse Fix</string>
+			<key>many</key>
+			<string>%2$@ больше не перехватываются Mac Mouse Fix</string>
+			<key>one</key>
+			<string>%2$@ больше не перехватывается Mac Mouse Fix</string>
+			<key>other</key>
+			<string>%2$@ больше не перехватываются Mac Mouse Fix</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string></string>
+			<key>many</key>
+			<string></string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+</dict>
+</plist>

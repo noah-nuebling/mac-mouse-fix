@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>17P-PJ-tV1.title</key>
+	<string>Normale</string>
+	<key>1TU-wL-skT.title</key>
+	<string>Annuler</string>
+	<key>1dS-BH-DIv.title</key>
+	<string>Pointeur</string>
+	<key>1nK-vb-jNz.title</key>
+	<string>&lt;Défilez précisement en bougeant la molette de défilement doucement&gt;</string>
+	<key>2Uv-W7-hzJ.title</key>
+	<string>Consulter les guides ou demander à la communauté...</string>
+	<key>3a9-XG-oHg.title</key>
+	<string>Accélération :</string>
+	<key>3pt-ka-lxV.title</key>
+	<string>Vérifier les mises à jour...</string>
+	<key>4Cx-DN-qX3.title</key>
+	<string>&lt;Mission Control and Spaces&gt;</string>
+	<key>4gx-d0-WNb.title</key>
+	<string>Désactivée</string>
+	<key>4hf-tQ-y76.title</key>
+	<string>Précision</string>
+	<key>5yb-g8-Kcg.title</key>
+	<string>Proposer une nouvelle fonctionnalité</string>
+	<key>6Nj-Ed-W5T.title</key>
+	<string>Défiler à l'horizontal</string>
+	<key>6Yt-gG-Nf9.title</key>
+	<string>Modifier</string>
+	<key>6es-it-kDs.title</key>
+	<string>Supprimer</string>
+	<key>79J-Zg-ebA.title</key>
+	<string>&lt;Version - (-)&gt;</string>
+	<key>8pi-FV-zYE.title</key>
+	<string>Remerciements</string>
+	<key>97W-3h-SSc.title</key>
+	<string>Haute</string>
+	<key>A6t-UZ-2DE.title</key>
+	<string>Défiler avec précision</string>
+	<key>AHn-zX-g4d.title</key>
+	<string>Déplacez-vous entre les pages dans Safari en défilant horizontalement, et bien plus</string>
+	<key>AYu-sK-qS6.title</key>
+	<string>Main Menu</string>
+	<key>AqN-zN-yDS.title</key>
+	<string>Permet d'activer ou de désactiver rapidement
+les fonctionnalités comme le défilement doux</string>
+	<key>Bnm-ze-Mca.title</key>
+	<string>Masquer Mac Mouse Fix</string>
+	<key>DNu-D4-tBY.title</key>
+	<string>Faible</string>
+	<key>DVS-lH-VBH.title</key>
+	<string>Aide</string>
+	<key>DtT-YF-gUn.title</key>
+	<string>Définir l'accélération sous 
+Préférences Système &gt; Souris &gt;  Mouse &gt; Vitesse de déplacement </string>
+	<key>E0q-4e-axc.title</key>
+	<string>Modérée</string>
+	<key>ENz-Ny-4ax.title</key>
+	<string>Défiler rapidement</string>
+	<key>FT8-zP-xsg.title</key>
+	<string>Lente</string>
+	<key>Fp4-bf-cbR.title</key>
+	<string>Aide</string>
+	<key>Gr8-qh-oGd.title</key>
+	<string>Services</string>
+	<key>H4T-Rp-t33.title</key>
+	<string>Zoomer ou dézoomer</string>
+	<key>Hur-83-2a2.title</key>
+	<string>Options...</string>
+	<key>IJF-sN-Wfw.title</key>
+	<string>Annuler</string>
+	<key>ILO-GQ-vNk.title</key>
+	<string>Afficher dans la barre des menus</string>
+	<key>IQv-IB-iLA.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>InY-TB-ky6.title</key>
+	<string>Fenêtre</string>
+	<key>LTC-zW-sTp.title</key>
+	<string>Édition</string>
+	<key>Mck-5W-5lv.title</key>
+	<string>Recevoir les versions bêta</string>
+	<key>Mjk-wy-Z7C.label</key>
+	<string>Boutons</string>
+	<key>N65-aN-Hxp.title</key>
+	<string>Simulation du trackpad</string>
+	<key>N7H-9j-DIr.title</key>
+	<string>Déplacez le pointeur de la souris à l'intérieur du champ « + », puis *cliquez* sur un bouton de la souris pour lui affecter une action.
+Vous pouvez aussi utiliser le *double-clic*, le *clic et déplacement* et bien d'autres.</string>
+	<key>NdF-Gb-mOK.title</key>
+	<string>Minimiser</string>
+	<key>Ozk-o9-C4a.title</key>
+	<string>Visiter le site web</string>
+	<key>PdO-dH-G7Y.title</key>
+	<string>Off</string>
+	<key>Pxm-4w-iO7.title</key>
+	<string>&lt;Box&gt;</string>
+	<key>QKM-im-bk9.title</key>
+	<string>&lt;⌘⇧⌥⌃ + Triple-clic et glisser Bouton 3&gt;</string>
+	<key>QaW-cc-uzc.title</key>
+	<string>M'envoyer un e-mail</string>
+	<key>RV9-5T-rvb.title</key>
+	<string>Activer Mac Mouse Fix</string>
+	<key>Rlr-89-4fc.title</key>
+	<string>Masquer les autres</string>
+	<key>S3S-2l-eNQ.title</key>
+	<string>Fermer</string>
+	<key>S55-uf-Xij.title</key>
+	<string>&lt;0.6x&gt;</string>
+	<key>S6k-al-LbR.title</key>
+	<string>Coller</string>
+	<key>SaY-fF-d1s.title</key>
+	<string>Vous serez prévenu d'une nouvelle mise à jour
+ lorsque vous ouvrirez cette fenêtre</string>
+	<key>SjO-Dq-CEX.title</key>
+	<string>Fluidité :</string>
+	<key>TrI-uu-DEN.title</key>
+	<string>Achetez-moi un milkshake :)</string>
+	<key>UeD-ND-tYj.title</key>
+	<string>Quitter Mac Mouse Fix</string>
+	<key>WiZ-l0-Th5.title</key>
+	<string>&lt;Text Cell&gt;</string>
+	<key>X8q-Nk-Fwr.title</key>
+	<string>Services</string>
+	<key>XAP-He-hda.title</key>
+	<string>Sensibilité :</string>
+	<key>YBT-Ar-F4S.title</key>
+	<string>Activer une licence...</string>
+	<key>YDr-ez-VKk.title</key>
+	<string>Moyenne</string>
+	<key>Yyg-LD-A1v.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>ZMA-p0-2lf.title</key>
+	<string>Voir sur GitHub</string>
+	<key>ZfY-xQ-tQl.title</key>
+	<string>Réduire/agrandir</string>
+	<key>Zqs-Y4-U4Q.title</key>
+	<string>&lt;Button X&gt;</string>
+	<key>aZA-uL-uvx.title</key>
+	<string>Tout ramener au premier plan</string>
+	<key>bGk-tB-fcH.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>bIE-g7-3St.title</key>
+	<string>Rapide</string>
+	<key>bJS-hB-0l3.title</key>
+	<string>Moyenne</string>
+	<key>bQf-qv-mvB.title</key>
+	<string>Signaler un bug</string>
+	<key>bew-ni-FnZ.title</key>
+	<string>Mac Mouse Fix restera activé après l'avoir fermé</string>
+	<key>bgk-wr-o8T.title</key>
+	<string>Ne plus me le rappeler</string>
+	<key>bsO-Hw-2ui.title</key>
+	<string>&lt;Initial Tab Controller&gt;</string>
+	<key>buH-zX-xXu.title</key>
+	<string>À propos</string>
+	<key>cnA-CV-nF3.title</key>
+	<string>macOS</string>
+	<key>cul-5Z-iUo.title</key>
+	<string>&lt;Day 2/14 of your test period&gt;</string>
+	<key>d0g-07-PaJ.title</key>
+	<string>Acheter Mac Mouse Fix...</string>
+	<key>d9S-X9-qM1.title</key>
+	<string>Boutons</string>
+	<key>eLS-O0-A1x.title</key>
+	<string>Général</string>
+	<key>eVc-l9-Z0h.title</key>
+	<string>Obtenir de l'aide</string>
+	<key>fGs-UI-L0d.title</key>
+	<string>Tout afficher</string>
+	<key>fNA-5s-U4d.title</key>
+	<string>Fenêtre</string>
+	<key>fW3-4Q-yB8.title</key>
+	<string>macOS</string>
+	<key>g9N-Za-8Ss.label</key>
+	<string>&lt;Initial&gt;</string>
+	<key>gK0-1z-Pjv.title</key>
+	<string>Défilement naturel</string>
+	<key>gOt-GR-IbE.headerCell.title</key>
+	<string>&lt;Effect&gt;</string>
+	<key>hSC-BE-EZJ.title</key>
+	<string>Mac Mouse Fix</string>
+	<key>hmb-DX-idO.title</key>
+	<string>Faible</string>
+	<key>iFe-4y-9Xa.title</key>
+	<string>Copier</string>
+	<key>jOM-dH-pdc.label</key>
+	<string>Défilement</string>
+	<key>kK6-b5-Rfd.title</key>
+	<string>&lt;Click and Drag Button 3&gt;</string>
+	<key>l7d-al-Y14.title</key>
+	<string>Vitesse :</string>
+	<key>lLu-45-nE3.label</key>
+	<string>Pointer</string>
+	<key>lrw-Lp-nQ4.title</key>
+	<string>Restaurer les paramètres par défaut...</string>
+	<key>o3B-zA-fJm.headerCell.title</key>
+	<string>&lt;Trigger&gt;</string>
+	<key>oEX-Tp-9Cv.title</key>
+	<string>Tout sélectionner</string>
+	<key>pMz-a0-1UQ.title</key>
+	<string>Créé par Noah Nuebling</string>
+	<key>qcW-e9-BqR.title</key>
+	<string>Défilement</string>
+	<key>rFn-h3-0EN.title</key>
+	<string>Couper</string>
+	<key>rIq-3r-6ck.label</key>
+	<string>Général</string>
+	<key>sef-RZ-SeL.title</key>
+	<string>Élevée</string>
+	<key>tdD-8Q-JB2.title</key>
+	<string>Vérifier les mises à jour</string>
+	<key>u9F-yq-WC3.title</key>
+	<string>À propos de Mac Mouse Fix</string>
+	<key>vbN-zN-z2V.title</key>
+	<string>Raccourcis clavier :</string>
+	<key>wJW-hQ-lUc.title</key>
+	<string>Élevée</string>
+	<key>wal-3r-ZZs.label</key>
+	<string>À propos</string>
+	<key>zwX-Pv-OOK.title</key>
+	<string>&lt;Text Cell&gt;</string>
+</dict>
+</plist>

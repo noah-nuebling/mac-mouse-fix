@@ -57,6 +57,8 @@ void commitConfig(void);
 /// Overrides
 #if IS_HELPER
     - (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event;
+    - (NSDictionary * _Nullable)appOverridesForCurrentApp; /// `AppOverrides.<bundleID>.Root` for the app under the pointer (as of the last scroll), or nil
+    - (BOOL)hasAnyAppOverrides;
     @property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied; /// [Aug 2025] This could just be an ivar
 #endif
 

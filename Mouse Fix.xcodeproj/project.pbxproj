@@ -425,6 +425,7 @@
 		4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAEBE92E74367300832CE2 /* AddField.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		7F369D4BBE8F447F7E97BF4E /* AppSpecificTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3F96EF5270B07F0C854D5C /* AppSpecificTabController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1220,6 +1221,7 @@
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 		4FFF9F37307B8FE300211519 /* mk_timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mk_timer.h; sourceTree = "<group>"; };
 		4FFF9F38307B904900211519 /* mk_timer_notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = mk_timer_notes.md; sourceTree = "<group>"; };
+		BD3F96EF5270B07F0C854D5C /* AppSpecificTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSpecificTabController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1777,6 +1779,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */,
+				BD3F96EF5270B07F0C854D5C /* AppSpecificTabController.swift */,
 				4F6F67A128A8188000C6C40F /* ButtonTab */,
 				4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */,
 				4F909CF828A0C3D2009349A2 /* PointerTabController.swift */,
@@ -3571,6 +3574,7 @@
 				4F4C66172E636584005C2612 /* NSBox+Additions.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
+				7F369D4BBE8F447F7E97BF4E /* AppSpecificTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastController.m in Sources */,
 				4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
@@ -3936,11 +3940,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = XCStringsDummyApp/xcstrings_dummy_app.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -3977,10 +3981,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = XCStringsDummyApp/xcstrings_dummy_app.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -4010,11 +4014,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = LocalizationScreenshotTaker/LocalizationScreenshotTaker.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -4049,10 +4053,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = LocalizationScreenshotTaker/LocalizationScreenshotTaker.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -4084,10 +4088,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = App/SupportFiles/App.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = 544L7K3FPV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4127,10 +4131,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = App/SupportFiles/App.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = 544L7K3FPV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4197,7 +4201,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "";
 				DEAD_CODE_STRIPPING = YES;
@@ -4294,7 +4298,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CURRENT_PROJECT_VERSION = "";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -4361,10 +4365,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Helper/SupportFiles/Helper.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4406,10 +4410,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Helper/SupportFiles/Helper.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4453,10 +4457,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -4501,10 +4505,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;

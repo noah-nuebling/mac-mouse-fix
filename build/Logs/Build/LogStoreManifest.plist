@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>13</integer>
+	<key>logs</key>
+	<dict>
+		<key>B3B5AFCC-E86D-476B-8F95-650EF1442162</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>B3B5AFCC-E86D-476B-8F95-650EF1442162.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>1767</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Mouse Fix project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>App - Release</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Mouse Fix with scheme App - Release and configuration Release</string>
+			<key>timeStartedRecording</key>
+			<real>816149292.13451505</real>
+			<key>timeStoppedRecording</key>
+			<real>816149325.14731801</real>
+			<key>title</key>
+			<string>Building project Mouse Fix with scheme App - Release and configuration Release</string>
+			<key>uniqueIdentifier</key>
+			<string>B3B5AFCC-E86D-476B-8F95-650EF1442162</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

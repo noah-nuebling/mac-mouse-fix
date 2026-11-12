@@ -48,10 +48,18 @@ import Cocoa
     @objc static func reload() {
         assertRunLoop(configRunLoop());
 
+        /// Pick up app-specific overrides
+        ///     [Nov 2026] Do this before the guard below, so that editing app-specific settings applies even if the global `Scroll` settings didn't change.
+        _ = reloadAppOverrides()
+        let anyAppEnablesSmoothNew = computeAnyAppEnablesSmooth()
+        let anyAppEnablesSmoothChanged = anyAppEnablesSmoothNew != _anyAppEnablesSmooth
+        _anyAppEnablesSmooth = anyAppEnablesSmoothNew
+        
         /// Guard not equal
         
         let newConfigRaw = config("Scroll") as! NSDictionary?
         guard !(_scrollConfigRaw?.isEqual(newConfigRaw) ?? false) else {
+            if anyAppEnablesSmoothChanged { SwitchMaster_ScrollConfigChanged(_defaultInstance) } /// Scroll eventTap may need to be toggled
             return
         }
         
@@ -71,6 +79,66 @@ import Cocoa
         cache = nil
     }
     private static var cache: [_HT<MFScrollModificationResult, MFAxis, CGDirectDisplayID>: ScrollConfig]? = nil
+    
+    // MARK: App-specific overrides
+    /// [Nov 2026] Added for the MMF 3 'App-specific' tab.
+    ///
+    /// Design:
+    ///     - `_defaultInstance` always reflects the *global* `Scroll` settings. SwitchMaster uses it to decide whether the scroll eventTap is on – it must never be turned off due to the app under the pointer, otherwise we'd never see the scroll event that tells us the pointer moved to a different app.
+    ///     - App-specific overrides are layered on top in `scrollConfig(modifiers:inputAxis:display:)` and in `ScrollModifiers`.
+    ///     - Most overrides can only *turn off* features.
+    ///     - Exception: `smooth` can also turn smooth scrolling *on* for an app while it's globally off. To keep the eventTap alive for that, SwitchMaster also checks `anyAppEnablesSmooth` (any app in the config, not just the one under the pointer).
+    ///     - Supported override values (under `AppOverrides.<bundleID>.Root.Scroll`):
+    ///         `smooth = "off" | "low" | "regular" | "high"`, `reverseDirection = false`, `modifiers.horizontal = 0`, `modifiers.zoom = 0`
+    
+    private static var _appOverrideRaw: NSDictionary? = nil /// The `Scroll` sub-dict of the overrides for the app under the pointer
+    
+    @objc static func reloadAppOverrides() -> Bool {
+        /// Returns true if the effective overrides changed
+        assertRunLoop(configRunLoop())
+        let new = Config.shared().appOverridesForCurrentApp()?[kMFConfigKeyScroll] as? NSDictionary
+        if new == nil && _appOverrideRaw == nil { return false }
+        if let new = new, let old = _appOverrideRaw, new.isEqual(old) { return false }
+        _appOverrideRaw = new?.copy() as? NSDictionary
+        cache = nil
+        return true
+    }
+    
+    private static var _anyAppEnablesSmooth = false
+    @objc static var anyAppEnablesSmooth: Bool {
+        assertRunLoop(configRunLoop())
+        return _anyAppEnablesSmooth
+    }
+    private static func computeAnyAppEnablesSmooth() -> Bool {
+        guard let overrides = config(kMFConfigKeyAppOverrides) as? NSDictionary else { return false }
+        for case let entry as NSDictionary in overrides.allValues {
+            let scroll = (entry["Root"] as? NSDictionary)?[kMFConfigKeyScroll] as? NSDictionary
+            if let smooth = scroll?["smooth"] as? String, smooth != "off" { return true }
+        }
+        return false
+    }
+    
+    @objc static var appDisablesHorizontalModifier: Bool {
+        return (_appOverrideRaw?.object(forCoolKeyPath: "modifiers.horizontal") as? NSNumber)?.uint64Value == 0
+    }
+    @objc static var appDisablesZoomModifier: Bool {
+        return (_appOverrideRaw?.object(forCoolKeyPath: "modifiers.zoom") as? NSNumber)?.uint64Value == 0
+    }
+    private static func applyAppOverrides(to new: ScrollConfig) {
+        guard let o = _appOverrideRaw else { return }
+        if let smooth = o["smooth"] as? String {
+            switch smooth {
+            case "off":     new.u_smoothness = kMFScrollSmoothnessOff;     new.animationCurve = kMFScrollAnimationCurveNameNone
+            case "low":     new.u_smoothness = kMFScrollSmoothnessLow;     new.animationCurve = kMFScrollAnimationCurveNameVeryLowInertia
+            case "regular": new.u_smoothness = kMFScrollSmoothnessRegular; new.animationCurve = kMFScrollAnimationCurveNameLowInertia
+            case "high":    new.u_smoothness = kMFScrollSmoothnessHigh;    new.animationCurve = new.u_trackpadSimulation ? kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim : kMFScrollAnimationCurveNameHighInertia
+            default:        assert(false) /// Unknown value – ignore
+            }
+        }
+        if let reverse = o["reverseDirection"] as? Bool, reverse == false {
+            new.u_invertDirection = kMFScrollInversionNonInverted
+        }
+    }
     
     // MARK: Overrides
     
@@ -93,6 +161,9 @@ import Cocoa
             
             /// Copy og settings
             let new = _defaultInstance.copy() as! ScrollConfig
+            
+            /// Apply app-specific settings
+            applyAppOverrides(to: new)
 
             /// Declare overridables
             var u_speed = new.u_speed

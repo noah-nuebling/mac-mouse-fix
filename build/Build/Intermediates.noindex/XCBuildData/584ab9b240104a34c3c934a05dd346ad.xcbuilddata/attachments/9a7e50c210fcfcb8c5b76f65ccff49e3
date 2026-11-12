@@ -1,0 +1,10 @@
+framework module ReactiveSwift {
+  umbrella header "ReactiveSwift.h"
+  export *
+
+  module * { export * }
+}
+
+module ReactiveSwift.__Swift {
+  exclude header "ReactiveSwift-Swift.h"
+}
