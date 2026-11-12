@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Kasım 2026**
 
+- 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1
 - 🇹🇼&nbsp;Tomchen012
 - 🇵🇪&nbsp;Roberto&nbsp;Antonio&nbsp;Panta&nbsp;Garcia
 - 🇿🇦&nbsp;Rt&nbsp;Lawez - "This is an incredible tool! Thanks, Noah"
