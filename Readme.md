@@ -251,19 +251,20 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
 - **Are there 'App-Specific Settings' or 'Profiles'?**
   
-  In Mac Mouse Fix 2, you can **disable features like Smooth Scrolling** under `More... > App-specific settings`.
-  
-  In Mac Mouse Fix 3, this feature doesn't exist yet. <br>
-  Both 'app-specific settings' and 'mouse-specific settings' are planned, but I don't have a timeline yet for when they'll be released.
-  
-  **Tip:** Until 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:
-  - Open the `General` tab
-  - Turn on `Show in Menu Bar`
-  - Now you can **disable features like Smooth Scrolling** directly from the Menu Bar
-  
-  I'm also interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=en&target=mmf-feedback-feature-request). Your input will help make the feature as good as possible once it arrives.
-  <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
-  <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->
+  Yes! Mac Mouse Fix 3 has an **App-specific** tab, where you can choose which scrolling features to use in each app.
+
+<img width="830" height="549" alt="Screenshot 2026-11-12 at 17 12 55" src="https://github.com/user-attachments/assets/4b744b79-eb60-4714-aeb9-0e0d6f94ab08" />
+
+  - Click `+`, or drag an app into the list, to add it.
+  - Uncheck **Reverse direction**, **Horizontal** or **Zoom** to turn that feature off while the pointer is over the app. This is useful for apps that handle Shift-scroll or Command-scroll themselves.
+  - The **Smooth scrolling** checkbox has three states: empty = off, **–** = regular smoothness, **✓** = high smoothness. This works even if smooth scrolling is turned off in the `Scrolling` tab.
+  - Everywhere else, your settings from the `Scrolling` tab apply.
+
+
+  **Tip:** To quickly turn off all app-specific settings, turn on `Show in Menu Bar` in the `General` tab, then uncheck `App-specific` in the Menu Bar.
+
+  'Mouse-specific settings' are still planned. I'm interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=en&target=mmf-feedback-feature-request).
+  <!-- ^^^ [Nov 2026] Rewritten for the new 'App-specific' tab (Previously: 'doesn't exist yet in MMF 3' + Menu Bar tip). -->
 
 - **Is my mouse supported?**
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="25408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25408"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -341,6 +341,11 @@ We put this NOTE here, because:
                                 <fragment content="Toolbar &gt; General Tab Button"/>
                             </attributedString>
                         </tabViewItem>
+                        <tabViewItem label="App-specific" identifier="appSpecific" image="appstore" id="BNp-Hb-Ayj">
+                            <attributedString key="userComments">
+                                <fragment content="Toolbar &gt; App-specific Tab Button. (Lets users turn off scrolling features for individual apps.)"/>
+                            </attributedString>
+                        </tabViewItem>
                         <tabViewItem label="Buttons" identifier="buttons" image="rectangle" catalog="system" id="Mjk-wy-Z7C">
                             <attributedString key="userComments">
                                 <fragment content="Toolbar &gt; Buttons Tab Button"/>
@@ -375,6 +380,7 @@ We put this NOTE here, because:
                         <outlet property="tabView" destination="oqi-09-EfH" id="1rO-NB-pwr"/>
                         <segue destination="bsO-Hw-2ui" kind="relationship" relationship="tabItems" id="OiV-lA-NY3"/>
                         <segue destination="eLS-O0-A1x" kind="relationship" relationship="tabItems" id="dQW-nT-h2b"/>
+                        <segue destination="bJl-uN-Inx" kind="relationship" relationship="tabItems" id="jJi-2y-IBm"/>
                         <segue destination="d9S-X9-qM1" kind="relationship" relationship="tabItems" id="rD6-Y3-OVe"/>
                         <segue destination="qcW-e9-BqR" kind="relationship" relationship="tabItems" id="8Vk-gd-khS"/>
                         <segue destination="1dS-BH-DIv" kind="relationship" relationship="tabItems" id="0ZF-Yb-Oso"/>
@@ -1913,6 +1919,35 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
             </objects>
             <point key="canvasLocation" x="-724" y="1206"/>
         </scene>
+        <!--App-specific View Controller-->
+        <scene sceneID="P82-7e-YAg">
+            <objects>
+                <viewController title="App-specific" id="bJl-uN-Inx" userLabel="App-specific View Controller" customClass="AppSpecificTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="JHQ-fu-YFT" userLabel="ContentView">
+                        <rect key="frame" x="0.0" y="0.0" width="530" height="340"/>
+                        <subviews>
+                            <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="fD3-fj-l5S" userLabel="Wrapper (UI is built in code)">
+                                <rect key="frame" x="0.0" y="0.0" width="530" height="340"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="fD3-fj-l5S" firstAttribute="leading" secondItem="JHQ-fu-YFT" secondAttribute="leading" id="FCR-9m-GEs"/>
+                            <constraint firstAttribute="bottom" secondItem="fD3-fj-l5S" secondAttribute="bottom" id="GGk-yt-GHc"/>
+                            <constraint firstItem="fD3-fj-l5S" firstAttribute="top" secondItem="JHQ-fu-YFT" secondAttribute="top" id="YuM-Ob-5zL"/>
+                            <constraint firstAttribute="trailing" secondItem="fD3-fj-l5S" secondAttribute="trailing" id="uPR-mY-a89"/>
+                        </constraints>
+                    </view>
+                    <attributedString key="userComments">
+                        <fragment content="Toolbar &gt; App-specific Tab Title"/>
+                    </attributedString>
+                    <connections>
+                        <outlet property="wrapperView" destination="fD3-fj-l5S" id="cot-vY-7vC"/>
+                    </connections>
+                </viewController>
+                <customObject id="jBL-g6-NSy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1128" y="1180"/>
+        </scene>
         <!--About View Controller-->
         <scene sceneID="3NB-Tm-GfZ">
             <objects>
@@ -2665,6 +2700,7 @@ Also see CFBundleName in InfoPlist.xcstrings.</string>
     <resources>
         <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
         <image name="LittleMilkshakeOutlines" width="116" height="128"/>
+        <image name="appstore" width="18" height="15.875"/>
         <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
         <image name="arrow.up.and.down" catalog="system" width="11" height="15"/>
         <image name="arrow.uturn.backward.circle.fill" catalog="system" width="15" height="15"/>

@@ -303,7 +303,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [ScrollUtility updateMouseDidMoveWithEvent: event];
 
         /// Update application Overrides
-        if ((NO)) { /// Unused in MMF 3
+        ///     [Nov 2026] Reactivated for the 'App-specific' tab. Skipped entirely if the user hasn't set up any app-specific settings, since looking up the app under the pointer isn't free.
+        if (Config.shared.hasAnyAppOverrides || Config.shared.appOverridesForCurrentApp != nil) {
             if (!ScrollUtility.mouseDidMove) {
                 [ScrollUtility updateFrontMostAppDidChange];
                 /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
@@ -313,7 +314,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 /// Set app overrides
                 DDLogDebug("Scroll.m: Frontmost app did change. Reloading config overrides.");
-                BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
+                BOOL appDidChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
+                BOOL didChange = appDidChange && [ScrollConfig reloadAppOverrides];
                 if (didChange) {
                     DDLogDebug("Scroll.m: Config did change. Resetting state.");
                     allowNestedReadOrWrite() [Scroll resetState];

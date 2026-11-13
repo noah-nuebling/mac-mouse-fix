@@ -329,7 +329,8 @@ void SwitchMaster_ScrollConfigChanged(ScrollConfig *scrollConfig) {
 
     bool scrollModifiedByDefault = (scrollConfig.smoothEnabled ||
                                    scrollConfig.u_speed != kMFScrollSpeedSystem ||
-                                   scrollConfig.u_invertDirection == kMFScrollInversionInverted);
+                                   scrollConfig.u_invertDirection == kMFScrollInversionInverted ||
+                                   ScrollConfig.anyAppEnablesSmooth); /// [Nov 2026] 'App-specific' tab can turn on smooth scrolling for some apps while it's globally off – we need the eventTap for that.
 
     if (!scrollModifiedByDefault) _state->_eventsModifiedByDefault &= ~kMFEventType_ScrollWheel;
     else                          _state->_eventsModifiedByDefault |= kMFEventType_ScrollWheel;
