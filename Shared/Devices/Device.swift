@@ -483,8 +483,14 @@ private let handleInputCallback: IOHIDValueCallback = { context, result, sender,
     let usage = IOHIDElementGetUsage(elem)
     let usagePage = IOHIDElementGetUsagePage(elem)
     let integerValue = IOHIDValueGetIntegerValue(value)
+    let reportID = IOHIDElementGetReportID(elem)
     
-    if usagePage == 65347 && !sendingDev.isLogitechDiverted {
+    // HID++ protocol packets (Report ID 0x10/0x11/0x12) and packets arriving while
+    // LogitechActivator is probing/activating must never be parsed as legacy Page 65347 buttons.
+    let isHIDPPReport = (reportID == 0x10 || reportID == 0x11 || reportID == 0x12)
+    let isActivatingLogitech = LogitechActivator.shared.isActivatingDevice(sendingDev.iohidDevice)
+    
+    if usagePage == 65347 && !sendingDev.isLogitechDiverted && !isHIDPPReport && !isActivatingLogitech {
         if integerValue == 0 {
             for button in logiButtonsDown {
                 postVirtualButtonEvent(button, false)

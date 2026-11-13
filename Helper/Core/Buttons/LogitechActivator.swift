@@ -187,6 +187,8 @@ class DeviceState {
     
     var pressedCIDs = [UInt16](repeating: 0, count: 32)
     var pressedCount: Int = 0
+    var divertedCIDs: Set<UInt16> = []
+    var isActivating: Bool = false
     
     var featWirelessStatus: UInt8 = 0
     var featReprogV4: UInt8 = 0
@@ -253,6 +255,12 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                 repeats: true
             )
         }
+    }
+    
+    @objc public func isActivatingDevice(_ device: IOHIDDevice?) -> Bool {
+        guard let device = device else { return false }
+        guard let s = state(for: device) else { return false }
+        return stateLock.withLock { s.isActivating }
     }
     
     @objc public func isAnyButtonPressed() -> Bool {
@@ -728,6 +736,7 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                 }
                 
                 let divertFlags: UInt8 = kDivertFlags
+                var newlyDiverted: Set<UInt16> = []
                 for cid in todivert {
                     let params: [UInt8] = [UInt8((cid >> 8) & 0xFF), UInt8(cid & 0xFF), divertFlags]
                     
@@ -754,12 +763,16 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                     switch retResult {
                     case .success:
                         diverted += 1
+                        newlyDiverted.insert(cid)
                         os_log("LogitechCIDActivator: diverted side-button CID 0x%{public}04X as Button %{public}d on '%{public}@'",
                                log: self.logger, type: .info, cid, button(for: cid, state: s), name)
                     case .failure(let err):
                         os_log("LogitechCIDActivator: Failed to divert CID 0x%{public}04X on '%{public}@', error: %{public}@",
                                log: self.logger, type: .error, cid, name, String(describing: err))
                     }
+                }
+                stateLock.withLock {
+                    s.divertedCIDs = newlyDiverted
                 }
             }
         } catch {
@@ -826,7 +839,10 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
     }
     
     private func performActivation(for s: DeviceState, maxRetries: Int = 3, retryDelay: TimeInterval = 0.5) {
-        stateLock.withLock { isActivatingOrReactivating = true }
+        stateLock.withLock {
+            isActivatingOrReactivating = true
+            s.isActivating = true
+        }
         
         Task {
             var attempt = 0
@@ -860,7 +876,10 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                 }
             }
             
-            stateLock.withLock { isActivatingOrReactivating = false }
+            stateLock.withLock {
+                isActivatingOrReactivating = false
+                s.isActivating = false
+            }
             
             if configured >= 0 {
                 os_log("LogitechCIDActivator: Successfully configured %{public}d CID(s) on '%{public}@' after %{public}d attempt(s)",
@@ -1141,7 +1160,7 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                                log: this.logger, type: .info, devIdx)
                         reconnectDetected = true
                     }
-                } else if reportBytes[2] != 0 && reportBytes[2] < 0x10 {
+                } else if reportBytes[2] != 0 && reportBytes[2] < 0x10 && reportBytes[2] != s.featReprogV4 {
                     let status = reportBytes[4]
                     if status == 0x01 || status == 0x02 {
                         os_log("LogitechCIDActivator: Generic wireless status event detected for deviceIndex 0x%{public}02X",
@@ -1189,26 +1208,34 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
             }
         }
         
-        if reportBytes[3] != 0x00 || reportBytes[2] != s.featReprogV4 {
+        if s.featReprogV4 == 0 || reportBytes[0] != kHIDPP_Long || reportBytes[3] != 0x00 || reportBytes[2] != s.featReprogV4 {
             return
+        }
+        
+        let allowedCIDs = this.stateLock.withLock { s.divertedCIDs }
+        let isExpectedCID: (UInt16) -> Bool = { cid in
+            if !allowedCIDs.isEmpty {
+                return allowedCIDs.contains(cid)
+            }
+            return cid == 0x0053 || cid == 0x0056 || cid == 0x00C4 || cid == 0x00D7
         }
         
         var currentPressed: [UInt16] = []
         if reportLength >= 6 {
             let cid1 = (UInt16(reportBytes[4]) << 8) | UInt16(reportBytes[5])
-            if cid1 != 0 { currentPressed.append(cid1) }
+            if cid1 != 0 && isExpectedCID(cid1) { currentPressed.append(cid1) }
         }
         if reportLength >= 8 {
             let cid2 = (UInt16(reportBytes[6]) << 8) | UInt16(reportBytes[7])
-            if cid2 != 0 { currentPressed.append(cid2) }
+            if cid2 != 0 && isExpectedCID(cid2) { currentPressed.append(cid2) }
         }
         if reportLength >= 10 {
             let cid3 = (UInt16(reportBytes[8]) << 8) | UInt16(reportBytes[9])
-            if cid3 != 0 { currentPressed.append(cid3) }
+            if cid3 != 0 && isExpectedCID(cid3) { currentPressed.append(cid3) }
         }
         if reportLength >= 12 {
             let cid4 = (UInt16(reportBytes[10]) << 8) | UInt16(reportBytes[11])
-            if cid4 != 0 { currentPressed.append(cid4) }
+            if cid4 != 0 && isExpectedCID(cid4) { currentPressed.append(cid4) }
         }
         
         for i in 0..<s.pressedCount {
@@ -1790,8 +1817,12 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
     }
     
     @objc public func reactivateAll() {
-        stateLock.withLock { isActivatingOrReactivating = true }
-        let activeStates = stateLock.withLock { Array(states.values) }
+        let activeStates = stateLock.withLock {
+            isActivatingOrReactivating = true
+            let all = Array(states.values)
+            for s in all { s.isActivating = true }
+            return all
+        }
         
         Task {
             for s in activeStates {
@@ -1834,8 +1865,11 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                         attachedDev.isLogitechDiverted = false
                     }
                 }
+                stateLock.withLock { s.isActivating = false }
             }
-            stateLock.withLock { isActivatingOrReactivating = false }
+            stateLock.withLock {
+                isActivatingOrReactivating = false
+            }
             os_log("LogitechCIDActivator: System wake reactivation completed.", log: self.logger, type: .info)
         }
     }
