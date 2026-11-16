@@ -20,6 +20,7 @@ class GeneralTabController: NSViewController {
     var showInMenuBar = ConfigValue<Bool>(configPath: "General.showMenuBarItem")
     var checkForUpdates = ConfigValue<Bool>(configPath: "General.checkForUpdates")
     var getBetaVersions = ConfigValue<Bool>(configPath: "General.checkForPrereleases")
+    var startHidden = ConfigValue<Bool>(configPath: "General.startHidden")
     
     /// Outlets
     
@@ -233,6 +234,8 @@ class GeneralTabController: NSViewController {
         menuBarToggle.reactive.boolValue <~ showInMenuBar
         updatesToggle.reactive.boolValue <~ checkForUpdates
         betaToggle.reactive.boolValue <~ getBetaVersions
+
+        addLaunchAtLoginSection()
         
         mainHidableSection.reactive.isCollapsed <~ EnabledState.shared.producer.negate()
         updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.producer.negate()
@@ -284,6 +287,94 @@ class GeneralTabController: NSViewController {
                 SUUpdater.shared().checkForUpdatesInBackground()
             }
         }
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        refreshLaunchAtLoginState() /// The login item can also be changed in System Settings
+    }
+
+    /// Launch at login
+    ///     Registers the main app as a login item with SMAppService. The checkbox shows the state the system reports, not a cached value.
+    ///     'Start hidden' is a config setting. The app reads it at launch (see `applicationDidFinishLaunching:` in AppDelegate.m).
+    private let launchAtLoginIsOn = MutableProperty<Bool>(false)
+
+    private func addLaunchAtLoginSection() {
+
+        guard #available(macOS 13.0, *) else { return } /// SMAppService.mainApp needs macOS 13
+
+        let divider = NSBox()
+        divider.boxType = .separator
+        divider.translatesAutoresizingMaskIntoConstraints = false
+
+        let launchToggle = NSButton(checkboxWithTitle: MFLocalizedString("launch-at-login-toggle", comment: "Checkbox in the General tab. Starts Mac Mouse Fix when the user logs in."), target: nil, action: nil)
+        launchToggle.translatesAutoresizingMaskIntoConstraints = false
+
+        let startHiddenToggle = NSButton(checkboxWithTitle: MFLocalizedString("start-hidden-toggle", comment: "Checkbox under 'Launch at login'. When the app starts at login, its main window stays hidden."), target: nil, action: nil)
+        startHiddenToggle.controlSize = .small
+        startHiddenToggle.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+
+        /// Indent 'Start hidden' under the 'Launch at login' checkbox
+        let startHiddenRow = NSStackView(views: [startHiddenToggle])
+        startHiddenRow.orientation = .vertical
+        startHiddenRow.alignment = .leading
+        startHiddenRow.edgeInsets = NSEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        /// Without this the stack's default low hugging lets the window size itself to a huge height
+        startHiddenRow.translatesAutoresizingMaskIntoConstraints = false
+        startHiddenRow.setHuggingPriority(.required, for: .vertical)
+        startHiddenRow.setContentHuggingPriority(.required, for: .vertical)
+        startHiddenRow.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        /// Inside the collapsing section, so it hides together with the other settings while the app is disabled
+        mainHidableSection.addArrangedSubview(divider)
+        mainHidableSection.addArrangedSubview(launchToggle)
+        mainHidableSection.addArrangedSubview(startHiddenRow)
+        for view in [divider, startHiddenRow] {
+            view.leadingAnchor.constraint(equalTo: mainHidableSection.leadingAnchor).isActive = true
+            view.trailingAnchor.constraint(equalTo: mainHidableSection.trailingAnchor).isActive = true
+        }
+        launchToggle.leadingAnchor.constraint(equalTo: mainHidableSection.leadingAnchor).isActive = true
+
+        /// UI <-> data bindings
+        launchToggle.reactive.boolValues.observeValues { [weak self] doLaunchAtLogin in
+            self?.setLaunchAtLogin(doLaunchAtLogin)
+        }
+        launchToggle.reactive.boolValue <~ launchAtLoginIsOn.producer
+        startHiddenRow.reactive.isCollapsed <~ launchAtLoginIsOn.producer.negate()
+        startHidden <~ startHiddenToggle.reactive.boolValues
+        startHiddenToggle.reactive.boolValue <~ startHidden.producer
+
+        /// Follow changes made in System Settings > Login Items
+        NotificationCenter.default.addObserver(forName: NSApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.refreshLaunchAtLoginState()
+        }
+
+        refreshLaunchAtLoginState()
+    }
+
+    /// Reads the login item state from the system
+    private func refreshLaunchAtLoginState() {
+        guard #available(macOS 13.0, *) else { return }
+        launchAtLoginIsOn.value = SMAppService.mainApp.status == .enabled
+    }
+
+    private func setLaunchAtLogin(_ enable: Bool) {
+        guard #available(macOS 13.0, *) else { return }
+        do {
+            if enable {
+                try SMAppService.mainApp.register()
+            } else {
+                try SMAppService.mainApp.unregister()
+            }
+        } catch {
+            DDLogError("GeneralTabController - Failed to \(enable ? "register" : "unregister") the app as a login item: \(error)")
+        }
+        /// If the user first has to approve the login item, send them to the Login Items settings
+        if enable && SMAppService.mainApp.status == .requiresApproval {
+            SMAppService.openSystemSettingsLoginItems()
+        }
+        /// Show what the system actually did
+        refreshLaunchAtLoginState()
     }
 }
 
