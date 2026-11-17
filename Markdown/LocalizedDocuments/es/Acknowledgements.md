@@ -94,6 +94,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **noviembre 2026**
 
+- 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
 - 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1
 - 🇹🇼&nbsp;Tomchen012
 - 🇵🇪&nbsp;Roberto&nbsp;Antonio&nbsp;Panta&nbsp;Garcia

@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **نوفمبر 2026**
 
+- 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
 - 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1
 - 🇹🇼&nbsp;Tomchen012
 - 🇵🇪&nbsp;Roberto&nbsp;Antonio&nbsp;Panta&nbsp;Garcia

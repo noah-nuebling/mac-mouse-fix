@@ -95,6 +95,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 11 2026**
 
+- 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
 - 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1
 - 🇹🇼&nbsp;Tomchen012
 - 🇵🇪&nbsp;Roberto&nbsp;Antonio&nbsp;Panta&nbsp;Garcia

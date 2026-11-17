@@ -94,6 +94,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **listopad 2026**
 
+- 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
 - 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1
 - 🇹🇼&nbsp;Tomchen012
 - 🇵🇪&nbsp;Roberto&nbsp;Antonio&nbsp;Panta&nbsp;Garcia

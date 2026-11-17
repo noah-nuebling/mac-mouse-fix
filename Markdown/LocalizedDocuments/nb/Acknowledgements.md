@@ -94,6 +94,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **november 2026**
 
+- 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
 - 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1
 - 🇹🇼&nbsp;Tomchen012
 - 🇵🇪&nbsp;Roberto&nbsp;Antonio&nbsp;Panta&nbsp;Garcia
