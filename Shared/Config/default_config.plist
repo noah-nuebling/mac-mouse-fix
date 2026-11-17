@@ -17,6 +17,8 @@
 		</dict>
 		<key>reverseDirection</key>
 		<true/>
+		<key>reverseClickAndDragDirection</key>
+		<false/>
 		<key>trackpadSimulation</key>
 		<true/>
 		<key>precise</key>
