@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Kasım 2026**
 
+- 🇺🇸&nbsp;Leakpp
 - 🇩🇪&nbsp;Jörg&nbsp;Sommerfeld
 - 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
 - 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1

@@ -94,6 +94,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **listopad 2026**
 
+- 🇺🇸&nbsp;Leakpp
 - 🇩🇪&nbsp;Jörg&nbsp;Sommerfeld
 - 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
 - 🇨🇦&nbsp;Mhcn&nbsp;Q&nbsp;1
