@@ -17,6 +17,10 @@ static void capturePost(CGEventTapLocation location, CGEventRef event) {
 @property NSMutableDictionary<NSNumber *, NSNumber *> *reporting;
 @property NSMutableArray<NSString *> *edges;
 @property BOOL asleep;
+@property BOOL protectedInput;
+@property int requests;
+@property int opens;
+@property BOOL failOpen;
 @property BOOL shortReportingReply;
 @property BOOL loseWriteReply;
 @property int writes;
@@ -27,7 +31,10 @@ static void capturePost(CGEventTapLocation location, CGEventRef event) {
     return self;
 }
 - (void)enqueue:(dispatch_block_t)block { block(); }
+- (BOOL)secureInputActive { return _protectedInput; }
+- (BOOL)openInterface:(MFLogiInterface *)i { _opens++; i.isOpen = !_failOpen; return i.isOpen; }
 - (int)request:(MFLogiInterface *)i deviceIndex:(uint8_t)d feature:(uint8_t)f function:(uint8_t)fn params:(const uint8_t *)p length:(int)n {
+    _requests++;
     if (_asleep) return -1;
     memset(i.responseBytes, 0, 20); i.responseLength = 20;
     if (!f) { i.responseBytes[4] = p[0] == 0x1B ? 9 : 10; return 0; }
@@ -158,6 +165,44 @@ int main(void) { @autoreleasepool {
     shortReply.shortReportingReply = YES;
     [shortReply activateTarget:t on:i quietly:YES];
     assert(t.buttonForCID.count == 0 && shortReply.writes == 0); // remap bytes must be present
+    // A password field must pause transport without discarding an owned lease.
+    FakeDiverter *secure = [FakeDiverter new]; i = interface(secure); t = i.targets[0];
+    secure.modeShiftRequested = YES;
+    [secure activateTarget:t on:i quietly:YES];
+    NSData *originalMode = t.originalReporting[@0xC4];
+    t.pressedMask = 3; secure.protectedInput = YES;
+    int blockedRequests = secure.requests, blockedWrites = secure.writes;
+    NSUInteger blockedEdges = secure.edges.count;
+    [secure verifyAll:NO];
+    assert(secure.requests == blockedRequests && secure.writes == blockedWrites);
+    assert(t.buttonForCID.count == 2 && [t.originalReporting[@0xC4] isEqual:originalMode]);
+    assert(t.pressedMask == 0 && t.pendingReleaseMask == 3 && secure.edges.count == blockedEdges);
+    // No notification is delivered during pause.
+    [secure handleDivertedButtons:r length:20 target:t]; assert(secure.edges.count == blockedEdges);
+    // Delete Button7 binding while blocked: restoration must wait, not lose ownership.
+    secure.modeShiftRequested = NO;
+    [secure reconcileTarget:t on:i];
+    assert(secure.requests == blockedRequests && t.buttonForCID[@0xC4]);
+    secure.protectedInput = NO; i.accessDenied = YES; secure.failOpen = YES;
+    [secure verifyAll:NO];
+    assert(!i.isOpen && t.buttonForCID.count == 2); // failed reopen preserves claims
+    secure.failOpen = NO;
+    [secure verifyAll:NO];
+    assert(i.isOpen && t.buttonForCID[@0xD0] && !t.buttonForCID[@0xC4]);
+    assert(![secure.reporting[@0xC4] boolValue]); // native mode restored after exit
+    assert(secure.opens == 2);
+    // Same registry entry can recover our own claims; another entry cannot.
+    i.registryID = 123; [secure rememberOwnership:i];
+    MFLogiInterface *same = [MFLogiInterface new]; same.registryID = 123;
+    [secure recoverOwnership:same]; assert(same.targets.firstObject == t && !t.deliveryReady);
+    NSUInteger beforeValidation = secure.edges.count;
+    [secure handleDivertedButtons:r length:20 target:t]; assert(secure.edges.count == beforeValidation);
+    MFLogiInterface *different = [MFLogiInterface new]; different.registryID = 124;
+    [secure recoverOwnership:different]; assert(different.targets.count == 0);
+    // Reopening may reveal another client's reporting state: relinquish without writes.
+    secure.reporting[@0xD0] = @0x11; int foreignWrites = secure.writes;
+    [secure verifyAll:NO]; assert(!t.buttonForCID[@0xD0] && secure.writes == foreignWrites);
     _shared = nil;
+    puts("PASS: protected input pauses HID and event delivery; owned claims survive failed reopen; same-registry recovery validates before delivery; different registry and foreign reporting never adopted");
     puts("PASS: production activation, ownership, lost ACK rollback, recovery, cleanup; dynamic Button7 add/remove/reload, Add-mode cancel, modifier binding, disable/quit/re-enable, exact reporting preservation and foreign diversion");
 } }

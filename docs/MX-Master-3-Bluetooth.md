@@ -148,3 +148,28 @@ These are related requests, not automatic closing claims. Several concern models
 | Mixed recognition/action/UI requests | [#1252](https://github.com/noah-nuebling/mac-mouse-fix/issues/1252), [#1472](https://github.com/noah-nuebling/mac-mouse-fix/issues/1472), [#1682](https://github.com/noah-nuebling/mac-mouse-fix/issues/1682), [#1744](https://github.com/noah-nuebling/mac-mouse-fix/issues/1744): this PR addresses the scoped input path, not every requested action or UI change; #1682's 3S remains unverified |
 | Context, not a verified fix | [#1590](https://github.com/noah-nuebling/mac-mouse-fix/issues/1590) (Master 4 extra control/scroll/tracking), [#1978](https://github.com/noah-nuebling/mac-mouse-fix/issues/1978) (ambiguous press-drag behavior) |
 | Historical/protocol context | [#591](https://github.com/noah-nuebling/mac-mouse-fix/issues/591) is closed around click actions, not proof that special-button support was delivered; [#1277](https://github.com/noah-nuebling/mac-mouse-fix/issues/1277) discusses HID++ 2.0, but its M650 buttons 4/5 are not supported by this patch |
+
+
+### Protected input recovery
+
+macOS Secure Input may deny HID++ requests on this device's combined keyboard/mouse
+collection. Special button actions are intentionally suspended while protected
+input is active; password protection is not disabled or bypassed. A local state
+check detects exit within about one second, then verifies the original owned
+reporting state. Normal Bluetooth verification remains every 30 seconds.
+
+Transient `kIOReturnNotPermitted` marks the interface for a close/reopen after
+protected input ends, without discarding original reporting or button ownership.
+A failed open stays retryable. If the same registry entry is removed and matched
+again within this Helper process, its previously proven claims are retained;
+a different registry entry or a new Helper process cannot inherit them. Reporting
+changed by another client is still relinquished without writes. Removing the last
+Button 7 binding while paused defers exact native restoration until access returns.
+
+Quitting/crashing/replacing the Helper while the mouse cannot be reached can still
+leave temporary diversion behind: HID++ provides no owner token or process lease.
+This implementation cannot safely identify an unknown existing diversion after a
+process restart. It deliberately does not adopt it; a physical mouse power cycle
+may be necessary for that already orphaned state. Secure Input alone and an
+interrupted Helper lifetime are separate cases. Do not restart the Helper as a
+routine workaround for a protected field.

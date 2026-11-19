@@ -5,6 +5,7 @@
 #import <IOKit/hid/IOHIDLib.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <AppKit/AppKit.h>
+#import <Carbon/Carbon.h>
 #import "Constants.h"
 #import "Config.h"
 #import "Logging.h"
@@ -31,7 +32,8 @@
 #define kCIDReportingDivert             0x01
 #define kCIDReportingDivertValid        0x02
 
-#define kVerifyInterval                 30.0    /// Seconds between checks that the diversion is still active.
+#define kVerifyInterval                 30.0    /// Preserve the normal Bluetooth verification cadence.
+#define kSecureInputPollInterval        1.0     /// Local-only state check; no HID traffic while paused.
 
 /// Which physical controls we divert and which Mac Mouse Fix button they become.
 ///     Button numbers use MMF's 1-based numbering (1 = left, 2 = right, 3 = middle, 4 = back, 5 = forward).
@@ -65,6 +67,8 @@ static const MFLogiControlPolicy *policyForCID(uint16_t cid) {
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSNumber *> *buttonForCID;   /// Diverted control ID -> MMF button number
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSData *> *originalReporting;
 @property (nonatomic, strong) NSDictionary<NSNumber *, NSNumber *> *flagsForCID;
+@property (nonatomic) BOOL deliveryReady;
+@property (nonatomic) uint8_t pendingReleaseMask;
 @property (nonatomic) uint8_t pressedMask; /// Thumb=1, mode shift=2
 @property (nonatomic) uint64_t senderID;                                            /// Registry entry ID stamped onto the events we post
 @end
@@ -89,6 +93,9 @@ static const MFLogiControlPolicy *policyForCID(uint16_t cid) {
 @property (nonatomic) uint16_t productID;
 
 @property (nonatomic) BOOL isOpen;
+@property (nonatomic) BOOL accessDenied;
+@property (nonatomic) uint64_t registryID;
+@property (nonatomic) NSUInteger generation;
 @property (nonatomic, strong) NSMutableArray<MFLogiTarget *> *targets;
 /// Pending request
 @property (nonatomic) BOOL waiting;
@@ -123,10 +130,14 @@ static const MFLogiControlPolicy *policyForCID(uint16_t cid) {
 @property (nonatomic, strong) NSMutableArray<dispatch_block_t> *workQueue;
 @property (nonatomic) BOOL isDraining;
 @property (nonatomic) IOHIDManagerRef manager;
+@property (nonatomic) BOOL managerOpen;
+@property (nonatomic) CFAbsoluteTime nextVerification;
 @property (nonatomic) BOOL stopped;
 @property (atomic) BOOL shutdownRequested;
 @property (nonatomic) BOOL restoring;
 @property (nonatomic) BOOL modeShiftRequested;
+@property (nonatomic) BOOL secureInputPaused;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSArray<MFLogiTarget *> *> *suspendedOwnership;
 @end
 
 static LogitechButtonDiverter *_shared = nil;
@@ -212,6 +223,7 @@ static NSCondition *_threadReady = nil;
     self = [super init];
     if (self) {
         _interfaces = [NSMutableArray array];
+        _suspendedOwnership = [NSMutableDictionary dictionary];
         _workQueue = [NSMutableArray array];
 
     }
@@ -241,8 +253,15 @@ static NSCondition *_threadReady = nil;
         CFRunLoopAddSource(CFRunLoopGetCurrent(), emptySource, kCFRunLoopCommonModes);
 
         /// Periodic verification
-        CFRunLoopTimerRef timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + kVerifyInterval, kVerifyInterval, 0, 0, ^(CFRunLoopTimerRef t) {
-            [self enqueue:^{ [self verifyAll:NO]; }];
+        self.nextVerification = CFAbsoluteTimeGetCurrent() + kVerifyInterval;
+        CFRunLoopTimerRef timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + kSecureInputPollInterval, kSecureInputPollInterval, 0, 0, ^(CFRunLoopTimerRef t) {
+            [self enqueue:^{
+                BOOL secure = [self secureInputActive];
+                if (secure != self.secureInputPaused || (!secure && CFAbsoluteTimeGetCurrent() >= self.nextVerification)) {
+                    [self verifyAll:NO];
+                    self.nextVerification = CFAbsoluteTimeGetCurrent() + kVerifyInterval;
+                }
+            }];
         });
         CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopCommonModes);
 
@@ -310,17 +329,16 @@ static void interfaceRemoved(void *context, IOReturn result, void *sender, IOHID
     IOHIDManagerRegisterDeviceRemovalCallback(_manager, interfaceRemoved, (__bridge void *)self);
     IOHIDManagerScheduleWithRunLoop(_manager, _runLoop, kCFRunLoopDefaultMode);
     IOReturn r = IOHIDManagerOpen(_manager, kIOHIDOptionsTypeNone);
-    if (r != kIOReturnSuccess) {
+    _managerOpen = r == kIOReturnSuccess;
+    if (!_managerOpen) {
         DDLogError("LogitechButtonDiverter: IOHIDManagerOpen failed: 0x%x", r);
     }
 }
 
 - (MFLogiInterface *)interfaceForDevice:(IOHIDDeviceRef)device {
-    NSNumber *uid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDUniqueIDKey));
+    uint64_t entryID = registryIDOfDevice(device);
     for (MFLogiInterface *iface in _interfaces) {
-        if (iface.device == device) return iface;
-        NSNumber *otherUID = (__bridge NSNumber *)IOHIDDeviceGetProperty(iface.device, CFSTR(kIOHIDUniqueIDKey));
-        if (uid != nil && [uid isEqual:otherUID]) return iface;
+        if (iface.device == device || (entryID && iface.registryID == entryID)) return iface;
     }
     return nil;
 }
@@ -337,30 +355,62 @@ static void inputReportCallback(void *context, IOReturn result, void *sender, IO
     iface.name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey)) ?: @"Logitech device";
     iface.productID = ((__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey))).unsignedShortValue;
 
-    IOReturn r = IOHIDDeviceOpen(device, kIOHIDOptionsTypeNone);
-    if (r != kIOReturnSuccess) {
-        DDLogError("LogitechButtonDiverter: Couldn't open HID++ interface of '%{public}@': 0x%x", iface.name, r);
-        CFRelease(device);
-        return;
+    iface.registryID = registryIDOfDevice(device);
+    [self recoverOwnership:iface];
+    if (iface.targets.count == 0) {
+        MFLogiTarget *t = [[MFLogiTarget alloc] init];
+        t.deviceIndex = kHIDPPDeviceIndexDirect;
+        t.name = iface.name;
+        t.senderID = iface.registryID;
+        [iface.targets addObject:t];
+    }
+    [_interfaces addObject:iface]; // Keep failed/denied opens for the retry timer.
+    if (![self secureInputActive] && [self openInterface:iface]) {
+        for (MFLogiTarget *t in iface.targets) [self activateTarget:t on:iface quietly:NO];
+    }
+}
+
+// Keep only this process's proven claims and only for the identical registry entry.
+// A different registry ID (physical reconnect/restart) must never inherit ownership.
+- (void)rememberOwnership:(MFLogiInterface *)iface {
+    if (!iface.registryID) return;
+    for (MFLogiTarget *t in iface.targets) {
+        if (t.originalReporting.count) {
+            _suspendedOwnership[@(iface.registryID)] = [iface.targets copy];
+            return;
+        }
+    }
+}
+
+- (void)recoverOwnership:(MFLogiInterface *)iface {
+    NSArray *saved = _suspendedOwnership[@(iface.registryID)];
+    if (!saved) return;
+    for (MFLogiTarget *target in saved) target.deliveryReady = NO;
+    [iface.targets addObjectsFromArray:saved];
+    [_suspendedOwnership removeObjectForKey:@(iface.registryID)];
+}
+
+- (BOOL)secureInputActive { return IsSecureEventInputEnabled(); }
+
+- (BOOL)openInterface:(MFLogiInterface *)iface {
+    IOReturn result = IOHIDDeviceOpen(iface.device, kIOHIDOptionsTypeNone);
+    if (result != kIOReturnSuccess) {
+        DDLogDebug("Logitech HID++ open deferred for '%{public}@': 0x%x", iface.name, result);
+        return NO;
     }
     iface.isOpen = YES;
-    IOHIDDeviceRegisterInputReportCallback(device, iface->_reportBuffer, sizeof(iface->_reportBuffer), inputReportCallback, (__bridge void *)iface);
-    IOHIDDeviceScheduleWithRunLoop(device, _runLoop, kCFRunLoopDefaultMode);
-
-    [_interfaces addObject:iface];
-
-    MFLogiTarget *t = [[MFLogiTarget alloc] init];
-    t.deviceIndex = kHIDPPDeviceIndexDirect;
-    t.name = iface.name;
-    t.senderID = registryIDOfDevice(device);
-    [iface.targets addObject:t];
-    [self activateTarget:t on:iface quietly:NO];
+    iface.generation++;
+    for (MFLogiTarget *target in iface.targets) target.deliveryReady = NO;
+    IOHIDDeviceRegisterInputReportCallback(iface.device, iface->_reportBuffer, sizeof(iface->_reportBuffer), inputReportCallback, (__bridge void *)iface);
+    IOHIDDeviceScheduleWithRunLoop(iface.device, _runLoop, kCFRunLoopDefaultMode);
+    return YES;
 }
 
 - (void)handleInterfaceRemoved:(IOHIDDeviceRef)device {
     MFLogiInterface *iface = [self interfaceForDevice:device];
     if (iface == nil) return;
     for (MFLogiTarget *t in iface.targets) [self releaseAllPressedOn:t];
+    [self rememberOwnership:iface];
     [self closeInterface:iface];
 
     [_interfaces removeObject:iface];
@@ -372,6 +422,8 @@ static void inputReportCallback(void *context, IOReturn result, void *sender, IO
 
 - (void)closeInterface:(MFLogiInterface *)iface {
     if (!iface.isOpen) return;
+    iface.generation++;
+    for (MFLogiTarget *target in iface.targets) target.deliveryReady = NO;
     IOHIDDeviceRegisterInputReportCallback(iface.device, iface->_reportBuffer, sizeof(iface->_reportBuffer), NULL, NULL);
     IOHIDDeviceUnscheduleFromRunLoop(iface.device, _runLoop, kCFRunLoopDefaultMode);
     IOHIDDeviceClose(iface.device, kIOHIDOptionsTypeNone);
@@ -398,7 +450,7 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
 - (int)request:(MFLogiInterface *)iface deviceIndex:(uint8_t)deviceIndex feature:(uint8_t)feature function:(uint8_t)function params:(const uint8_t *)params length:(int)paramsLength {
 
     assert(NSThread.currentThread == _thread);
-    if (!iface.isOpen || (_shutdownRequested && !_restoring)) return -1;
+    if (!iface.isOpen || (_shutdownRequested && !_restoring) || [self secureInputActive]) return -1;
 
     uint8_t packet[kHIDPPLongLength] = {0};
     packet[0] = kHIDPPReportLong;
@@ -418,6 +470,10 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
     IOReturn r = IOHIDDeviceSetReport(iface.device, kIOHIDReportTypeOutput, kHIDPPReportLong, packet, sizeof(packet));
     if (r != kIOReturnSuccess) {
         iface.waiting = NO;
+        if (r == kIOReturnNotPermitted) {
+            iface.accessDenied = YES;
+            for (MFLogiTarget *t in iface.targets) [self releaseAllPressedOn:t];
+        }
         DDLogDebug("LogitechButtonDiverter: SetReport to '%{public}@' failed: 0x%x", iface.name, r);
         return -1;
     }
@@ -452,7 +508,8 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
 /// Probes the device behind `target` and diverts the wanted controls. `quietly` suppresses logging when nothing is there (empty receiver slots).
 - (void)activateTarget:(MFLogiTarget *)target on:(MFLogiInterface *)iface quietly:(BOOL)quietly {
 
-    if (_stopped || _shutdownRequested || !iface.isOpen) return;
+    if (_stopped || _shutdownRequested || !iface.isOpen || [self secureInputActive]) return;
+    target.deliveryReady = NO;
     [self releaseAllPressedOn:target];
     /// Find features
     BOOL responded = NO;
@@ -486,6 +543,7 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
 
     target.flagsForCID = flagsForCID;
     [self reconcileTarget:target on:iface];
+    [self validateTarget:target on:iface];
 }
 
 // Change only the temporary diversion bit. All other reporting modes/remapping
@@ -509,8 +567,10 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
         if (![self setDivert:NO cid:cid.unsignedShortValue on:iface target:target] ||
             ![[self reportingCID:cid.unsignedShortValue on:iface target:target] isEqual:before]) return NO;
     }
-    if (target.pressedMask & MFHIDPPButtonBit(cid.unsignedShortValue)) [self postCID:cid down:NO target:target];
-    target.pressedMask &= ~MFHIDPPButtonBit(cid.unsignedShortValue);
+    uint8_t bit = MFHIDPPButtonBit(cid.unsignedShortValue);
+    if ((target.pressedMask | target.pendingReleaseMask) & bit) [self postCID:cid down:NO target:target];
+    target.pressedMask &= ~bit;
+    target.pendingReleaseMask &= ~bit;
     [target.buttonForCID removeObjectForKey:cid];
     [target.originalReporting removeObjectForKey:cid];
     DDLogInfo("Logitech HID++ released ownership of CID=0x%04x", cid.unsignedShortValue);
@@ -518,7 +578,7 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
 }
 
 - (void)reconcileTarget:(MFLogiTarget *)target on:(MFLogiInterface *)iface {
-    if (_stopped || _shutdownRequested || !iface.isOpen || !target.reprogFeatureIndex) return;
+    if (_stopped || _shutdownRequested || !iface.isOpen || !target.reprogFeatureIndex || [self secureInputActive]) return;
     NSArray *wanted = self.wantedCIDs;
     for (NSNumber *cid in target.buttonForCID.allKeys) {
         if (![wanted containsObject:cid]) [self restoreCID:cid on:iface target:target];
@@ -558,27 +618,60 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
 /// Verify every owned CID and retry initially sleeping devices.
 - (void)verifyAll:(BOOL)force {
     if (_stopped || _shutdownRequested) return;
+    if ([self secureInputActive]) {
+        if (!_secureInputPaused) DDLogInfo("Logitech HID++ paused for protected input; retaining owned controls");
+        _secureInputPaused = YES;
+        for (MFLogiInterface *iface in _interfaces) {
+            for (MFLogiTarget *t in iface.targets) {
+                t.deliveryReady = NO;
+                [self releaseAllPressedOn:t];
+            }
+        }
+        return;
+    }
+    if (_secureInputPaused) DDLogInfo("Logitech HID++ resuming after protected input");
+    _secureInputPaused = NO;
+    if (_manager && !_managerOpen) {
+        _managerOpen = IOHIDManagerOpen(_manager, kIOHIDOptionsTypeNone) == kIOReturnSuccess;
+        if (!_managerOpen) return;
+    }
     for (MFLogiInterface *iface in [_interfaces copy]) {
-        if (!iface.isOpen) continue;
+        if (iface.accessDenied) {
+            [self closeInterface:iface]; // Reopen the client, not the mouse's reporting state.
+            iface.accessDenied = NO;
+        }
+        if (!iface.isOpen && ![self openInterface:iface]) continue;
         for (MFLogiTarget *t in iface.targets) {
+            if (t.pendingReleaseMask) [self releaseAllPressedOn:t];
+            t.deliveryReady = NO;
             if (force || t.reprogFeatureIndex == 0 || t.buttonForCID.count == 0) {
                 [self activateTarget:t on:iface quietly:YES];
             }
             [self reconcileTarget:t on:iface];
-            for (NSNumber *cid in t.buttonForCID.allKeys) {
-                NSData *state = [self reportingCID:cid.unsignedShortValue on:iface target:t];
-                if (!state) { [self releaseAllPressedOn:t]; continue; }
-                NSData *before = t.originalReporting[cid];
-                uint8_t expected[3]; memcpy(expected, before.bytes, 3); expected[0] |= kCIDReportingDivert;
-                if ([state isEqual:before]) {
-                    [self releaseAllPressedOn:t];
-                    if ([[self wantedCIDs] containsObject:cid]) [self setDivert:YES cid:cid.unsignedShortValue on:iface target:t];
-                } else if (memcmp(state.bytes, expected, 3) != 0) {
-                    [self restoreCID:cid on:iface target:t]; // another client changed it; don't overwrite
-                }
-            }
+            [self validateTarget:t on:iface];
         }
     }
+}
+
+// Callback notifications are queued behind request sequences, and recovered claims
+// stay muted until every owned reporting state has been checked on this client.
+- (void)validateTarget:(MFLogiTarget *)target on:(MFLogiInterface *)iface {
+    target.deliveryReady = NO;
+    BOOL reachable = YES;
+    for (NSNumber *cid in target.buttonForCID.allKeys) {
+        NSData *state = [self reportingCID:cid.unsignedShortValue on:iface target:target];
+        if (!state) { reachable = NO; [self releaseAllPressedOn:target]; continue; }
+        NSData *before = target.originalReporting[cid];
+        if (before.length != 3) { reachable = NO; continue; }
+        uint8_t expected[3]; memcpy(expected, before.bytes, 3); expected[0] |= kCIDReportingDivert;
+        if ([state isEqual:before]) {
+            [self releaseAllPressedOn:target];
+            if ([[self wantedCIDs] containsObject:cid] && ![self setDivert:YES cid:cid.unsignedShortValue on:iface target:target]) reachable = NO;
+        } else if (memcmp(state.bytes, expected, 3) != 0) {
+            if (![self restoreCID:cid on:iface target:target]) reachable = NO;
+        }
+    }
+    target.deliveryReady = reachable && ![self secureInputActive];
 }
 
 - (void)restoreAllOnWorker {
@@ -598,7 +691,9 @@ static uint64_t registryIDOfDevice(IOHIDDeviceRef device) {
     if (_manager) {
         IOHIDManagerUnscheduleFromRunLoop(_manager, _runLoop, kCFRunLoopDefaultMode);
         IOHIDManagerClose(_manager, kIOHIDOptionsTypeNone);
+        _managerOpen = NO;
     }
+    [_suspendedOwnership removeAllObjects];
     _restoring = NO;
 }
 
@@ -629,13 +724,18 @@ static void inputReportCallback(void *context, IOReturn result, void *sender, IO
     }
 
     /// HID++ 2.0 notifications carry software ID 0
-    if (softwareID != 0 || _shared.stopped || !iface.isOpen) return;
+    if (softwareID != 0 || _shared.stopped || !iface.isOpen || [_shared secureInputActive]) return;
     MFLogiTarget *t = [iface targetForDeviceIndex:deviceIndex];
     if (t == nil || t.reprogFeatureIndex == 0) return;
 
     if (featureIndex == t.reprogFeatureIndex && function == 0x00) {
         /// divertedButtonsEvent: up to four control IDs that are currently held
-        [_shared handleDivertedButtons:r length:n target:t];
+        NSData *snapshot = [NSData dataWithBytes:r length:n];
+        NSUInteger generation = iface.generation;
+        [_shared enqueue:^{
+            if (!iface.isOpen || iface.generation != generation || ![_shared.interfaces containsObject:iface]) return;
+            [_shared handleDivertedButtons:snapshot.bytes length:snapshot.length target:t];
+        }];
     } else if (t.wirelessFeatureIndex != 0 && featureIndex == t.wirelessFeatureIndex && function == 0x00) {
         /// WirelessDeviceStatus: the mouse (re)connected and forgot its temporary settings
         DDLogInfo("LogitechButtonDiverter: '%{public}@' reconnected – re-diverting", t.name);
@@ -645,6 +745,7 @@ static void inputReportCallback(void *context, IOReturn result, void *sender, IO
 
 - (void)handleDivertedButtons:(const uint8_t *)r length:(size_t)n target:(MFLogiTarget *)target {
 
+    if (!target.deliveryReady || [self secureInputActive]) return;
     uint8_t mask;
     if (!MFHIDPPButtonSnapshot(r, (size_t)n, target.reprogFeatureIndex, &mask)) return;
     uint8_t owned = 0;
@@ -661,8 +762,13 @@ static void inputReportCallback(void *context, IOReturn result, void *sender, IO
 }
 
 - (void)releaseAllPressedOn:(MFLogiTarget *)target {
-    uint8_t held = target.pressedMask;
+    uint8_t held = target.pressedMask | target.pendingReleaseMask;
     target.pressedMask = 0;
+    if ([self secureInputActive]) {
+        target.pendingReleaseMask = held;
+        return;
+    }
+    target.pendingReleaseMask = 0;
     for (NSNumber *cid in target.buttonForCID) {
         if (held & MFHIDPPButtonBit(cid.unsignedShortValue)) [self postCID:cid down:NO target:target];
     }
@@ -670,7 +776,7 @@ static void inputReportCallback(void *context, IOReturn result, void *sender, IO
 
 - (void)postCID:(NSNumber *)cid down:(BOOL)down target:(MFLogiTarget *)target {
     NSNumber *button = target.buttonForCID[cid];
-    if (button == nil) return;   /// Diverted by someone else (e.g. Logi Options+) – not ours
+    if (button == nil || [self secureInputActive]) return;   /// Diverted by someone else (e.g. Logi Options+) – not ours
     postButtonEvent(button.intValue, down, target.senderID);
 }
 

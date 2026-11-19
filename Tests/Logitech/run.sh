@@ -7,7 +7,7 @@ xcrun clang -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined Tests/Lo
 "$bin"
 xcrun clang -fobjc-arc -fblocks -Wno-unused-variable -I Tests/Logitech/stubs \
     -fsanitize=address,undefined Tests/Logitech/lifecycle.m \
-    -framework Foundation -framework AppKit -framework IOKit -framework CoreGraphics -o "$bin"
+    -framework Foundation -framework AppKit -framework IOKit -framework CoreGraphics -framework Carbon -o "$bin"
 "$bin"
 
 python3 Tests/Logitech/popup-cell.py
