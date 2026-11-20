@@ -191,6 +191,11 @@ static NSDictionary *sideButtonActions;
                             || isclassd(win, NSPopupMenuWindow)                     /// NSMenu windows
                             || isclassd(win, AppKit._NSGlassEffectWindow)           /// No clue. Seen on macOS 27.2 [Oct 2026]
                             || isclassd(win, NSToolTipPanel)                        /// Seen on macOS 27.2 [Oct 2026]
+                            || [win isKindOfClass: NSSavePanel.class]               /// NSOpenPanel / NSSavePanel – system-provided file pickers (e.g. the + button in the 'App-specific' tab). Their UI is out of our control. [Nov 2026]
+                            || [NSApp.windows indexOfObjectPassingTest: ^BOOL (NSWindow *w, NSUInteger i, BOOL *stop) { return [w isKindOfClass: NSSavePanel.class] && w.isVisible; }] != NSNotFound /// While a file picker is open, it shows more internal AppKit windows (e.g. search suggestions when typing in its search field). [Nov 2026]
+                            || isclassd(win, SPRoundedWindow)                       /// System popup (input-source indicator?) shown when a text field gets focus. Seen on macOS 26 [Nov 2026]
+                            || ({ NSBundle *b = [NSBundle bundleForClass: win.class];   /// Any window whose class comes from outside our app and AppKit (private system frameworks, Sparkle, ...) – their UI is out of our control. [Nov 2026]
+                                  !([b isEqual: NSBundle.mainBundle] || [b isEqual: [NSBundle bundleForClass: NSWindow.class]]); })
                             || [win.frameAutosaveName isEqual: @"SUStatusFrame"]    /// Sparkle window
                             || [win.frameAutosaveName isEqual: @"SUUpdateAlert"]    /// Sparkle window
                         );

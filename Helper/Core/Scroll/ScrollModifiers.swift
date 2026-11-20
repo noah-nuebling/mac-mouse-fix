@@ -99,6 +99,15 @@ extension MFScrollModificationResult: Hashable {
             }
         }
         
+        /// App-specific settings
+        ///     [Nov 2026] If the user turned off a modifier feature for the app under the pointer, let the scroll event through unmodified, so the app can handle e.g. Command-scroll itself.
+        if result.effectMod == kMFScrollEffectModificationHorizontalScroll && ScrollConfig.appDisablesHorizontalModifier {
+            result.effectMod = kMFScrollEffectModificationNone
+        }
+        if result.effectMod == kMFScrollEffectModificationZoom && ScrollConfig.appDisablesZoomModifier {
+            result.effectMod = kMFScrollEffectModificationNone
+        }
+        
         /// Feedback
         let resultIsEmpty = result.inputMod == emptyResult.inputMod && result.effectMod == emptyResult.effectMod
         if !resultIsEmpty {

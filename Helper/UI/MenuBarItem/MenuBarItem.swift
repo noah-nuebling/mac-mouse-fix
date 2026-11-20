@@ -29,6 +29,7 @@ import Foundation
     
     @IBOutlet weak var scrollEnabledItem: NSMenuItem!
     @IBOutlet weak var buttonsEnabledItem: NSMenuItem!
+    @IBOutlet weak var appSpecificEnabledItem: NSMenuItem! /// [Nov 2026]
     
     @IBOutlet weak var appCompatItem: NSMenuItem!
     @IBOutlet var appCompatView: NSView!
@@ -111,12 +112,14 @@ import Foundation
 
         let buttonsKilled = config("General.buttonKillSwitch") as? Bool ?? false
         let scrollKilled = config("General.scrollKillSwitch") as? Bool ?? false
+        let appSpecificKilled = config("General.appSpecificKillSwitch") as? Bool ?? false
         
         if shouldShow {
 
             mfrun(CFRunLoopGetMain()) {
                 instance?.buttonsEnabledItem.state = !buttonsKilled ? .on : .off
                 instance?.scrollEnabledItem.state = !scrollKilled ? .on : .off
+                instance?.appSpecificEnabledItem.state = !appSpecificKilled ? .on : .off
             }
             
         }
@@ -125,9 +128,10 @@ import Foundation
             /// Disable all settings from the menuItem, if the menuItem is disabled
             /// Need to do the killed check to prevent infinite loops. (Not sure if true anymore). This would be easier if we just used the reactive ConfigValue instead.
             
-            if (buttonsKilled || scrollKilled) {
+            if (buttonsKilled || scrollKilled || appSpecificKilled) {
                 setConfig("General.scrollKillSwitch", false as NSObject)
                 setConfig("General.buttonKillSwitch", false as NSObject)
+                setConfig("General.appSpecificKillSwitch", false as NSObject)
                 commitConfig()
             }
         }
@@ -162,6 +166,19 @@ import Foundation
         let killed = sender.state != .on
         mfrun(IOThread.runLoop()) {
             setConfig("General.buttonKillSwitch", killed as NSObject)
+            commitConfig()
+        }
+    }
+    
+    @IBAction func disableAppSpecific(_ sender: NSMenuItem) {
+        assertRunLoop(CFRunLoopGetMain())
+        /// Toggle
+        sender.state = sender.state == .on ? .off : .on
+        /// Set to config
+        ///     When killed, the Helper ignores `AppOverrides` and every app uses the settings from the Scrolling tab. [Nov 2026]
+        let killed = sender.state != .on
+        mfrun(IOThread.runLoop()) {
+            setConfig("General.appSpecificKillSwitch", killed as NSObject)
             commitConfig()
         }
     }
