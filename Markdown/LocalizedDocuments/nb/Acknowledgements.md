@@ -94,6 +94,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **november 2026**
 
+- 🇦🇺&nbsp;Paul&nbsp;Power
 - 🇺🇸&nbsp;Leakpp
 - 🇩🇪&nbsp;Jörg&nbsp;Sommerfeld
 - 🇳🇴&nbsp;Leif&nbsp;John&nbsp;Korshavn
