@@ -161,7 +161,7 @@ import ReactiveSwift
         ///     Update [Mar 2025] Still not totally sure. But I don't think it's necessary. The managers of all the state we're setting here should give SwitchMaster a callback when the state is initialized or when it changes. If the managers do that, then this shouldn't be necessary.
         latestDevices = DeviceManager.attachedDevices
         latestRemaps = Remap.remaps
-        latestScrollConfig = ScrollConfig.shared
+        latestScrollConfig = ScrollConfig.defaultInstance
         latestModifiers = Modifiers.modifiers(with: nil)
         
         /// Debug
@@ -377,7 +377,7 @@ import ReactiveSwift
             """)
     }
     
-    private var latestScrollConfig = ScrollConfig.shared /// Not sure if this is a good initialization value
+    private var latestScrollConfig = ScrollConfig.defaultInstance /// Not sure if this is a good initialization value
     @objc func scrollConfigChanged(scrollConfig: ScrollConfig) {
 
         assertRunLoop(IOThread.runLoop())

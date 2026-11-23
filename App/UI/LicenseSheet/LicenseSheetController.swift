@@ -138,9 +138,9 @@ import Cocoa
                 do {
                     /// Read
                     var dict: NSMutableDictionary? = nil
-                    var err = readSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", &dict)
-                    if err == kSecureStorageReadError_UnexpectedError {
-                        err = kSecureStorageReadError_ForceWrite; /// Try to force the write regardless of the read error. Failing to store the user's licenseKey would be worse than overriding anything else in the SecureStorage (just the trial data [Oct 2026])
+                    var readError = readSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", &dict)
+                    if readError == kSecureStorageReadError_UnexpectedError {
+                        readError = kSecureStorageReadError_ForceWrite; /// Try to force the write regardless of the readError. Failing to store the user's licenseKey would be worse than overriding anything else in the SecureStorage (just the trial data [Oct 2026])
                         dict = [:]
                     }
 
@@ -148,7 +148,7 @@ import Cocoa
                     dict?.setObject(key as NSObject, forCoolKeyPath: "License.key")
 
                     /// Write
-                    let success = writeSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", dict, err)
+                    let success = writeSecureStorage(/*callerName*/"LicenseSheetController.activateLicense", dict, readError)
                     if !success {
                         successfullyActivatedLicense = false
                         error = NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCode_KeychainError, userInfo: nil) /// [Oct 2026] Overrides the serverError? Don't think that can happen

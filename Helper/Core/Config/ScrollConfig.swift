@@ -33,16 +33,21 @@ import Cocoa
     
     private static var _scrollConfigRaw: NSDictionary? = nil /// This needs to be static, not an instance var. Otherwise there are weird crashes in Scroll.m. Not sure why.
     private func c(_ keyPath: String) -> NSObject? {
-        /// @afterNoGCDTodo forCoolKeyPath is pretty slow while scrolling [Sep 2026]
+        /// §afterNoGCDTodo forCoolKeyPath is pretty slow while scrolling [Sep 2026]
         return ScrollConfig._scrollConfigRaw?.object(forCoolKeyPath: keyPath) /// Not sure whether to use coolKeyPath here?
     }
     
     // MARK: Static functions
     
-    @objc private(set) static var shared = ScrollConfig() /// Singleton instance
-    
+    private static var _defaultInstance = ScrollConfig()
+    @objc static var defaultInstance: ScrollConfig {
+        assertRunLoop(configRunLoop())
+        return _defaultInstance;
+    }
+
     @objc static func reload() {
-        
+        assertRunLoop(configRunLoop());
+
         /// Guard not equal
         
         let newConfigRaw = config("Scroll") as! NSDictionary?
@@ -54,14 +59,15 @@ import Cocoa
         /// - This should be called when the underlying config (which mirrors the config file) changes
         /// - All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
         /// - TODO: Make a copy before storing in `_scrollConfigRaw` just to be sure the equality checks always work
-        shared = ScrollConfig()
+        _defaultInstance = ScrollConfig()
         _scrollConfigRaw = newConfigRaw
         cache = nil
-//        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
-        SwitchMaster.shared.scrollConfigChanged(scrollConfig: shared)
+        //ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
+        SwitchMaster_ScrollConfigChanged(_defaultInstance);
     }
     @objc static func devToggles_deleteCache() { /// [May 2025] Added this function as a hack for DevToggles.m
-        shared = ScrollConfig()
+        assertRunLoop(configRunLoop());
+        _defaultInstance = ScrollConfig()
         cache = nil
     }
     private static var cache: [_HT<MFScrollModificationResult, MFAxis, CGDirectDisplayID>: ScrollConfig]? = nil
@@ -69,7 +75,8 @@ import Cocoa
     // MARK: Overrides
     
     @objc static func scrollConfig(modifiers: MFScrollModificationResult, inputAxis: MFAxis, display: CGDirectDisplayID) -> ScrollConfig {
-        
+        assertRunLoop(configRunLoop()); /// [Oct 2026] This returns an instance of `ScrollConfig` All the per-instance-getters below don't have `assertRunLoop`. The only client is Scroll.m which has assertRunLoop() checks anyways [Oct 2026]
+
         /// Try to get result from cache
         
         if cache == nil {
@@ -85,8 +92,8 @@ import Cocoa
             /// Cache retrieval failed -> Recalculate result
             
             /// Copy og settings
-            let new = shared.copy() as! ScrollConfig
-            
+            let new = _defaultInstance.copy() as! ScrollConfig
+
             /// Declare overridables
             var u_speed = new.u_speed
             var precise = new.u_precise
@@ -242,11 +249,11 @@ import Cocoa
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
     
-//    @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
-//                                                            "control" : CGEventFlags.maskControl,
-//                                                            "option" : CGEventFlags.maskAlternate,
-//                                                            "shift" : CGEventFlags.maskShift]
-    
+    //@objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
+    //                                                        "control" : CGEventFlags.maskControl,
+    //                                                        "option" : CGEventFlags.maskAlternate,
+    //                                                        "shift" : CGEventFlags.maskShift]
+
     // MARK: Derived
     /// For convenience I guess? Should probably remove these
     
@@ -584,9 +591,9 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         
         let baseCurve =
         Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(0.66, 1), _P(1, 1)], defaultEpsilon: 0.001)
-//            Bezier(controlPoints: [_P(0, 0), _P(0.31, 0.44), _P(0.66, 1), _P(1, 1)], defaultEpsilon: 0.001)
-//            ScrollConfig.linearCurve
-//            Bezier(controlPoints: [_P(0, 0), _P(0.23, 0.89), _P(0.52, 1), _P(1, 1)], defaultEpsilon: 0.001)
+            //Bezier(controlPoints: [_P(0, 0), _P(0.31, 0.44), _P(0.66, 1), _P(1, 1)], defaultEpsilon: 0.001)
+            //ScrollConfig.linearCurve
+            //Bezier(controlPoints: [_P(0, 0), _P(0.23, 0.89), _P(0.52, 1), _P(1, 1)], defaultEpsilon: 0.001)
         return MFScrollAnimationCurveParameters(justBaseCurve: baseCurve, speedSmoothing: -1, baseMsPerStep: 250, baseMsPerStepCurve: nil, sendGestureScrolls: false)
     
     case kMFScrollAnimationCurveNameVeryLowInertia:
@@ -1011,13 +1018,13 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     /// vv Old screenSizeFactor formula
     ///     Replaced this with the new formula without in-depth testing, so this might be better
     
-//    if screenHeightFactor >= 1 {
-//        screenHeightSummand = 20*(screenHeightFactor - 1)
-//    } else {
-//        screenHeightSummand = -20*((1/screenHeightFactor) - 1)
-//    }
-//    maxSens += screenHeightSummand
-    
+    //if screenHeightFactor >= 1 {
+    //    screenHeightSummand = 20*(screenHeightFactor - 1)
+    //} else {
+    //    screenHeightSummand = -20*((1/screenHeightFactor) - 1)
+    //}
+    //maxSens += screenHeightSummand
+
     /// Get Curve
     /// - Not sure if 0.08 defaultEpsilon is accurate enough when we create the curve.
     
@@ -1031,8 +1038,8 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     
     /// Debug
     
-//    DDLogDebug("Recommended epsilon for Acceleration Curve: \(curve.getMinEpsilon(forResolution: 1000, startEpsilon: 0.02/*0.08*/, epsilonEpsilon: 0.001))")
-    
+    //DDLogDebug("Recommended epsilon for Acceleration Curve: \(curve.getMinEpsilon(forResolution: 1000, startEpsilon: 0.02/*0.08*/, epsilonEpsilon: 0.001))")
+
     /// Return
     return curve
     

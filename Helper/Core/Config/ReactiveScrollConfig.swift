@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+#if false /// [Oct 2026] Unused
+
 import Foundation
 import ReactiveSwift
 
@@ -17,10 +19,10 @@ class ReactiveScrollConfig {
     
     /// Main Interface
     
-    var scrollConfig: SignalProducer<ScrollConfig, Never> {
-        return signal.producer.prefix(value: ScrollConfig.shared)
-    }
-    
+    //var scrollConfig: SignalProducer<ScrollConfig, Never> {
+    //    return signal.producer.prefix(value: ScrollConfig.shared)
+    //}
+
     /// Reactive Core + Init
     let signal: Signal<ScrollConfig, Never>
     let observer: Signal<ScrollConfig, Never>.Observer
@@ -31,7 +33,9 @@ class ReactiveScrollConfig {
     
     /// Updater
     func handleScrollConfigChanged(newValue: ScrollConfig) {
-//        observer.send(value: newValue)
-        SwitchMaster.shared.scrollConfigChanged(scrollConfig: newValue)
+        //observer.send(value: newValue)
+        SwitchMaster_ScrollConfigChanged(newValue);
     }
 }
+
+#endif

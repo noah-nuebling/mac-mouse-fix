@@ -20,7 +20,7 @@ typedef enum {
     ///     `outDict` has been set to an empty dictionary which you can fill and pass to `writeSecureStorage` along with this error code to create the keychainItem.
     kSecureStorageReadError_DoesntExistYet = 1,
 
-    /// Some strange error occured with the keychain API. We think these errors might occur transiently for some people. Use some lenient fallback mechanism. ('lenient' meaning it lets people use the app, and doesn't lock them out) (See 'Free days are over' bug notes) [Oct 2026]
+    /// Some strange error occured with the keychain API. We think these errors might occur transiently for some people. Caller should use some lenient fallback mechanism. ('lenient' meaning it lets people use the app, and doesn't lock them out) (See 'Free days are over' bug notes) [Oct 2026]
     ///     `outDict` has been set to nil. `writeSecureStorage` crashes if you pass it this error code. Override it with `kSecureStorageReadError_ForceWrite` if needed [Oct 2026]
     kSecureStorageReadError_UnexpectedError = 2,
 

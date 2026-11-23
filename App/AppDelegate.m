@@ -189,6 +189,8 @@ static NSDictionary *sideButtonActions;
                         assert(win.contentView.prefersCompactControlSizeMetrics == YES
                             || isclassd(win, _NSAlertPanel)                         /// NSAlert windows
                             || isclassd(win, NSPopupMenuWindow)                     /// NSMenu windows
+                            || isclassd(win, AppKit._NSGlassEffectWindow)           /// No clue. Seen on macOS 27.2 [Oct 2026]
+                            || isclassd(win, NSToolTipPanel)                        /// Seen on macOS 27.2 [Oct 2026]
                             || [win.frameAutosaveName isEqual: @"SUStatusFrame"]    /// Sparkle window
                             || [win.frameAutosaveName isEqual: @"SUUpdateAlert"]    /// Sparkle window
                         );
@@ -198,7 +200,7 @@ static NSDictionary *sideButtonActions;
         }
         
         /// Setup CocoaLumberjack logging
-        [Logging setUpDDLog];
+        //[Logging setUpDDLog];
         DDLogInfo("Main App starting up...");
         
         /// Remove restart the app untranslocated if it's currently translocated

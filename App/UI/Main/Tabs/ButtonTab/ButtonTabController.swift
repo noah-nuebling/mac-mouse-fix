@@ -635,19 +635,18 @@ import Foundation
         }
     }
     
-    /// Ignore MB1 & MB2
-    ///     TODO: Use format strings and shared functions from UIStrings.m to obtain button names
-
-    override func mouseUp(with event: NSEvent) {
-        
+    /// Give use feedback for `kMFEventType_ButtonBlacklist`
+    ///     (The helper's addMode code won't let the user capture the `MFEventType_ButtonBlacklist` buttons [Oct 2026])
+    override func mouseUp(with event: NSEvent)      { someMouseUp(event); }
+    override func rightMouseUp(with event: NSEvent) { someMouseUp(event); }
+    override func otherMouseUp(with event: NSEvent) { someMouseUp(event); }
+    func someMouseUp(_ event: NSEvent) {
         if !pointerIsInsideAddField { return }
-        
-        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.1")
-    }
-    override func rightMouseUp(with event: NSEvent) {
-        
-        if !pointerIsInsideAddField { return }
-        
-        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.2")
+        if      (event.buttonNumber == 0) { Toasts.showSimpleToast(name: "k-forbidden-capture-toast.1") } /// §afterNoGCDTodo: Use format strings and shared functions from UIStrings.m / `MFEventType_ButtonBlacklist` to obtain button names
+        else if (event.buttonNumber == 1) { Toasts.showSimpleToast(name: "k-forbidden-capture-toast.2") }
+        else {
+            mfassert((MFEventType_Button(CGMouseButton(rawValue: UInt32(event.buttonNumber))!) & MFEventType_ButtonBlacklist()) == 0,
+                "ButtonTabController out of sync with _ButtonBlacklist [Oct 2026]");
+        }
     }
 }

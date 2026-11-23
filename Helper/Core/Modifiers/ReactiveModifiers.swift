@@ -23,15 +23,17 @@ import ReactiveSwift
     override init() {
         (signal, observer) = Signal<NSDictionary, Never>.pipe()
     }
-/// Main interface
+
+    /// Main interface
     var modifiers: SignalProducer<NSDictionary, Never> {
         return signal.producer.prefix(value: Modifiers.modifiers(with: nil)) // .skipRepeats()
     }
     
     /// ObjC Interface
     @objc func handleModifiersDidChange(to newModifiers: NSDictionary) {
-//        observer.send(value: newModifiers)
-        SwitchMaster.shared.modifiersChanged(modifiers: newModifiers)
+        //observer.send(value: newModifiers)
+        SwitchMaster_ModifiersChanged( newModifiers)
+
     }
     
 }

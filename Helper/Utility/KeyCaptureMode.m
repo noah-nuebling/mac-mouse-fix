@@ -13,42 +13,35 @@
 #import "MFMessagePort.h"
 #import "Logging.h"
 #import "Threads.h"
+#import "MFEventTap.h"
+
+#define kListenerID @"KeyCaptureMode"
 
 @implementation KeyCaptureMode
 
-
 /// Explanation for this class:
 ///  When the user records keyboard shortcuts in the mainApp we wanted to use eventTaps for that. I think otherwise certain keys weren't captured. Not sure though. The helper already has permissions to use eventTaps so the mainApp delegates the capturing to the helper.
-
-
-CFMachPortRef _keyCaptureEventTap;
 
 + (void)enable {
     assertRunLoop(IOThread.runLoop);
 
     DDLogInfo("Enabling keyCaptureMode");
-    
-    if (!_keyCaptureEventTap) {
-        _keyCaptureEventTap = [
-            ModificationUtility
-            createEventTapWithLocation: kCGHIDEventTap
-            mask: CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined)
-            option: kCGEventTapOptionDefault
-            placement: kCGHeadInsertEventTap
-            callback: keyCaptureModeCallback
-            runLoop: IOThread.runLoop
-        ];
-    }
-    CGEventTapEnable(_keyCaptureEventTap, true);
+    static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
+        [MFEventTap registerListener: kListenerID forEvents: kMFEventType_KeyPress callback: keyCaptureModeCallback];
+    });
+    [MFEventTap enable: true forListener: kListenerID];
 }
 
 + (void)disable {
     assertRunLoop(IOThread.runLoop);
-    CGEventTapEnable(_keyCaptureEventTap, false);
+    [MFEventTap enable: false forListener: kListenerID];
 }
 
-CGEventRef _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+void keyCaptureModeCallback(MFEventType eventType, CGEventRef *eventPtr) {
     assertRunLoop(IOThread.runLoop);
+
+    CGEventRef event = *eventPtr;
+    CGEventType type = CGEventGetType(event);
 
     CGEventFlags flags  = CGEventGetFlags(event);
     
@@ -69,7 +62,7 @@ CGEventRef _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType t
             [KeyCaptureMode disable];
         }
         
-    } else if (type == NSEventTypeSystemDefined) {
+    } else if (type == NX_SYSDEFINED) {
         
         NSEvent *e = [NSEvent eventWithCGEvent:event];
         
@@ -90,8 +83,7 @@ CGEventRef _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType t
         
     }
     
-    
-    return nil;
+    *eventPtr = NULL;
 }
 static bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
     return true; /// keyCode 0 is 'A'

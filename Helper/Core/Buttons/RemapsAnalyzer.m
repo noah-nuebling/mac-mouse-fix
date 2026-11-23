@@ -34,108 +34,149 @@
 static NSMutableDictionary *_minButtonInModificationsCache;
 
 #pragma mark - For SwitchMaster
-/// Most of the remapsAnalysis methods used for SwitchMaster are still in SwitchMaster.swift. Should migrate them here and cache the slow ones at some point.
 
-+ (BOOL)modificationsModifyButtons:(NSDictionary *)modifications maxButton:(MFMouseButtonNumber)maxButton {
-    
-    assert(modifications != nil);
-    
-    /// 1. v Old caching method
-//    NSInteger minInModifications = minButtonInModifications(modifications);
-//    return minInModifications <= maxButton;
-    
-    /// 2. v New direct method
-    ///     We tried caching here but it doesn't seem to speed things up
-    for (NSObject *key in modifications) {
-        if ([key isKindOfClass:NSNumber.class]) {
-            
-            NSNumber *btn = (NSNumber *)key;
-            NSInteger button = btn.integerValue;
-            
-            if (button <= maxButton) {
-                return YES;
-            }
+    + (MFEventType) eventsModifiedByModifications: (NSDictionary *)modifications {
+        /// Did some ad-hoc remapsAnalysis in SwitchMaster, moved parts of it here for optimization. Now everything's objc, so it doesn't matter! I guess having this here is cleaner [Oct 2026]
+        ///
+        MFEventType result = 0;
+
+        if (!modifications) return result;
+
+        /// Gather buttons
+        for (id key in modifications) {
+            if (!isclass(key, NSNumber)) continue;
+            result |= MFEventType_From_MFMouseButtonNumber([key intValue]);
         }
-    }
-    
-    return NO;
-}
+        /// Gather ScrollWheel
+        if (CFDictionaryContainsKey((void *)modifications, kMFTriggerScroll)) /// Using `CFDictionaryContainsKey` for optimization. Untested [Oct 2026]
+            result |= kMFEventType_ScrollWheel;
 
-static NSInteger minButtonInModifications(NSDictionary *modifications) {
-    
-    assert(false);
-    return 0;
-    
-    if (_minButtonInModificationsCache == nil) {
-        _minButtonInModificationsCache = [NSMutableDictionary dictionary];
+        /// Gather Sensor
+        if (CFDictionaryContainsKey((void *)modifications, kMFTriggerDrag))
+            result |= kMFEventType_Sensor;
+
+        return result;
     }
-    
-    NSNumber *fromCache = _minButtonInModificationsCache[modifications];
-    
-    if (fromCache != nil) {
-        return fromCache.integerValue;
-    } else {
-        
-        NSInteger min = NSIntegerMax;
-        
+
+    + (MFEventType) eventsInModifiers: (NSDictionary *)modifiers {
+        MFEventType result = 0;
+
+        if (!modifiers) return result;
+
+        /// Keyboard modifiers
+        if (CFDictionaryContainsKey((void *)modifiers, kMFModificationPreconditionKeyKeyboard))
+            result |= kMFEventType_KeyboardModifier;
+
+        /// Button modifiers
+        for (NSDictionary *buttonModifiers in [modifiers objectForKey: kMFModificationPreconditionKeyButtons]) {
+            MFMouseButtonNumber buttonNumber = [[buttonModifiers objectForKey: kMFButtonModificationPreconditionKeyButtonNumber] intValue];
+            result |= MFEventType_From_MFMouseButtonNumber(buttonNumber);
+        }
+        return result;
+    }
+
+#if 0
+    + (BOOL)modificationsModifyButtons:(NSDictionary *)modifications maxButton:(MFMouseButtonNumber)maxButton {
+
+        if (!modifications) return NO;
+
+        /// 1. v Old caching method
+        //NSInteger minInModifications = minButtonInModifications(modifications);
+        //return minInModifications <= maxButton;
+
+        /// 2. v New direct method
+        ///     We tried caching here but it doesn't seem to speed things up
         for (NSObject *key in modifications) {
             if ([key isKindOfClass:NSNumber.class]) {
-                
+
                 NSNumber *btn = (NSNumber *)key;
                 NSInteger button = btn.integerValue;
-                
-                if (button < min) {
-                    min = button;
+
+                if (button <= maxButton) {
+                    return YES;
                 }
             }
         }
-        
-        _minButtonInModificationsCache[modifications] = @(min);
-        
-        return min;
+
+        return NO;
     }
-}
 
-//func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
-//
-//    /// Return true if the modification modifies any button `<=` maxButton
-//
-//    if let modification = modification {
-//
-//        for element in modification {
-//
-//            guard let btn = element.key as? NSNumber else { continue }
-//
-//            let doesModify = btn.int32Value <= maxButton
-//            if doesModify { return true }
-//        }
-//    }
-//
-//    return false
-//}
+    static NSInteger minButtonInModifications(NSDictionary *modifications) {
 
-+ (BOOL)modificationsModifyScroll:(NSDictionary *)modifications {
-    
-    /// NOTES:
-    /// - This code was originally written in Swift in SwitchMaster. Using the `kMFTriggerScroll` brought a big a big performance penalty for bridging the string to Swift.
-    /// - Using `CFDictionaryContainsKey(dict, key)` instead of `dict[key] != nil` because I'm pretty sure it's faster.
-    
-    assert(modifications != nil);
-    return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerScroll);
-}
+        assert(false);
+        return 0;
 
-+ (BOOL)modificationsModifyPointing:(NSDictionary *)modifications {
-    assert(modifications != nil);
-    return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerDrag);
-}
+        if (_minButtonInModificationsCache == nil) {
+            _minButtonInModificationsCache = [NSMutableDictionary dictionary];
+        }
 
-//fileprivate func modificationModifiesScroll(_ modification: NSDictionary?) -> Bool {
-//    return modification?.object(forKey: kMFTriggerScroll) != nil
-//}
-//
-//fileprivate func modificationModifiesPointing(_ modification: NSDictionary?) -> Bool {
-//    return modification?.object(forKey: kMFTriggerDrag) != nil
-//}
+        NSNumber *fromCache = _minButtonInModificationsCache[modifications];
+
+        if (fromCache != nil) {
+            return fromCache.integerValue;
+        } else {
+
+            NSInteger min = NSIntegerMax;
+
+            for (NSObject *key in modifications) {
+                if ([key isKindOfClass:NSNumber.class]) {
+
+                    NSNumber *btn = (NSNumber *)key;
+                    NSInteger button = btn.integerValue;
+
+                    if (button < min) {
+                        min = button;
+                    }
+                }
+            }
+
+            _minButtonInModificationsCache[modifications] = @(min);
+
+            return min;
+        }
+    }
+
+    //func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
+    //
+    //    /// Return true if the modification modifies any button `<=` maxButton
+    //
+    //    if let modification = modification {
+    //
+    //        for element in modification {
+    //
+    //            guard let btn = element.key as? NSNumber else { continue }
+    //
+    //            let doesModify = btn.int32Value <= maxButton
+    //            if doesModify { return true }
+    //        }
+    //    }
+    //
+    //    return false
+    //}
+
+    + (BOOL)modificationsModifyScroll:(NSDictionary *)modifications {
+
+        /// NOTES:
+        /// - This code was originally written in Swift in SwitchMaster. Using the `kMFTriggerScroll` brought a big a big performance penalty for bridging the string to Swift.
+        /// - Using `CFDictionaryContainsKey(dict, key)` instead of `dict[key] != nil` because I'm pretty sure it's faster.
+
+        if (!modifications) return NO;
+        return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerScroll);
+    }
+
+    + (BOOL)modificationsModifyPointing:(NSDictionary *)modifications {
+        if (!modifications) return NO;
+        return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerDrag);
+    }
+
+    //fileprivate func modificationModifiesScroll(_ modification: NSDictionary?) -> Bool {
+    //    return modification?.object(forKey: kMFTriggerScroll) != nil
+    //}
+    //
+    //fileprivate func modificationModifiesPointing(_ modification: NSDictionary?) -> Bool {
+    //    return modification?.object(forKey: kMFTriggerDrag) != nil
+    //}
+#endif
 
 #pragma mark - For Buttons.swift
 ///

@@ -17,6 +17,7 @@
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
 #import "Logging.h"
+#import "MFDescriptionWithIndent.h"
 
 /// Old notes: (basically all outdated as of 28.08.2024)
 ///     Consider refactoring:
@@ -338,19 +339,22 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         NSString *productID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
         NSString *vendorID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
         
-        NSString *outString = [NSString stringWithFormat:@"Device Info:\n"
-                               "    Product: %@\n"
-                               "    Manufacturer: %@\n"
-                               "    nOfButtons: %d\n"
-                               "    UsagePairs: %@\n"
-                               "    ProductID: %@\n"
-                               "    VendorID: %@\n",
-                               product,
-                               manufacturer,
-                               [self nOfButtons],
-                               usagePairs,
-                               productID,
-                               vendorID];
+        NSString *outString = [NSString stringWithFormat: @""
+             "{\n"
+             "    Product: %@\n"
+             "    Manufacturer: %@\n"
+             "    nOfButtons: %d\n"
+             "    ProductID: %@\n"
+             "    VendorID: %@\n"
+             "    UsagePairs: %@\n"
+             "}",
+             product,
+             manufacturer,
+             [self nOfButtons],
+             productID,
+             vendorID,
+             [usagePairs mf_descriptionWithIndent: 4]
+        ];
         return outString;
     } @catch (NSException *exception) {
         DDLogInfo("Exception while getting MFDevice description: %@", exception);

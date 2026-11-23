@@ -185,13 +185,15 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
     ///     Also see:
     ///         - 'Free days are over' bug notes
     ///         - Where these hashing functions are used (to validate the offline license)
-    ///     Explanation of offline validation (and how we use the hashes): (Writing this [Oct 2026] - might be duplicate with something older)
+    ///     `Explanation of MFLicenseState offline validation (and how we use the hashes)`:
     ///         We cache the latest `MFLicenseState` in the config.plist > `License.licenseStateCache` and then use that instead of pinging Gumroad on every launch.
-    ///         To prevent piracy from beingt too easy, we hash the licenseState against some environment variables: (In the abstract sense, not to be confused with Unix envvars)
+    ///         To prevent piracy from being too easy, we hash the licenseState against some environment variables:
     ///             1. The user's `licenseKey`
     ///             2. The `deviceUID` of the current computer
-    ///         If the environment changes or the `MFLicenseState` is tampered with, the hash will change and we don't use the cached `MFLicenseState`. That's what 'offline license validation' is currently [Oct 2026]
-    ///     Why use separate hashing functions for each environment variable? [Oct 2026]
+    ///         If the environment changes or the `MFLicenseState` is tampered with, the hash will change and we don't use the cached `MFLicenseState`. [Oct 2026]
+    ///         Also see:
+    ///             `Explanation of our offline validation strategy` (Older more comprehensive explanation, also focused on `MFLicenseConfig`, not just  `MFLicenseState` [Oct 2026])
+    ///     `Why use separate hashing functions for each environment variable?` [Oct 2026]
     ///         We think that the getters for the environment variables could sporadically fail causing random lockdowns of the app (See 'Free days are over' bug notes) [Oct 2026] - so we only validate against the environment variables that are currently available
     ///             That means err on the side of treating the MFLicenseState as valid, without giving up all validation just because one of the environment variables is not available,
     ///                 preventing robust, shareable "30 second crack" (See in 'Free days are over' bug notes [Oct 2026]) without ever locking paying users out (hopefully)
@@ -210,7 +212,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
     }
     private static func legacy_hashLicenseState(_ licenseState: Data, againstLicenseKey licenseKey: String, andDeviceUID_V1 deviceUID: Data?) -> Data {
         /// Formerly `getHashForOfflineCacheValidation`
-        /// Old hash which combines licenseKey and deviceUID. See "Why use separate hashing functions for each environment variable" above [Oct 2026]
+        /// Old hash which combines licenseKey and deviceUID. See `Why use separate hashing functions for each environment variable?` above [Oct 2026]
 
         var hashFunction = SHA256.init()
         hashFunction.update(data: licenseState)
@@ -286,7 +288,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             /// Convert MFDataClass object to plist dict
             let dict = newValue.asPlist(withRequireSecureCoding: true)
             
-            /// Calculate hashes
+            /// Serialize the licenseState (offline license) for hashing
             ///     Note: [Jan 2025] Need to use `.xml` instead of `.binary`. to make the data (and with it the hash) deterministic. Not sure why. We might be relying on an implementation detail here.
             let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: dict, format: .xml, options: 0) }
             guard let dictData else {
@@ -294,13 +296,11 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
                 assert(false);
                 return
             }
-            let hash_licenseKey = self.hashLicenseState(dictData, againstLicenseKey: licenseKey)
-            let hash_deviceUID  = deviceUID_V2 == nil ? nil : self.hashLicenseState(dictData, againstDeviceUID_V2: deviceUID_V2!)
 
-            /// Store data
+            /// Store (& hash)
             setConfig("License.licenseStateCache",                         dict as NSDictionary)
-            setConfig("License.licenseStateCacheHash_AgainstLicenseKey",   hash_licenseKey as NSData)
-            setConfig("License.licenseStateCacheHash_AgainstDeviceUID",    hash_deviceUID as NSData?)
+            setConfig("License.licenseStateCacheHash_AgainstLicenseKey",   self.hashLicenseState(dictData, againstLicenseKey: licenseKey) as NSData)
+            if let deviceUID_V2 { setConfig("License.licenseStateCacheHash_AgainstDeviceUID", self.hashLicenseState(dictData, againstDeviceUID_V2: deviceUID_V2) as NSData) }
             commitConfig()
     }
     
@@ -362,6 +362,7 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
                         isValid = true
                         /// Rewrite the `licenseStateCacheHash` in the new format [Oct 2026]
                         ///     Usually we do these kinds of migrations in `Config.m > _loadAndRepair` [Oct 2026]. I think migrating like this is ok for transient data. (App just has to connect to internet once to recover, if this fails)
+                        ///     More on this in 'Free days are over' bug notes [Oct 2026]
                         removeFromConfig("License.licenseStateCacheHash")
                         setConfig("License.licenseStateCacheHash_AgainstLicenseKey", self.hashLicenseState(cachedLicenseState_Data, againstLicenseKey: licenseKey) as NSObject)
                         if let deviceUID_V2 { setConfig("License.licenseStateCacheHash_AgainstDeviceUID",  self.hashLicenseState(cachedLicenseState_Data, againstDeviceUID_V2: deviceUID_V2) as NSObject) }
@@ -528,7 +529,8 @@ fileprivate func _DDLogError(_ m: @autoclosure () -> String) { DDLogError("GetLi
             ///         That's because if we set the value to`.invalid` we consider the app *definitively*unlicensed and then lock it down immediately (in case the free days have been used up), which makes for a really annoying user experience if there's a false positive on `.invalid` due to an internal server error or something.
             ///         If instead, we have a false positive on `.unsure` then we just fall back to the cached value for whether the app is licensed or not, which should make for a much less disruptive user experience.
             ///         Actually, as I'm working on this, (Oct 9 2024) I got a [GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/1136) from a user saying they regularly have their app locked down and they have to re-enter their license. (I think I also saw reports like this before.) Hopefully that stuff is fixed now.
-            
+            ///         Update: [Oct 2026] Also see 'Free days are over' bug notes. (We mostly fixed these 2024 issues in 3.0.4 but there were still some reports which we hope to have addressed now [Oct 2026])
+
             let serverSuccess: Bool? = serverResponseDict["success"] as? Bool
             var isValidKey: LicenseValidityFromServer
             if      (serverSuccess == true)     { isValidKey = .valid }

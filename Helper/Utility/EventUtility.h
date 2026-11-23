@@ -19,7 +19,7 @@ bool CGEvent_IsWacomEvent(CGEventRef event);
 IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent);
 //IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *event);
 IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID);
-CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event);
+CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef cgEvent, CGEventTapLocation eventTapLocation);
 //CFTimeInterval machDeltaToTimeInterval(uint64_t machTime1, uint64_t machTime2);
 NSString *scrollEventDescription(CGEventRef scrollEvent);
 NSString *scrollEventDescriptionWithOptions(CGEventRef scrollEvent, BOOL allDeltas, BOOL phases);

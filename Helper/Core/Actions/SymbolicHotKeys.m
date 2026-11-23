@@ -83,6 +83,7 @@
 #import "SharedUtility.h"
 #import "MFDefer.h"
 #import "Threads.h"
+#import "MFEventTap.h"
 
 @implementation SymbolicHotKeys
 
@@ -198,7 +199,6 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 static void postKeyboardEventsForSymbolicHotKey(CGKeyCode vkc, CGSModifierFlags mods) {
     
     /// Constants
-    const CGEventTapLocation tapLoc = kCGSessionEventTap;
     const CGEventSourceRef   source = NULL;
     
     /// Create key events
@@ -211,9 +211,9 @@ static void postKeyboardEventsForSymbolicHotKey(CGKeyCode vkc, CGSModifierFlags 
     CGEventSetFlags(keyUp,   originalModifierFlags); /// Restore original keyboard modifier flags state on key up. This seems to fix `[Modifiers getCurrentModifiers]`
     
     /// Send key events
-    CGEventPost(tapLoc, keyDown);
-    CGEventPost(tapLoc, keyUp);
-    
+    [MFEventTap postCGEvent:  keyDown];
+    [MFEventTap postCGEvent:  keyUp];
+
     CFRelease(keyDown);
     CFRelease(keyUp);
 }

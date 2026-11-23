@@ -38,7 +38,7 @@
 ///         Avoid callbacks close together?
 ///             I sometimes saw pattern where every second frame callback is delayed, and delivers really close to the next one. Might be better to skip?
 ///                 However, I saw same pattern for real Trackpad events (using `vblphase.m`). Probably fine [Oct 2026]
-///         Use real time thread (instead of max priority in the normal band (`MAXPRI_USER`) via our `set_thread_priority()` [Oct 2026]) (@afterNoGCDTodo)
+///         Use real time thread (instead of max priority in the normal band (`MAXPRI_USER`) via our `set_thread_priority()` [Oct 2026]) (§afterNoGCDTodo)
 ///             -> Might solve bad-phase-zone and close-together-callabacks issues (above). Haven't tried real time scheduling at all so far. [Oct 2026]
 ///     Other info:
 ///         Opus 5.5 says CADisplayLink and CFRunLoopTimer are built on `mk_timer`, too, just like this DisplayLink
@@ -137,7 +137,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
 
         _timerMachPort = (void *)CFAutorelease(CFMachPortCreateWithPort(kCFAllocatorDefault, _mkTimer, mkTimerCallback, &(CFMachPortContext){
             .info = (__bridge void *)self,
-            .retain = NULL, .release = NULL, /// Don't need to own this since we destroy this stuff in -dealloc [Oct 2026]
+            .retain = NULL, .release = NULL, /// Doesn't need to own `self`.`self` destroys this stuff in `-dealloc` [Oct 2026]
         }, /*shouldFreeInfo*/NULL));
         CFRunLoopSourceRef timerSource = (void *)CFAutorelease(CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _timerMachPort, /*order*/0));
         _mfrequire(timerSource, "Wrapping _mkTimer in a CFRunLoopSourceRef failed");
@@ -164,7 +164,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
 
         if (lastFrame <= self->_lastLastFrame + tolerance) { /// [Oct 2026] Last frame being equal rarely happens but causes division by zero in the animators. Have never seen wakeups in quick succession within `tolerance`.
             _DDLogDebug("Woke up twice lastFrame: %f, _lastLastFrame: %f",
-                machTimeToSeconds(now - lastFrame) * 1e3, machTimeToSeconds(now - self->_lastLastFrame) * 1e3);
+                1e3*machTimeToSeconds(now - lastFrame), 1e3*machTimeToSeconds(now - self->_lastLastFrame));
         }
         else {
 
@@ -263,7 +263,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
         return _isRunning;
     }
 
-    - (void) linkToMainScreen { /// @afterNoGCDTodo: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
+    - (void) linkToMainScreen { /// §afterNoGCDTodo: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
         assertRunLoop(_runLoop);
         _linkedDisplay = [[NSScreen mainScreen] displayID];
     }
