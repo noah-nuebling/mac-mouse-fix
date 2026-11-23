@@ -11,71 +11,68 @@
 #import "AnnotationUtility.h"
 #import "SharedUtility.h"
 
+#if 0 /// Removing CocoaLumberJack. None if this is necessary anymore.
 @implementation Logging
 
-+ (void)flushLog {
-    /// Drop-in replacement for CocoaLumberjack's `[DDLog flushLog]`
-    ///     No longer needed with oslog (I think. printf does have to be flushed via fflush IIRC)
-}
+    + (void)flushLog {
+        /// Drop-in replacement for CocoaLumberjack's `[DDLog flushLog]`
+        ///     No longer needed with oslog (I think. printf does have to be flushed via fflush IIRC)
+    }
 
-+ (void)setUpDDLog {
-    
-    
-    #if 0 /// Removing CocoaLumberJack. None if this is necessary anymore.
-    
+    + (void)setUpDDLog {
+
         /// Start logging to console and to Xcode output
         /// Call this at the entry point of an app, so that DDLog statements work.
-        
+
         /// Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
         /// Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
         ///     Update: [Apr 10 2025] Removed logging section from Feedback Assistant for now until we have time to make instructions for properly collecting logs using sysdiagnose.
-        
+
         /// Use `os_log` backend for CocoaLumberjack.
         ///     Notes:
         ///     - This should log to console and terminal and be faster than the old methods. ([Apr 2025] What are the 'old methods'?)
         ///     - Specifying a subsystem and category allows us to configure logging using `Info.plist > OSLogPreferences`
         ///         > Also See: https://github.com/noah-nuebling/notes-public/blob/main/mmf/error-logging-improvement-ideas_oct-2024.md
-        
+
         #define kMFOSLogSubsystem   @"com.nuebling.mac-mouse-fix"
         #define kMFOSLogCategory    @"main-category"
         DDOSLogger *logger = [[DDOSLogger alloc] initWithSubsystem: kMFOSLogSubsystem category: kMFOSLogCategory logLevelMapper: [[DDOSLogLevelMapperDefault alloc] init]];
         [DDLog addLogger: logger];
-        
+
         /// Set logging format
         //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
-        
+
         /// Find swift subclass
         ///     Discussion: Retrieving the class dynamically through the objc runtime is a bit weird but otherwise we'd have to import the `"<TargetName>-Swift.h"` header to have access to the swiftSubclass which would make the code here not target-independent, which I don't like (I probably have my priorities wrong?). Also I tested and the search only took 1.2ms so it should be ok to use this in production.
         ///     Update: [Apr 2025] Why not just use `NSClassFromString()` here.
         NSArray<Class> *swiftSubclasses = searchClasses(@{ @"superclass": self, @"framework": getExecutablePath() });
         assert(swiftSubclasses.count <= 1);
         Class swiftSubclass = swiftSubclasses.firstObject;
-        
+
         /// Call swift setup
         if (swiftSubclass != nil) {
             nowarn_push()
             [swiftSubclass performSelector:@selector(setUpDDLogSwift)];
             nowarn_pop()
         }
-        
+
         if ((NO) /*runningDebugMode()*/) {
-            
+
             /// Setup logging  file
             /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
             /// Haven't thought about whether the exact settings make sense.
-            
+
             DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
             fileLogger.rollingFrequency = 60 * 60 * 24; /// 24 hour rolling
             fileLogger.logFileManager.maximumNumberOfLogFiles = 2;
-            
+
             [DDLog addLogger:fileLogger];
-            
+
             DDLogInfo("Logging to directory: \'%@\'", fileLogger.logFileManager.logsDirectory);
         }
-    #endif
-}
-
+    }
 @end
+#endif
 
 #import "Locator.h"
 
@@ -83,45 +80,24 @@ bool runningPrereleaseBuild(void) {
 
     #if IS_XC_TEST
         assert(false);
-        return true;
-    #else
-
-        /// Caching optimization
-        /// Rationale: (From back before most usage sites were replaced with runningDebugMode() [Oct 2026]):
-        ///     Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
-        static BOOL _isCached = NO;
-        static BOOL _runningPrereleaseBuild = NO;
-
-        if (_isCached) {
-
-            return _runningPrereleaseBuild;
-
-        } else{
-            /// Check debug configuration
-
-            #if DEBUG
-                _runningPrereleaseBuild = YES;
-            #endif
-
-            /// Check app name for 'beta' or 'alpha'
-            ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
-            ///     Notes:
-            ///     - Why are we using the 'localized' search? What does that do?
-            ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
-
-            if (!_runningPrereleaseBuild) {
-
-                NSString *versionName = Locator.bundleVersionShort;
-                if ([versionName localizedCaseInsensitiveContainsString: @"beta"] || [versionName localizedCaseInsensitiveContainsString: @"alpha"]) {
-                    _runningPrereleaseBuild = YES;
-                }
-            }
-
-            /// Update flag
-            _isCached = YES;
-
-            /// Return
-            return _runningPrereleaseBuild;
-        }
+        return 1;
+    #elif DEBUG
+        return 1;
     #endif
+
+    /// Caching optimization
+    /// Rationale: (From back before most usage sites were replaced with `runningDebugMode()` [Oct 2026]):
+    ///     Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
+    static int _result;
+    static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
+        /// Check app name for 'beta' or 'alpha'
+        ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
+        ///     Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
+        NSString *versionName = Locator.bundleVersionShort;
+        _result = [versionName localizedCaseInsensitiveContainsString: @"alpha"] ||
+                  [versionName localizedCaseInsensitiveContainsString: @"beta"];
+    });
+
+    /// Return
+    return _result;
 }

@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #import "Logging.h"
+#import "MFEventTap.h"
 
 @implementation ModificationUtility
 
@@ -75,23 +76,8 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     return 0.0;
 }
 
-+ (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
-                                       mask:(CGEventMask)mask
-                                     option:(CGEventTapOptions)option
-                                  placement:(CGEventTapPlacement)placement
-                                   callback:(CGEventTapCallBack)callback
-                                    runLoop:(CFRunLoopRef)runLoop {
-    CFMachPortRef eventTap = CGEventTapCreate(location, placement, option, mask, callback, NULL);
-    /// ^ Make sure to use the same EventTapLocation and EventTapPlacement here as you do in ButtonInputReceiver, otherwise there'll be timing and ordering issues! (This was one of the causes for the stuck bug and also caused other issues)
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-    CFRunLoopAddSource(runLoop, runLoopSource, kCFRunLoopCommonModes);
-    CFRelease(runLoopSource);
-    CGEventTapEnable(eventTap, false);
-    return eventTap;
-}
++ (void)makeCursorSettable { /// TODO: Probably just inline thisinto hideMousePointer? Idk why we're calling this in some random +load_Manual [Oct 2026]
 
-+ (void)makeCursorSettable {
-    
     /// Only do this once
     static BOOL cursorIsSettable = NO;
     if (cursorIsSettable) return;
@@ -146,13 +132,11 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     
     DDLogDebug("Posting %lld mouse button %u clicks", nOfClicks, button);
     
-    CGEventTapLocation tapLoc = kCGSessionEventTap;
-    
     CGPoint mouseLoc = getPointerLocation();
-    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:YES];
-    CGEventType eventTypeUp = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:NO];
-    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
-    
+    CGEventType eventTypeDown = CGEventType_From_MFMouseButtonNumber(button, /*mouseDown*/true);
+    CGEventType eventTypeUp   = CGEventType_From_MFMouseButtonNumber(button, /*mouseDown*/false);
+    CGMouseButton buttonCG    = CGMouseButton_From_MFMouseButtonNumber(button);
+
     CGEventRef buttonDown = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
     CGEventRef buttonUp = CGEventCreateMouseEvent(NULL, eventTypeUp, mouseLoc, buttonCG);
     
@@ -162,9 +146,9 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
         CGEventSetIntegerValueField(buttonDown, kCGMouseEventClickState, clickLevel);
         CGEventSetIntegerValueField(buttonUp, kCGMouseEventClickState, clickLevel);
         
-        CGEventPost(tapLoc, buttonDown);
-        CGEventPost(tapLoc, buttonUp);
-        
+        [MFEventTap postCGEvent: buttonDown];
+        [MFEventTap postCGEvent: buttonUp];
+
         clickLevel++;
     }
     
@@ -184,16 +168,14 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     
     DDLogDebug("POSTING FAKE MOUSE BUTTON EVENT. btn: %d, down: %d", button, down);
     
-    CGEventTapLocation tapLoc = kCGSessionEventTap;
-    
     CGPoint mouseLoc = getPointerLocation();
-    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:down];
-    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
-    
+    CGEventType eventTypeDown = CGEventType_From_MFMouseButtonNumber(button, down);
+    CGMouseButton buttonCG    = CGMouseButton_From_MFMouseButtonNumber(button);
+
     CGEventRef event = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
     CGEventSetIntegerValueField(event, kCGMouseEventClickState, 1);
     
-    CGEventPost(tapLoc, event);
+    [MFEventTap postCGEvent: event];
     CFRelease(event);
 }
 

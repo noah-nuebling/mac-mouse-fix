@@ -119,48 +119,47 @@ class TabViewController: NSTabViewController {
         
         /// Return
         return;
-        
-        ///
+
         /// Old implementation
-        ///
-        
-        /// There's a library method `self.tabView.selectTabViewItem(withIdentifier:)`
-        ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
-        /// Sometimes you need to pass in window, when you call this right after the window is created.
-        
-        let window = w ?? MainAppState.shared.window
-        
-        guard let window = window, let tb = window.toolbar else { assert(false); return }
-        let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
-        
-        let lvs: [NSView]?
-        
-        if #available(macOS 11.0, *) {
-            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_allItemViewers") as? [NSView]
-            /// ^ Might be better to use`_layoutViews` vs `_allItemViewers` here
-        } else {
-            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? [NSView]
-            /// ^ Might be better to use `_layoutOrderedItemViewers`vs `_toolbarOrderedItemViewers  here
-        }
-        guard let lvs = lvs else { assert(false); return }
-        assert(lvs.count > 0)
-        
-        var success = false
-        outerLoop: for v in lvs {
-            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
-            if item.itemIdentifier.rawValue == identifier {
-                for sub in v.subviews {
-                    if let sub = sub as? NSButton {
-                        
-                        sub.performClick(nil)
-                        
-                        success = true
-                        break outerLoop
+        #if false
+            /// There's a library method `self.tabView.selectTabViewItem(withIdentifier:)`
+            ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
+            /// Sometimes you need to pass in window, when you call this right after the window is created.
+
+            let window = w ?? MainAppState.shared.window
+
+            guard let window = window, let tb = window.toolbar else { assert(false); return }
+            let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
+
+            let lvs: [NSView]?
+
+            if #available(macOS 11.0, *) {
+                lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_allItemViewers") as? [NSView]
+                /// ^ Might be better to use`_layoutViews` vs `_allItemViewers` here
+            } else {
+                lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? [NSView]
+                /// ^ Might be better to use `_layoutOrderedItemViewers`vs `_toolbarOrderedItemViewers  here
+            }
+            guard let lvs = lvs else { assert(false); return }
+            assert(lvs.count > 0)
+
+            var success = false
+            outerLoop: for v in lvs {
+                guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
+                if item.itemIdentifier.rawValue == identifier {
+                    for sub in v.subviews {
+                        if let sub = sub as? NSButton {
+
+                            sub.performClick(nil)
+
+                            success = true
+                            break outerLoop
+                        }
                     }
                 }
             }
-        }
-        assert(success)
+            assert(success)
+        #endif
     }
     
     @objc public func coolHideTab(identifier: String, window w: NSWindow? = nil) {
@@ -272,6 +271,7 @@ class TabViewController: NSTabViewController {
                     itemViewer.setAccessibilityIdentifier(item.itemIdentifier.rawValue)
                 } else {
                     assert(false) /// We only need this for screenshot-taking, so we actually don't care if this fails in some edge cases. (Could even turn this whole thing off unless the app is started with the `-MF_ANNOTATE_LOCALIZED_STRINGS` arg)
+                                  ///   Update: [Oct 2026] `getPrivateValue` now just maps to KVC so `_getToolbarItemViewer` would crash instead of returning nil if the ivar doesn't exist.
                 }
             }
         } else {

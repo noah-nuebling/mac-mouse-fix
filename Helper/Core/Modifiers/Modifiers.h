@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "Device.h"
 #import "DisableSwiftBridging.h"
+#import "MFEventTap.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,10 +43,7 @@ typedef enum {
 
 + (void)load_Manual;
 
-//+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef _Nullable) event;
-
-+ (void)setKeyboardModifierPriority:(MFModifierPriority)priority;
-+ (void)setButtonModifierPriority:(MFModifierPriority)priority;
++ (void) setModifierPriorityWithActiveListenEvents: (MFEventType)activeListenEvents passiveUseEvents: (MFEventType)passiveUseEvents;
 
 + (MF_SWIFT_UNBRIDGED(NSDictionary *))modifiersWithEvent:(CGEventRef _Nullable)event NS_REFINED_FOR_SWIFT;
 
@@ -55,10 +53,6 @@ typedef enum {
 
 + (MFModifierPriority)kbModPriority;
 + (MFModifierPriority)btnModPriority;
-
-//+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device;
-//+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device activeModifiers:(NSDictionary *)activeModifiers;
-
 
 @end
 

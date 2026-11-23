@@ -94,7 +94,7 @@
 
 #define mfabort(format, args...) ({ \
     DDLogError("mfabort failure: " format, ## args); \
-    [Logging flushLog];               /** [Aug 2025] Without this, nothing would be logged, due to async logging of CocoaLumberjack and and the abort right after. But this should make it work (I think – haven't tested any of this.) Claude 4.0 also tells me to sleep for 10ms after flushing, but I don't trust it.*/\
+    /*[Logging flushLog];*/               /** [Aug 2025] Without this, nothing would be logged, due to async logging of CocoaLumberjack and and the abort right after. But this should make it work (I think – haven't tested any of this.) Claude 4.0 also tells me to sleep for 10ms after flushing, but I don't trust it.*/\
     abort();                        \
 })
 
@@ -372,6 +372,7 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 /// stringf – (string) (f)ormatting convenience.
 ///  Notes:
 ///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string ?: "")` instead – (Update [2025] – `?: ""` since `@()` crashes if you pass it NULL.)
+///  Idea: Maybe have this create `NSMutableString`. I don't see any downsides. [Oct 2026]
 #define stringf(format, ...) [NSString stringWithFormat: (format), ## __VA_ARGS__]
 
 /// astringf – like (stringf) but for NS(A)ttributedStrings.
@@ -580,6 +581,8 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 ///     Example: `assert(ifthen(it_rains, street_is_wet));`
 #define ifthen(a, b) (!(a) || (b))
 
+
+#if 0 /// Unused [Oct 2026]
 /// Helper macro: bitpos(): Get the position of the bit in a one-bit-mask
 ///     - (a one-bit-mask is an integer with a single bit set – it specifies what that bit means in a bitflags datatype)
 ///     - Example usage: This expression will always evaluate to true: `mask == (1 << bitpos(mask))` (Given that exactly 1 bit is set in `mask`)
@@ -589,6 +592,7 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
     ((mask) & (mask)-1) != 0  ? -1 :                                    /** Fail: more than one bit set (aka not a power of two) */\
     __builtin_ctz(mask)                                                 /** Sucess! – Count trailling zeros*/ \
 )
+#endif
 
 /// Internal helper macro
 ///     Deferred concat

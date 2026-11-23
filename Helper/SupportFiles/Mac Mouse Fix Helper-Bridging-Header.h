@@ -52,6 +52,7 @@
 #import "Localization.h"
 #import "Threads.h"
 #import "SecureStorage.h"
+#import "SwitchMaster.h"
 
 #import "DevToggles.h" /// [May 2025] We don't need this in release builds
 

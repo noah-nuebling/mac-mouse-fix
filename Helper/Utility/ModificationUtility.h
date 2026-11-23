@@ -21,13 +21,6 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2);
 
 + (NSTimeInterval)nsTimeStamp;
 
-+ (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
-                                       mask:(CGEventMask)mask
-                                     option:(CGEventTapOptions)option
-                                  placement:(CGEventTapPlacement)placement
-                                   callback:(CGEventTapCallBack)callback
-                                    runLoop:(CFRunLoopRef)runLoop;
-
 + (void)makeCursorSettable;
 
 + (void)hideMousePointer:(BOOL)B;

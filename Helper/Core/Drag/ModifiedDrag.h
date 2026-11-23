@@ -16,6 +16,7 @@
 #import "DisableSwiftBridging.h"
 //#import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DisplayLink.h"
+#import "WarpDeltaCompensator.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -46,7 +47,6 @@ typedef enum {
 
 typedef struct {
     
-    CFMachPortRef eventTap;
     int64_t usageThreshold;
     
     NSDictionary *effectDict;
@@ -74,6 +74,8 @@ typedef struct {
     bool coalesceEvents;
     NSMutableArray<CoalescableEvent *> *pendingCoalescableEvents;
     uint64_t lastVBLTimeThatProcessedCoalescableEvents;
+
+    WarpDeltaCompensator warpDeltaCompensator;
 
 } ModifiedDragState;
 

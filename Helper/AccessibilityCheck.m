@@ -96,7 +96,6 @@
     /// Testing & Debug
     ///
     
-    
     //    [GlobalDefaults applyDoubleClickThreshold];
     //    PointerConfig.customTableBasedAccelCurve;
     //    CFMachPortRef testTap = [ModificationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];
@@ -106,7 +105,7 @@
     [UNIXSignals load_Manual];
     
     /// Set up CocoaLumberjack
-    [Logging setUpDDLog];
+    //[Logging setUpDDLog];
     DDLogInfo("Accessibility Check - Mac Mosue Fix begins logging excessively");
     
     
@@ -195,9 +194,10 @@
             //[ModifiedDrag load_Manual];
             [Modifiers load_Manual];
             [ModifiedDrag load_Manual];
-            [Config load_Manual];
 
-            [SwitchMaster.shared load_Manual];
+            SwitchMaster_Load_Manual(); /// Moved this up since `[Config load_Manual]` calls into it [Oct 2026]
+
+            [Config load_Manual];
 
             [ScreenDrawer.shared load_Manual];
             [PointerFreeze load_Manual];

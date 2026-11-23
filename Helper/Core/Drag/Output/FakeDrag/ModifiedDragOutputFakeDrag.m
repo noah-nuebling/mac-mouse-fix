@@ -11,6 +11,7 @@
 #import "ModificationUtility.h"
 #import "SharedUtility.h"
 #import "HelperUtility.h"
+#import "MFEventTap.h"
 
 @implementation ModifiedDragOutputFakeDrag
 
@@ -44,9 +45,9 @@ static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used w
     {
         location = getPointerLocation();
     }
-    CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_fakeDragButtonNumber];
+    CGMouseButton button = CGMouseButton_From_MFMouseButtonNumber(_fakeDragButtonNumber);
     CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
-    CGEventPost(kCGSessionEventTap, draggedEvent);
+    [MFEventTap postCGEvent: draggedEvent];
     CFRelease(draggedEvent);
 }
 

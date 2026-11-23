@@ -28,6 +28,7 @@
 #import "Logging.h"
 #import "Threads.h"
 #import "NSTimer+Additions.h"
+#import "MFEventTap.h"
 
 @implementation TouchSimulator
 
@@ -47,10 +48,10 @@ static NSMutableDictionary *_swipeInfo;
     CGEventSetIntegerValueField(e, 132, kIOHIDEventPhaseBegan);
     CGEventSetIntegerValueField(e, 115, dir);
     
-    CGEventPost(kCGHIDEventTap, e);
+    [MFEventTap postCGEvent: e];
     CGEventSetIntegerValueField(e, 115, kIOHIDSwipeNone);
     CGEventSetIntegerValueField(e, 132, kIOHIDEventPhaseEnded);
-    CGEventPost(kCGHIDEventTap, e);
+    [MFEventTap postCGEvent: e];
     CFRelease(e);
 }
 
@@ -59,7 +60,7 @@ static NSMutableDictionary *_swipeInfo;
     CGEventRef e = CGEventCreate(NULL);
     CGEventSetIntegerValueField(e, 55, 29); /// NSEventTypeGesture
     CGEventSetIntegerValueField(e, 110, 22); /// kIOHIDEventTypeZoomToggle
-    CGEventPost(kCGHIDEventTap, e);
+    [MFEventTap postCGEvent: e];
     CFRelease(e);
 }
 
@@ -71,7 +72,7 @@ static NSMutableDictionary *_swipeInfo;
     CGEventSetIntegerValueField(e, 110, 5); /// kIOHIDEventTypeRotation
     CGEventSetDoubleValueField(e, 114, rotation);
     CGEventSetIntegerValueField(e, 132, phase);
-    CGEventPost(kCGHIDEventTap, e);
+    [MFEventTap postCGEvent: e];
     CFRelease(e);
 }
 
@@ -91,13 +92,13 @@ static NSMutableDictionary *_swipeInfo;
     CGEventSetIntegerValueField(event, 110, 8); /// 8 -> kIOHIDEventTypeZoom
     CGEventSetIntegerValueField(event, 132, phase);
     CGEventSetDoubleValueField(event, 113, magnification);
-    CGEventPost(kCGHIDEventTap, event);
+    [MFEventTap postCGEvent: event];
     CFRelease(event);
 }
 
 + (void) postDockSwipeEventWithDelta: (double)d type: (MFDockSwipeType)type phase: (IOHIDEventPhaseBits)phase invertedFromDevice: (BOOL)invertedFromDevice {
 
-    /// @afterNoGCDTodo The pinch DockSwipes no longer work in Mission Control (extremely niche, but I do use them sometimes. [Oct 2026] )
+    /// §afterNoGCDTodo The pinch DockSwipes no longer work in Mission Control (extremely niche, but I do use them sometimes. [Oct 2026] )
 
     assertRunLoop(IOThread.runLoop);
 
@@ -300,9 +301,9 @@ static NSMutableDictionary *_swipeInfo;
     
     DDLogDebug("TouchSimulator: Sending dockSwipe with phase %d with events: %@ %@", phase, e30, e29);
     
-    if (e30) CGEventPost(kCGSessionEventTap, e30); /// Not sure if order matters
-    if (e29) CGEventPost(kCGSessionEventTap, e29); /// This is NULL on macOS 27. Doesn't cause issues but logs `invalid CGEvent: 0x0` error.
-    
+    if (e30) [MFEventTap postCGEvent: e30]; /// Not sure if order matters
+    if (e29) [MFEventTap postCGEvent: e29]; /// This is NULL on macOS 27. Doesn't cause issues but logs `invalid CGEvent: 0x0` error.
+
     if (phase == kIOHIDEventPhaseBegan) {
 
         if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
@@ -355,8 +356,8 @@ static NSMutableDictionary *_swipeInfo;
     
     DDLogDebug("TouchSimulator: Sending dockSwipe end (Double/Triple) with events: %@ %@", e30, e29);
     
-    if (e30) CGEventPost(kCGSessionEventTap, e30);
-    if (e29) CGEventPost(kCGSessionEventTap, e29);
+    if (e30) [MFEventTap postCGEvent: e30];
+    if (e29) [MFEventTap postCGEvent: e29];
 }
 
 

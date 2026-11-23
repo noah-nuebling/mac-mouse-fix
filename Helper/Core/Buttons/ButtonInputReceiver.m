@@ -20,77 +20,29 @@
 
 @implementation ButtonInputReceiver
 
-static CFMachPortRef _eventTap;
+#define kListenerID @"ButtonInputReceiver"
 
 + (void)load_Manual {
-    registerInputCallback();
-    _buttonParseBlacklist = @[@(1),@(2)]; /// Ignore inputs from left and right mouse buttons
-}
-
-+ (void)start {
-    assertRunLoop(IOThread.runLoop);
-    CGEventTapEnable(_eventTap, true);
-}
-+ (void)stop {
-    assertRunLoop(IOThread.runLoop);
-    CGEventTapEnable(_eventTap, false);
-}
-+ (BOOL)isRunning {
-    assertRunLoop(IOThread.runLoop);
-    /// Only used for debug inspection at the time of writing. Shouldn't need it for anything else. [Sep 2026]
-    return CGEventTapIsEnabled(_eventTap);
-}
-
-static void registerInputCallback() {
-
-    ///
-    /// Register event Tap Callback
-    ///
-    
-    /// Declare events of interest
-    /// I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / `_buttonInputsFromRelevantDevices`. Not sure though. Maybe that was just when we did the event Einschleusung for the old device seizing stuff.
-    ///     Edit: will just see what happens when we turn it off.
-    
-    CGEventMask mask =
-    CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp);
-    //| CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp)
-    //| CGEventMaskBit(kCGEventRightMouseDown) | CGEventMaskBit(kCGEventRightMouseUp);
-
     /// Create tap
-    _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-    
-    /// Get source
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-    
-    /// Add to runLoop
-    ///     Old note: [Sep 2026]
-    ///         Running on `IOThread`. Used to run on main. We made this change as a hotfix to the StatusBarItem only reacting to mouseHover if you click and then move mouse outside of the menu and then back in.
-    ///         This might have unforseen consequences. E.g. the stuff we call from the tap must dispatch to mainThread at some points, so this changes the threading model, and might introduce raceConditions
-    ///         Edit: Yes this is causing race conditions. The click and drag gestures get stuck all the time now. Alternative solution: Run on main thread and just don't capture MB1.
-
-    CFRunLoopAddSource(IOThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
-    
-    CFRelease(runLoopSource);
+    ///     Probably doesn't do anything at this point [Oct 2026]
+    [MFEventTap registerListener: kListenerID forEvents: 0 callback: eventTapCallback];
+    [MFEventTap enable: true forListener: kListenerID]; /// Always keep enabled. SwitchMaster effectively enables/disables this tap by setting different `MFEventTypes` [Oct 2026]
 }
 
-NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
++ (void) listenToButtons: (MFEventType)buttons {
+    assertRunLoop(IOThread.runLoop);
+    [MFEventTap setEvents: buttons forListener: kListenerID];
+}
 
-static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
++ (NSString *) listenedToEventsDescription {
+    return MFEventTypeDescription([MFEventTap eventsForListener: kListenerID]);
+}
+
+static void eventTapCallback(MFEventType eventType, CGEventRef *eventPtr) {
 
     assertRunLoop(IOThread.runLoop);
 
-    /// Re-enable on timeout
-    /// Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
-   
-    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
-        
-        DDLogDebug("ButtonInputReceiver eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
-        
-        if (type == kCGEventTapDisabledByTimeout) {
-            CGEventTapEnable(_eventTap, true);
-        }
-        return event;
-    }
+    CGEventRef event = *eventPtr;
 
     /// Debug
     if (runningDebugMode()) {
@@ -117,11 +69,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///
     
     /// Get info from cgEvent
-    NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+    MFMouseButtonNumber buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
     BOOL mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
-    
-    /// Filter buttons
-    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
     
     /// Debug
     DDLogDebug("Input Receiver - Received event: %@", [NSEvent eventWithCGEvent:event].description);
@@ -166,7 +115,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
                 DDLogDebug("Input Receiver - Sending device is not among attached devices. Letting the event pass through. Event description: %@", [NSEvent eventWithCGEvent:event]);
             }
 
-            return event;
+            return;
         #endif
     }
     
@@ -179,15 +128,14 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Set the `RECORDING_MODE` flag when you want to record video demos, so that cleanshot can properly highlight when a button or keyboard key is pressed
     
     #if RECORDING_MODE
-        return event;
+        return;
     #endif
     
     /// Let events pass through
     if (eval == kMFEventPassThroughRefusal) {
-        return nil;
+        *eventPtr = NULL;
     } else {
         DDLogDebug("... letting event pass through");
-        return event;
     }
 
 }

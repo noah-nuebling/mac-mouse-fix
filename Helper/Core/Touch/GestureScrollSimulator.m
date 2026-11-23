@@ -17,6 +17,7 @@
 #import "ModificationUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "MFHIDEventImports.h"
+#import "MFEventTap.h"
 
 /**
  This generates fliud scroll events containing gesture data similar to the Apple Trackpad or Apple Magic Mouse driver.
@@ -576,7 +577,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     CGEventSetTimestamp(e22, eventTs);
     //CGEventSetLocation(e22, eventLocation);
-    CGEventPost(kCGSessionEventTap, e22); /// Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but that will make the events feed back into our scroll event tap. That's not tooo bad, because we ignore continuous events anyways, still bad because CPU use and stuff.
+    [MFEventTap postCGEvent: e22];
     CFRelease(e22);
     
     if (phase != kIOHIDEventPhaseUndefined) {
@@ -608,7 +609,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
         /// Post t29s6 events
         CGEventSetTimestamp(e29, eventTs);
         //CGEventSetLocation(e29, eventLocation);
-        CGEventPost(kCGSessionEventTap, e29);
+        [MFEventTap postCGEvent: e29];
         CFRelease(e29);
     }
     
