@@ -18,6 +18,7 @@ class ScrollTabController: NSViewController {
     var smooth = ConfigValue<String>(configPath: "Scroll.smooth")
     var trackpad = ConfigValue<Bool>(configPath: "Scroll.trackpadSimulation")
     var reverseDirection = ConfigValue<Bool>(configPath: "Scroll.reverseDirection")
+    var reverseClickAndDrag = ConfigValue<Bool>(configPath: "Scroll.reverseClickAndDragDirection")
     var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
     var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
     var horizontalMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.horizontal")
@@ -111,6 +112,17 @@ class ScrollTabController: NSViewController {
         /// Natural direction
         reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
         reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
+
+        /// Reverse Click & Drag direction
+        /// - Created in code, and inserted into the same stack right below `reverseDirectionToggle`.
+        let reverseClickAndDragToggle = NSButton(checkboxWithTitle: MFLocalizedString("reverse-click-and-drag-direction-toggle", comment: "Checkbox in the Scrolling tab. Reverses the direction of Click & Drag actions (Spaces & Mission Control, Scroll & Navigate), independently of the system's natural scrolling setting. Keep it short."), target: nil, action: nil)
+        if let stack = reverseDirectionToggle.superview as? NSStackView, let index = stack.arrangedSubviews.firstIndex(of: reverseDirectionToggle) {
+            stack.insertArrangedSubview(reverseClickAndDragToggle, at: index + 1)
+        } else {
+            assertionFailure("reverseDirectionToggle is not inside an NSStackView")
+        }
+        reverseClickAndDrag.bindingTarget <~ reverseClickAndDragToggle.reactive.boolValues
+        reverseClickAndDragToggle.reactive.boolValue <~ reverseClickAndDrag.producer
         
         /// Scroll speed
         scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
