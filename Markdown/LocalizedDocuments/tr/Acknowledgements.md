@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Kasım 2026**
 
+- 🇷🇴&nbsp;Tudor - "Lifesaver app"
 - 🇺🇸&nbsp;Tom&nbsp;Kazakov
 - 🇦🇺&nbsp;Paul&nbsp;Power
 - 🇺🇸&nbsp;Leakpp

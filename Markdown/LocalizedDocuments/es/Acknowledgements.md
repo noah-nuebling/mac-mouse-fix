@@ -94,6 +94,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **noviembre 2026**
 
+- 🇷🇴&nbsp;Tudor - "Lifesaver app"
 - 🇺🇸&nbsp;Tom&nbsp;Kazakov
 - 🇦🇺&nbsp;Paul&nbsp;Power
 - 🇺🇸&nbsp;Leakpp

@@ -95,6 +95,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 11 2026**
 
+- 🇷🇴&nbsp;Tudor - "Lifesaver app"
 - 🇺🇸&nbsp;Tom&nbsp;Kazakov
 - 🇦🇺&nbsp;Paul&nbsp;Power
 - 🇺🇸&nbsp;Leakpp

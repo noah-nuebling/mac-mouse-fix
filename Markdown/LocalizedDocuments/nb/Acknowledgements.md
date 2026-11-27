@@ -94,6 +94,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **november 2026**
 
+- 🇷🇴&nbsp;Tudor - "Lifesaver app"
 - 🇺🇸&nbsp;Tom&nbsp;Kazakov
 - 🇦🇺&nbsp;Paul&nbsp;Power
 - 🇺🇸&nbsp;Leakpp

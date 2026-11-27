@@ -94,6 +94,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **listopad 2026**
 
+- 🇷🇴&nbsp;Tudor - "Lifesaver app"
 - 🇺🇸&nbsp;Tom&nbsp;Kazakov
 - 🇦🇺&nbsp;Paul&nbsp;Power
 - 🇺🇸&nbsp;Leakpp

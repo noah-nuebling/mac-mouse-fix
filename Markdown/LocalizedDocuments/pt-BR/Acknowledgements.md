@@ -96,6 +96,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **novembro 2026**
 
+- 🇷🇴&nbsp;Tudor - "Lifesaver app"
 - 🇺🇸&nbsp;Tom&nbsp;Kazakov
 - 🇦🇺&nbsp;Paul&nbsp;Power
 - 🇺🇸&nbsp;Leakpp
