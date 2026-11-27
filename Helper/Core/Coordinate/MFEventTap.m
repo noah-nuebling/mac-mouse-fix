@@ -291,6 +291,14 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
             if (!_cgTapData[i].tap) {
 
                 CFMachPortRef eventTap = CGEventTapCreate(kTapLocation_Listening, kCGTailAppendEventTap, _cgTapData[i].options, _cgTapData[i].mask, sharedCGTapCallback, /*userInfo*/(void *)i);
+
+                /// CGEventTapCreate() can return NULL (e.g. missing permissions). Passing NULL to CGEventTapEnable() crashes, so skip the tap and retry next time. (See #2122)
+                if (!eventTap) {
+                    DDLogError("MFEventTap: Failed to create cgTap '%{public}@' (CGEventTapCreate returned NULL). Not enabling it.", CGTapIDDescription(i));
+                    _cgTapData[i].enabled = false;
+                    continue;
+                }
+
                 CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, /*order*/0);
                 CFRunLoopAddSource(eventTapRunLoop(), runLoopSource, kCFRunLoopCommonModes);
 
@@ -318,7 +326,8 @@ NSString *CGEventMaskDescription(CGEventMask eventMask) {
             _DDLogDebug("cgTap '%{public}@' was disabled by %{public}@", CGTapIDDescription(tapID), cgEventType == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
             if (cgEventType == kCGEventTapDisabledByTimeout) {
                 _lockScope(&_cgTapDataLock);
-                if (_cgTapData[tapID].enabled) CGEventTapEnable(_cgTapData[tapID].tap, true);
+                /// Don't pass a NULL tap to CGEventTapEnable() – it crashes (See #2122)
+                if (_cgTapData[tapID].enabled && _cgTapData[tapID].tap) CGEventTapEnable(_cgTapData[tapID].tap, true);
             }
             return cgEvent;
         }
