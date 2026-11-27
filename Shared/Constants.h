@@ -180,6 +180,7 @@ typedef NSString*                                                       MFString
 // Type key
 #define kMFActionDictKeyType                                            @"type"
 // Type values
+#define kMFActionDictTypeMissionControlPreviews                         @"missionControlPreviews"
 #define kMFActionDictTypeSymbolicHotkey                                 @"symbolicHotkey"
 #define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"

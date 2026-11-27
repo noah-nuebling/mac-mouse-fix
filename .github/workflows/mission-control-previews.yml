@@ -1,0 +1,22 @@
+name: Mission Control pointer lifecycle
+on:
+  pull_request:
+    paths:
+      - 'Helper/Core/Actions/MissionControlPreviews.*'
+      - 'Helper/Core/Actions/Actions.m'
+      - 'App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableTranslator.m'
+      - 'Shared/Constants.h'
+      - 'Localization/Localizable.xcstrings'
+      - 'Tests/MissionControl/**'
+      - '.github/workflows/mission-control-previews.yml'
+  push:
+    branches: [mission-control-expanded-spaces]
+permissions:
+  contents: read
+jobs:
+  lifecycle:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test pointer lifecycle without desktop interaction
+        run: Tests/MissionControl/run.sh

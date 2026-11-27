@@ -7749,6 +7749,17 @@
         }
       }
     },
+    "effect.mission-control-previews" : {
+      "comment" : "Separate experimental action; desktop previews are the thumbnails in the Spaces bar.",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mission Control with Desktop Previews (Experimental)" } }
+      }
+    },
+    "effect.mission-control-previews.hint" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Mission Control with desktop previews. Briefly moves the pointer to the top of its display, then restores it if you have not moved it. May not work on every macOS version or display setup." } }
+      }
+    },
     "effect.mission-control" : {
       "comment" : "",
       "localizations" : {

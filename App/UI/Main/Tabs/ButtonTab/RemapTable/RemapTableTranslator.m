@@ -212,6 +212,9 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }}, /// I removed actions that are redundant to the Click and Drag for Spaces & Mission Control feature in 3.0.0 Beta 6 but  people complained https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue+label%3A%223.0.0+Beta+6+Removed+Actions%22
+        @{@"ui": MFLocalizedString(@"effect.mission-control-previews", @"Separate action: open Mission Control with the desktop thumbnails expanded."),
+          @"tool": MFLocalizedString(@"effect.mission-control-previews.hint", @"Disclose the temporary visible pointer movement and experimental compatibility."),
+          @"dict": @{kMFActionDictKeyType: kMFActionDictTypeMissionControlPreviews}},
         @{
             @"ui": MFLocalizedString(
                 @"effect.app-expose",
