@@ -45,6 +45,8 @@
 		<false/>
 		<key>scrollKillSwitch</key>
 		<false/>
+		<key>appSpecificKillSwitch</key>
+		<false/>
 		<key>checkForPrereleases</key>
 		<false/>
 		<key>checkForUpdates</key>

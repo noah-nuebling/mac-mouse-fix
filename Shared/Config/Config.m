@@ -9,6 +9,7 @@
 
 /// Notes:
 /// - [Aug 2025] MMF 3 doesn't support app-specific settings, so all the 'overrides' stuff doesn't apply currently.
+///     Update: [Nov 2026] Overrides are used again by the 'App-specific' tab (`AppSpecificTabController.swift`). Currently they only cover turning off scroll features. See `ScrollConfig.swift > App-specific overrides`.
 /// - We're using our custom coolKeyPath API all over this class, instead of Apple's key-value-coding API (aka KVC) (See valueForKeyPath:). The main reason we do this, is so that, when we set a value at a keypPath which doesn't exist, yet using the function `setConfig(NSString *keyPath, NSObject *value)` then the keyPath is created automatically, instead of just failing. This has the benefit, of being more robust and we don't need to make sure, that all keyPaths already exist in the defaultConfig. In all the other places where we use the coolKeyPath API in this class, we only do this to stay consistent (at the time of writing). I'm not sure, whether our coolKeyPath API is slower that the KVC API. We transitioned over to coolKeyPath API without testing speed.
 /// - TODO: Test if the coolKeyPath API is slower than the KVC API and optimize
 /// - TODO: Implement callback when frontmost application changes - change settings accordingly
@@ -47,6 +48,7 @@
 {
     NSString*_configFilePath; /// [Jun 2025] This is currently unused. We're using Locator.m instead.
     NSString *_bundleIDOfAppWhichCausesAppOverride;
+    NSDictionary *_appOverridesForCurrentApp; /// [Nov 2026] The `AppOverrides.<bundleID>.Root` dict for `_bundleIDOfAppWhichCausesAppOverride` (or nil). Read by `ScrollConfig` and `ScrollModifiers`.
 //    NSDictionary *_stringToEventFlagMask; /// Delete this
 }
 @synthesize config=_config;
@@ -166,7 +168,8 @@ static void updateDerivedStates(void) {
     #elif IS_HELPER
         /// Force update of internal state, (even the active app hastn't changed)
         ///     (Not sure if we need to always do this or only after loading from file)
-        loadOverridesForApp(@"");
+        ///     [Nov 2026] Re-apply the overrides of the app that's currently under the pointer (instead of resetting to `@""`), so that edits in the 'App-specific' tab take effect immediately, without having to move the mouse.
+        loadOverridesForApp(Config.shared->_bundleIDOfAppWhichCausesAppOverride ?: @"");
 
         /// Notify other modules
         [Remap reload];
@@ -185,9 +188,7 @@ static void updateDerivedStates(void) {
 #if IS_HELPER
 - (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event {
     
-    /// Unused in MMF 3
-    ///     Reactivate when we reimplement app-specific settings.
-    return NO;
+    /// [Nov 2026] Reactivated for the MMF 3 'App-specific' tab.
     
     /// Returns yes when it's made a change
     /// TODO: Add compatibility for command line executables
@@ -198,7 +199,7 @@ static void updateDerivedStates(void) {
 
     /// Get bundleID
     NSRunningApplication *app = [HelperUtility appUnderMousePointerWithEvent:event];
-    NSString *bundleID = app.bundleIdentifier;
+    NSString *bundleID = app.bundleIdentifier ?: @""; /// Executables without a bundle (e.g. many games) have no bundleID -> treat them like 'no app'
 
     /// Debug
     DDLogDebug("Loading overrides for app %@", bundleID);
@@ -211,6 +212,18 @@ static void updateDerivedStates(void) {
     
     return NO;
 }
+
+- (NSDictionary *)appOverridesForCurrentApp {
+    assertRunLoop(configRunLoop());
+    return _appOverridesForCurrentApp;
+}
+
+- (BOOL)hasAnyAppOverrides {
+    /// Cheap check so Scroll.m can skip the (slow) 'which app is under the pointer' lookup when the user hasn't set up any app-specific settings.
+    if ([(id)[self->_config objectForCoolKeyPath: @"General.appSpecificKillSwitch"] boolValue]) return NO; /// Turned off from the menu bar
+    NSDictionary *overrides = [self->_config objectForKey:kMFConfigKeyAppOverrides];
+    return [overrides isKindOfClass: NSDictionary.class] && overrides.count > 0;
+}
 #endif
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `self->_config` and writes the result into `_configWithAppOverridesApplied`.
@@ -222,12 +235,16 @@ static void loadOverridesForApp(NSString *bundleID) {
 
     /// Get overrides for app
     NSDictionary *overrides = [Config.shared->_config objectForKey:kMFConfigKeyAppOverrides];
-    NSDictionary *overridesForThisApp;
-    for (NSString *b in overrides.allKeys) {
-        if ([bundleID isEqualToString:b]) {
-                overridesForThisApp = [[overrides objectForKey: b] objectForKey:@"Root"];
+    NSDictionary *overridesForThisApp = nil;
+    BOOL appSpecificKilled = [(id)[Config.shared->_config objectForCoolKeyPath: @"General.appSpecificKillSwitch"] boolValue]; /// [Nov 2026] 'App-specific' toggle in the menu bar. nil -> NO
+    if (!appSpecificKilled && bundleID.length > 0 && [overrides isKindOfClass: NSDictionary.class]) {
+        NSDictionary *appEntry = overrides[bundleID];
+        if ([appEntry isKindOfClass: NSDictionary.class]) {
+            overridesForThisApp = appEntry[@"Root"];
+            if (![overridesForThisApp isKindOfClass: NSDictionary.class]) overridesForThisApp = nil;
         }
     }
+    Config.shared->_appOverridesForCurrentApp = overridesForThisApp;
     if (overridesForThisApp) {
         Config.shared->_configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to: Config.shared->_config] mutableCopy];
     } else {
