@@ -8,6 +8,7 @@
 //
 
 #import "Remap.h"
+#import "LogitechButtonDiverter.h"
 #import "ModificationUtility.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerGenerator.h"
@@ -69,6 +70,7 @@ static NSDictionary *_remaps;
 }
 
 static void setRemaps(NSDictionary *remapsDict) {
+    [LogitechButtonDiverter updateRemaps:remapsDict];
 
     /// Compare
     BOOL isEqual = [_remaps isEqualToDictionary:remapsDict];

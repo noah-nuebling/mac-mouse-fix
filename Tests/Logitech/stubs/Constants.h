@@ -1,0 +1,1 @@
+#define kMFCGEventFieldSenderID 87
